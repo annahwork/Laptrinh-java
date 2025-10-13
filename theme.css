@@ -1,0 +1,260 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: "";
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+
+:root {
+
+    --p-20: hsl(213, 100%, 98%);
+    --p-50: hsl(215, 100%, 97%);
+    --p-100: hsl(215, 100%, 94%);
+    --p-200: hsl(216, 93%, 89%);
+    --p-300: hsl(219, 91%, 82%);
+    --p-400: hsl(224, 86%, 74%);
+    --p-450: hsl(198, 81%, 63%);
+    --p-500: hsl(228, 81%, 63%);
+    --p-500-code: 228, 81%, 63%;
+    --p-600: hsl(233, 73%, 59%);
+    --p-600-code: 233, 73%, 59%;
+    --p-700: hsl(234, 56%, 51%);
+    --p-700-code: 234, 56%, 51%;
+    --p-800: hsl(233, 53%, 41%);
+    --p-900: hsl(231, 46%, 34%);
+    --p-900-code: 231, 46%, 34%;
+    --p-950: hsl(233, 45%, 20%);
+    --p-950-code: 233, 45%, 20%;
+
+  /* Neutrals */
+    --n-50: hsl(210, 14%, 97%);
+    --n-500: hsl(215, 16%, 47%);
+    --n-600: hsl(215, 16%, 35%);
+    --foreground-color: hsl(0, 0%, 100%);
+
+  /* Gradients */
+    --main-gradient-color: linear-gradient(to right, var(--p-450), var(--p-500));
+    --gradient-color: linear-gradient(var(--foreground-color) 10%, var(--p-100));
+
+  /* 32px */
+    --h1-font-size: 2rem;
+  /* 36px */
+    --h1-line-height: 2.25rem;
+
+  /* 26px */
+    --h2-font-size: 1.6rem;
+  /* 32px */
+    --h2-line-height: 2rem;
+
+  /* 20px */
+    --h3-font-size: 1.266rem;
+  /* 24px */
+    --h3-line-height: 1.5rem;
+
+  /* 18px */
+    --h4-font-size: 1.125rem;
+  /* 16px */
+    --h4-line-height: 1.5rem;
+
+  /* 16px */
+    --p-font-size: 1rem;
+  /* 24px */
+    --p-line-height: 1.5rem;
+
+    --p-letter-spacing: 0.025rem;
+
+  /* 12px */
+    --caption-font-size: 0.875rem;
+  /* 16px */
+    --caption-line-height: 1rem;
+}
+
+:root{
+  /* Brand */
+    --primary:#0A66C2; --primary-contrast:#FFFFFF;
+    --secondary:#22A699;
+
+  /* Neutral (UI surfaces & text) */
+    --gray-50:#F8FAFC; --gray-100:#F1F5F9; --gray-300:#CBD5E1;
+    --gray-600:#475569; --gray-900:#0F172A;
+
+  /* Semantic states */
+    --success:#16A34A; --success-bg:#E9F8EE; --success-text:#0C4A1A;
+    --warning:#F59E0B; --warning-bg:#FFF7E6; --warning-text:#7C4A00;
+    --danger:#DC2626;  --danger-bg:#FDECEC;  --danger-text:#7A1212;
+    --info:#0284C7;    --info-bg:#E7F4FB;    --info-text:#0B4562;
+    --pending:#8B5CF6; --pending-bg:#F1ECFE; --pending-text:#3B1E9E;
+
+  /* Surfaces */
+    --page-bg:var(--gray-50);
+    --card-bg:#FFFFFF;
+    --border:var(--gray-300);
+
+  /* Text */
+    --text:var(--gray-900);
+    --text-muted:var(--gray-600);
+}
+
+body{ background: var(--page-bg); color: var(--text); }
+
+.btn-primary{
+    background: var(--primary);
+    color: var(--primary-contrast);
+    border: 1px solid var(--primary);
+    padding: .625rem 1rem;
+    border-radius: .5rem;
+    cursor: pointer;
+}
+.btn-primary:hover{ filter: brightness(1.05); }
+
+.card{
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: .75rem;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.badge{
+    display: inline-flex; align-items: center; gap:.375rem;
+    padding: .125rem .5rem;
+    border-radius: 999px;
+    font-size: .875rem; line-height: 1.25rem;
+    border: 1px solid transparent;
+}
+
+/* State badges */
+.badge--success{ background: var(--success-bg); color: var(--success-text); border-color: var(--success); }
+.badge--warning{ background: var(--warning-bg); color: var(--warning-text); border-color: var(--warning); }
+.badge--danger{  background: var(--danger-bg); color: var(--danger-text);  border-color: var(--danger); }
+.badge--info{    background: var(--info-bg);    color: var(--info-text);    border-color: var(--info); }
+.badge--pending{ background: var(--pending-bg); color: var(--pending-text); border-color: var(--pending); }
+
+.table-zebra tr:nth-child(even){ background: var(--gray-50); }
+.table thead th{ background: var(--gray-100); color: var(--text); }
+

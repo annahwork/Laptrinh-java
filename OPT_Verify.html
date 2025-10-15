@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Xác thực OTP - EV Warranty System</title>
+  <link rel="stylesheet" href="theme.css" />
+</head>
+
+<body style="background: linear-gradient(135deg, hsl(187, 70%, 75%), hsl(233, 65%, 55%)); 
+             min-height: 100vh; display: flex; align-items: center; justify-content: center; 
+             font-family: 'Inter', sans-serif; color: var(--n-900);">
+
+  <div class="card_otp"
+       style="width: 50%; max-width: 500px; padding: 3rem 2.5rem; border-radius: 1.5rem;
+              background: rgba(255,255,255,0.55); backdrop-filter: blur(16px);
+              box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center;">
+
+    <h1 style="font-size:2rem; color:var(--p-700); font-weight:700; margin-bottom:0.5rem;">
+      Xác thực mã OTP
+    </h1>
+    <p style="color:var(--n-600); margin-bottom:2rem; font-size:1rem;">
+      Vui lòng nhập mã OTP được gửi đến email của bạn để đặt lại mật khẩu.
+    </p>
+
+    <form id="otpForm" style="max-width: 360px; margin: 0 auto;">
+  <div style="display:flex; justify-content:space-between; margin-bottom:1.5rem;">
+    <input type="text" maxlength="1" class="otp-input" required>
+    <input type="text" maxlength="1" class="otp-input" required>
+    <input type="text" maxlength="1" class="otp-input" required>
+    <input type="text" maxlength="1" class="otp-input" required>
+    <input type="text" maxlength="1" class="otp-input" required>
+    <input type="text" maxlength="1" class="otp-input" required>
+  </div>
+
+  <button type="submit"
+          style="width:100%; padding:0.9rem; font-size:1.05rem; background:var(--p-600);
+                 color:white; border:none; border-radius:0.5rem; font-weight:600; cursor:pointer;
+                 transition: all 0.25s;">
+    Xác nhận
+  </button>
+</form>
+
+    <p style="margin-top:1.5rem; color:var(--n-600);">
+      Không nhận được mã?
+      <a href="#" id="resendOTP" style="color:var(--p-600); text-decoration:none; font-weight:600;">
+        Gửi lại
+      </a>
+    </p>
+
+    <p style="margin-top:1rem;">
+      <a href="ForgotPassWord.html" style="color:var(--p-600); text-decoration:none; font-weight:600;">
+        ← Quay lại Quên mật khẩu
+      </a>
+    </p>
+  </div>
+
+    <script>
+    const inputs = document.querySelectorAll('.otp-input');
+
+    inputs.forEach((input, index) => {
+        input.addEventListener('input', () => {
+        if(input.value.length === 1 && index < inputs.length - 1) {
+            inputs[index + 1].focus();
+        }
+        });
+
+        input.addEventListener('keydown', (e) => {
+        if(e.key === "Backspace" && input.value === "" && index > 0) {
+            inputs[index - 1].focus();
+        }
+        });
+    });
+    </script>
+</body>
+</html>

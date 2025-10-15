@@ -1,0 +1,94 @@
+  <!DOCTYPE html>
+  <html lang="vi">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - EV Warranty System</title>
+    <link rel="stylesheet" href="theme.css">
+  </head>
+  <body style="background: linear-gradient(135deg, hsl(187, 70%, 75%), hsl(233, 65%, 55%)); 
+              min-height:100vh; display:flex; align-items:center; justify-content:center; 
+              font-family: 'Inter', sans-serif; color: var(--n-900);">
+
+    <div class="card_login" 
+        style="width: 50%; max-width: 777px; padding: 3rem 2.5rem; border-radius: 1.5rem; 
+                background: rgba(255,255,255,0.55); backdrop-filter: blur(16px);
+                box-shadow: 0 10px 25px rgba(0,0,0,0.1); color: var(--n-900);">
+
+      <div style="text-align:center; margin-bottom:2rem;">
+      <h1 style="font-size:3rem; color:var(--p-700); margin-top:0.75rem; font-weight: 700;">
+          EV Warranty System
+      </h1>
+      </div>
+
+      <div class="user-type-wrapper">
+    <label class="user-type-label">Đăng nhập với tư cách:</label>
+    <div class="user-type-tabs">
+      <input type="radio" id="type-hang" name="userType" value="hang" checked>
+      <label for="type-hang" class="tab">
+        🏢
+        <span>Hãng</span>
+      </label>
+
+      <input type="radio" id="type-trungtam" name="userType" value="trungtam">
+      <label for="type-trungtam" class="tab">
+        🔧
+        <span>Trung tâm</span>
+      </label>
+    </div>
+  </div>
+
+
+      <form id="loginForm" style="max-width: 400px; margin: 0 auto;">
+        <div style="margin-bottom:1.25rem;">
+          <label for="email" 
+                style="display:block; font-weight:600; color:var(--n-600); margin-bottom:0.5rem;">
+            Tên đăng nhập hoặc Email
+          </label>
+          <input type="email" id="email" name="email" required autocomplete="email"
+                style="width:100%; padding:0.75rem 1rem; border:1.5px solid var(--n-300);
+                        border-radius:0.5rem; font-size:1rem; color:var(--n-900);
+                        background:rgba(255,255,255,0.9);">
+        </div>
+
+      <div style="margin-bottom:1.25rem; position:relative;">
+      <label for="password" 
+              style="display:block; font-weight:600; color:var(--n-600); margin-bottom:0.5rem;">
+          Mật khẩu
+      </label>
+
+          <input type="password" id="password" name="password" required autocomplete="current-password"
+                  style="width:100%; padding:0.75rem 1rem; border:1.5px solid var(--n-300);
+                        border-radius:0.5rem; font-size:1rem; color:var(--n-900);
+                        background:rgba(255,255,255,0.9);">
+
+          <button type="button" id="togglePassword" aria-label="Hiện mật khẩu"
+                  style="position:absolute; top:36px; right:10px; background:none; border:none; cursor:pointer; color:#555;">
+          </button>
+          </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+          <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+            <input type="checkbox" id="remember" name="remember" style="accent-color: var(--p-600);">
+            <span style="color:var(--n-600); font-size:0.95rem;">Ghi nhớ đăng nhập</span>
+          </label>
+          <a href="ForgotPassWord.html" style="color:var(--p-600); text-decoration:none; font-weight:600;">Quên mật khẩu?</a>
+        </div>
+
+        <button type="submit" 
+                style="width:108%; padding:0.9rem; font-size:1.05rem; background:var(--p-600);
+                      color:white; border:none; border-radius:0.5rem; font-weight:600; cursor:pointer;
+                      transition: all 0.25s;">
+          Đăng nhập
+        </button>
+
+        <p class="muted" 
+          style="text-align:center; margin-top:1rem; color:var(--n-500); font-size:0.95rem;">
+          Chưa có tài khoản? Vui lòng liên hệ quản trị viên.
+        </p>
+      </form>
+    </div>
+
+    
+  </body>
+  </html>

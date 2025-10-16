@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - EV Warranty System</title>
+  <link rel="stylesheet" href="theme.css">
+</head>
+<body style="background: linear-gradient(135deg, hsl(187, 70%, 75%), hsl(233, 65%, 55%)); 
+             min-height:100vh; display:flex; align-items:center; justify-content:center; 
+             font-family:'Inter', sans-serif; color:var(--n-900);">
+
+  <div class="card_profile" 
+       style="width: 90%; max-width: 700px; padding: 3rem 2.5rem; border-radius: 1.5rem;
+              background: rgba(255,255,255,0.55); backdrop-filter: blur(16px);
+              box-shadow: 0 10px 25px rgba(0,0,0,0.1); color: var(--n-900);">
+
+    <div style="text-align:center; margin-bottom:2rem;">
+      <h1 style="font-size:2.5rem; color:var(--p-700); margin-top:0.5rem; font-weight:700;">
+        Thông tin cá nhân
+      </h1>
+      <p style="color:var(--n-600); font-size:1rem;">Quản lý thông tin tài khoản của bạn</p>
+    </div>
+<div style="text-align:center; margin-bottom:2rem;">
+  <img id="avatar" src="user-avatar.jpg" alt="Avatar"
+       onerror="this.onerror=null;this.src='avatar-placeholder.png';"
+       style="width:120px; height:120px; border-radius:50%; object-fit:cover; border:2px solid var(--p-600);">
+</div>
+
+<form id="profileForm" style="max-width: 500px; margin: 0 auto;">
+  <div style="margin-bottom:1.25rem;">
+    <label for="fullName" style="display:block; font-weight:600; color:var(--n-600); margin-bottom:0.5rem;">
+      Họ và tên
+    </label>
+    <input type="text" id="fullName" name="fullName" value="" required
+           style="width:100%; padding:0.75rem 1rem; border:1.5px solid var(--n-300);
+                  border-radius:0.5rem; font-size:1rem; color:var(--n-900);
+                  background:rgba(255,255,255,0.9);">
+  </div>
+
+  <div style="margin-bottom:1.25rem;">
+    <label for="email" style="display:block; font-weight:600; color:var(--n-600); margin-bottom:0.5rem;">
+      Email
+    </label>
+    <input type="email" id="email" name="email" value="" required
+           style="width:100%; padding:0.75rem 1rem; border:1.5px solid var(--n-300);
+                  border-radius:0.5rem; font-size:1rem; color:var(--n-900);
+                  background:rgba(255,255,255,0.9);">
+  </div>
+
+  <div style="margin-bottom:1.25rem;">
+    <label for="phone" style="display:block; font-weight:600; color:var(--n-600); margin-bottom:0.5rem;">
+      Số điện thoại
+    </label>
+    <input type="tel" id="phone" name="phone" value=""
+           style="width:100%; padding:0.75rem 1rem; border:1.5px solid var(--n-300);
+                  border-radius:0.5rem; font-size:1rem; color:var(--n-900);
+                  background:rgba(255,255,255,0.9);">
+  </div>
+
+  <div style="margin-bottom:1.25rem;">
+    <label for="address" style="display:block; font-weight:600; color:var(--n-600); margin-bottom:0.5rem;">
+      Địa chỉ
+    </label>
+    <input type="text" id="address" name="address" value=""
+           style="width:100%; padding:0.75rem 1rem; border:1.5px solid var(--n-300);
+                  border-radius:0.5rem; font-size:1rem; color:var(--n-900);
+                  background:rgba(255,255,255,0.9);">
+  </div>
+
+  <div style="margin-bottom:1.25rem;">
+    <label for="role" style="display:block; font-weight:600; color:var(--n-600); margin-bottom:0.5rem;">
+      Vai trò
+    </label>
+    <input type="text" id="role" name="role" value="" readonly
+           style="width:100%; padding:0.75rem 1rem; border:1.5px solid var(--n-300);
+                  border-radius:0.5rem; font-size:1rem; color:var(--n-900);
+                  background:rgba(255,255,255,0.9);">
+  </div>
+
+  <button type="submit" 
+          style="width:100%; padding:0.9rem; font-size:1.05rem; background:var(--p-600);
+                 color:white; border:none; border-radius:0.5rem; font-weight:600; cursor:pointer;
+                 transition: all 0.25s;">
+    Cập nhật thông tin
+  </button>
+</form>
+
+    <p style="margin-top:1.5rem; text-align:center;">
+      <a href="Login.html" style="color:var(--p-600); text-decoration:none; font-weight:600;">
+        ← Đăng xuất
+      </a>
+    </p>
+  </div>
+
+</body>
+</html>

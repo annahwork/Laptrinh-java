@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lịch Bảo Hành - EV Warranty System</title>
+  <link rel="stylesheet" href="theme.css" />
+
+</head>
+
+<body style="background: linear-gradient(135deg, hsl(187, 70%, 75%), hsl(233, 65%, 55%)); 
+             min-height:100vh; font-family: 'Inter', sans-serif;">
+
+  <div class="page-container">
+    <div class="page-header">
+      <h1>Lịch Bảo Hành</h1>
+      <button class="btn-primary">+ Thêm lịch mới</button>
+    </div>
+
+    <div class="filter-bar">
+      <input type="text" placeholder="Tìm theo tên khách hàng..." />
+      <select>
+        <option>Tất cả trạng thái</option>
+        <option>Hoàn thành</option>
+        <option>Đang chờ</option>
+        <option>Đã hủy</option>
+      </select>
+      <input type="date" />
+      <button class="btn-primary">Lọc</button>
+    </div>
+
+    <div class="table-wrapper card">
+      <table class="table-zebra">
+        <thead>
+          <tr>
+            <th>Mã lịch</th>
+            <th>Tên khách hàng</th>
+            <th>Trung tâm</th>
+            <th>Ngày bảo hành</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+
+</body>
+</html>

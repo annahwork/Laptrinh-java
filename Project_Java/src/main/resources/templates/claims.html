@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SC Staff | Yêu cầu Bảo hành</title>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-layout">
+
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3>EV Warranty System</h3>
+
+            </div>
+
+            <nav class="sidebar-menu">
+                <ul>
+                    <li><a href="vehicles.html"><i class="fas fa-car-side fa-fw"></i> <span>Quản lý Xe</span></a></li>
+                    <li><a href="customers.html"><i class="fas fa-users fa-fw"></i> <span>Quản lý Khách hàng</span></a>
+                    </li>
+                    <li><a href="claims.html" class="active"><i class="fas fa-screwdriver-wrench fa-fw"></i> <span>Yêu
+                                cầu Bảo hành</span></a></li>
+                    <li><a href="dieu_phoi_ky_thuat_vien.html"><i class="fas fa-user-gear fa-fw"></i> <span>Điều phối Kỹ
+                                thuật viên</span></a></li>
+                    <li><a href="campaigns.html"><i class="fas fa-bullhorn fa-fw"></i> <span>Quản lý Chiến dịch</span>
+                        </a></li>
+                    <li><a href="notifications.html"><i class="fas fa-bell fa-fw"></i> <span>Thông báo</span></a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-resizer" id="sidebarResizer"></div>
+        </aside>
+
+        <main class="content-wrapper" id="contentWrapper">
+            <div class="content-header">
+                <h1>Yêu cầu Bảo hành</h1>
+            </div>
+
+            <div class="main-content-area">
+                <!-- Search + New claim button -->
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                    <div style="position:relative; width:320px;">
+                        <i class="fas fa-search"
+                            style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted);"></i>
+                        <input type="text" class="form-control" placeholder="Tìm theo biển số, VIN, mã yêu cầu..."
+                            style="padding-left:40px;">
+                    </div>
+                    <!-- changed: add id to open the create form modal -->
+                    <button class="btn-primary" id="newClaimBtn"><i class="fas fa-plus"></i> Tạo yêu cầu mới</button>
+                </div>
+
+                <!-- Filters -->
+                <div class="card" style="margin-bottom:16px;">
+                    <div style="padding:12px;">
+                        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                            <select style="padding:8px; border:1px solid var(--border); border-radius:6px;">
+                                <option>Tất cả trạng thái</option>
+                                <option>Chờ xử lý</option>
+                                <option>Đã xác nhận</option>
+                                <option>Hoàn tất</option>
+                            </select>
+
+                            <!--  technician  (data comes from DB later) -->
+
+                            <input type="date" style="padding:8px; border:1px solid var(--border); border-radius:6px;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Claims table -->
+                <div class="card">
+                    <div style="padding:14px 18px; border-bottom:1px solid var(--border); background:var(--gray-100);">
+                        <h3>Danh sách Yêu cầu Bảo hành</h3>
+                    </div>
+                    <div style="padding:0;">
+                        <table class="table-zebra" style="width:100%; border-collapse:collapse;">
+                            <thead>
+                                <tr style="background:var(--gray-100);">
+                                    <th style="padding:12px; text-align:left; border-bottom:1px solid var(--border);">Mã
+                                        Y/C</th>
+                                    <th style="padding:12px; text-align:left; border-bottom:1px solid var(--border);">
+                                        Biển số / VIN</th>
+                                    <th style="padding:12px; text-align:left; border-bottom:1px solid var(--border);">
+                                        Ngày tạo</th>
+                                    <th style="padding:12px; text-align:left; border-bottom:1px solid var(--border);">
+                                        Trạng thái</th>
+                                    <!-- Kỹ thuật viên column removed -->
+                                    <th style="padding:12px; text-align:left; border-bottom:1px solid var(--border);">
+                                        Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Placeholder khi chưa có database -->
+                                <tr>
+                                    <td colspan="5" style="padding:24px; text-align:center; color:var(--text-muted);">
+                                        Dữ liệu sẽ được load từ database — chưa có dữ liệu ở môi trường hiện tại.
+                                    </td>
+                                </tr>
+
+                                <!--
+                                Ví dụ Thymeleaf khi có backend (bỏ cột kỹ thuật viên):
+                                <tr th:each="claim : ${claims}">
+                                    <td th:text="${claim.code}">CLM-0001</td>
+                                    <td>
+                                        <div th:text="${claim.plate}">51A-12345</div>
+                                        <div th:text="${claim.vin}" style="color:var(--text-muted); font-size:0.85rem;">VF8123456789</div>
+                                    </td>
+                                    <td th:text="${claim.createdDate}">01/04/2024</td>
+                                    <td>
+                                        <span th:classappend="${claim.status == 'pending'} ? ' badge--warning' : (claim.status == 'confirmed') ? ' badge--info' : ' badge--success'"
+                                              th:text="${claim.statusLabel}">Chờ xử lý</span>
+                                    </td>
+                                    <td>
+                                        <button class="btn" onclick="openClaimDetail(/*id*/)">Xem</button>
+                                    </td>
+                                </tr>
+                                -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="padding:12px 18px; border-top:1px solid var(--border); background:var(--gray-100);">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="color:var(--text-muted);">Hiển thị 0 của 0</span>
+                            <div>
+                                <button
+                                    style="padding:6px 10px; margin:0 4px; border:1px solid var(--border); background:white; cursor:pointer;">«
+                                    Trước</button>
+                                <button class="btn-primary" style="padding:6px 10px; margin:0 4px;">1</button>
+                                <button
+                                    style="padding:6px 10px; margin:0 4px; border:1px solid var(--border); background:white; cursor:pointer;">2</button>
+                                <button
+                                    style="padding:6px 10px; margin:0 4px; border:1px solid var(--border); background:white; cursor:pointer;">Sau
+                                    »</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Claim detail / create modal: replaced simple skeleton with full create form -->
+                <div id="claimModal" class="modal" style="display:none;">
+                    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="claimModalTitle"
+                        tabindex="-1">
+                        <div class="modal-header">
+                            <h3 id="claimModalTitle">Tạo Yêu cầu Bảo hành mới</h3>
+                            <span class="modal-close" id="claimModalClose" role="button"
+                                aria-label="Đóng">&times;</span>
+                        </div>
+
+                        <form id="claimForm">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label class="form-label">Biển số</label>
+                                    <input type="text" id="plate" name="plate" class="form-control" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">VIN</label>
+                                    <input type="text" id="vin" name="vin" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Tên chủ / Khách hàng</label>
+                                    <input type="text" id="ownerName" name="ownerName" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Ngày mua</label>
+                                    <input type="date" id="purchaseDate" name="purchaseDate" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Mô tả lỗi / Yêu cầu</label>
+                                    <textarea id="description" name="description" class="form-control" rows="4"
+                                        required></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Số seri phụ tùng (tuỳ chọn)</label>
+                                    <input type="text" id="partsSerial" name="partsSerial" class="form-control"
+                                        placeholder="Có thể nhập nhiều serial, cách nhau bằng dấu phẩy">
+                                </div>
+
+                                <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;">
+                                    <button type="button" class="btn" id="claimCancelBtn">Huỷ</button>
+                                    <button type="submit" class="btn btn-primary">Gửi yêu cầu</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Sidebar resize + modal helpers (giống các trang khác)
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebar = document.getElementById('sidebar');
+            const contentWrapper = document.getElementById('contentWrapper');
+            const resizer = document.getElementById('sidebarResizer');
+
+            let isResizing = false;
+            let startX = 0;
+            let startWidth = 0;
+            const minWidth = 200;
+            const maxWidth = 400;
+
+            resizer.addEventListener('mousedown', function (e) {
+                isResizing = true;
+                startX = e.clientX;
+                startWidth = parseInt(document.defaultView.getComputedStyle(sidebar).width, 10);
+                document.body.style.cursor = 'ew-resize';
+                document.body.style.userSelect = 'none';
+                e.preventDefault();
+            });
+
+            document.addEventListener('mousemove', function (e) {
+                if (!isResizing) return;
+                const width = startWidth + e.clientX - startX;
+                if (width >= minWidth && width <= maxWidth) {
+                    sidebar.style.width = width + 'px';
+                    contentWrapper.style.marginLeft = width + 'px';
+                }
+            });
+
+            document.addEventListener('mouseup', function () {
+                if (isResizing) {
+                    isResizing = false;
+                    document.body.style.cursor = '';
+                    document.body.style.userSelect = '';
+                }
+            });
+
+            // --- Modal & Form handlers (UPDATED) ---
+            const modal = document.getElementById('claimModal');
+            const modalContent = modal ? modal.querySelector('.modal-content') : null;
+            const modalClose = document.getElementById('claimModalClose');
+            const newClaimBtn = document.getElementById('newClaimBtn');
+            const claimCancelBtn = document.getElementById('claimCancelBtn');
+            const claimForm = document.getElementById('claimForm');
+            const firstInput = document.getElementById('plate');
+
+            function openModal() {
+                if (!modal) return;
+                modal.style.display = 'block';
+                // add body lock class
+                document.body.classList.add('modal-open');
+                // focus first input inside modal (after a tick to ensure visible)
+                setTimeout(() => {
+                    if (firstInput) firstInput.focus();
+                    if (modalContent) modalContent.focus();
+                }, 50);
+            }
+            function closeModal() {
+                if (!modal) return;
+                modal.style.display = 'none';
+                document.body.classList.remove('modal-open');
+                // optional: return focus to the create button
+                if (newClaimBtn) newClaimBtn.focus();
+            }
+
+            if (newClaimBtn) newClaimBtn.addEventListener('click', openModal);
+            if (modalClose) modalClose.addEventListener('click', closeModal);
+            if (claimCancelBtn) claimCancelBtn.addEventListener('click', (e) => { e.preventDefault(); closeModal(); });
+
+            // Close on Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal && modal.style.display === 'block') closeModal();
+            });
+
+            // Click outside modal-content to close
+            window.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+            // Submit handler: POST to /api/claims (fallback: log)
+            if (claimForm) {
+                claimForm.addEventListener('submit', async function (e) {
+                    e.preventDefault();
+
+                    const data = {
+                        plate: document.getElementById('plate').value.trim(),
+                        vin: document.getElementById('vin').value.trim(),
+                        ownerName: document.getElementById('ownerName').value.trim(),
+                        purchaseDate: document.getElementById('purchaseDate').value,
+                        description: document.getElementById('description').value.trim(),
+                        partsSerial: document.getElementById('partsSerial').value.trim()
+                    };
+
+                    // basic validation
+                    if (!data.plate) {
+                        alert('Vui lòng nhập biển số.');
+                        return;
+                    }
+                    if (!data.description) {
+                        alert('Vui lòng mô tả yêu cầu.');
+                        return;
+                    }
+
+                    // try sending to backend; if not available, fallback to console log
+                    try {
+                        const resp = await fetch('/api/claims', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(data)
+                        });
+
+                        if (resp.ok) {
+                            // success (you can customize further)
+                            alert('Tạo yêu cầu thành công.');
+                            claimForm.reset();
+                            closeModal();
+                            // optionally reload or update table via AJAX
+                        } else {
+                            // backend returned error
+                            let json;
+                            try { json = await resp.json(); } catch (_) { json = null; }
+                            alert('Lỗi khi gửi yêu cầu: ' + (json && json.message ? json.message : resp.status));
+                        }
+                    } catch (err) {
+                        // likely no backend during dev: fallback
+                        console.warn('POST /api/claims failed, fallback log:', err, data);
+                        alert('Không thể gửi lên server (chưa có backend). Yêu cầu đã được log trên console.');
+                        console.log('TẠO YÊU CẦU (local):', data);
+                        claimForm.reset();
+                        closeModal();
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>

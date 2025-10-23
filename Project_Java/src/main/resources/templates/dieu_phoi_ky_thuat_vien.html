@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SC Staff | Điều phối Kỹ thuật viên</title>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-layout">
+
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3>EV Warranty System</h3>
+                <small>SC Staff</small>
+            </div>
+
+            <nav class="sidebar-menu">
+                <ul>
+                    <li class="menu-group">
+                        <button class="menu-group-toggle" type="button">
+                            <i class="fas fa-layer-group fa-fw"></i>
+                            <span>Quản lý hồ sơ</span>
+                            <i class="fas fa-chevron-down group-arrow"></i>
+                        </button>
+                        <ul class="submenu">
+                            <li><a href="vehicles.html"><i class="fas fa-car-side fa-fw"></i> Quản lý Xe</a></li>
+                            <li><a href="customers.html"><i class="fas fa-users fa-fw"></i> Quản lý Khách hàng</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="claims.html"><i class="fas fa-screwdriver-wrench fa-fw"></i> <span>Yêu cầu Bảo
+                                hành</span></a></li>
+                    <li><a href="dieu_phoi_ky_thuat_vien.html" class="active"><i class="fas fa-user-gear fa-fw"></i>
+                            <span>Điều phối Kỹ thuật viên</span></a></li>
+                    <li><a href="campaigns.html"><i class="fas fa-bullhorn fa-fw"></i> <span>Quản lý Chiến
+                                dịch</span></a></li>
+                    <li><a href="notifications.html"><i class="fas fa-bell fa-fw"></i> <span>Thông báo</span></a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-resizer" id="sidebarResizer"></div>
+        </aside>
+
+        <main class="content-wrapper" id="contentWrapper">
+            <div class="content-header">
+                <h1>Điều phối Kỹ thuật viên <small style="color:var(--text-muted); font-size:1rem;">(SC Staff)</small>
+                </h1>
+            </div>
+
+            <div class="main-content-area">
+                <!-- Search + Filter -->
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                    <div style="position:relative; width:320px;">
+                        <i class="fas fa-search"
+                            style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted);"></i>
+                        <input type="text" id="searchBox" class="form-control"
+                            placeholder="Tìm theo biển số, mã yêu cầu..." style="padding-left:40px;">
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="card" style="margin-bottom:16px;">
+                    <div style="padding:12px;">
+                        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                            <select id="statusFilter"
+                                style="padding:8px; border:1px solid var(--border); border-radius:6px;">
+                                <option value="">Tất cả trạng thái</option>
+                                <option value="approved" selected>Đã chấp thuận</option>
+                                <option value="assigned">Đã phân công</option>
+                            </select>
+                            <input type="date" id="dateFilter"
+                                style="padding:8px; border:1px solid var(--border); border-radius:6px;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Danh sách yêu cầu -->
+                <div class="card">
+                    <div style="padding:14px 18px; border-bottom:1px solid var(--border); background:var(--gray-100);">
+                        <h3>Yêu cầu Bảo hành đã chấp thuận</h3>
+                    </div>
+                    <div style="padding:0;">
+                        <table class="table-zebra" style="width:100%; border-collapse:collapse;">
+                            <thead>
+                                <tr style="background:var(--gray-100);">
+                                    <th style="padding:12px; text-align:left; border-bottom:1px solid var(--border);">Mã
+                                        Y/C</th>
+                                    <th style="padding:12px; text-align:left; border-bottom:1px solid var(--border);">
+                                        Biển số / VIN</th>
+                                    <th style="padding:12px; text-align:left; border-bottom:1px solid var(--border);">
+                                        Ngày tạo</th>
+                                    <th style="padding:12px; text-align:left; border-bottom:1px solid var(--border);">Kỹ
+                                        thuật viên</th>
+                                    <th style="padding:12px; text-align:left; border-bottom:1px solid var(--border);">
+                                        Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="claimsTbody">
+                                <!-- Placeholder -->
+                                <tr id="placeholderRow">
+                                    <td colspan="5" style="padding:24px; text-align:center; color:var(--text-muted);">
+                                        Dữ liệu sẽ được load từ database — chưa có dữ liệu ở môi trường hiện tại.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="padding:12px 18px; border-top:1px solid var(--border); background:var(--gray-100);">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="color:var(--text-muted);">Hiển thị 0 của 0</span>
+                            <div>
+                                <button
+                                    style="padding:6px 10px; margin:0 4px; border:1px solid var(--border); background:white; cursor:pointer;">«
+                                    Trước</button>
+                                <button class="btn-primary" style="padding:6px 10px; margin:0 4px;">1</button>
+                                <button
+                                    style="padding:6px 10px; margin:0 4px; border:1px solid var(--border); background:white; cursor:pointer;">Sau
+                                    »</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal phân công KTV -->
+                <div id="assignModal" class="modal" style="display:none;">
+                    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="assignModalTitle"
+                        tabindex="-1">
+                        <div class="modal-header">
+                            <h3 id="assignModalTitle">Phân công Kỹ thuật viên</h3>
+                            <span class="modal-close" id="assignModalClose" role="button"
+                                aria-label="Đóng">&times;</span>
+                        </div>
+
+                        <form id="assignForm">
+                            <div class="modal-body">
+                                <p style="margin-bottom:12px;">Yêu cầu: <strong id="assignClaimCode">CLM-0001</strong>
+                                </p>
+
+                                <div class="form-group">
+                                    <label class="form-label">Chọn Kỹ thuật viên</label>
+                                    <select id="techSelect" class="form-control" style="padding:8px; border-radius:6px;"
+                                        required>
+                                        <option value="">-- Chọn kỹ thuật viên --</option>
+                                        <!-- 
+											Danh sách kỹ thuật viên sẽ load từ database.
+											
+											Ví dụ Thymeleaf khi có backend:
+											<option th:each="tech : ${technicians}" th:value="${tech.id}" th:text="${tech.fullName}">Nguyễn Văn A</option>
+											
+											Hoặc dùng JavaScript fetch từ /api/technicians để render options động.
+										-->
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Ghi chú (tuỳ chọn)</label>
+                                    <textarea id="assignNote" class="form-control" rows="3"
+                                        placeholder="Ghi chú cho kỹ thuật viên..."></textarea>
+                                </div>
+
+                                <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;">
+                                    <button type="button" class="btn" id="assignCancelBtn">Huỷ</button>
+                                    <button type="submit" class="btn btn-primary">Lưu</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Sidebar resize
+            const sidebar = document.getElementById('sidebar');
+            const contentWrapper = document.getElementById('contentWrapper');
+            const resizer = document.getElementById('sidebarResizer');
+            let isResizing = false, startX = 0, startWidth = 0;
+            const minWidth = 200, maxWidth = 400;
+            resizer.addEventListener('mousedown', (e) => { isResizing = true; startX = e.clientX; startWidth = parseInt(window.getComputedStyle(sidebar).width, 10); document.body.style.cursor = 'ew-resize'; document.body.style.userSelect = 'none'; e.preventDefault(); });
+            document.addEventListener('mousemove', (e) => { if (!isResizing) return; const w = startWidth + e.clientX - startX; if (w >= minWidth && w <= maxWidth) { sidebar.style.width = w + 'px'; contentWrapper.style.marginLeft = w + 'px'; } });
+            document.addEventListener('mouseup', () => { if (isResizing) { isResizing = false; document.body.style.cursor = ''; document.body.style.userSelect = ''; } });
+
+            // Menu group toggle
+            document.querySelectorAll('.menu-group-toggle').forEach(btn => btn.addEventListener('click', function () { const li = this.closest('.menu-group'); li.classList.toggle('open'); }));
+
+            // Data từ database
+            const tbody = document.getElementById('claimsTbody');
+            const placeholder = document.getElementById('placeholderRow');
+            const statusFilter = document.getElementById('statusFilter');
+            let claimsList = []; // Sẽ load từ database qua API
+
+            function renderClaims(filter = '') {
+                if (!tbody) return;
+                tbody.innerHTML = '';
+                const list = filter ? claimsList.filter(c => c.status === filter) : claimsList;
+                if (list.length === 0) { tbody.appendChild(placeholder); return; }
+                list.forEach(c => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+					<td style="padding:12px; border-bottom:1px solid var(--border);"><strong>${escHtml(c.code)}</strong></td>
+					<td style="padding:12px; border-bottom:1px solid var(--border);">
+						<div>${escHtml(c.plate)}</div>
+						<small style="color:var(--text-muted);">${escHtml(c.vin)}</small>
+					</td>
+					<td style="padding:12px; border-bottom:1px solid var(--border);">${escHtml(c.createdDate)}</td>
+					<td style="padding:12px; border-bottom:1px solid var(--border);">${c.techName ? escHtml(c.techName) : '<em style="color:var(--text-muted);">Chưa phân</em>'}</td>
+					<td style="padding:12px; border-bottom:1px solid var(--border);">
+						<button class="btn btn-primary" style="padding:5px 10px; font-size:12px;" onclick="openAssignModal('${escJs(c.id)}','${escJs(c.code)}')">Phân công</button>
+					</td>
+				`;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            function escHtml(s) { if (!s) return ''; return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+            function escJs(s) { return escHtml(s).replace(/'/g, "\\'"); }
+
+            if (statusFilter) statusFilter.addEventListener('change', () => renderClaims(statusFilter.value));
+
+            // Modal assign
+            const assignModal = document.getElementById('assignModal');
+            const assignModalClose = document.getElementById('assignModalClose');
+            const assignCancelBtn = document.getElementById('assignCancelBtn');
+            const assignForm = document.getElementById('assignForm');
+            const assignClaimCode = document.getElementById('assignClaimCode');
+            const techSelect = document.getElementById('techSelect');
+            let currentClaimId = null;
+
+            window.openAssignModal = function (id, code) {
+                currentClaimId = id;
+                if (assignClaimCode) assignClaimCode.textContent = code;
+                if (assignModal) assignModal.style.display = 'block';
+                document.body.classList.add('modal-open');
+                setTimeout(() => { if (techSelect) techSelect.focus(); }, 50);
+            };
+            function closeAssignModal() { if (assignModal) { assignModal.style.display = 'none'; document.body.classList.remove('modal-open'); } }
+
+            if (assignModalClose) assignModalClose.addEventListener('click', closeAssignModal);
+            if (assignCancelBtn) assignCancelBtn.addEventListener('click', (e) => { e.preventDefault(); closeAssignModal(); });
+            window.addEventListener('click', (e) => { if (e.target === assignModal) closeAssignModal(); });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && assignModal && assignModal.style.display === 'block') closeAssignModal(); });
+
+            if (assignForm) {
+                assignForm.addEventListener('submit', async function (e) {
+                    e.preventDefault();
+                    const techId = techSelect.value;
+                    const techName = techSelect.options[techSelect.selectedIndex].text;
+                    const note = document.getElementById('assignNote').value.trim();
+                    if (!techId) { alert('Vui lòng chọn kỹ thuật viên.'); return; }
+
+                    const payload = { claimId: currentClaimId, technicianId: techId, technicianName: techName, note };
+                    try {
+                        const resp = await fetch(`/api/claims/${currentClaimId}/assign`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                        if (resp.ok) {
+                            alert('Phân công thành công.');
+                            // update local claim
+                            const claim = claimsList.find(c => c.id === currentClaimId);
+                            if (claim) { claim.techId = techId; claim.techName = techName; claim.status = 'assigned'; }
+                            renderClaims(statusFilter.value);
+                            assignForm.reset();
+                            closeAssignModal();
+                        } else {
+                            let json; try { json = await resp.json() } catch (_) { json = null }
+                            alert('Lỗi: ' + (json && json.message ? json.message : resp.status));
+                        }
+                    } catch (err) {
+                        console.warn('POST /api/claims/assign failed, fallback log', err, payload);
+                        alert('Chưa có backend. Dữ liệu đã log console.');
+                        console.log('ASSIGN TECH (local):', payload);
+                        // fallback: update local
+                        const claim = claimsList.find(c => c.id === currentClaimId);
+                        if (claim) { claim.techId = techId; claim.techName = techName; claim.status = 'assigned'; }
+                        renderClaims(statusFilter.value);
+                        assignForm.reset();
+                        closeAssignModal();
+                    }
+                });
+            }
+
+            // Load technicians list (client-side fallback when no backend)
+            // techSelect is already declared above, so we don't need to redeclare it here
+            let techniciansList = []; // mock or fetched from API
+
+            async function loadTechnicians() {
+                try {
+                    const resp = await fetch('/api/technicians');
+                    if (resp.ok) {
+                        techniciansList = await resp.json();
+                        renderTechOptions();
+                    } else {
+                        console.warn('API failed, using fallback data');
+                        // Tạm dùng data mẫu khi backend chưa sẵn sàng
+                        techniciansList = [
+                            { id: '1', fullName: 'Nguyễn Văn A' },
+                            { id: '2', fullName: 'Trần Thị B' },
+                            { id: '3', fullName: 'Lê Văn C' },
+                            { id: '4', fullName: 'Phạm Thị D' }
+                        ];
+                        renderTechOptions();
+                    }
+                } catch (err) {
+                    console.warn('GET /api/technicians failed, using fallback data', err);
+                    // Tạm dùng data mẫu khi backend chưa sẵn sàng
+                    techniciansList = [
+                        { id: '1', fullName: 'Nguyễn Văn A' },
+                        { id: '2', fullName: 'Trần Thị B' },
+                        { id: '3', fullName: 'Lê Văn C' },
+                        { id: '4', fullName: 'Phạm Thị D' }
+                    ];
+                    renderTechOptions();
+                }
+            }
+
+            function renderTechOptions() {
+                if (!techSelect) return;
+                // keep first option (placeholder)
+                const placeholder = techSelect.querySelector('option[value=""]');
+                techSelect.innerHTML = '';
+                if (placeholder) techSelect.appendChild(placeholder);
+                techniciansList.forEach(t => {
+                    const opt = document.createElement('option');
+                    opt.value = t.id;
+                    opt.textContent = t.fullName;
+                    techSelect.appendChild(opt);
+                });
+            }
+
+            loadTechnicians(); // load on page load
+
+            // initial render
+            renderClaims('approved');
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SC Staff | Quản lý Xe EV</title>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-layout">
+
+        <!-- Replaced aside: grouped menu fallback -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3>EV Warranty System</h3>
+
+            </div>
+
+            <nav class="sidebar-menu">
+                <ul>
+                    <li class="menu-group">
+                        <button class="menu-group-toggle" type="button">
+                            <i class="fas fa-layer-group fa-fw"></i>
+                            <span>Quản lý hồ sơ</span>
+                            <i class="fas fa-chevron-down group-arrow"></i>
+                        </button>
+                        <ul class="submenu">
+                            <li><a href="vehicles.html" class="active"><i class="fas fa-car-side fa-fw"></i> Quản lý
+                                    Xe</a>
+                            </li>
+                            <li><a href="customers.html"><i class="fas fa-users fa-fw"></i> Quản lý Khách hàng</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li><a href="claims.html"><i class="fas fa-screwdriver-wrench fa-fw"></i> <span>Yêu cầu Bảo
+                                hành</span></a>
+                    </li>
+                    <li><a href="dieu_phoi_ky_thuat_vien.html"><i class="fas fa-user-gear fa-fw"></i> <span>Điều phối Kỹ
+                                thuật viên</span></a></li>
+                    <li><a href="campaigns.html"><i class="fas fa-bullhorn fa-fw"></i> <span>Quản lý Chiến
+                                dịch</span></a>
+                    </li>
+                    <li><a href="notifications.html"><i class="fas fa-bell fa-fw"></i> <span>Thông báo</span></a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-resizer" id="sidebarResizer"></div>
+        </aside>
+
+        <main class="content-wrapper" id="contentWrapper">
+            <div class="content-header">
+                <h1>Quản lý Xe</h1>
+            </div>
+
+            <div class="main-content-area">
+                <!-- Header với search và button thêm xe -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div style="position: relative; width: 300px;">
+                        <i class="fas fa-search"
+                            style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                        <input type="text" class="form-control" placeholder="Tìm kiếm xe theo biển số, VIN..."
+                            style="padding-left: 40px;">
+                    </div>
+                    <!-- add id to open modal -->
+                    <button class="btn-primary" id="newVehicleBtn">
+                        <i class="fas fa-plus"></i> Đăng ký xe mới
+                    </button>
+                </div>
+
+                <!-- Filters -->
+                <div class="card" style="margin-bottom: 20px;">
+                    <div style="padding: 15px;">
+                        <div style="display: flex; gap: 15px;">
+                            <select
+                                style="width: 150px; padding: 8px; border: 1px solid var(--border); border-radius: 5px;">
+                                <option>Tất cả hãng</option>
+                                <option>VinFast</option>
+                                <option>Tesla</option>
+                                <option>BMW</option>
+                            </select>
+                            <select
+                                style="width: 150px; padding: 8px; border: 1px solid var(--border); border-radius: 5px;">
+                                <option>Tất cả trạng thái</option>
+                                <option>Còn bảo hành</option>
+                                <option>Hết bảo hành</option>
+                                <option>Đang xử lý</option>
+                            </select>
+                            <select
+                                style="width: 150px; padding: 8px; border: 1px solid var(--border); border-radius: 5px;">
+                                <option>Tất cả năm</option>
+                                <option>2024</option>
+                                <option>2023</option>
+                                <option>2022</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Danh sách xe -->
+                <div class="card">
+                    <div
+                        style="padding: 15px 20px; border-bottom: 1px solid var(--border); background: var(--gray-100);">
+                        <h3>Danh sách xe EV (42 xe)</h3>
+                    </div>
+                    <div style="padding: 0;">
+                        <table class="table-zebra" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: var(--gray-100);">
+                                    <th
+                                        style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border);">
+                                        Biển số</th>
+                                    <th
+                                        style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border);">
+                                        Hãng/Model</th>
+                                    <th
+                                        style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border);">
+                                        VIN</th>
+                                    <th
+                                        style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border);">
+                                        Khách hàng</th>
+                                    <th
+                                        style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border);">
+                                        Ngày mua</th>
+                                    <th
+                                        style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border);">
+                                        Trạng thái BH</th>
+                                    <th
+                                        style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border);">
+                                        Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Thời điểm hiện tại chưa có DB: show placeholder -->
+                                <tr>
+                                    <td colspan="7" style="padding: 24px; text-align:center; color:var(--text-muted);">
+                                        Dữ liệu sẽ được load từ database — chưa có dữ liệu ở môi trường hiện tại.
+                                    </td>
+                                </tr>
+
+                                <!--
+                                Ví dụ tích hợp Thymeleaf khi có dữ liệu từ backend:
+                                <tr th:each="vehicle : ${vehicles}">
+                                    <td><strong th:text="${vehicle.plate}">51A-12345</strong></td>
+                                    <td th:text="${vehicle.makeModel}">VinFast VF8</td>
+                                    <td th:text="${vehicle.vin}">VF8123456789</td>
+                                    <td th:text="${vehicle.ownerName}">Nguyễn Văn A</td>
+                                    <td th:text="${vehicle.purchaseDate}">15/03/2024</td>
+                                    <td>
+                                        <span th:classappend="${vehicle.warrantyStatus == 'active'} ? ' badge--success' : (vehicle.warrantyStatus == 'expiring') ? ' badge--warning' : ' badge--danger'"
+                                              th:text="${vehicle.warrantyLabel}">Còn BH</span>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/vehicles/{id}(id=${vehicle.id})}" class="btn-primary" style="padding:5px 10px; font-size:12px;">
+                                            <i class="fas fa-eye"></i> Xem
+                                        </a>
+                                    </td>
+                                </tr>
+                                -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="padding: 15px 20px; border-top: 1px solid var(--border); background: var(--gray-100);">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: var(--text-muted);">Hiển thị 1-4 của 42 xe</span>
+                            <div>
+                                <button
+                                    style="padding: 5px 10px; margin: 0 2px; border: 1px solid var(--border); background: white; cursor: pointer;">«
+                                    Trước</button>
+                                <button class="btn-primary" style="padding: 5px 10px; margin: 0 2px;">1</button>
+                                <button
+                                    style="padding: 5px 10px; margin: 0 2px; border: 1px solid var(--border); background: white; cursor: pointer;">2</button>
+                                <button
+                                    style="padding: 5px 10px; margin: 0 2px; border: 1px solid var(--border); background: white; cursor: pointer;">3</button>
+                                <button
+                                    style="padding: 5px 10px; margin: 0 2px; border: 1px solid var(--border); background: white; cursor: pointer;">Sau
+                                    »</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- Vehicle create modal -->
+    <div id="vehicleModal" class="modal" style="display:none;">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="vehicleModalTitle" tabindex="-1">
+            <div class="modal-header">
+                <h3 id="vehicleModalTitle">Đăng ký Xe mới</h3>
+                <span class="modal-close" id="vehicleModalClose" role="button" aria-label="Đóng">&times;</span>
+            </div>
+
+            <form id="vehicleForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">Biển số</label>
+                        <input type="text" id="v_plate" name="plate" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">VIN</label>
+                        <input type="text" id="v_vin" name="vin" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Hãng / Model</label>
+                        <input type="text" id="v_model" name="model" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Tên chủ / Khách hàng</label>
+                        <input type="text" id="v_owner" name="ownerName" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Ngày mua</label>
+                        <input type="date" id="v_purchaseDate" name="purchaseDate" class="form-control">
+                    </div>
+
+                    <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;">
+                        <button type="button" class="btn" id="vehicleCancelBtn">Huỷ</button>
+                        <button type="submit" class="btn btn-primary">Gửi</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Sidebar resize script
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebar = document.getElementById('sidebar');
+            const contentWrapper = document.getElementById('contentWrapper');
+            const resizer = document.getElementById('sidebarResizer');
+
+            let isResizing = false;
+            let startX = 0;
+            let startWidth = 0;
+
+            const minWidth = 200;
+            const maxWidth = 400;
+
+            resizer.addEventListener('mousedown', function (e) {
+                isResizing = true;
+                startX = e.clientX;
+                startWidth = parseInt(document.defaultView.getComputedStyle(sidebar).width, 10);
+                document.body.style.cursor = 'ew-resize';
+                document.body.style.userSelect = 'none';
+                e.preventDefault();
+            });
+
+            document.addEventListener('mousemove', function (e) {
+                if (!isResizing) return;
+                const width = startWidth + e.clientX - startX;
+                if (width >= minWidth && width <= maxWidth) {
+                    sidebar.style.width = width + 'px';
+                    contentWrapper.style.marginLeft = width + 'px';
+                }
+            });
+
+            document.addEventListener('mouseup', function () {
+                if (isResizing) {
+                    isResizing = false;
+                    document.body.style.cursor = '';
+                    document.body.style.userSelect = '';
+                }
+            });
+
+            // Submenu toggle
+            document.querySelectorAll('.menu-group-toggle').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const group = btn.closest('.menu-group');
+                    group.classList.toggle('open');
+                });
+            });
+
+            // Vehicle modal handlers
+            const vehicleModal = document.getElementById('vehicleModal');
+            const vehicleModalClose = document.getElementById('vehicleModalClose');
+            const newVehicleBtn = document.getElementById('newVehicleBtn');
+            const vehicleCancelBtn = document.getElementById('vehicleCancelBtn');
+            const vehicleForm = document.getElementById('vehicleForm');
+            const vFirst = document.getElementById('v_plate');
+
+            function openVehicleModal() {
+                if (!vehicleModal) return;
+                vehicleModal.style.display = 'block';
+                document.body.classList.add('modal-open');
+                setTimeout(() => { if (vFirst) vFirst.focus(); }, 50);
+            }
+            function closeVehicleModal() {
+                if (!vehicleModal) return;
+                vehicleModal.style.display = 'none';
+                document.body.classList.remove('modal-open');
+                if (newVehicleBtn) newVehicleBtn.focus();
+            }
+
+            if (newVehicleBtn) newVehicleBtn.addEventListener('click', openVehicleModal);
+            if (vehicleModalClose) vehicleModalClose.addEventListener('click', closeVehicleModal);
+            if (vehicleCancelBtn) vehicleCancelBtn.addEventListener('click', (e) => { e.preventDefault(); closeVehicleModal(); });
+            window.addEventListener('click', (e) => { if (e.target === vehicleModal) closeVehicleModal(); });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && vehicleModal && vehicleModal.style.display === 'block') closeVehicleModal(); });
+
+            if (vehicleForm) {
+                vehicleForm.addEventListener('submit', async function (e) {
+                    e.preventDefault();
+                    const payload = {
+                        plate: document.getElementById('v_plate').value.trim(),
+                        vin: document.getElementById('v_vin').value.trim(),
+                        model: document.getElementById('v_model').value.trim(),
+                        ownerName: document.getElementById('v_owner').value.trim(),
+                        purchaseDate: document.getElementById('v_purchaseDate').value
+                    };
+                    if (!payload.plate) { alert('Vui lòng nhập biển số.'); return; }
+                    try {
+                        const resp = await fetch('/api/vehicles', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        if (resp.ok) {
+                            alert('Đăng ký xe thành công.');
+                            vehicleForm.reset();
+                            closeVehicleModal();
+                        } else {
+                            let json; try { json = await resp.json(); } catch (_) { json = null; }
+                            alert('Lỗi: ' + (json && json.message ? json.message : resp.status));
+                        }
+                    } catch (err) {
+                        console.warn('/api/vehicles failed, fallback log', err, payload);
+                        alert('Chưa có backend. Yêu cầu đã được log console.');
+                        console.log('NEW VEHICLE (local):', payload);
+                        vehicleForm.reset();
+                        closeVehicleModal();
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!-- Sidebar fragment để include bằng Thymeleaf -->
+<div th:fragment="sidebar">
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>EV Warranty System</h3>
+            
+        </div>
+
+        <nav class="sidebar-menu">
+            <ul>
+                <!-- New grouped menu -->
+                <li class="menu-group"
+                    th:classappend="${#httpServletRequest.requestURI.contains('/vehicles') or #httpServletRequest.requestURI.contains('/customers')} ? ' open' : ''">
+                    <button class="menu-group-toggle" type="button">
+                        <i class="fas fa-layer-group fa-fw"></i>
+                        <span>Quản lý hồ sơ</span>
+                        <i class="fas fa-chevron-down group-arrow"></i>
+                    </button>
+                    <ul class="submenu">
+                        <li><a href="vehicles.html"
+                                th:classappend="${#httpServletRequest.requestURI.endsWith('/vehicles.html')} ? ' active' : ''"><i
+                                    class="fas fa-car-side fa-fw"></i> Quản lý Xe</a></li>
+                        <li><a href="customers.html"
+                                th:classappend="${#httpServletRequest.requestURI.endsWith('/customers.html')} ? ' active' : ''"><i
+                                    class="fas fa-users fa-fw"></i> Quản lý Khách hàng</a></li>
+                    </ul>
+                </li>
+
+                <!-- Other menu items (kept) -->
+                <li>
+                    <a href="claims.html"
+                        th:classappend="${#httpServletRequest.requestURI.endsWith('/claims.html')} ? ' active' : ''">
+                        <i class="fas fa-screwdriver-wrench fa-fw"></i> <span>Yêu cầu Bảo hành</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="campaigns.html"
+                        th:classappend="${#httpServletRequest.requestURI.endsWith('/campaigns.html')} ? ' active' : ''">
+                        <i class="fas fa-bullhorn fa-fw"></i> <span>Quản lý Chiến dịch</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="notifications.html"
+                        th:classappend="${#httpServletRequest.requestURI.endsWith('/notifications.html')} ? ' active' : ''">
+                        <i class="fas fa-bell fa-fw"></i> <span>Thông báo</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-resizer" id="sidebarResizer"></div>
+    </aside>
+</div>

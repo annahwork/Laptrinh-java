@@ -49,65 +49,56 @@
 
             <div class="main-content-area">
                 <!-- Search + New notification -->
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                    <div style="position:relative; width:360px;">
-                        <i class="fas fa-search"
-                            style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted);"></i>
-                        <input type="text" class="form-control" placeholder="Tìm kiếm theo tiêu đề, nội dung..."
-                            style="padding-left:40px;">
+                <div class="search-action-bar">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="form-control search-input"
+                            placeholder="Tìm kiếm theo tiêu đề, nội dung...">
                     </div>
                     <button class="btn-primary" id="newNotificationBtn"><i class="fas fa-plus"></i> Tạo thông
                         báo</button>
                 </div>
 
                 <!-- Filters -->
-                <div class="card" style="margin-bottom:16px;">
-                    <div style="padding:12px;">
-                        <div style="display:flex; gap:12px; flex-wrap:wrap;">
-                            <select style="padding:8px; border:1px solid var(--border); border-radius:6px;">
-                                <option>Tất cả loại</option>
-                                <option>Hệ thống</option>
-                                <option>Khách hàng</option>
-                                <option>Chiến dịch</option>
-                            </select>
-                            <select style="padding:8px; border:1px solid var(--border); border-radius:6px;">
-                                <option>Tất cả trạng thái</option>
-                                <option>Đã gửi</option>
-                                <option>Đang lên lịch</option>
-                                <option>Nháp</option>
-                            </select>
-                            <input type="date" style="padding:8px; border:1px solid var(--border); border-radius:6px;">
-                        </div>
+                <div class="filter-card">
+                    <div class="filter-group">
+                        <select class="filter-select">
+                            <option>Tất cả loại</option>
+                            <option>Hệ thống</option>
+                            <option>Khách hàng</option>
+                            <option>Chiến dịch</option>
+                        </select>
+                        <select class="filter-select">
+                            <option>Tất cả trạng thái</option>
+                            <option>Đã gửi</option>
+                            <option>Đang lên lịch</option>
+                            <option>Nháp</option>
+                        </select>
+                        <input type="date" class="filter-select">
                     </div>
                 </div>
 
                 <!-- Notifications table -->
                 <div class="card">
-                    <div style="padding:14px 18px; border-bottom:1px solid var(--border); background:var(--gray-100);">
+                    <div class="table-header">
                         <h3>Danh sách Thông báo</h3>
                     </div>
-                    <div style="padding:0;">
-                        <table class="table-zebra" style="width:100%; border-collapse:collapse;">
+                    <div class="card-body-no-padding">
+                        <table class="table-zebra table-full-width">
                             <thead>
-                                <tr style="background:var(--gray-100);">
-                                    <th style="padding:12px; text-align:left; border-bottom:1px solid var(--border);">
-                                        Tiêu đề</th>
-                                    <th style="padding:12px; text-align:left; border-bottom:1px solid var(--border);">
-                                        Loại</th>
-                                    <th style="padding:12px; text-align:left; border-bottom:1px solid var(--border);">
-                                        Ngày tạo</th>
-                                    <th style="padding:12px; text-align:left; border-bottom:1px solid var(--border);">
-                                        Người tạo</th>
-                                    <th style="padding:12px; text-align:left; border-bottom:1px solid var(--border);">
-                                        Trạng thái</th>
-                                    <th style="padding:12px; text-align:left; border-bottom:1px solid var(--border);">
-                                        Thao tác</th>
+                                <tr class="table-header-row">
+                                    <th class="table-header-cell">Tiêu đề</th>
+                                    <th class="table-header-cell">Loại</th>
+                                    <th class="table-header-cell">Ngày tạo</th>
+                                    <th class="table-header-cell">Người tạo</th>
+                                    <th class="table-header-cell">Trạng thái</th>
+                                    <th class="table-header-cell">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <!-- Placeholder khi chưa có DB -->
                                 <tr>
-                                    <td colspan="6" style="padding:24px; text-align:center; color:var(--text-muted);">
+                                    <td colspan="6" class="table-placeholder-cell">
                                         Dữ liệu sẽ được load từ database — chưa có dữ liệu ở môi trường hiện tại.
                                     </td>
                                 </tr>
@@ -131,19 +122,14 @@
                             </tbody>
                         </table>
                     </div>
-                    <div style="padding:12px 18px; border-top:1px solid var(--border); background:var(--gray-100);">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="color:var(--text-muted);">Hiển thị 0 của 0</span>
+                    <div class="card-footer">
+                        <div class="pagination-wrapper">
+                            <span class="pagination-info">Hiển thị 0 của 0</span>
                             <div>
-                                <button
-                                    style="padding:6px 10px; margin:0 4px; border:1px solid var(--border); background:white; cursor:pointer;">«
-                                    Trước</button>
-                                <button class="btn-primary" style="padding:6px 10px; margin:0 4px;">1</button>
-                                <button
-                                    style="padding:6px 10px; margin:0 4px; border:1px solid var(--border); background:white; cursor:pointer;">2</button>
-                                <button
-                                    style="padding:6px 10px; margin:0 4px; border:1px solid var(--border); background:white; cursor:pointer;">Sau
-                                    »</button>
+                                <button class="pagination-btn">« Trước</button>
+                                <button class="btn-primary pagination-btn-active">1</button>
+                                <button class="pagination-btn">2</button>
+                                <button class="pagination-btn">Sau »</button>
                             </div>
                         </div>
                     </div>
@@ -186,7 +172,7 @@
                                         required></textarea>
                                 </div>
 
-                                <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;">
+                                <div class="modal-footer">
                                     <button type="button" class="btn" id="notificationCancelBtn">Huỷ</button>
                                     <button type="submit" class="btn btn-primary">Gửi</button>
                                 </div>
@@ -250,62 +236,16 @@
                 }
             });
 
-            // Modal helpers
-            const notificationModal = document.getElementById('notificationModal');
-            const notificationModalClose = document.getElementById('notificationModalClose');
-            const newNotificationBtn = document.getElementById('newNotificationBtn') || document.querySelector('.btn-primary');
-            const notificationCancelBtn = document.getElementById('notificationCancelBtn');
-            const notificationForm = document.getElementById('notificationForm');
-            const nFirst = document.getElementById('n_title');
+            // Modal open/close helpers (skeleton)
+            const modal = document.getElementById('notificationModal');
+            const modalClose = document.getElementById('notificationModalClose');
+            const newBtn = document.getElementById('newNotificationBtn');
+            const cancelBtn = document.getElementById('notificationCancelBtn');
 
-            function openNotificationModal() {
-                if (!notificationModal) return;
-                notificationModal.style.display = 'block';
-                document.body.classList.add('modal-open');
-                setTimeout(() => { if (nFirst) nFirst.focus(); }, 50);
-            }
-
-            function closeNotificationModal() {
-                if (!notificationModal) return;
-                notificationModal.style.display = 'none';
-                document.body.classList.remove('modal-open');
-                if (newNotificationBtn) newNotificationBtn.focus();
-            }
-
-            if (newNotificationBtn) newNotificationBtn.addEventListener('click', openNotificationModal);
-            if (notificationModalClose) notificationModalClose.addEventListener('click', closeNotificationModal);
-            if (notificationCancelBtn) notificationCancelBtn.addEventListener('click', (e) => { e.preventDefault(); closeNotificationModal(); });
-            window.addEventListener('click', (e) => { if (e.target === notificationModal) closeNotificationModal(); });
-            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && notificationModal && notificationModal.style.display === 'block') closeNotificationModal(); });
-
-            if (notificationForm) {
-                notificationForm.addEventListener('submit', async function (e) {
-                    e.preventDefault();
-                    const payload = {
-                        title: document.getElementById('n_title').value.trim(),
-                        type: document.getElementById('n_type').value,
-                        scheduledDate: document.getElementById('n_date').value,
-                        content: document.getElementById('n_content').value.trim()
-                    };
-                    if (!payload.title || !payload.content) { alert('Vui lòng nhập tiêu đề và nội dung.'); return; }
-                    try {
-                        const resp = await fetch('/api/notifications', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                        if (resp.ok) { alert('Tạo thông báo thành công.'); notificationForm.reset(); closeNotificationModal(); }
-                        else { let json; try { json = await resp.json() } catch (_) { json = null } alert('Lỗi: ' + (json && json.message ? json.message : resp.status)); }
-                    } catch (err) {
-                        console.warn('/api/notifications failed, fallback log', err, payload);
-                        alert('Chưa có backend. Dữ liệu đã log console.'); console.log('NEW NOTIFICATION (local):', payload);
-                        notificationForm.reset(); closeNotificationModal();
-                    }
-                });
-            }
-
-            // Notification detail modal (skeleton)
-            const notificationDetailModal = document.getElementById('notificationDetailModal');
-            const notificationDetailModalClose = document.getElementById('notificationDetailModalClose');
-            window.openNotificationDetail = function () { if (notificationDetailModal) notificationDetailModal.style.display = 'block'; };
-            if (notificationDetailModalClose) notificationDetailModalClose.addEventListener('click', () => notificationDetailModal.style.display = 'none');
-            window.addEventListener('click', (e) => { if (e.target === notificationDetailModal) notificationDetailModal.style.display = 'none'; });
+            if (newBtn) newBtn.addEventListener('click', () => { if (modal) modal.style.display = 'block'; });
+            if (modalClose) modalClose.addEventListener('click', () => { if (modal) modal.style.display = 'none'; });
+            if (cancelBtn) cancelBtn.addEventListener('click', () => { if (modal) modal.style.display = 'none'; });
+            window.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
         });
     </script>
 

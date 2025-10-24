@@ -280,3 +280,241 @@ h4 {
     gap: 8px;
     margin-top: 6px;
 }
+
+/* ========================================== */
+/* CSS CHUNG CHO CÁC TRANG QUẢN LÝ */
+/* Sử dụng cho: claims, vehicles, campaigns, notifications, menu, customers, dieu_phoi_ky_thuat_vien */
+/* ========================================== */
+
+/* Header subtitle */
+.content-header h1 small {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+/* Search and action button section */
+.search-action-bar,
+.search-add-bar,
+.search-filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-box-wrapper {
+    position: relative;
+    width: 320px;
+}
+
+.search-box-wrapper-wide {
+    position: relative;
+    width: 360px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+}
+
+.search-input-with-icon {
+    padding-left: 40px;
+}
+
+/* Filter card */
+.filter-card {
+    margin-bottom: 16px;
+}
+
+.filter-card-body {
+    padding: 12px;
+}
+
+.filter-controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.filter-select,
+.filter-input {
+    padding: 8px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+}
+
+/* Table card */
+.card-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    background: var(--gray-100);
+}
+
+.card-body-no-padding {
+    padding: 0;
+}
+
+.table-full-width {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-header-row {
+    background: var(--gray-100);
+}
+
+.table-header-cell {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+.table-data-cell {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.table-data-cell-center {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+}
+
+.table-placeholder-cell {
+    padding: 24px;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.table-cell-small-text {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.table-cell-muted,
+.table-cell-em {
+    color: var(--text-muted);
+}
+
+/* Dynamic table styles for JavaScript-generated content */
+.table-zebra .dynamic-cell {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.table-zebra .dynamic-cell small {
+    color: var(--text-muted);
+}
+
+.table-zebra .dynamic-cell em {
+    color: var(--text-muted);
+}
+
+/* Pagination */
+.card-footer {
+    padding: 12px 18px;
+    border-top: 1px solid var(--border);
+    background: var(--gray-100);
+}
+
+.pagination-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pagination-info {
+    color: var(--text-muted);
+}
+
+.pagination-btn {
+    padding: 6px 10px;
+    margin: 0 4px;
+    border: 1px solid var(--border);
+    background: white;
+    cursor: pointer;
+}
+
+.pagination-btn-active {
+    padding: 6px 10px;
+    margin: 0 4px;
+}
+
+/* Modal styles */
+.modal-hidden {
+    display: none;
+}
+
+.modal-body-text {
+    margin-bottom: 12px;
+    color: var(--text-muted);
+}
+
+.modal-select-styled {
+    padding: 8px;
+    border-radius: 6px;
+}
+
+.modal-footer-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+/* Button small variant */
+.btn-small {
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+/* Campaign specific */
+.campaign-name-cell {
+    font-weight: 500;
+}
+
+.campaign-desc-small {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 2px;
+}
+
+/* Notification specific */
+.notification-title-cell {
+    font-weight: 500;
+}
+
+.notification-date-small {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* Menu/sidebar specific */
+.menu-section {
+    margin-bottom: 24px;
+}
+
+.menu-section-title {
+    font-weight: 600;
+    margin-bottom: 12px;
+    padding: 0 12px;
+}
+
+.menu-list {
+    list-style: none;
+    padding: 0;
+}
+
+.menu-list-item {
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.menu-list-item:hover {
+    background: var(--gray-100);
+}

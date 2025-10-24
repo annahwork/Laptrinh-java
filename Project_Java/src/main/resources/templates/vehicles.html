@@ -61,85 +61,63 @@
 
             <div class="main-content-area">
                 <!-- Header với search và button thêm xe -->
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <div style="position: relative; width: 300px;">
-                        <i class="fas fa-search"
-                            style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
-                        <input type="text" class="form-control" placeholder="Tìm kiếm xe theo biển số, VIN..."
-                            style="padding-left: 40px;">
+                <div class="search-action-bar">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="form-control search-input"
+                            placeholder="Tìm kiếm xe theo biển số, VIN...">
                     </div>
-                    <!-- add id to open modal -->
                     <button class="btn-primary" id="newVehicleBtn">
                         <i class="fas fa-plus"></i> Đăng ký xe mới
                     </button>
                 </div>
 
                 <!-- Filters -->
-                <div class="card" style="margin-bottom: 20px;">
-                    <div style="padding: 15px;">
-                        <div style="display: flex; gap: 15px;">
-                            <select
-                                style="width: 150px; padding: 8px; border: 1px solid var(--border); border-radius: 5px;">
-                                <option>Tất cả hãng</option>
-                                <option>VinFast</option>
-                                <option>Tesla</option>
-                                <option>BMW</option>
-                            </select>
-                            <select
-                                style="width: 150px; padding: 8px; border: 1px solid var(--border); border-radius: 5px;">
-                                <option>Tất cả trạng thái</option>
-                                <option>Còn bảo hành</option>
-                                <option>Hết bảo hành</option>
-                                <option>Đang xử lý</option>
-                            </select>
-                            <select
-                                style="width: 150px; padding: 8px; border: 1px solid var(--border); border-radius: 5px;">
-                                <option>Tất cả năm</option>
-                                <option>2024</option>
-                                <option>2023</option>
-                                <option>2022</option>
-                            </select>
-                        </div>
+                <div class="filter-card">
+                    <div class="filter-group">
+                        <select class="filter-select">
+                            <option>Tất cả hãng</option>
+                            <option>VinFast</option>
+                            <option>Tesla</option>
+                            <option>BMW</option>
+                        </select>
+                        <select class="filter-select">
+                            <option>Tất cả trạng thái</option>
+                            <option>Còn bảo hành</option>
+                            <option>Hết bảo hành</option>
+                            <option>Đang xử lý</option>
+                        </select>
+                        <select class="filter-select">
+                            <option>Tất cả năm</option>
+                            <option>2024</option>
+                            <option>2023</option>
+                            <option>2022</option>
+                        </select>
                     </div>
                 </div>
 
                 <!-- Danh sách xe -->
                 <div class="card">
-                    <div
-                        style="padding: 15px 20px; border-bottom: 1px solid var(--border); background: var(--gray-100);">
+                    <div class="table-header">
                         <h3>Danh sách xe EV (42 xe)</h3>
                     </div>
-                    <div style="padding: 0;">
-                        <table class="table-zebra" style="width: 100%; border-collapse: collapse;">
+                    <div class="card-body-no-padding">
+                        <table class="table-zebra table-full-width">
                             <thead>
-                                <tr style="background: var(--gray-100);">
-                                    <th
-                                        style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border);">
-                                        Biển số</th>
-                                    <th
-                                        style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border);">
-                                        Hãng/Model</th>
-                                    <th
-                                        style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border);">
-                                        VIN</th>
-                                    <th
-                                        style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border);">
-                                        Khách hàng</th>
-                                    <th
-                                        style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border);">
-                                        Ngày mua</th>
-                                    <th
-                                        style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border);">
-                                        Trạng thái BH</th>
-                                    <th
-                                        style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border);">
-                                        Thao tác</th>
+                                <tr class="table-header-row">
+                                    <th class="table-header-cell">Biển số</th>
+                                    <th class="table-header-cell">Hãng/Model</th>
+                                    <th class="table-header-cell">VIN</th>
+                                    <th class="table-header-cell">Khách hàng</th>
+                                    <th class="table-header-cell">Ngày mua</th>
+                                    <th class="table-header-cell">Trạng thái BH</th>
+                                    <th class="table-header-cell">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <!-- Thời điểm hiện tại chưa có DB: show placeholder -->
                                 <tr>
-                                    <td colspan="7" style="padding: 24px; text-align:center; color:var(--text-muted);">
+                                    <td colspan="7" class="table-placeholder-cell">
                                         Dữ liệu sẽ được load từ database — chưa có dữ liệu ở môi trường hiện tại.
                                     </td>
                                 </tr>
@@ -166,21 +144,15 @@
                             </tbody>
                         </table>
                     </div>
-                    <div style="padding: 15px 20px; border-top: 1px solid var(--border); background: var(--gray-100);">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: var(--text-muted);">Hiển thị 1-4 của 42 xe</span>
+                    <div class="card-footer">
+                        <div class="pagination-wrapper">
+                            <span class="pagination-info">Hiển thị 1-4 của 42 xe</span>
                             <div>
-                                <button
-                                    style="padding: 5px 10px; margin: 0 2px; border: 1px solid var(--border); background: white; cursor: pointer;">«
-                                    Trước</button>
-                                <button class="btn-primary" style="padding: 5px 10px; margin: 0 2px;">1</button>
-                                <button
-                                    style="padding: 5px 10px; margin: 0 2px; border: 1px solid var(--border); background: white; cursor: pointer;">2</button>
-                                <button
-                                    style="padding: 5px 10px; margin: 0 2px; border: 1px solid var(--border); background: white; cursor: pointer;">3</button>
-                                <button
-                                    style="padding: 5px 10px; margin: 0 2px; border: 1px solid var(--border); background: white; cursor: pointer;">Sau
-                                    »</button>
+                                <button class="pagination-btn">« Trước</button>
+                                <button class="btn-primary pagination-btn-active">1</button>
+                                <button class="pagination-btn">2</button>
+                                <button class="pagination-btn">3</button>
+                                <button class="pagination-btn">Sau »</button>
                             </div>
                         </div>
                     </div>
@@ -226,7 +198,7 @@
                         <input type="date" id="v_purchaseDate" name="purchaseDate" class="form-control">
                     </div>
 
-                    <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;">
+                    <div class="modal-footer">
                         <button type="button" class="btn" id="vehicleCancelBtn">Huỷ</button>
                         <button type="submit" class="btn btn-primary">Gửi</button>
                     </div>
@@ -275,75 +247,27 @@
                 }
             });
 
-            // Submenu toggle
-            document.querySelectorAll('.menu-group-toggle').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const group = btn.closest('.menu-group');
-                    group.classList.toggle('open');
+            // Menu group toggle
+            const menuGroupToggles = document.querySelectorAll('.menu-group-toggle');
+            menuGroupToggles.forEach(toggle => {
+                toggle.addEventListener('click', function () {
+                    const parentLi = this.parentElement;
+                    const isOpen = parentLi.classList.toggle('open');
+                    const submenu = this.nextElementSibling;
+                    submenu.style.maxHeight = isOpen ? submenu.scrollHeight + 'px' : '0';
                 });
             });
 
-            // Vehicle modal handlers
-            const vehicleModal = document.getElementById('vehicleModal');
-            const vehicleModalClose = document.getElementById('vehicleModalClose');
-            const newVehicleBtn = document.getElementById('newVehicleBtn');
-            const vehicleCancelBtn = document.getElementById('vehicleCancelBtn');
-            const vehicleForm = document.getElementById('vehicleForm');
-            const vFirst = document.getElementById('v_plate');
+            // Modal open/close helpers (skeleton)
+            const modal = document.getElementById('vehicleModal');
+            const modalClose = document.getElementById('vehicleModalClose');
+            const newBtn = document.getElementById('newVehicleBtn');
+            const cancelBtn = document.getElementById('vehicleCancelBtn');
 
-            function openVehicleModal() {
-                if (!vehicleModal) return;
-                vehicleModal.style.display = 'block';
-                document.body.classList.add('modal-open');
-                setTimeout(() => { if (vFirst) vFirst.focus(); }, 50);
-            }
-            function closeVehicleModal() {
-                if (!vehicleModal) return;
-                vehicleModal.style.display = 'none';
-                document.body.classList.remove('modal-open');
-                if (newVehicleBtn) newVehicleBtn.focus();
-            }
-
-            if (newVehicleBtn) newVehicleBtn.addEventListener('click', openVehicleModal);
-            if (vehicleModalClose) vehicleModalClose.addEventListener('click', closeVehicleModal);
-            if (vehicleCancelBtn) vehicleCancelBtn.addEventListener('click', (e) => { e.preventDefault(); closeVehicleModal(); });
-            window.addEventListener('click', (e) => { if (e.target === vehicleModal) closeVehicleModal(); });
-            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && vehicleModal && vehicleModal.style.display === 'block') closeVehicleModal(); });
-
-            if (vehicleForm) {
-                vehicleForm.addEventListener('submit', async function (e) {
-                    e.preventDefault();
-                    const payload = {
-                        plate: document.getElementById('v_plate').value.trim(),
-                        vin: document.getElementById('v_vin').value.trim(),
-                        model: document.getElementById('v_model').value.trim(),
-                        ownerName: document.getElementById('v_owner').value.trim(),
-                        purchaseDate: document.getElementById('v_purchaseDate').value
-                    };
-                    if (!payload.plate) { alert('Vui lòng nhập biển số.'); return; }
-                    try {
-                        const resp = await fetch('/api/vehicles', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload)
-                        });
-                        if (resp.ok) {
-                            alert('Đăng ký xe thành công.');
-                            vehicleForm.reset();
-                            closeVehicleModal();
-                        } else {
-                            let json; try { json = await resp.json(); } catch (_) { json = null; }
-                            alert('Lỗi: ' + (json && json.message ? json.message : resp.status));
-                        }
-                    } catch (err) {
-                        console.warn('/api/vehicles failed, fallback log', err, payload);
-                        alert('Chưa có backend. Yêu cầu đã được log console.');
-                        console.log('NEW VEHICLE (local):', payload);
-                        vehicleForm.reset();
-                        closeVehicleModal();
-                    }
-                });
-            }
+            if (newBtn) newBtn.addEventListener('click', () => { if (modal) modal.style.display = 'block'; });
+            if (modalClose) modalClose.addEventListener('click', () => { if (modal) modal.style.display = 'none'; });
+            if (cancelBtn) cancelBtn.addEventListener('click', () => { if (modal) modal.style.display = 'none'; });
+            window.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
         });
     </script>
 

@@ -45,61 +45,48 @@
 
             <div class="main-content-area">
                 <!-- Search + New claim button -->
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                    <div style="position:relative; width:320px;">
-                        <i class="fas fa-search"
-                            style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted);"></i>
-                        <input type="text" class="form-control" placeholder="Tìm theo biển số, VIN, mã yêu cầu..."
-                            style="padding-left:40px;">
+                <div class="search-action-bar">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="form-control search-input"
+                            placeholder="Tìm theo biển số, VIN, mã yêu cầu...">
                     </div>
-                    <!-- changed: add id to open the create form modal -->
                     <button class="btn-primary" id="newClaimBtn"><i class="fas fa-plus"></i> Tạo yêu cầu mới</button>
                 </div>
 
                 <!-- Filters -->
-                <div class="card" style="margin-bottom:16px;">
-                    <div style="padding:12px;">
-                        <div style="display:flex; gap:12px; flex-wrap:wrap;">
-                            <select style="padding:8px; border:1px solid var(--border); border-radius:6px;">
-                                <option>Tất cả trạng thái</option>
-                                <option>Chờ xử lý</option>
-                                <option>Đã xác nhận</option>
-                                <option>Hoàn tất</option>
-                            </select>
-
-                            <!--  technician  (data comes from DB later) -->
-
-                            <input type="date" style="padding:8px; border:1px solid var(--border); border-radius:6px;">
-                        </div>
+                <div class="filter-card">
+                    <div class="filter-group">
+                        <select class="filter-select">
+                            <option>Tất cả trạng thái</option>
+                            <option>Chờ xử lý</option>
+                            <option>Đã xác nhận</option>
+                            <option>Hoàn tất</option>
+                        </select>
+                        <input type="date" class="filter-select">
                     </div>
                 </div>
 
                 <!-- Claims table -->
-                <div class="card">
-                    <div style="padding:14px 18px; border-bottom:1px solid var(--border); background:var(--gray-100);">
+                <div class="card" style="margin-top: 10px;">
+                    <div class="table-header">
                         <h3>Danh sách Yêu cầu Bảo hành</h3>
                     </div>
-                    <div style="padding:0;">
-                        <table class="table-zebra" style="width:100%; border-collapse:collapse;">
+                    <div class="card-body-no-padding">
+                        <table class="table-zebra table-full-width">
                             <thead>
-                                <tr style="background:var(--gray-100);">
-                                    <th style="padding:12px; text-align:left; border-bottom:1px solid var(--border);">Mã
-                                        Y/C</th>
-                                    <th style="padding:12px; text-align:left; border-bottom:1px solid var(--border);">
-                                        Biển số / VIN</th>
-                                    <th style="padding:12px; text-align:left; border-bottom:1px solid var(--border);">
-                                        Ngày tạo</th>
-                                    <th style="padding:12px; text-align:left; border-bottom:1px solid var(--border);">
-                                        Trạng thái</th>
-                                    <!-- Kỹ thuật viên column removed -->
-                                    <th style="padding:12px; text-align:left; border-bottom:1px solid var(--border);">
-                                        Thao tác</th>
+                                <tr class="table-header-row">
+                                    <th class="table-header-cell">Mã Y/C</th>
+                                    <th class="table-header-cell">Biển số / VIN</th>
+                                    <th class="table-header-cell">Ngày tạo</th>
+                                    <th class="table-header-cell">Trạng thái</th>
+                                    <th class="table-header-cell">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <!-- Placeholder khi chưa có database -->
                                 <tr>
-                                    <td colspan="5" style="padding:24px; text-align:center; color:var(--text-muted);">
+                                    <td colspan="5" class="table-placeholder-cell">
                                         Dữ liệu sẽ được load từ database — chưa có dữ liệu ở môi trường hiện tại.
                                     </td>
                                 </tr>
@@ -125,19 +112,14 @@
                             </tbody>
                         </table>
                     </div>
-                    <div style="padding:12px 18px; border-top:1px solid var(--border); background:var(--gray-100);">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="color:var(--text-muted);">Hiển thị 0 của 0</span>
+                    <div class="card-footer">
+                        <div class="pagination-wrapper">
+                            <span class="pagination-info">Hiển thị 0 của 0</span>
                             <div>
-                                <button
-                                    style="padding:6px 10px; margin:0 4px; border:1px solid var(--border); background:white; cursor:pointer;">«
-                                    Trước</button>
-                                <button class="btn-primary" style="padding:6px 10px; margin:0 4px;">1</button>
-                                <button
-                                    style="padding:6px 10px; margin:0 4px; border:1px solid var(--border); background:white; cursor:pointer;">2</button>
-                                <button
-                                    style="padding:6px 10px; margin:0 4px; border:1px solid var(--border); background:white; cursor:pointer;">Sau
-                                    »</button>
+                                <button class="pagination-btn">« Trước</button>
+                                <button class="btn-primary pagination-btn-active">1</button>
+                                <button class="pagination-btn">2</button>
+                                <button class="pagination-btn">Sau »</button>
                             </div>
                         </div>
                     </div>
@@ -187,7 +169,7 @@
                                         placeholder="Có thể nhập nhiều serial, cách nhau bằng dấu phẩy">
                                 </div>
 
-                                <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;">
+                                <div class="modal-footer">
                                     <button type="button" class="btn" id="claimCancelBtn">Huỷ</button>
                                     <button type="submit" class="btn btn-primary">Gửi yêu cầu</button>
                                 </div>
@@ -238,100 +220,16 @@
                 }
             });
 
-            // --- Modal & Form handlers (UPDATED) ---
+            // Modal open/close helpers (skeleton)
             const modal = document.getElementById('claimModal');
-            const modalContent = modal ? modal.querySelector('.modal-content') : null;
             const modalClose = document.getElementById('claimModalClose');
-            const newClaimBtn = document.getElementById('newClaimBtn');
-            const claimCancelBtn = document.getElementById('claimCancelBtn');
-            const claimForm = document.getElementById('claimForm');
-            const firstInput = document.getElementById('plate');
+            const newBtn = document.getElementById('newClaimBtn');
+            const cancelBtn = document.getElementById('claimCancelBtn');
 
-            function openModal() {
-                if (!modal) return;
-                modal.style.display = 'block';
-                // add body lock class
-                document.body.classList.add('modal-open');
-                // focus first input inside modal (after a tick to ensure visible)
-                setTimeout(() => {
-                    if (firstInput) firstInput.focus();
-                    if (modalContent) modalContent.focus();
-                }, 50);
-            }
-            function closeModal() {
-                if (!modal) return;
-                modal.style.display = 'none';
-                document.body.classList.remove('modal-open');
-                // optional: return focus to the create button
-                if (newClaimBtn) newClaimBtn.focus();
-            }
-
-            if (newClaimBtn) newClaimBtn.addEventListener('click', openModal);
-            if (modalClose) modalClose.addEventListener('click', closeModal);
-            if (claimCancelBtn) claimCancelBtn.addEventListener('click', (e) => { e.preventDefault(); closeModal(); });
-
-            // Close on Escape key
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && modal && modal.style.display === 'block') closeModal();
-            });
-
-            // Click outside modal-content to close
-            window.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-
-            // Submit handler: POST to /api/claims (fallback: log)
-            if (claimForm) {
-                claimForm.addEventListener('submit', async function (e) {
-                    e.preventDefault();
-
-                    const data = {
-                        plate: document.getElementById('plate').value.trim(),
-                        vin: document.getElementById('vin').value.trim(),
-                        ownerName: document.getElementById('ownerName').value.trim(),
-                        purchaseDate: document.getElementById('purchaseDate').value,
-                        description: document.getElementById('description').value.trim(),
-                        partsSerial: document.getElementById('partsSerial').value.trim()
-                    };
-
-                    // basic validation
-                    if (!data.plate) {
-                        alert('Vui lòng nhập biển số.');
-                        return;
-                    }
-                    if (!data.description) {
-                        alert('Vui lòng mô tả yêu cầu.');
-                        return;
-                    }
-
-                    // try sending to backend; if not available, fallback to console log
-                    try {
-                        const resp = await fetch('/api/claims', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(data)
-                        });
-
-                        if (resp.ok) {
-                            // success (you can customize further)
-                            alert('Tạo yêu cầu thành công.');
-                            claimForm.reset();
-                            closeModal();
-                            // optionally reload or update table via AJAX
-                        } else {
-                            // backend returned error
-                            let json;
-                            try { json = await resp.json(); } catch (_) { json = null; }
-                            alert('Lỗi khi gửi yêu cầu: ' + (json && json.message ? json.message : resp.status));
-                        }
-                    } catch (err) {
-                        // likely no backend during dev: fallback
-                        console.warn('POST /api/claims failed, fallback log:', err, data);
-                        alert('Không thể gửi lên server (chưa có backend). Yêu cầu đã được log trên console.');
-                        console.log('TẠO YÊU CẦU (local):', data);
-                        claimForm.reset();
-                        closeModal();
-                    }
-                });
-            }
+            if (newBtn) newBtn.addEventListener('click', () => { if (modal) modal.style.display = 'block'; });
+            if (modalClose) modalClose.addEventListener('click', () => { if (modal) modal.style.display = 'none'; });
+            if (cancelBtn) cancelBtn.addEventListener('click', () => { if (modal) modal.style.display = 'none'; });
+            window.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
         });
     </script>
 

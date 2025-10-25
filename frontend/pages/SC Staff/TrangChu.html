@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SC Staff - Quản lý Yêu Cầu & Phụ Tùng</title>
+
+  <!-- ===== CSS & Fonts ===== -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- theme.css ở thư mục gốc -->
+  <link href="../../../theme.css" rel="stylesheet">
+
+  <!-- CSS riêng của SC Staff -->
+  <link href="../../css/SC Staff/sc-staff.css" rel="stylesheet">
+</head>
+
+<body class="app-layout">
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar">
+  <input type="checkbox" id="open-sidebar" />
+  <label for="open-sidebar" class="open-sidebar-btn">
+    <i class="bi bi-list"></i>
+  </label>
+
+  <div class="sidebar-menu">
+    <div class="sidebar-logo">
+      <a href="TrangChu.html">
+        <span class="logo-text">Hệ Thống Quản Lý SC</span>
+      </a>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li class="active">
+        <a href="TrangChu.html">
+          <span class="icon"><i class="bi bi-gear-wide-connected"></i></span>
+          <span class="label">Quản lý Yêu Cầu</span>
+        </a>
+      </li>
+      <!-- 🔗 Đường dẫn sửa đúng -->
+      <li><a href="BaoHanh.html"><span class="icon"><i class="bi bi-tools"></i></span><span class="label">Bảo Hành</span></a></li>
+      <li><a href="PhuTung.html"><span class="icon"><i class="bi bi-box-seam-fill"></i></span><span class="label">Phụ Tùng</span></a></li>
+      <li><a href="ThongBao.html"><span class="icon"><i class="bi bi-bell-fill"></i></span><span class="label">Thông Báo</span></a></li>
+    </ul>
+  </div>
+</aside>
+<!-- ===== /SIDEBAR ===== -->
+
+<main class="main-content">
+  <h1><i class="bi bi-gear-wide-connected me-2"></i> SC Staff Hub</h1>
+  <p class="page-description">Quản lý yêu cầu bảo hành và đặt phụ tùng</p>
+
+  <section id="summary" class="row g-4 mb-5">
+    <div class="col-lg-3 col-md-6">
+      <div class="card interactive-card">
+        <div class="d-flex align-items-center">
+          <i class="bi bi-file-earmark-plus-fill fs-3 text-primary me-3"></i>
+          <div>
+            <div class="small-muted">Yêu cầu mới</div>
+            <h4 class="mb-0" id="new-requests-count">0</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+      <div class="card interactive-card">
+        <div class="d-flex align-items-center">
+          <i class="bi bi-hourglass-split fs-3 text-warning me-3"></i>
+          <div>
+            <div class="small-muted">Đang xử lý</div>
+            <h4 class="mb-0" id="processing-requests-count">0</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+      <div class="card interactive-card">
+        <div class="d-flex align-items-center">
+          <i class="bi bi-check-circle-fill fs-3 text-success me-3"></i>
+          <div>
+            <div class="small-muted">Hoàn thành tháng này</div>
+            <h4 class="mb-0" id="completed-requests-count">0</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+      <div class="card interactive-card">
+        <div class="d-flex align-items-center">
+          <i class="bi bi-tools fs-3 text-dark me-3"></i>
+          <div>
+            <div class="small-muted">Đơn phụ tùng chờ</div>
+            <h4 class="mb-0" id="pending-parts-count">0</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="row g-4">
+    <div class="col-lg-8">
+      <section id="sent-requests">
+        <div class="card">
+          <div class="section-title">
+            <h5><i class="bi bi-list-check me-2 text-dark"></i> Yêu Cầu Bảo Hành Đã Gửi</h5>
+            <div class="small-muted">Danh sách các yêu cầu gần đây. Nhấn đúp hoặc nút Xem để xem chi tiết.</div>
+          </div>
+          <div class="table-container">
+            <table class="table table-hover">
+              <thead>
+              <tr>
+                <th>Mã</th>
+                <th>Khách hàng</th>
+                <th>Ngày</th>
+                <th>Trạng thái</th>
+                <th>Hành động</th>
+              </tr>
+              </thead>
+              <tbody id="requests-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="col-lg-4">
+      <section id="notifications">
+        <div class="card">
+          <div class="section-title">
+            <h5><i class="bi bi-bell-fill me-2 text-danger"></i> Thông Báo Mới</h5>
+            <div class="small-muted">Các thông báo công việc dành cho bạn.</div>
+          </div>
+          <ul id="notifications-list" class="list-group"></ul>
+          <div class="text-end">
+            <a href="ThongBao.html" class="small-muted">Xem tất cả <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<!-- Modal chi tiết yêu cầu -->
+<div class="modal fade" id="requestModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Chi tiết Yêu Cầu</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+      </div>
+      <div class="modal-body">
+        <dl class="row">
+          <dt class="col-sm-4">Mã:</dt><dd class="col-sm-8" id="modalWrId"></dd>
+          <dt class="col-sm-4">Khách hàng:</dt><dd class="col-sm-8" id="modalCustomer"></dd>
+          <dt class="col-sm-4">Ngày tạo:</dt><dd class="col-sm-8" id="modalDate"></dd>
+          <dt class="col-sm-4">Trạng thái:</dt>
+          <dd class="col-sm-8" id="modalStatus">
+            <select id="statusSelect">
+              <option value="Mới">Mới</option>
+              <option value="Đang xử lý">Đang xử lý</option>
+              <option value="Hoàn thành">Hoàn thành</option>
+              <option value="Từ chối">Từ chối</option>
+            </select>
+          </dd>
+          <dt class="col-sm-4">Mô tả:</dt><dd class="col-sm-8" id="modalDesc"></dd>
+          <dt class="col-sm-4">Phụ tùng:</dt><dd class="col-sm-8" id="modalParts"></dd>
+          <dt class="col-sm-4">Ghi chú:</dt><dd class="col-sm-8" id="modalNote"></dd>
+        </dl>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button>
+        <button class="btn btn-primary" id="updateStatusBtn">Cập nhật trạng thái</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== JS ===== -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../../js/SC%20Staff/sc-staff.js"></script>
+
+</body>
+</html>

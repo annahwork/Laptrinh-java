@@ -1,0 +1,89 @@
+/* sc-staff.css - styles tách từ TrangChu.Html */
+
+/* Fallback styles for status badges */
+.badge--soft-success {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+.badge--soft-warning {
+  background-color: #fff3cd;
+  color: #664d03;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+.badge--soft-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+.badge--soft-info {
+  background-color: #e7f1ff;
+  color: #0052cc;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+/* Custom styles for status select dropdown */
+select#statusSelect {
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ced4da;
+}
+select#statusSelect option[value="Mới"] {
+  background-color: #e7f1ff;
+  color: #0052cc;
+}
+select#statusSelect option[value="Đang xử lý"] {
+  background-color: #fff3cd;
+  color: #664d03;
+}
+select#statusSelect option[value="Hoàn thành"] {
+  background-color: #d4edda;
+  color: #155724;
+}
+select#statusSelect option[value="Từ chối"] {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+select#statusSelect.status-mới {
+  background-color: #e7f1ff;
+  color: #0052cc;
+}
+select#statusSelect.status-đang-xử-lý {
+  background-color: #fff3cd;
+  color: #664d03;
+}
+select#statusSelect.status-hoàn-thành {
+  background-color: #d4edda;
+  color: #155724;
+}
+select#statusSelect.status-từ-chối {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Adjustments to reduce empty space below sections */
+#sent-requests, #notifications {
+  margin-bottom: 1rem !important;
+}
+.card {
+  padding: 0.75rem;
+}
+.table-container, #notifications-list {
+  min-height: 0;
+  max-height: none;
+  overflow: visible;
+}
+.table {
+  margin-bottom: 0;
+}
+#notifications-list {
+  padding-bottom: 0;
+}
+
+/* helper */
+.notification-icon { margin-right: .5rem; }
+.logo-text { font-weight: 600; }

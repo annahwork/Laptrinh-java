@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ - SC Staff</title>
+    <link rel="stylesheet" href="/frontend/css/main.css">
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar__header">
+        <h2 class="sidebar__logo">OEM EV</h2>
+        <img src="/frontend/assets/logo_EVM.png" alt="Logo" class="sidebar__avatar">
+        </div>
+
+        <div class="sidebar__user">
+        <div class="sidebar__userinfo">
+            <h4 class="sidebar__username">Name User</h4>
+            <p class="sidebar__role">SC Staff</p>
+        </div>
+        </div>
+
+        <nav class="sidebar__nav">
+        <ul>
+            <li class="sidebar__item sidebar__item--active">
+            <a href="dashboard.html" class="sidebar__link">Dashboard</a>
+            </li>
+
+            <li class="sidebar__item">
+            <a href="vehicle-management.html" class="sidebar__link">Vehicle Management</a>
+            </li>
+
+            <li class="sidebar__item">
+            <a href="customer-management.html" class="sidebar__link">Customer Management</a>
+            </li>
+
+            <li class="sidebar__item">
+            <a href="warranty-requests.html" class="sidebar__link">Warranty Requests</a>
+            </li>
+
+            <li class="sidebar__item">
+            <a href="parts-order.html" class="sidebar__link">Parts Ordering</a>
+            </li>
+
+            <li class="sidebar__item">
+            <a href="notifications.html" class="sidebar__link">Notifications</a>
+            </li>
+
+            <li class="sidebar__item">
+                <a href="#" data-page="Technician_Assignment.html" class="sidebar__link">Điều phối kỹ thuật viên</a>
+            </li>
+
+            <li class="sidebar__item">
+            <a href="performance.html" class="sidebar__link">Time & Performance</a>
+            </li>
+
+            <li class="sidebar__item">
+            <a href="campaigns.html" class="sidebar__link">Campaign Management</a>
+            </li>
+        </ul>
+        </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main id="main-content" class="main" style="margin-left:240px; padding:2rem;">
+    </main>
+    <script src="../../js/js_SCStaff.js"></script>
+
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        fetch('../../partials/footer.html')
+        .then(res => res.text())
+        .then(html => document.getElementById('footer-placeholder').innerHTML = html)
+        .catch(err => console.error("Không tải được footer:", err));
+    </script>
+
+</body>
+</html>

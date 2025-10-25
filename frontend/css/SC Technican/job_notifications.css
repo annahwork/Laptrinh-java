@@ -1,0 +1,84 @@
+    .job-notifications-section {
+    padding: 2rem;
+    }
+
+    .page-header h2 {
+    margin-bottom: 1rem;
+    color: #222;
+    }
+
+    .filter-bar {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1rem;
+    }
+
+    .filter-input,
+    .filter-select,
+    .filter-date {
+    padding: 0.4rem 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    }
+
+    .btn {
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    }
+
+    .btn-primary {
+    background-color: #0078ff;
+    color: #fff;
+    border: none;
+    }
+
+    .btn-outline {
+    border: 1px solid #aaa;
+    background: transparent;
+    color: #333;
+    }
+
+    .table-container {
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    overflow-x: auto;
+    }
+
+    .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    }
+
+    .data-table th, .data-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    font-size: 0.9rem;
+    }
+
+    .data-table th {
+    background: #f7f9fb;
+    font-weight: 600;
+    color: #333;
+    }
+
+    .no-data {
+    text-align: center;
+    color: #777;
+    font-style: italic;
+    }
+
+    .pagination {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    }
+        

@@ -1,3 +1,4 @@
+/* --- SIDEBAR --- */
 .sidebar {
   position: fixed;
   top: 0;
@@ -8,14 +9,14 @@
   color: var(--primary-contrast);
   display: flex;
   flex-direction: column;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
 }
 
-/* --- HEADER: Logo + Ảnh nằm cùng hàng --- */
+/* Header */
 .sidebar__header {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* logo trái, ảnh phải */
+  justify-content: space-between;
   padding: 0.75rem 1rem;
   background-color: var(--primary);
 }
@@ -34,7 +35,7 @@
   object-fit: cover;
 }
 
-/* --- USER INFO --- */
+/* User info */
 .sidebar__user {
   display: flex;
   align-items: center;
@@ -44,7 +45,6 @@
 
 .sidebar__username {
   font-size: 0.95rem;
-  margin: 0;
   color: var(--gray-100);
 }
 
@@ -53,38 +53,33 @@
   color: var(--gray-400);
 }
 
-/* --- NAVIGATION --- */
+/* Navigation */
 .sidebar__nav ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
+/* Reset mặc định cho link */
+.sidebar__nav a {
+  text-decoration: none;        /* ❌ bỏ gạch chân */
+  color: inherit;               /* giữ màu chữ */
+  display: block;               /* giúp toàn bộ li có thể click */
+}
+
+/* Item style */
 .sidebar__item {
-  display: flex;
-  align-items: center;
   padding: 0.75rem 1rem;
-  color: var(--gray-100);
-  cursor: pointer;
   transition: background 0.2s, color 0.2s;
 }
 
-.sidebar__item:hover {
-  background-color: var(--primary);
-  color: var(--primary-contrast);
-}
-
+.sidebar__item:hover,
 .sidebar__item--active {
   background-color: var(--primary);
   color: var(--primary-contrast);
 }
 
-.sidebar__icon {
-  margin-right: 0.75rem;
-  font-size: 1rem;
-}
-
-/* --- RESPONSIVE --- */
+/* Responsive */
 @media (max-width: 768px) {
   .sidebar {
     width: 200px;

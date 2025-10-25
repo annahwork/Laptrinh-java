@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ - EVM Staff</title>
+    <link rel="stylesheet" href="/frontend/css/main.css">
+</head>
+
+<body>
+
+    <aside class="sidebar">
+    <div class="sidebar__header">
+        <h2 class="sidebar__logo">OEM EV</h2>
+        <img src="/frontend/assets/logo_EVM.png" alt="Logo" class="sidebar__avatar">
+    </div>
+
+    <div class="sidebar__user">
+        <div class="sidebar__userinfo">
+        <h4 class="sidebar__username">Name User</h4>
+        <p class="sidebar__role">EVM Staff</p>
+        </div>
+    </div>
+
+    <nav class="sidebar__nav">
+        <ul>
+        <li class="sidebar__item sidebar__item--active">
+            <span>Dashboard</span>
+        </li>
+        <li class="sidebar__item">
+            <span>Quản lý sản phẩm & phụ tùng</span>
+        </li>
+        <li class="sidebar__item">
+            <span>Chính sách bảo hành</span>
+        </li>
+        <li class="sidebar__item">
+            <span>Gắn số seri phụ tùng</span>
+        </li>
+        <li class="sidebar__item">
+            <span>Yêu cầu bảo hành</span>
+        </li>
+        <li class="sidebar__item">
+            <span>Chiến dịch</span>
+        </li>
+        <li class="sidebar__item">
+            <span>Tồn kho</span>
+        </li>
+        <li class="sidebar__item">
+            <span>Báo cáo & Phân tích</span>
+        </li>
+        </ul>
+    </nav>
+    </aside>
+
+
+
+    <!-- Main content -->
+    <main class="main" style="margin-left:240px; padding:2rem;">
+    <h1 style="text-align:center; margin-top:200px;">Trang chủ OEM EV Warranty System</h1>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+    fetch('../../partials/footer.html')
+        .then(res => res.text())
+        .then(html => document.getElementById('footer-placeholder').innerHTML = html)
+        .catch(err => console.error("Không tải được footer:", err));
+    </script>
+
+</body>
+</html>

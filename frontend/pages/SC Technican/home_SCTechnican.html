@@ -1,0 +1,72 @@
+    <!DOCTYPE html>
+    <html lang="vi">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ - SC Technician</title>
+    <link rel="stylesheet" href="/frontend/css/main.css">
+    </head>
+
+    <body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar__header">
+        <h2 class="sidebar__logo">OEM EV</h2>
+        <img src="/frontend/assets/logo_EVM.png" alt="Logo" class="sidebar__avatar">
+        </div>
+
+        <div class="sidebar__user">
+        <div class="sidebar__userinfo">
+            <h4 class="sidebar__username">Name_Users</h4>
+            <p class="sidebar__role">SC Technician</p>
+        </div>
+        </div>
+
+        <nav class="sidebar__nav">
+        <ul>
+            <!-- Dashboard -->
+            <li class="sidebar__item sidebar__item--active">
+            <a href="#" data-page="dashboard.html" class="sidebar__link">🏠 Trang tổng quan</a>
+            </li>
+
+            <!-- Notifications -->
+            <li class="sidebar__item">
+            <a href="#" data-page="job_notifications.html" class="sidebar__link">🔔 Thông báo công việc</a>
+            </li>
+
+            <!-- Assigned Vehicles -->
+            <li class="sidebar__item">
+            <a href="#" data-page="assigned_jobs.html" class="sidebar__link">🚗 Xe đang sửa</a>
+            </li>
+
+            <!-- History -->
+            <li class="sidebar__item">
+            <a href="#" data-page="repair_history.html" class="sidebar__link">📜 Lịch sử sửa chữa</a>
+            </li>
+
+            <!-- Profile / Settings -->
+            <li class="sidebar__item">
+            <a href="#" data-page="profile.html" class="sidebar__link">⚙️ Hồ sơ cá nhân</a>
+            </li>
+        </ul>
+        </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main id="main-content" class="main" style="margin-left:240px; padding:2rem;">
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Load footer template
+        fetch('../../partials/footer.html')
+        .then(res => res.text())
+        .then(html => document.getElementById('footer-placeholder').innerHTML = html)
+        .catch(err => console.error("Không tải được footer:", err));
+    </script>
+    <script src="../../js/js_SCTechnican.jss"></script>
+    </body>
+    </html>

@@ -1,0 +1,117 @@
+    <section class="technician-jobs">
+    <div class="content-wrapper">
+
+        <!-- ======= Header ======= -->
+        <div class="page-header">
+        <h2>🚗 Xe đang sửa</h2>
+        <p class="page-subtitle">Danh sách các xe được phân công cho kỹ thuật viên.</p>
+        </div>
+
+        <!-- ======= Search + Filter ======= -->
+        <div class="filter-bar">
+        <div class="filter-group">
+            <input type="text" id="searchJob" class="filter-input" placeholder="🔍 Tìm theo biển số, VIN, mã yêu cầu...">
+            <select id="statusFilter" class="filter-select">
+            <option value="">Tất cả trạng thái</option>
+            <option value="in_progress" selected>Đang sửa</option>
+            <option value="waiting_parts">Chờ phụ tùng</option>
+            <option value="completed">Đã hoàn thành</option>
+            </select>
+            <input type="date" id="dateFilter" class="filter-input">
+            <button class="btn btn-primary" id="filterBtn">Lọc</button>
+        </div>
+        </div>
+
+        <!-- ======= Danh sách công việc ======= -->
+        <div class="table-container">
+        <table class="data-table">
+            <thead>
+            <tr>
+                <th>Mã yêu cầu</th>
+                <th>Biển số / VIN</th>
+                <th>Loại công việc</th>
+                <th>Ngày nhận</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+            </tr>
+            </thead>
+            <tbody id="jobTableBody">
+            <!-- Dữ liệu thực tế sẽ được load bằng fetch từ API -->
+            <tr>
+                <td colspan="6" class="no-data">
+                ⏳ Dữ liệu sẽ được tải từ hệ thống — hiện chưa có dữ liệu.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+
+        <!-- ======= Pagination ======= -->
+        <div class="pagination">
+        <button class="btn btn-outline">« Trước</button>
+        <span>Trang 1</span>
+        <button class="btn btn-outline">Sau »</button>
+        </div>
+
+        <!-- ======= Modal chi tiết công việc ======= -->
+        <div id="jobDetailModal" class="modal modal-hidden">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="jobModalTitle" tabindex="-1">
+            <div class="modal-header">
+            <h3 id="jobModalTitle">Chi tiết công việc</h3>
+            <span class="modal-close" id="closeJobModal" role="button" aria-label="Đóng">&times;</span>
+            </div>
+
+            <div class="modal-body">
+            <p><strong>Mã yêu cầu:</strong> <span id="jobCode">CLM-0001</span></p>
+            <p><strong>Biển số / VIN:</strong> <span id="jobVIN">29A-12345</span></p>
+            <p><strong>Loại công việc:</strong> <span id="jobType">Thay pin</span></p>
+            <p><strong>Trạng thái:</strong> <span id="jobStatus">Đang sửa</span></p>
+            <p><strong>Ghi chú:</strong></p>
+            <textarea id="jobNote" class="form-control" rows="3" placeholder="Ghi chú tiến độ..."></textarea>
+            </div>
+
+            <div class="modal-footer">
+            <button type="button" class="btn" id="cancelJobModal">Đóng</button>
+            <button type="button" class="btn btn-primary" id="saveJobUpdate">Cập nhật</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- ======= JS xử lý modal và filter ======= -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        const modal = document.getElementById('jobDetailModal');
+        const closeModal = document.getElementById('closeJobModal');
+        const cancelModal = document.getElementById('cancelJobModal');
+
+        // Mở modal
+        window.openJobModal = function (id) {
+            console.log("Mở chi tiết công việc:", id);
+            modal.classList.remove('modal-hidden');
+            modal.style.display = 'block';
+            document.body.classList.add('modal-open');
+        };
+
+        // Đóng modal
+        function closeJobModal() {
+            modal.classList.add('modal-hidden');
+            modal.style.display = 'none';
+            document.body.classList.remove('modal-open');
+        }
+
+        if (closeModal) closeModal.addEventListener('click', closeJobModal);
+        if (cancelModal) cancelModal.addEventListener('click', closeJobModal);
+
+        window.addEventListener('click', e => {
+            if (e.target === modal) closeJobModal();
+        });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && modal.style.display === 'block') closeJobModal();
+        });
+
+        // Giả lập thao tác mở modal (demo)
+        // Sau này có thể gọi openJobModal(jobId) từ onclick trong bảng
+        });
+    </script>
+    </section>

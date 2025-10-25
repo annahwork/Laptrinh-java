@@ -40,7 +40,6 @@ public abstract class User {
     public void setRole(String Role){
         this.Role = Role;
     }
-    
 
     public void login(){
     }

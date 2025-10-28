@@ -1,17 +1,13 @@
-# ⚙️ OEM EV Warranty Management System  
-### *Phần mềm quản lý bảo hành xe điện từ hãng*  
-
+# OEM EV Warranty Management System  
 ---
-
-## 👥 **Actors**
+## **Actors**
 - **SC Staff**  
 - **SC Technician**  
 - **EVM Staff**  
 - **Admin**
 
 ---
-
-## 🚗 **1. Chức năng cho Trung tâm dịch vụ (SC Staff, SC Technician)**
+## **1. Chức năng cho Trung tâm dịch vụ (SC Staff, SC Technician)**
 
 ### a. Quản lý hồ sơ xe & khách hàng  
 - Đăng ký xe theo **VIN**  
@@ -41,7 +37,7 @@
 
 ---
 
-## 🏭 **2. Chức năng cho Hãng sản xuất xe (EVM Staff, Admin)**
+##  **2. Chức năng cho Hãng sản xuất xe (EVM Staff, Admin)**
 
 ### a. Quản lý sản phẩm & phụ tùng  
 - Cơ sở dữ liệu bộ phận EV *(pin, mô-tơ, BMS, inverter, bộ sạc, phụ tùng...)*  
@@ -65,6 +61,3 @@
 - **AI phân tích** nguyên nhân lỗi phổ biến  
 - Dự báo **chi phí bảo hành trong tương lai**  
 
----
-
-📘 *Tài liệu này mô tả phạm vi chức năng và vai trò trong hệ thống quản lý bảo hành xe điện OEM EV Warranty Management System.*

@@ -5,8 +5,7 @@
 - **SC Technician**  
 - **EVM Staff**  
 - **Admin**
-
----
+- 
 ## **1. Chức năng cho Trung tâm dịch vụ (SC Staff, SC Technician)**
 
 ### a. Quản lý hồ sơ xe & khách hàng  

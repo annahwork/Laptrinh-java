@@ -59,4 +59,8 @@
 - Thống kê số lượng và tỷ lệ hỏng hóc theo **model / phụ tùng / khu vực**  
 - **AI phân tích** nguyên nhân lỗi phổ biến  
 - Dự báo **chi phí bảo hành trong tương lai**  
+---
 
+## 🔗 **Link phân công nhiệm vụ**
+📄 [Google Sheets - Phân công nhiệm vụ](https://docs.google.com/spreadsheets/d/1ALFW6oM45nOZvwYalNRPIAulkr0tZwtctJMqONaN7kI/edit?gid=0#gid=0)
+---

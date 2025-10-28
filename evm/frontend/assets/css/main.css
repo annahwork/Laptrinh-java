@@ -1,0 +1,15 @@
+@import "theme.css";
+@import "footer.css";
+@import "sidebar.css";
+
+.main {
+    margin-left: 0;
+    flex: 1 1 auto;
+    transition: margin-left 0.3s ease;
+}
+
+.layout-wrapper {
+    display: flex;
+    align-items: flex-start;
+    min-height: 100vh;
+}

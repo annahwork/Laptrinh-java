@@ -101,16 +101,14 @@ EVM/
 
 Để đảm bảo codebase rõ ràng và dễ theo dõi lịch sử thay đổi, nhóm sử dụng **quy ước đặt tên commit theo chuẩn [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)** như sau:
 
-| Prefix | Ý nghĩa | Ví dụ |
-|---------|----------|--------|
-| **feat:** | Thêm một **tính năng mới** | `feat: thêm module phân công kỹ thuật viên` |
-| **fix:** | **Sửa lỗi** trong hệ thống | `fix: sửa lỗi hiển thị tên kỹ thuật viên` |
-| **refactor:** | Thay đổi **cấu trúc code** mà không thêm tính năng hoặc sửa lỗi | `refactor: tách component bảng danh sách yêu cầu` |
-| **docs:** | Cập nhật hoặc thay đổi **tài liệu** | `docs: thêm hướng dẫn chạy dự án vào README` |
-| **chore:** | Thay đổi nhỏ, **không ảnh hưởng logic** code (build, config...) | `chore: cập nhật gitignore và cấu trúc thư mục` |
-| **style:** | Thay đổi về **giao diện / CSS / UI**, không ảnh hưởng logic | `style: cải thiện màu sidebar và hiệu ứng hover` |
-| **perf:** | Cải thiện **hiệu năng xử lý / tốc độ tải** | `perf: tối ưu vòng lặp load danh sách yêu cầu` |
-| **vendor:** | Cập nhật **dependencies / packages / thư viện** | `vendor: nâng cấp Font Awesome lên v6.5.0` |
+feat:      thêm một feature mới
+fix:       sửa lỗi trong hệ thống
+refactor:  sửa code mà không thêm tính năng hoặc fix bug
+docs:      cập nhật hoặc thay đổi tài liệu
+chore:     thay đổi nhỏ, không liên quan đến logic code
+style:     thay đổi về giao diện, CSS/UI
+perf:      cải thiện hiệu năng xử lý
+vendor:    cập nhật phiên bản dependencies, packages
 
 ---
 

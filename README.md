@@ -61,6 +61,37 @@
 - Dự báo **chi phí bảo hành trong tương lai**  
 ---
 
-## 🔗 **Link phân công nhiệm vụ**
+---
 📄 [Google Sheets - Phân công nhiệm vụ](https://docs.google.com/spreadsheets/d/1ALFW6oM45nOZvwYalNRPIAulkr0tZwtctJMqONaN7kI/edit?gid=0#gid=0)
 ---
+## **4. Cấu trúc thư mục dự án**
+
+```plaintext
+EVM/
+├── frontend/                        
+│   ├── assets/                        
+│   │   ├── css/                     
+│   │   ├── js/                              
+│   │   └── pic/                           
+│   ├── components/            
+│   └── pages/                                 
+│
+├── src/             
+│   └── main/
+│       ├── java/                
+│       │   └── uth/
+│       │       └── edu/
+│       │           ├── dao/                
+│       │           ├── pojo/                 
+│       │           ├── repositories/       
+│       │           ├── services/               
+│       │           └── Main.java               
+│       │
+│       └── resources/                        
+│  
+│
+├── test/                                
+│   └── (java/, resources/)
+│
+├── target/                                  
+└── pom.xml   

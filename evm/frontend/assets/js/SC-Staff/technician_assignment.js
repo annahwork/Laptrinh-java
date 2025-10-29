@@ -92,4 +92,42 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape') closeAssignModal();
     });
+
+    const btnNewRequest = document.getElementById('btntechnician_assignment');
+    const assignForm = document.getElementById('assignForm');
+    const techSelect = document.getElementById('techSelect');
+    const assignNote = document.getElementById('assignNote');
+
+    if (btnNewRequest) {
+        btnNewRequest.addEventListener('click', () => {
+            if (assignModal) {
+                assignModal.classList.remove('modal-hidden');
+                assignModal.style.display = 'flex';
+                document.body.classList.add('modal-open');
+                document.getElementById('assignClaimCode').innerText = 'Mới';
+                assignForm.reset();
+            }
+        });
+    }
+
+    if (assignForm) {
+        assignForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const technician = techSelect.value;
+            const note = assignNote.value.trim();
+
+            if (!technician) {
+                alert('Vui lòng chọn kỹ thuật viên.');
+                return;
+            }
+            console.log('Tạo yêu cầu mới:', {
+                technician,
+                note
+            });
+            alert('Yêu cầu đã được lưu thành công!');
+            assignForm.reset();
+            closeAssignModal();
+        });
+    }
+
 });

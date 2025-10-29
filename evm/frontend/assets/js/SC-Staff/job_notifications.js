@@ -25,7 +25,6 @@
         }).join('');
     }
 
-    // API: allow other scripts to create a notification
     window.addNotification = function (notification) {
         const arr = loadNotifications();
         const n = Object.assign({ id: Date.now(), title: '', meta: '', body: '', unread: true }, notification);
@@ -108,7 +107,13 @@
             const first = document.getElementById('create_notif_title'); if (first) first.focus();
         });
 
-        // handle create form submit
+        const createModalCloseBtn = createModal ? createModal.querySelector('.notification__close-button') : null;
+        if (createModalCloseBtn) {
+            createModalCloseBtn.addEventListener('click', function() {
+                if (createModal) createModal.style.display = 'none';
+            });
+        }
+
         if (createForm) {
             createForm.addEventListener('submit', function (ev) {
                 ev.preventDefault();

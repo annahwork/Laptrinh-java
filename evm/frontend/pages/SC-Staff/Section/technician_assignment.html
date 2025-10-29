@@ -1,15 +1,17 @@
     <section class="technician-assignment">
     <div class="app-layout">
         <div class="content-wrapper" id="innerContent">
-
         <div class="main-content-area">
-
 
             <div class="search-filter-bar">
             <div class="search-box-wrapper">
                 <i class="fas fa-search search-icon"></i>
-                <input type="text" id="searchBox" class="form-control search-input-with-icon"
-                placeholder="Tìm theo biển số, mã yêu cầu...">
+                <input
+                type="text"
+                id="searchBox"
+                class="form-control search-input-with-icon"
+                placeholder="Tìm theo biển số, mã yêu cầu..."
+                />
             </div>
             </div>
 
@@ -21,7 +23,12 @@
                     <option value="approved" selected>Đã chấp thuận</option>
                     <option value="assigned">Đã phân công</option>
                 </select>
-                <input type="date" id="dateFilter" class="filter-input">
+                <input type="date" id="dateFilter" class="filter-input" />
+                <div class="filter-right">
+                    <button id="btntechnician_assignment" class="btn-primary">
+                    Tạo yêu cầu mới
+                    </button>
+                </div>
                 </div>
             </div>
             </div>
@@ -47,6 +54,7 @@
                 </tbody>
                 </table>
             </div>
+
             <div class="card-footer">
                 <div class="pagination-wrapper">
                 <span class="pagination-info">Hiển thị 0 của 0</span>
@@ -58,7 +66,7 @@
                 </div>
             </div>
             </div>
-            
+
             <div id="assignModal" class="modal modal-hidden">
             <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="assignModalTitle" tabindex="-1">
                 <div class="modal-header">
@@ -92,8 +100,69 @@
             </div>
             </div>
 
+            <div id="modalYeuCauDieuPhoi" class="technician-assign__modal" style="display:none;">
+            <div class="technician-assign__modal-content">
+                <span class="technician-assign__close-button">&times;</span>
+                <form class="technician-assign__form">
+                <h2 class="technician-assign__title">Tạo yêu cầu điều phối mới</h2>
+
+                <div class="technician-assign__form-group">
+                    <label for="assign_code" class="technician-assign__label">Mã yêu cầu</label>
+                    <input type="text" id="assign_code" class="technician-assign__input" placeholder="VD: DP2025-001">
+                </div>
+
+                <div class="technician-assign__form-group">
+                    <label for="vehicle_vin" class="technician-assign__label">Biển số / VIN</label>
+                    <input type="text" id="vehicle_vin" class="technician-assign__input" placeholder="VD: 51H-12345 / VN123456789">
+                </div>
+
+                <div class="technician-assign__form-group">
+                    <label for="assign_date" class="technician-assign__label">Ngày yêu cầu</label>
+                    <input type="date" id="assign_date" class="technician-assign__input">
+                </div>
+
+                <div class="technician-assign__form-group">
+                    <label for="technician_name" class="technician-assign__label">Kỹ thuật viên phụ trách</label>
+                    <select id="technician_name" class="technician-assign__select">
+                    <option value="">-- Chọn kỹ thuật viên --</option>
+                    <option value="nguyen_van_a">Nguyễn Văn A</option>
+                    <option value="tran_thi_b">Trần Thị B</option>
+                    <option value="le_van_c">Lê Văn C</option>
+                    </select>
+                </div>
+
+                <div class="technician-assign__form-group">
+                    <label for="assign_location" class="technician-assign__label">Địa điểm làm việc</label>
+                    <input type="text" id="assign_location" class="technician-assign__input" placeholder="VD: SC Bình Thạnh">
+                </div>
+
+                <div class="technician-assign__form-group">
+                    <label for="assign_desc" class="technician-assign__label">Mô tả công việc</label>
+                    <textarea id="assign_desc" class="technician-assign__textarea" rows="3"
+                    placeholder="VD: Kiểm tra và thay bình xe điện..."></textarea>
+                </div>
+
+                <div class="technician-assign__form-group">
+                    <label for="assign_status" class="technician-assign__label">Trạng thái</label>
+                    <select id="assign_status" class="technician-assign__select">
+                    <option value="pending">Chờ xác nhận</option>
+                    <option value="in_progress">Đang thực hiện</option>
+                    <option value="completed">Hoàn thành</option>
+                    </select>
+                </div>
+
+                <div class="technician-assign__button-group">
+                    <button type="button" id="assignCancelBtnModal"
+                    class="technician-assign__button technician-assign__button--cancel">Huỷ</button>
+                    <button type="submit"
+                    class="technician-assign__button technician-assign__button--submit">Tạo</button>
+                </div>
+                </form>
+            </div>
+            </div>
+
         </div>
         </div>
     </div>
-    <script src="../../js/SC Staff/technician_assignment.js"></script>
-    </section>
+    <script src="../../assets/js/SC-Staff/technician_assignment.js"></script>
+</section>

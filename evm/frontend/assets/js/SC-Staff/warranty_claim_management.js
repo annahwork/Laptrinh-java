@@ -1,10 +1,12 @@
-// Initialize modal behavior (kept in external JS)
+
 function initWarrantyModal() {
+    console.log('[warranty] initWarrantyModal start');
     const btnMoForm = document.getElementById('btnMoFormYeuCau');
     const modal = document.getElementById('modalYeuCauBaoHanh');
     const btnDongModal = modal ? modal.querySelector('.warranty-claim__close-button') : null;
     const btnHuyYeuCau = document.getElementById('warrantyCancelBtn');
     const form = modal ? modal.querySelector('.warranty-claim__form') : null;
+    console.log('[warranty] elements:', { btnMoForm: !!btnMoForm, modal: !!modal, btnDongModal: !!btnDongModal, btnHuyYeuCau: !!btnHuyYeuCau, form: !!form });
 
     function hienModal() {
         if (modal) modal.style.display = 'block';
@@ -17,26 +19,26 @@ function initWarrantyModal() {
         }
     }
 
-    if (btnMoForm) btnMoForm.addEventListener('click', function () { hienModal(); });
-    if (btnDongModal) btnDongModal.addEventListener('click', anModal);
-    if (btnHuyYeuCau) btnHuyYeuCau.addEventListener('click', anModal);
+    if (btnMoForm) btnMoForm.addEventListener('click', function () { console.log('[warranty] btnMoForm clicked'); hienModal(); });
+    else console.warn('[warranty] btnMoForm not found');
+    if (btnDongModal) btnDongModal.addEventListener('click', function(){ console.log('[warranty] close clicked'); anModal(); });
+    if (btnHuyYeuCau) btnHuyYeuCau.addEventListener('click', function(){ console.log('[warranty] cancel clicked'); anModal(); });
 
     if (form) {
         form.addEventListener('submit', function (event) {
             event.preventDefault();
-            // collect form values
+
             const warrantyCode = document.getElementById('warranty_code')?.value || '';
             const vin = document.getElementById('warranty_vin')?.value || '';
             const date = document.getElementById('warranty_date')?.value || '';
             const status = document.getElementById('warranty_status')?.value || '';
             const description = document.getElementById('warranty_desc')?.value || '';
 
-            // detect creator name from DOM (best-effort)
             const creator = (function () {
                 try {
                     const sel = document.querySelector('#userName, .user-name, .profile-name, .sidebar .name, .account-name');
                     if (sel && sel.textContent && sel.textContent.trim()) return sel.textContent.trim();
-                } catch (e) { /* ignore */ }
+                } catch (e) { }
                 return 'Bạn';
             })();
 

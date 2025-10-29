@@ -1,4 +1,3 @@
-// Campaign management JS: modal open/close + form submit
 (function () {
     function initCampaignModal() {
         const btnOpen = document.getElementById('btnMoFormCampaign');
@@ -27,10 +26,8 @@
                 desc: document.getElementById('campaign_desc')?.value || ''
             };
 
-            // Create a notification so it appears in the notifications list
             try {
                 const creator = (function () {
-                    // try to detect name on page or fall back to 'Bạn'
                     try {
                         const sel = document.querySelector('#userName, .user-name, .profile-name, .sidebar .name, .account-name');
                         if (sel && sel.textContent && sel.textContent.trim()) return sel.textContent.trim();

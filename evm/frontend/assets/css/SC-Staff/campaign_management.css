@@ -1,0 +1,111 @@
+.campaign__form-group {
+    margin-bottom: 12px;
+}
+
+.campaign__label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.campaign__input,
+.campaign__select,
+.campaign__textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.campaign__textarea {
+    resize: vertical;
+}
+
+.campaign__form-row {
+    display: flex;
+    gap: 12px;
+}
+
+.campaign__button {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.campaign__button--submit {
+    background: #007bff;
+    color: #fff;
+}
+
+.campaign__button--cancel {
+    background: #f8f9fa;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+.campaign__modal {
+    display: none;
+    position: fixed;
+    z-index: 1100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.campaign__modal-content {
+    background: #ffffff;
+    margin: 5% auto;
+    padding: 30px 20px 20px 20px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    border: 2px solid #007bff;
+}
+
+.campaign__close-button {
+    position: absolute;
+    right: 18px;
+    top: 10px;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #888;
+    font-weight: bold;
+}
+
+.filter-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* search styles intentionally left empty (restored to original state) */
+
+#btnMoFormCampaign {
+    margin-left: auto;
+    background: #007bff;
+    color: #fff;
+    border: 1px solid #0056b3;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+#btnMoFormCampaign:hover {
+    background: #0056b3;
+}
+
+.table-placeholder-cell {
+    color: #666;
+    padding: 18px;
+}

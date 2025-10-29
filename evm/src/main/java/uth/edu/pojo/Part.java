@@ -1,4 +1,4 @@
-package edu.vn.ev_wms;
+package uth.edu.pojo;
 
 import javax.persistence.*;
 
@@ -7,19 +7,19 @@ import javax.persistence.*;
 public class Part {
 
     @Id
-    @Column(length = 20)
+    @Column(name = "PartID", nullable = false, length = 20)
     private String PartID;
 
-    @Column(nullable = false, length = 100)
+    @Column(name = "Name", nullable = false, length = 100)
     private String Name;
 
-    @Column(length = 50)
+    @Column(name = "Type", length = 50)
     private String Type;
 
-    @Column(length = 30)
+    @Column(name = "WarrantyPeriod", length = 30)
     private String WarrantyPeriod;
 
-    @Column(length = 100)
+    @Column(name = "Manufacturer", length = 100)
     private String Manufacturer;
 
     public Part(){}

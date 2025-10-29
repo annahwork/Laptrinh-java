@@ -1,33 +1,38 @@
-package edu.vn.ev_wms;
+package uth.edu.pojo;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
+import javax.persistence.Inheritance;
+
 @Entity
-@Table(name = "jpa_user")
+@Table(name = "User")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "UserID")
     private int UserID;
 
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(name = "UserName", nullable = false, unique = true, length = 50)
     private String UserName;
 
-    @Column(nullable = false, length = 100)
+    @Column(name = "Password", nullable = false, length = 100)
     private String Password;
 
-    @Column(nullable = false, length = 100)
+    @Column(name = "Name", nullable = false, length = 100)
     private String Name;
 
-    @Column(length = 100)
+    @Column(name = "Email", length = 100)
     private String Email;
 
-    @Column(length = 20)
+    @Column(name = "Phone", length = 20)
     private String Phone;
 
     public User() {}

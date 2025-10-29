@@ -1,4 +1,4 @@
-package edu.vn.ev_wms;
+package uth.edu.pojo;
 
 import javax.persistence.*;
 
@@ -7,20 +7,21 @@ import javax.persistence.*;
 public class Customer {
 
     @Id
-    @Column(name = "CustomerID", length = 50)
+    @Column(name = "CustomerID", length = 50, nullable = false)
     private String CustomerID;
 
-    @Column(nullable = false, length = 100)
+    @Column(name = "Name", nullable = false, length = 100)
     private String Name;
 
-    @Column(length = 100)
+    @Column(name = "Email", length = 100)
     private String Email;
 
-    @Column(length = 20)
+    @Column(name = "Phone", length = 20)
     private String Phone;
 
-    @Column(length = 200)
+    @Column(name = "Address", length = 200)
     private String Address;
+
 
     public Customer() {}
 

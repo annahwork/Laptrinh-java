@@ -1,30 +1,34 @@
-package edu.vn.ev_wms;
+package uth.edu.pojo;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "Schedule")
 public class Schedule {
 
     @Id
-    @Column(length = 20)
+    @Column(name = "ScheduleID", length = 20)
     private String ScheduleID;
 
-    @Column(nullable = false)
-    private Integer CampaignID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CampaignID", nullable = false)
+    private RecallCampaign CampaignID;
 
-    @Column(nullable = false)
-    private Integer CustomerID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CustomerID", nullable = false)
+    private Customer CustomerID;
 
-    @Column(nullable = false, length = 20)
-    private String Date;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "Date", nullable = false)
+    private Date Date;
 
-    @Column(length = 255)
+    @Column(name = "Note", length = 255)
     private String Note;
 
     public Schedule(){}
 
-    public Schedule(String ScheduleID, Integer CampaignID, Integer CustomerID, String Date, String Note)
+    public Schedule(String ScheduleID, RecallCampaign CampaignID, Customer CustomerID, Date Date, String Note)
     {
         this.ScheduleID = ScheduleID;
         this.CampaignID = CampaignID;
@@ -37,15 +41,15 @@ public class Schedule {
         return this.ScheduleID;
     }
 
-    public Integer CampaignID(){
+    public RecallCampaign CampaignID(){
         return this.CampaignID;
     }
 
-    public Integer CustomerID(){
+    public Customer CustomerID(){
         return this.CustomerID;
     }
 
-    public String getDate(){
+    public Date getDate(){
         return this.Date;
     }
 
@@ -57,17 +61,17 @@ public class Schedule {
         this.ScheduleID = ScheduleID;
     }
 
-    public void setCampaignID(Integer CampaignID)
+    public void setCampaignID(RecallCampaign CampaignID)
     {
         this.CampaignID = CampaignID;
     }
 
-    public void setCustomerID(Integer CustomerID)
+    public void setCustomerID(Customer CustomerID)
     {
         this.CustomerID = CustomerID;
     }
 
-    public void setDate(String Date){
+    public void setDate(Date Date){
         this.Date = Date;
     }
 

@@ -1,5 +1,4 @@
-package edu.vn.ev_wms;
-
+package uth.edu.pojo;
 import javax.persistence.*;
 
 @Entity
@@ -14,8 +13,9 @@ public class ClaimService {
     @Column(name = "ClaimID", nullable = false)
     private Integer ClaimID;
 
-    @Column(name = "ServiceID", nullable = false)
-    private Integer ServiceID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ServiceID", nullable = false)
+    private WarrantyService ServiceID;
 
     @Column(name = "Result", length = 200)
     private String Result;
@@ -25,7 +25,7 @@ public class ClaimService {
 
     public ClaimService() {}
 
-    public ClaimService(Integer ClaimServID, Integer ClaimID, Integer ServiceID, String Name, String Result, String Note) {
+    public ClaimService(Integer ClaimServID, Integer ClaimID, WarrantyService ServiceID, String Name, String Result, String Note) {
         this.ClaimServID = ClaimServID;
         this.ClaimID = ClaimID;
         this.ServiceID = ServiceID;
@@ -41,7 +41,7 @@ public class ClaimService {
         return this.ClaimID;
     }
 
-    public Integer getServiceID() {
+    public WarrantyService getServiceID() {
         return this.ServiceID;
     }
 
@@ -61,7 +61,7 @@ public class ClaimService {
         this.ClaimID = ClaimID;
     }
 
-    public void setServiceID(Integer ServiceID) {
+    public void setServiceID(WarrantyService ServiceID) {
         this.ServiceID = ServiceID;
     }
 

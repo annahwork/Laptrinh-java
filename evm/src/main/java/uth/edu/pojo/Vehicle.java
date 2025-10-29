@@ -1,36 +1,42 @@
-package edu.vn.ev_wms;
+package uth.edu.pojo;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+
 @Entity
-@Table(name = "jpa_vehicle")
+@Table(name = "Vehicle")
 public class Vehicle {
 
     @Id
-    @Column(nullable = false, unique = true, length = 20)
+    @Column(name = "Vin", nullable = false, unique = true, length = 20)
     private String Vin;
 
-    @Column(nullable = false)
-    private Integer CustomerID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CustomerID", nullable = false)
+    private Customer CustomerID;
 
-    @Column(nullable = false, length = 50)
+    @Column(name = "Model", nullable = false, length = 50)
     private String Model;
 
-    @Column(nullable = false)
+    @Column(name = "Year_Of_Manufacture", nullable = false)
     private Integer Year_Of_Manufacture;
 
-    @Column(length = 50)
+    @Column(name = "Warranty_Time", length = 50)
     private String Warranty_Time;
 
-    @Column(length = 20)
+    @Column(name = "Status", length = 20)
     private String Status;
+
 
     public Vehicle() {}
 
-    public Vehicle(String Vin, Integer CustomerID, String Model, Integer Year_Of_Manufacture, String Warranty_Time, String Status) {
+    public Vehicle(String Vin, Customer CustomerID, String Model, Integer Year_Of_Manufacture, String Warranty_Time, String Status) {
         this.Vin = Vin;
         this.CustomerID = CustomerID;
         this.Model = Model;
@@ -43,7 +49,7 @@ public class Vehicle {
         return this.Vin;
     }
 
-    public Integer CustomerID() {
+    public Customer CustomerID() {
         return this.CustomerID;
     }
 
@@ -67,7 +73,7 @@ public class Vehicle {
         this.Vin = Vin;
     }
 
-    public void setCustomerID(Integer CustomerID) {
+    public void setCustomerID(Customer CustomerID) {
         this.CustomerID = CustomerID;
     }
 

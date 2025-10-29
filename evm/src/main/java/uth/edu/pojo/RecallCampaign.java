@@ -1,4 +1,4 @@
-package edu.vn.ev_wms;
+package uth.edu.pojo;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,18 +9,23 @@ public class RecallCampaign {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer RecallVehicleID;
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "CampaignID")
     private Integer CampaignID;
 
-    @Column(nullable = false, length = 100)
+    @Column(name = "Name", nullable = false, length = 100)
     private String Name;
 
-    @Column(length = 50)
+    @Column(name = "Status", length = 50)
     private String Status;
 
     @Temporal(TemporalType.DATE)
+    @Column(name = "Date")
     private Date Date;
 
-    @Column(length = 255)
+    @Column(name = "Description", length = 255)
     private String Description;
 
     public RecallCampaign(){}

@@ -1,28 +1,29 @@
-package edu.vn.ev_wms;
+package uth.edu.pojo;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "inventory")
+@Table(name = "Inventory")
 public class Inventory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "inventory_id")
+    @Column(name = "InvenStoryID")
     private Integer InvenStoryID;
 
-    @Column(name = "part_id", nullable = false)
-    private Integer PartID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PartID", nullable = false)
+    private Part PartID;
 
-    @Column(name = "current_stock")
+    @Column(name = "CurrentStock")
     private Integer CurrentStock;
 
-    @Column(name = "location", length = 100)
+    @Column(name = "Location", length = 100)
     private String Location;
 
     public Inventory() {}
 
-    public Inventory(Integer InvenStoryID, Integer PartID, String Location, Integer CurrentStock) {
+    public Inventory(Integer InvenStoryID, Part PartID, String Location, Integer CurrentStock) {
         this.InvenStoryID = InvenStoryID;
         this.PartID = PartID;
         this.Location = Location;
@@ -33,7 +34,7 @@ public class Inventory {
         return this.InvenStoryID;
     }
 
-    public Integer getPartID() {
+    public Part getPartID() {
         return this.PartID;
     }
 
@@ -49,7 +50,7 @@ public class Inventory {
         this.InvenStoryID = InvenStoryID;
     }
 
-    public void setPartID(Integer PartID) {
+    public void setPartID(Part PartID) {
         this.PartID = PartID;
     }
 

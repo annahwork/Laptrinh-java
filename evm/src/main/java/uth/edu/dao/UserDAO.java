@@ -1,115 +1,118 @@
-package edu.vn.ev_wms.dao;
+package uth.edu.dao;
 
-import edu.vn.ev_wms.pojo.User;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import uth.edu.pojo.User;
+
 import java.util.List;
 
 public class UserDAO {
 
-    private static EntityManagerFactory entityManagerFactory;
-    private static EntityManager entityManager;
+    private Configuration configuration = null;
+    private SessionFactory sessionFactory = null;
 
-    public UserDAO(String persistenceName) {
-        entityManagerFactory = Persistence.createEntityManagerFactory(persistenceName);
+    public UserDAO(String configFile) {
+        configuration = new Configuration();
+        configuration.configure(configFile);
+        sessionFactory = configuration.buildSessionFactory();
     }
 
-    public boolean save(User user) {
+    public void addUser(User user) {
+        Session session = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            entityManager.getTransaction().begin();
-            entityManager.persist(user);
-            entityManager.getTransaction().commit();
-            return true;
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.persist(user);
+            session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
-            if (entityManager != null && entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
+            if (session != null && session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
             }
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
-        return false;
     }
 
-    public boolean update(User user) {
+    public void updateUser(User user) {
+        Session session = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            entityManager.getTransaction().begin();
-            entityManager.merge(user);
-            entityManager.getTransaction().commit();
-            return true;
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.merge(user);
+            session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
-            if (entityManager != null && entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
+            if (session != null && session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
             }
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
-        return false;
     }
 
-    public boolean delete(int id) {
+    public void deleteUser(User user) {
+        Session session = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            entityManager.getTransaction().begin();
-            User user = entityManager.find(User.class, id);
-            if (user != null) {
-                entityManager.remove(user);
-                entityManager.getTransaction().commit();
-                return true;
-            }
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.remove(user);
+            session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
-            if (entityManager != null && entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
+            if (session != null && session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
             }
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
-        return false;
     }
 
-    public User findById(int id) {
+    public User getUserById(int id) {
+        Session session = null;
         User user = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            user = entityManager.find(User.class, id);
+            session = sessionFactory.openSession();
+            user = session.get(User.class, id);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
         return user;
     }
 
-    public List<User> findAll() {
+    public List<User> getAllUsers(int page, int pageSize) {
+        Session session = null;
+        List<User> users = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            return entityManager.createQuery("FROM User", User.class).getResultList();
+            session = sessionFactory.openSession();
+            users = session.createQuery("FROM User", User.class)
+                    .setFirstResult((page - 1) * pageSize)
+                    .setMaxResults(pageSize)
+                    .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
+        return users;
     }
 
-    public void close() {
-        if (entityManagerFactory != null) {
-            entityManagerFactory.close();
+    public void closeSessionFactory() {
+        if (sessionFactory != null) {
+            sessionFactory.close();
         }
     }
 }

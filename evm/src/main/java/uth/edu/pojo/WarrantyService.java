@@ -1,18 +1,26 @@
-package edu.vn.ev_wms;
+package uth.edu.pojo;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "WarrantyService")
 public class WarrantyService {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ServiceID")
     private Integer ServiceID;
 
+    @Column(name = "Name", length = 100, nullable = false)
     private String Name;
+
+    @Column(name = "Detail", length = 500)
     private String Detail;
+
+    @Column(name = "Duration", length = 50)
     private String Duration;
+
+    @Column(name = "Condition", length = 255)
     private String Condition;
 
     public WarrantyService(){}

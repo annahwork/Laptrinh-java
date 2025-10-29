@@ -1,116 +1,117 @@
-package edu.vn.ev_wms.dao;
+package uth.edu.dao;
 
-import edu.vn.ev_wms.pojo.Part;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import uth.edu.pojo.Part;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.util.List;
 
 public class PartDAO {
+    private Configuration configuration = null;
+    private SessionFactory sessionFactory = null;
 
-    private static EntityManagerFactory entityManagerFactory;
-    private static EntityManager entityManager;
-
-    public PartDAO(String persistenceName) {
-        entityManagerFactory = Persistence.createEntityManagerFactory(persistenceName);
+    public PartDAO(String configFile) {
+        configuration = new Configuration();
+        configuration.configure(configFile);
+        sessionFactory = configuration.buildSessionFactory();
     }
 
-    public boolean save(Part part) {
+    public void addPart(Part part) {
+        Session session = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            entityManager.getTransaction().begin();
-            entityManager.persist(part);
-            entityManager.getTransaction().commit();
-            return true;
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.persist(part);
+            session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
-            if (entityManager != null && entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
+            if (session != null && session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
             }
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
-        return false;
     }
 
-    public boolean update(Part part) {
+    public void updatePart(Part part) {
+        Session session = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            entityManager.getTransaction().begin();
-            entityManager.merge(part);
-            entityManager.getTransaction().commit();
-            return true;
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.merge(part);
+            session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
-            if (entityManager != null && entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
+            if (session != null && session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
             }
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
-        return false;
     }
 
-    public boolean delete(String partID) {
+    public void deletePart(Part part) {
+        Session session = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            entityManager.getTransaction().begin();
-            Part part = entityManager.find(Part.class, partID);
-            if (part != null) {
-                entityManager.remove(part);
-                entityManager.getTransaction().commit();
-                return true;
-            }
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.remove(part);
+            session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
-            if (entityManager != null && entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
+            if (session != null && session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
             }
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
-        return false;
     }
 
-    public Part findById(String partID) {
+    public Part getPartById(String partId) {
+        Session session = null;
         Part part = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            part = entityManager.find(Part.class, partID);
+            session = sessionFactory.openSession();
+            part = session.get(Part.class, partId);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
         return part;
     }
 
-    public List<Part> findAll() {
+    public List<Part> getAllParts(int page, int pageSize) {
+        Session session = null;
+        List<Part> parts = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            return entityManager.createQuery("FROM Part", Part.class).getResultList();
+            session = sessionFactory.openSession();
+            parts = session.createQuery("FROM Part", Part.class)
+                    .setFirstResult((page - 1) * pageSize)
+                    .setMaxResults(pageSize)
+                    .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
+        return parts;
     }
 
-    public void close() {
-        if (entityManagerFactory != null) {
-            entityManagerFactory.close();
+    public void closeSessionFactory() {
+        if (sessionFactory != null) {
+            sessionFactory.close();
         }
     }
 }

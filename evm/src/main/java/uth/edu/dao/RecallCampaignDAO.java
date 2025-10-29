@@ -1,116 +1,117 @@
-package edu.vn.ev_wms.dao;
+package uth.edu.dao;
 
-import edu.vn.ev_wms.pojo.RecallCampaign;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import uth.edu.pojo.RecallCampaign;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.util.List;
 
 public class RecallCampaignDAO {
+    private Configuration configuration = null;
+    private SessionFactory sessionFactory = null;
 
-    private static EntityManagerFactory entityManagerFactory;
-    private static EntityManager entityManager;
-
-    public RecallCampaignDAO(String persistenceName) {
-        entityManagerFactory = Persistence.createEntityManagerFactory(persistenceName);
+    public RecallCampaignDAO(String configFile) {
+        configuration = new Configuration();
+        configuration.configure(configFile);
+        sessionFactory = configuration.buildSessionFactory();
     }
 
-    public boolean save(RecallCampaign recallCampaign) {
+    public void addRecallCampaign(RecallCampaign recallCampaign) {
+        Session session = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            entityManager.getTransaction().begin();
-            entityManager.persist(recallCampaign);
-            entityManager.getTransaction().commit();
-            return true;
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.persist(recallCampaign);
+            session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
-            if (entityManager != null && entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
+            if (session != null && session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
             }
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
-        return false;
     }
 
-    public boolean update(RecallCampaign recallCampaign) {
+    public void updateRecallCampaign(RecallCampaign recallCampaign) {
+        Session session = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            entityManager.getTransaction().begin();
-            entityManager.merge(recallCampaign);
-            entityManager.getTransaction().commit();
-            return true;
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.merge(recallCampaign);
+            session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
-            if (entityManager != null && entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
+            if (session != null && session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
             }
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
-        return false;
     }
 
-    public boolean delete(int campaignID) {
+    public void deleteRecallCampaign(RecallCampaign recallCampaign) {
+        Session session = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            entityManager.getTransaction().begin();
-            RecallCampaign recallCampaign = entityManager.find(RecallCampaign.class, campaignID);
-            if (recallCampaign != null) {
-                entityManager.remove(recallCampaign);
-                entityManager.getTransaction().commit();
-                return true;
-            }
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.remove(recallCampaign);
+            session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
-            if (entityManager != null && entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
+            if (session != null && session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
             }
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
-        return false;
     }
 
-    public RecallCampaign findById(int campaignID) {
+    public RecallCampaign getRecallCampaignById(int id) {
+        Session session = null;
         RecallCampaign recallCampaign = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            recallCampaign = entityManager.find(RecallCampaign.class, campaignID);
+            session = sessionFactory.openSession();
+            recallCampaign = session.get(RecallCampaign.class, id);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
         return recallCampaign;
     }
 
-    public List<RecallCampaign> findAll() {
+    public List<RecallCampaign> getAllRecallCampaigns(int page, int pageSize) {
+        Session session = null;
+        List<RecallCampaign> recallCampaigns = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            return entityManager.createQuery("FROM RecallCampaign", RecallCampaign.class).getResultList();
+            session = sessionFactory.openSession();
+            recallCampaigns = session.createQuery("FROM RecallCampaign", RecallCampaign.class)
+                    .setFirstResult((page - 1) * pageSize)
+                    .setMaxResults(pageSize)
+                    .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
+        return recallCampaigns;
     }
 
-    public void close() {
-        if (entityManagerFactory != null) {
-            entityManagerFactory.close();
+    public void closeSessionFactory() {
+        if (sessionFactory != null) {
+            sessionFactory.close();
         }
     }
 }

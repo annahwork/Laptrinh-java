@@ -1,133 +1,116 @@
-package edu.vn.ev_wms.dao;
+package uth.edu.dao;
 
-import edu.vn.ev_wms.pojo.WarrantyService;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import uth.edu.pojo.WarrantyService;
 import java.util.List;
 
 public class WarrantyServiceDAO {
+    private Configuration configuration = null;
+    private SessionFactory sessionFactory = null;
 
-    private static EntityManagerFactory entityManagerFactory;
-    private static EntityManager entityManager;
-
-    public WarrantyServiceDAO(String persistenceName) {
-        entityManagerFactory = Persistence.createEntityManagerFactory(persistenceName);
+    public WarrantyServiceDAO(String configFile) {
+        configuration = new Configuration();
+        configuration.configure(configFile);
+        sessionFactory = configuration.buildSessionFactory();
     }
 
-    public boolean save(WarrantyService service) {
+    public void addWarrantyService(WarrantyService service) {
+        Session session = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            entityManager.getTransaction().begin();
-            entityManager.persist(service);
-            entityManager.getTransaction().commit();
-            return true;
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.persist(service);
+            session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
-            if (entityManager != null && entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
+            if (session != null && session.getTransaction().isActive()){
+                session.getTransaction().rollback();
             }
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
-        return false;
     }
 
-    public boolean update(WarrantyService service) {
+    public void updateWarrantyService(WarrantyService service) {
+        Session session = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            entityManager.getTransaction().begin();
-            entityManager.merge(service);
-            entityManager.getTransaction().commit();
-            return true;
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.merge(service);
+            session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
-            if (entityManager != null && entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
+            if (session != null && session.getTransaction().isActive()){
+                session.getTransaction().rollback();
             }
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
-        return false;
     }
 
-    public boolean delete(int serviceID) {
+    public void deleteWarrantyService(WarrantyService service) {
+        Session session = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            entityManager.getTransaction().begin();
-            WarrantyService service = entityManager.find(WarrantyService.class, serviceID);
-            if (service != null) {
-                entityManager.remove(service);
-                entityManager.getTransaction().commit();
-                return true;
-            }
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.remove(service);
+            session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
-            if (entityManager != null && entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
+            if (session != null && session.getTransaction().isActive()){
+                session.getTransaction().rollback();
             }
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
-        return false;
     }
 
-    public WarrantyService findById(int serviceID) {
+    public WarrantyService getWarrantyServiceById(int serviceID) {
+        Session session = null;
         WarrantyService service = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            service = entityManager.find(WarrantyService.class, serviceID);
+            session = sessionFactory.openSession();
+            service = session.get(WarrantyService.class, serviceID);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
         return service;
     }
 
-    public List<WarrantyService> findAll() {
+    public List<WarrantyService> getAllWarrantyServices(int page, int pageSize) {
+        Session session = null;
+        List<WarrantyService> services = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            return entityManager.createQuery("FROM WarrantyService", WarrantyService.class).getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            if (entityManager != null) {
-                entityManager.close();
-            }
-        }
-    }
-
-    public List<WarrantyService> findByName(String name) {
-        try {
-            entityManager = entityManagerFactory.createEntityManager();
-            return entityManager
-                    .createQuery("FROM WarrantyService w WHERE w.Name = :name", WarrantyService.class)
-                    .setParameter("name", name)
+            session = sessionFactory.openSession();
+            services = session.createQuery("FROM WarrantyService", WarrantyService.class)
+                    .setFirstResult((page - 1) * pageSize)
+                    .setMaxResults(pageSize)
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
+        return services;
     }
 
-    public void close() {
-        if (entityManagerFactory != null) {
-            entityManagerFactory.close();
+    public void closeSessionFactory() {
+        if (sessionFactory != null){
+            sessionFactory.close();
         }
     }
 }

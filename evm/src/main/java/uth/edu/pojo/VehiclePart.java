@@ -1,41 +1,46 @@
-package edu.vn.ev_wms;
+package uth.edu.pojo;
 
 import java.util.Date;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "jpa_vehicle_part")
+@Table(name = "VehiclePart")
 public class VehiclePart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "VehiclePartID")
     private Integer VehiclePartID;
 
-    @Column(nullable = false)
-    private Integer PartID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PartID", nullable = false)
+    private Part PartID;
 
-    @Column(nullable = false, length = 20)
-    private String VIN;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "VIN", nullable = false)
+    private Vehicle VIN;
 
-    @Column(length = 50)
+    @Column(name = "SerialNumber", length = 50)
     private String SerialNumber;
 
     @Temporal(TemporalType.DATE)
+    @Column(name = "InstallDate")
     private Date InstallDate;
 
     @Temporal(TemporalType.DATE)
+    @Column(name = "RemoveDate")
     private Date RemoveDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "InstalledBy", referencedColumnName = "UserID")
     private User InstalledBy;
 
-    @Column(length = 20)
+    @Column(name = "Status", length = 20)
     private String Status;
 
     public VehiclePart() {}
 
-    public VehiclePart(Integer VehiclePartID, Integer PartID, String VIN, String SerialNumber, Date InstallDate, Date RemoveDate, User InstalledBy, String Status) {
+    public VehiclePart(Integer VehiclePartID, Part PartID, Vehicle VIN, String SerialNumber, Date InstallDate, Date RemoveDate, User InstalledBy, String Status) {
         this.VehiclePartID = VehiclePartID;
         this.PartID = PartID;
         this.VIN = VIN;
@@ -50,11 +55,11 @@ public class VehiclePart {
         return this.VehiclePartID;
     }
 
-    public Integer getPartID() {
+    public Part getPartID() {
         return this.PartID;
     }
 
-    public String getVIN() {
+    public Vehicle getVIN() {
         return this.VIN;
     }
 
@@ -82,11 +87,11 @@ public class VehiclePart {
         this.VehiclePartID = VehiclePartID;
     }
 
-    public void setPartID(Integer PartID) {
+    public void setPartID(Part PartID) {
         this.PartID = PartID;
     }
 
-    public void setVIN(String VIN) {
+    public void setVIN( Vehicle VIN) {
         this.VIN = VIN;
     }
 

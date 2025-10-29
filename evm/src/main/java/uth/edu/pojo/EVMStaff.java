@@ -1,10 +1,9 @@
-package edu.vn.ev_wms;
+package uth.edu.pojo;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "EVMStaff")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class EVMStaff extends User {
 
     public EVMStaff() {}

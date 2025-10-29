@@ -1,10 +1,9 @@
-package edu.vn.ev_wms;
+package uth.edu.pojo;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "SCStaff")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class SCStaff extends User {
 
     public SCStaff(){}

@@ -1,133 +1,116 @@
-package edu.vn.ev_wms.dao;
+package uth.edu.dao;
 
-import edu.vn.ev_wms.pojo.WarrantyHistory;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import uth.edu.pojo.WarrantyHistory;
 import java.util.List;
 
 public class WarrantyHistoryDAO {
+    private Configuration configuration = null;
+    private SessionFactory sessionFactory = null;
 
-    private static EntityManagerFactory entityManagerFactory;
-    private static EntityManager entityManager;
-
-    public WarrantyHistoryDAO(String persistenceName) {
-        entityManagerFactory = Persistence.createEntityManagerFactory(persistenceName);
+    public WarrantyHistoryDAO(String configFile) {
+        configuration = new Configuration();
+        configuration.configure(configFile);
+        sessionFactory = configuration.buildSessionFactory();
     }
 
-    public boolean save(WarrantyHistory history) {
+    public void addWarrantyHistory(WarrantyHistory history) {
+        Session session = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            entityManager.getTransaction().begin();
-            entityManager.persist(history);
-            entityManager.getTransaction().commit();
-            return true;
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.persist(history);
+            session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
-            if (entityManager != null && entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
+            if (session != null && session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
             }
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
-        return false;
     }
 
-    public boolean update(WarrantyHistory history) {
+    public void updateWarrantyHistory(WarrantyHistory history) {
+        Session session = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            entityManager.getTransaction().begin();
-            entityManager.merge(history);
-            entityManager.getTransaction().commit();
-            return true;
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.merge(history);
+            session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
-            if (entityManager != null && entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
+            if (session != null && session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
             }
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
-        return false;
     }
 
-    public boolean delete(int warrantyHistoryID) {
+    public void deleteWarrantyHistory(WarrantyHistory history) {
+        Session session = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            entityManager.getTransaction().begin();
-            WarrantyHistory history = entityManager.find(WarrantyHistory.class, warrantyHistoryID);
-            if (history != null) {
-                entityManager.remove(history);
-                entityManager.getTransaction().commit();
-                return true;
-            }
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.remove(history);
+            session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
-            if (entityManager != null && entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
+            if (session != null && session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
             }
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
-        return false;
     }
 
-    public WarrantyHistory findById(int warrantyHistoryID) {
+    public WarrantyHistory getWarrantyHistoryById(int historyID) {
+        Session session = null;
         WarrantyHistory history = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            history = entityManager.find(WarrantyHistory.class, warrantyHistoryID);
+            session = sessionFactory.openSession();
+            history = session.get(WarrantyHistory.class, historyID);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
         return history;
     }
 
-    public List<WarrantyHistory> findAll() {
+    public List<WarrantyHistory> getAllWarrantyHistories(int page, int pageSize) {
+        Session session = null;
+        List<WarrantyHistory> histories = null;
         try {
-            entityManager = entityManagerFactory.createEntityManager();
-            return entityManager.createQuery("FROM WarrantyHistory", WarrantyHistory.class).getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            if (entityManager != null) {
-                entityManager.close();
-            }
-        }
-    }
-
-    public List<WarrantyHistory> findByClaimID(int claimID) {
-        try {
-            entityManager = entityManagerFactory.createEntityManager();
-            return entityManager
-                    .createQuery("FROM WarrantyHistory w WHERE w.ClaimID = :claimID", WarrantyHistory.class)
-                    .setParameter("claimID", claimID)
+            session = sessionFactory.openSession();
+            histories = session.createQuery("FROM WarrantyHistory", WarrantyHistory.class)
+                    .setFirstResult((page - 1) * pageSize)
+                    .setMaxResults(pageSize)
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
+        return histories;
     }
 
-    public void close() {
-        if (entityManagerFactory != null) {
-            entityManagerFactory.close();
+    public void closeSessionFactory() {
+        if (sessionFactory != null) {
+            sessionFactory.close();
         }
     }
 }

@@ -1,4 +1,4 @@
-package edu.vn.ev_wms;
+package uth.edu.pojo;
 
 import java.util.Date;
 import javax.persistence.*;
@@ -8,30 +8,33 @@ import javax.persistence.*;
 public class WarrantyClaim {
 
     @Id
-    @Column(nullable = false, unique = true, length = 20)
+    @Column(name = "ClaimID", nullable = false, unique = true, length = 20)
     private String ClaimID;
 
-    @Column(nullable = false)
-    private Integer VehiclePartID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "VehiclePartID", nullable = false)
+    private VehiclePart VehiclePartID;
 
-    @Column(nullable = false, length = 20)
-    private String UserID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "UserID", nullable = false)
+    private User UserID;
 
-    @Column(length = 500)
+    @Column(name = "Description", length = 500)
     private String Description;
 
-    @Column(length = 20)
+    @Column(name = "Status", length = 20)
     private String Status;
 
     @Temporal(TemporalType.DATE)
+    @Column(name = "Date")
     private Date Date;
 
-    @Column(length = 255)
+    @Column(name = "Attachment", length = 255)
     private String Attachment;
 
     public WarrantyClaim() {}
 
-    public WarrantyClaim(String ClaimID, Integer VehiclePartID, String UserID, String Description, String Status, Date Date, String Attachment) {
+    public WarrantyClaim(String ClaimID, VehiclePart VehiclePartID, User UserID, String Description, String Status, Date Date, String Attachment) {
         this.ClaimID = ClaimID;
         this.VehiclePartID = VehiclePartID;
         this.UserID = UserID;
@@ -45,11 +48,11 @@ public class WarrantyClaim {
         return this.ClaimID;
     }
 
-    public Integer getVehiclePartID() {
+    public VehiclePart getVehiclePartID() {
         return this.VehiclePartID;
     }
 
-    public String getUserID() {
+    public User getUserID() {
         return this.UserID;
     }
 
@@ -73,11 +76,11 @@ public class WarrantyClaim {
         this.ClaimID = ClaimID;
     }
 
-    public void setVehiclePartID(Integer VehiclePartID) {
+    public void setVehiclePartID(VehiclePart VehiclePartID) {
         this.VehiclePartID = VehiclePartID;
     }
 
-    public void setUserID(String UserID) {
+    public void setUserID(User UserID) {
         this.UserID = UserID;
     }
 

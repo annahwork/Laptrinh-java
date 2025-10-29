@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thông Báo - Hệ Thống Quản Lý SC</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- CSS chung -->
+  <link href="../../../assets/css/theme.css" rel="stylesheet">
+  <link href="../../../assets/css/SC-Staff/sidebar.css" rel="stylesheet">
+  <link href="../../../assets/css/SC_Staff/sc_staff.css" rel="stylesheet">
+
+  <!-- CSS riêng của trang -->
+  <link href="../../css/SC-Staff/notification.css" rel="stylesheet">
+</head>
+
+<body class="app-layout">
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <input type="checkbox" id="open-sidebar" />
+    <label for="open-sidebar" class="open-sidebar-btn">
+      <i class="bi bi-list"></i>
+    </label>
+
+    <div class="sidebar-menu">
+      <div class="sidebar__logo">
+        <a href="request_management.html">
+          <span class="logo-text">Hệ Thống Quản Lý SC</span>
+        </a>
+      </div>
+
+      <ul class="sidebar-nav">
+      <li>
+        <a href="request_management.html">
+          <span class="icon"><i class="bi bi-gear-wide-connected"></i></span>
+          <span class="label">Quản lý Yêu Cầu</span>
+        </a>
+      </li>
+
+      <ul class="sidebar-nav">
+        <li><a href="warranty.html">
+          <span class="icon"><i class="bi bi-tools"></i></span>
+          <span class="label">Bảo Hành</span>
+        </a></li>
+
+        <li><a href="parts_management.html">
+          <span class="icon"><i class="bi bi-box-seam-fill"></i></span>
+          <span class="label">Phụ Tùng</span>
+        </a></li>
+
+        <li class="active"><a href="notification.html">
+          <span class="icon"><i class="bi bi-bell-fill"></i></span>
+          <span class="label">Thông Báo</span>
+        </a></li>
+      </ul>
+    </div>
+  </aside>
+  <!-- ===== /SIDEBAR ===== -->
+
+  <main class="main-content">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <div>
+        <h1><i class="bi bi-bell-fill me-2 text-danger"></i> Thông Báo</h1>
+        <p class="page-description">Danh sách các thông báo mới nhất</p>
+      </div>
+      <div class="header-search">
+        <input id="searchInput" type="text" class="form-control" placeholder="Tìm kiếm thông báo">
+        <button id="btnSearch" class="btn btn-primary"><i class="bi bi-search"></i></button>
+      </div>
+    </div>
+
+    <div class="card">
+      <ul id="notificationsList" class="list-notifs"></ul>
+    </div>
+
+    <div class="form-actions">
+      <button id="btnMarkAll" class="btn btn-outline-primary"><i class="bi bi-check-all"></i> Đánh dấu tất cả</button>
+      <button id="btnClearAll" class="btn btn-outline-danger"><i class="bi bi-trash"></i> Xoá tất cả</button>
+    </div>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal fade" id="notifModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Chi tiết thông báo</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+        </div>
+        <div class="modal-body">
+          <p id="modalContent" class="mb-0"></p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button>
+          <button id="modalMark" class="btn btn-primary"><i class="bi bi-check-lg"></i> Đánh dấu đã đọc</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../../../assets/js/SC-Staff/sc_staff.js"></script>
+  <script src="../../../assets/js/SC-Staff/notification.js"></script>
+</body>
+</html>

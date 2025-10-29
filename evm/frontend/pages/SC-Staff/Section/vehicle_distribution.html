@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phân Phối Xe - SC Staff</title>
+
+  <!-- ===== External Libraries ===== -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- ===== CSS chung ===== -->
+  <link href="../../../assets/css/theme.css" rel="stylesheet">
+    <link href="../../../assets/css/SC-Staff/sidebar.css" rel="stylesheet">
+
+  <link href="../../../assets/css/SC-Staff/sc_staff.css" rel="stylesheet">
+
+  <!-- ===== CSS riêng ===== -->
+  <link href="../../../assets/css/SC-Staff/vehicle_distribution.css" rel="stylesheet">
+</head>
+
+<body class="app-layout">
+<aside class="sidebar">
+  <div class="sidebar-menu">
+    <div class="sidebar-logo">
+      <a href="../home_sc_staff.html">Hệ Thống Quản Lý SC</a>
+    </div>
+    <ul class="sidebar-nav">
+      <li><a href="../home_sc_staff.html"><i class="bi bi-gear-wide-connected"></i> Quản Lý Yêu Cầu</a></li>
+      <li><a href="warranty.html"><i class="bi bi-tools"></i> Bảo Hành</a></li>
+      <li><a href="parts_management.html"><i class="bi bi-box-seam"></i> Phụ Tùng</a></li>
+      <li><a href="notification.html"><i class="bi bi-bell"></i> Thông Báo</a></li>
+      <li class="active"><a href="vehicle_distribution.html"><i class="bi bi-truck"></i> Phân Phối Xe</a></li>
+    </ul>
+  </div>
+</aside>
+
+<main class="main-content">
+  <h1><i class="bi bi-truck text-primary"></i> Phân Phối Xe Cho Technican</h1>
+
+  <div class="card p-3">
+    <div class="row g-3">
+      <div class="col-md-4">
+        <input id="carId" class="form-control" placeholder="Mã xe (VD: SC1023)">
+      </div>
+      <div class="col-md-5">
+        <input id="jobDesc" class="form-control" placeholder="Mô tả công việc (VD: Sửa hộp số, thay dầu)">
+      </div>
+      <div class="col-md-3">
+        <button id="btnSend" class="btn btn-primary w-100"><i class="bi bi-send"></i> Gửi cho Technican</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <h4>Danh sách xe đã gửi</h4>
+    <ul id="sentList" class="list-group"></ul>
+  </div>
+</main>
+
+<!-- ===== Scripts ===== -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../../../assets/js/SC-Staff/sc_staff.js"></script>
+<script src="../../../assets/js/SC-Staff/vehicle_distribution.js"></script>
+
+</body>
+</html>

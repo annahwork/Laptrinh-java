@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phụ Tùng - Hệ Thống Quản Lý SC</title>
+
+  <!-- ===== CSS & Fonts ===== -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- theme.css ở thư mục gốc -->
+  <link href="../../../assets/css/theme.css" rel="stylesheet">
+    <link href="../../../assets/css/SC-Staff/sidebar.css" rel="stylesheet">
+
+  
+  <!-- CSS riêng của SC Staff -->
+  <link href="../../css/SC-Staff/parts_management.css" rel="stylesheet">
+</head>
+
+<body class="app-layout">
+<!-- ====== SIDEBAR ====== -->
+<aside class="sidebar">
+  <input type="checkbox" id="open-sidebar" />
+  <label for="open-sidebar" class="open-sidebar-btn">
+    <i class="bi bi-list"></i>
+  </label>
+
+  <div class="sidebar-menu">
+    <div class="sidebar-logo">
+      <a href="request_management.html">
+        <span class="logo-text">Hệ Thống Quản Lý SC</span>
+      </a>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li>
+        <a href="request_management.html">
+          <span class="icon"><i class="bi bi-gear-wide-connected"></i></span>
+          <span class="label">Quản lý Yêu Cầu</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="warranty.html">
+          <span class="icon"><i class="bi bi-tools"></i></span>
+          <span class="label">Bảo Hành</span>
+        </a>
+      </li>
+
+      <!-- ✅ Mục đang active -->
+      <li class="active">
+        <a href="parts_management.html">
+          <span class="icon"><i class="bi bi-box-seam-fill"></i></span>
+          <span class="label">Phụ Tùng</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="notification.html">
+          <span class="icon"><i class="bi bi-bell-fill"></i></span>
+          <span class="label">Thông Báo</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</aside>
+<!-- ====== /SIDEBAR ====== -->
+
+<main class="main-content">
+  <div class="page-header">
+    <div class="title">
+      <h1><i class="bi bi-box-seam-fill text-dark fs-4"></i> Đặt Phụ Tùng</h1>
+      <div class="d-none d-md-block">
+        <span class="page-description">Nhập thông tin chi tiết để đặt phụ tùng</span>
+      </div>
+    </div>
+  </div>
+
+  <section id="order-parts" class="mb-4">
+    <div class="card fullscreen-card">
+      <form id="parts-form" class="form-grid" style="width:100%;max-width:880px;margin:0 auto;">
+        <div class="form-group">
+          <label class="form-label" for="pt-code">Mã phụ tùng</label>
+          <input required type="text" class="form-control" id="pt-code" placeholder="VD: PT-001">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="pt-qty">Số lượng</label>
+          <input required type="number" min="1" class="form-control" id="pt-qty" value="1">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="pt-name">Tên phụ tùng</label>
+          <input required type="text" class="form-control" id="pt-name" placeholder="Tên phụ tùng">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="pt-note">Ghi chú / Lý do</label>
+          <textarea class="form-control" id="pt-note" rows="4" placeholder="Ghi chú gửi EVM"></textarea>
+        </div>
+
+        <div class="form-actions" style="grid-column:1 / -1;">
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-cart-plus-fill me-1"></i> Gửi Yêu Cầu Phụ Tùng
+          </button>
+          <button type="button" id="btnReset" class="btn btn-outline-secondary">Xóa</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== JS ===== -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../../js/SC-Staff/parts_management.js"></script>
+
+</body>
+</html>

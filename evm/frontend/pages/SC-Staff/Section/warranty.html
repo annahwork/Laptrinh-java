@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bảo Hành - Hệ Thống Quản Lý SC</title>
+
+  <!-- Bootstrap + Icons + Fonts -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Theme -->
+  <link href="../../../assets/css/theme.css" rel="stylesheet">
+    <link href="../../../assets/css/SC-Staff/sidebar.css" rel="stylesheet">
+
+
+  <!-- Styles tách riêng -->
+  <link href="../../css/SC-Staff/warranty.css" rel="stylesheet">
+</head>
+
+<body>
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar">
+  <input type="checkbox" id="open-sidebar" />
+  <label for="open-sidebar" class="open-sidebar-btn">
+    <i class="bi bi-list"></i>
+  </label>
+
+  <div class="sidebar-menu">
+    <div class="sidebar-logo">
+      <a href="request_management.html">
+        <span class="logo-text">Hệ Thống Quản Lý SC</span>
+      </a>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li><a href="request_management.html">
+        <span class="icon"><i class="bi bi-gear-wide-connected"></i></span>
+        <span class="label">Quản lý Yêu Cầu</span>
+      </a></li>
+
+      <li class="active"><a href="warranty.html">
+        <span class="icon"><i class="bi bi-tools"></i></span>
+        <span class="label">Bảo Hành</span>
+      </a></li>
+
+      <li><a href="parts_management.html">
+        <span class="icon"><i class="bi bi-box-seam-fill"></i></span>
+        <span class="label">Phụ Tùng</span>
+      </a></li>
+
+      <li><a href="notification.html">
+        <span class="icon"><i class="bi bi-bell-fill"></i></span>
+        <span class="label">Thông Báo</span>
+      </a></li>
+    </ul>
+  </div>
+</aside>
+<!-- ===== /SIDEBAR ===== -->
+
+<main class="main-content">
+  <div class="page-header">
+    <div>
+      <h1><i class="bi bi-tools text-primary fs-4"></i> Tạo Yêu Cầu Bảo Hành</h1>
+      <div class="small-muted">Điền thông tin chi tiết và gửi tới bộ phận xử lý.</div>
+    </div>
+  </div>
+
+  <section id="create-warranty" class="mb-4">
+    <div class="card fullscreen-card">
+      <form id="warranty-form" class="form-grid" style="width:100%;max-width:880px;margin:0 auto;">
+        <div class="form-group">
+          <label class="form-label" for="wr-id">Mã yêu cầu</label>
+          <input required type="text" class="form-control" id="wr-id" placeholder="VD: WR004">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="wr-customer">Khách hàng</label>
+          <input required type="text" class="form-control" id="wr-customer" placeholder="Tên khách hàng">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="wr-date">Ngày tạo</label>
+          <input required type="date" class="form-control" id="wr-date">
+        </div>
+
+        <div class="form-group" style="grid-column: 1 / -1;">
+          <label class="form-label" for="wr-desc">Mô tả vấn đề</label>
+          <textarea required class="form-control" id="wr-desc" rows="5" placeholder="Mô tả chi tiết và rõ ràng về vấn đề bảo hành"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="wr-parts">Phụ tùng yêu cầu</label>
+          <textarea class="form-control" id="wr-parts" rows="2" placeholder="Liệt kê các phụ tùng cần thiết"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="wr-note">Ghi chú</label>
+          <textarea class="form-control" id="wr-note" rows="2" placeholder="Thêm ghi chú nếu có"></textarea>
+        </div>
+
+        <div class="form-actions" style="grid-column:1 / -1;">
+          <button type="submit" class="btn btn-primary"><i class="bi bi-send-fill me-1"></i> Gửi Yêu Cầu</button>
+          <button type="button" class="btn btn-outline-secondary" id="btnClear">Xóa</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <div class="page-footer small-muted">
+  </div>
+</main>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../../../assets/js/SC-Staff/warranty.js"></script>
+</body>
+</html>

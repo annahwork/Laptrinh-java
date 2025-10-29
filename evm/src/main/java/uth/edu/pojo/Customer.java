@@ -1,14 +1,17 @@
 package uth.edu.pojo;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "Customer")
 public class Customer {
 
     @Id
-    @Column(name = "CustomerID", length = 50, nullable = false)
-    private String CustomerID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "CustomerID")
+    private Integer CustomerID;
 
     @Column(name = "Name", nullable = false, length = 100)
     private String Name;
@@ -22,10 +25,24 @@ public class Customer {
     @Column(name = "Address", length = 200)
     private String Address;
 
+    @OneToMany(
+            mappedBy = "customer",
+            cascade = CascadeType.ALL, // Xóa Customer sẽ xóa Vehicle của họ
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    private List<Vehicle> vehicles = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "customer",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
+    )
+    private List<Schedule> schedules = new ArrayList<>();
 
     public Customer() {}
 
-    public Customer(String CustomerID, String Name, String Email, String Phone, String Address) {
+    public Customer(Integer CustomerID, String Name, String Email, String Phone, String Address) {
         this.CustomerID = CustomerID;
         this.Name = Name;
         this.Email = Email;
@@ -33,7 +50,7 @@ public class Customer {
         this.Address = Address;
     }
 
-    public String getCustomerID() {
+    public Integer getCustomerID() {
         return this.CustomerID;
     }
 
@@ -53,7 +70,7 @@ public class Customer {
         return this.Address;
     }
 
-    public void setCustomerID(String CustomerID) {
+    public void setCustomerID(Integer CustomerID) {
         this.CustomerID = CustomerID;
     }
 

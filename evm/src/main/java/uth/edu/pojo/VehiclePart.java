@@ -2,6 +2,8 @@ package uth.edu.pojo;
 
 import java.util.Date;
 import javax.persistence.*;
+import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "VehiclePart")
@@ -14,11 +16,11 @@ public class VehiclePart {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PartID", nullable = false)
-    private Part PartID;
+    private Part part;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "VIN", nullable = false)
-    private Vehicle VIN;
+    private Vehicle vehicle;
 
     @Column(name = "SerialNumber", length = 50)
     private String SerialNumber;
@@ -40,10 +42,10 @@ public class VehiclePart {
 
     public VehiclePart() {}
 
-    public VehiclePart(Integer VehiclePartID, Part PartID, Vehicle VIN, String SerialNumber, Date InstallDate, Date RemoveDate, User InstalledBy, String Status) {
+    public VehiclePart(Integer VehiclePartID, Part part, Vehicle vehicle, String SerialNumber, Date InstallDate, Date RemoveDate, User InstalledBy, String Status) {
         this.VehiclePartID = VehiclePartID;
-        this.PartID = PartID;
-        this.VIN = VIN;
+        this.PartID = part;
+        this.VIN = vehicle;
         this.SerialNumber = SerialNumber;
         this.InstallDate = InstallDate;
         this.RemoveDate = RemoveDate;
@@ -55,11 +57,11 @@ public class VehiclePart {
         return this.VehiclePartID;
     }
 
-    public Part getPartID() {
+    public Part getPart() {
         return this.PartID;
     }
 
-    public Vehicle getVIN() {
+    public Vehicle getVehicle() {
         return this.VIN;
     }
 
@@ -87,12 +89,12 @@ public class VehiclePart {
         this.VehiclePartID = VehiclePartID;
     }
 
-    public void setPartID(Part PartID) {
+    public void setPart(Part PartID) {
         this.PartID = PartID;
     }
 
-    public void setVIN( Vehicle VIN) {
-        this.VIN = VIN;
+    public void setVehicle(Vehicle vehicle) {
+        this.VIN = vehicle;
     }
 
     public void SerialNumber(String SerialNumber) {

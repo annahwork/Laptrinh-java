@@ -1,7 +1,8 @@
 package uth.edu.pojo;
 
 import javax.persistence.*;
-
+import java.util.ArrayList;
+import java.util.List;
 @Entity
 @Table(name = "WarrantyService")
 public class WarrantyService {
@@ -22,6 +23,12 @@ public class WarrantyService {
 
     @Column(name = "Condition", length = 255)
     private String Condition;
+
+    @OneToMany(
+            mappedBy = "warrantyService",
+            fetch = FetchType.LAZY
+    )
+    private List<ClaimService> claimServices = new ArrayList<>();
 
     public WarrantyService(){}
 

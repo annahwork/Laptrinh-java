@@ -14,7 +14,7 @@ public class WarrantyHistory {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ClaimID", nullable = false)
-    private WarrantyClaim ClaimID;
+    private WarrantyClaim warrantyClaim;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "Date")
@@ -25,9 +25,9 @@ public class WarrantyHistory {
 
     public WarrantyHistory(){}
 
-    public WarrantyHistory(Integer WarrantyHistory, WarrantyClaim ClaimID, Date Date, String Note){
-        this.WarrantyHistoryID = WarrantyHistory;
-        this.ClaimID = ClaimID;
+    public WarrantyHistory(Integer WarrantyHistoryID, WarrantyClaim warrantyClaim, Date Date, String Note){
+        this.WarrantyHistoryID = WarrantyHistoryID;
+        this.warrantyClaim = warrantyClaim;
         this.Date = Date;
         this.Note = Note;
     }
@@ -36,7 +36,7 @@ public class WarrantyHistory {
         return this.WarrantyHistoryID;
     }
 
-    public WarrantyClaim getClaimID() {
+    public WarrantyClaim getWarrantyClaim() {
         return this.ClaimID;
     }
 
@@ -52,7 +52,7 @@ public class WarrantyHistory {
         this.WarrantyHistoryID = WarrantyHistoryID;
     }
 
-    public void setClaimID(WarrantyClaim ClaimID) {
+    public void setWarrantyClaim(WarrantyClaim ClaimID) {
         this.ClaimID = ClaimID;
     }
 

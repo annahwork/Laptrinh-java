@@ -7,18 +7,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
-
 import javax.persistence.Inheritance;
+import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "User")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "User_Role", discriminatorType = DiscriminatorType.STRING)
 public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "UserID")
-    private int UserID;
+    private Integer UserID;
 
     @Column(name = "UserName", nullable = false, unique = true, length = 50)
     private String UserName;
@@ -34,6 +36,14 @@ public abstract class User {
 
     @Column(name = "Phone", length = 20)
     private String Phone;
+
+    @OneToMany(
+            mappedBy = "receiver",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    private List<Notification> notifications = new ArrayList<>();
 
     public User() {}
 

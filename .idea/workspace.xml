@@ -4,7 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c1113d8-0d76-4694-aa47-5f337a0cea98" name="Changes" comment="" />
+    <list default="true" id="1c1113d8-0d76-4694-aa47-5f337a0cea98" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/Admin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/ClaimService.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/ClaimService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/EVMStaff.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/EVMStaff.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/Inventory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/Part.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/Part.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/RecallCampaign.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/RecallCampaign.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/RecallVehicle.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/RecallVehicle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/SCStaff.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/SCStaff.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/SCTechnician.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/SCTechnician.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/Schedule.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/Schedule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/Vehicle.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/Vehicle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/VehiclePart.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/VehiclePart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/WarrantyClaim.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/WarrantyClaim.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/WarrantyHistory.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/WarrantyHistory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/WarrantyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/WarrantyService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,7 +62,6 @@
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="34YvWxNHVokjgLKiBphWUElnTFv" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="autoscrollToSource" value="true" />
@@ -58,8 +76,15 @@
     "RunOnceActivity.git.unshallow": "true",
     "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/hongocgiahan/MÔN JAVA/Laptrinh-java"
+    "last_opened_file_path": "C:/Users/Latitude/JAVA/Project/Laptrinh-java",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
     "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
@@ -98,6 +123,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -117,8 +143,17 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <method v="2" />
     </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
+        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -128,6 +163,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1761403354503</updated>
+      <workItem from="1761750853362" duration="75000" />
+      <workItem from="1761751739750" duration="3013000" />
     </task>
     <task id="LOCAL-00001" summary="Cập Nhật Lại 1 Số Chức Năng Của SC Staff và SC Technican">
       <option name="closed" value="true" />
@@ -139,6 +176,9 @@
     </task>
     <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="OPEN_GENERIC_TABS">

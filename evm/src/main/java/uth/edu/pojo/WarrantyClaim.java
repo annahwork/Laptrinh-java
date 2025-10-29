@@ -2,6 +2,8 @@ package uth.edu.pojo;
 
 import java.util.Date;
 import javax.persistence.*;
+import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "jpa_warranty_claim")
@@ -9,15 +11,15 @@ public class WarrantyClaim {
 
     @Id
     @Column(name = "ClaimID", nullable = false, unique = true, length = 20)
-    private String ClaimID;
+    private Integer ClaimID;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "VehiclePartID", nullable = false)
-    private VehiclePart VehiclePartID;
+    private VehiclePart vehiclePart;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "UserID", nullable = false)
-    private User UserID;
+    @JoinColumn(name = "UserID") // Người tạo claim (SCStaff)
+    private SCStaff createdByStaff;
 
     @Column(name = "Description", length = 500)
     private String Description;
@@ -32,27 +34,43 @@ public class WarrantyClaim {
     @Column(name = "Attachment", length = 255)
     private String Attachment;
 
+    @OneToMany(
+            mappedBy = "warrantyClaim",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    private List<WarrantyHistory> history = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "warrantyClaim",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    private List<ClaimService> claimServices = new ArrayList<>();
+
     public WarrantyClaim() {}
 
-    public WarrantyClaim(String ClaimID, VehiclePart VehiclePartID, User UserID, String Description, String Status, Date Date, String Attachment) {
+    public WarrantyClaim(Integer ClaimID, VehiclePart vehiclePart, SCStaff createdByStaff, String Description, String Status, Date Date, String Attachment) {
         this.ClaimID = ClaimID;
-        this.VehiclePartID = VehiclePartID;
-        this.UserID = UserID;
+        this.VehiclePartID = vehiclePart;
+        this.createdByStaff = createdByStaff;
         this.Description = Description;
         this.Status = Status;
         this.Date = Date;
         this.Attachment = Attachment;
     }
 
-    public String getClaimID() {
+    public Integer getClaimID() {
         return this.ClaimID;
     }
 
-    public VehiclePart getVehiclePartID() {
+    public VehiclePart getVehiclePart() {
         return this.VehiclePartID;
     }
 
-    public User getUserID() {
+    public User getUser() {
         return this.UserID;
     }
 
@@ -72,15 +90,15 @@ public class WarrantyClaim {
         return this.Attachment;
     }
 
-    public void setClaimID(String ClaimID) {
+    public void setClaimID(Integer ClaimID) {
         this.ClaimID = ClaimID;
     }
 
-    public void setVehiclePartID(VehiclePart VehiclePartID) {
+    public void setVehiclePart(VehiclePart VehiclePartID) {
         this.VehiclePartID = VehiclePartID;
     }
 
-    public void setUserID(User UserID) {
+    public void setUser(User UserID) {
         this.UserID = UserID;
     }
 

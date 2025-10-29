@@ -14,12 +14,12 @@ import javax.persistence.JoinColumn;
 public class Vehicle {
 
     @Id
-    @Column(name = "Vin", nullable = false, unique = true, length = 20)
+    @Column(name = "VIN", nullable = false, unique = true, length = 20)
     private String Vin;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CustomerID", nullable = false)
-    private Customer CustomerID;
+    private Customer customer;
 
     @Column(name = "Model", nullable = false, length = 50)
     private String Model;
@@ -33,12 +33,35 @@ public class Vehicle {
     @Column(name = "Status", length = 20)
     private String Status;
 
+    @OneToMany(
+            mappedBy = "vehicle",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    private List<VehiclePart> vehicleParts = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "vehicle",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    private List<WarrantyClaim> warrantyClaims = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "vehicle",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    private List<RecallVehicle> recalls = new ArrayList<>();
 
     public Vehicle() {}
 
-    public Vehicle(String Vin, Customer CustomerID, String Model, Integer Year_Of_Manufacture, String Warranty_Time, String Status) {
+    public Vehicle(String Vin, Customer customer, String Model, Integer Year_Of_Manufacture, String Warranty_Time, String Status) {
         this.Vin = Vin;
-        this.CustomerID = CustomerID;
+        this.CustomerID = customer;
         this.Model = Model;
         this.Year_Of_Manufacture = Year_Of_Manufacture;
         this.Warranty_Time = Warranty_Time;
@@ -73,7 +96,7 @@ public class Vehicle {
         this.Vin = Vin;
     }
 
-    public void setCustomerID(Customer CustomerID) {
+    public void setCustomer(Customer CustomerID) {
         this.CustomerID = CustomerID;
     }
 

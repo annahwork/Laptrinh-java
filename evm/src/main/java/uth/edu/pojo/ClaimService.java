@@ -10,12 +10,17 @@ public class ClaimService {
     @Column(name = "ClaimServID")
     private Integer ClaimServID;
 
-    @Column(name = "ClaimID", nullable = false)
-    private Integer ClaimID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ClaimID", nullable = false)
+    private WarrantyClaim warrantyClaim;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ServiceID", nullable = false)
-    private WarrantyService ServiceID;
+    private WarrantyService warrantyService;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TechnicianID")
+    private SCTechnician technician;
 
     @Column(name = "Result", length = 200)
     private String Result;
@@ -25,52 +30,60 @@ public class ClaimService {
 
     public ClaimService() {}
 
-    public ClaimService(Integer ClaimServID, Integer ClaimID, WarrantyService ServiceID, String Name, String Result, String Note) {
-        this.ClaimServID = ClaimServID;
-        this.ClaimID = ClaimID;
-        this.ServiceID = ServiceID;
-        this.Result = Result;
-        this.Note = Note;
+    public ClaimService(Integer claimServID, WarrantyClaim warrantyClaim, WarrantyService warrantyService, SCTechnician technician, String result, String note) {
+        ClaimServID = claimServID;
+        this.warrantyClaim = warrantyClaim;
+        this.warrantyService = warrantyService;
+        this.technician = technician;
+        Result = result;
+        Note = note;
     }
 
     public Integer getClaimServID() {
-        return this.ClaimServID;
+        return ClaimServID;
     }
 
-    public Integer getClaimID() {
-        return this.ClaimID;
+    public void setClaimServID(Integer claimServID) {
+        ClaimServID = claimServID;
     }
 
-    public WarrantyService getServiceID() {
-        return this.ServiceID;
+    public WarrantyClaim getWarrantyClaim() {
+        return warrantyClaim;
+    }
+
+    public void setWarrantyClaim(WarrantyClaim warrantyClaim) {
+        this.warrantyClaim = warrantyClaim;
+    }
+
+    public WarrantyService getWarrantyService() {
+        return warrantyService;
+    }
+
+    public void setWarrantyService(WarrantyService warrantyService) {
+        this.warrantyService = warrantyService;
+    }
+
+    public SCTechnician getTechnician() {
+        return technician;
+    }
+
+    public void setTechnician(SCTechnician technician) {
+        this.technician = technician;
     }
 
     public String getResult() {
-        return this.Result;
+        return Result;
+    }
+
+    public void setResult(String result) {
+        Result = result;
     }
 
     public String getNote() {
-        return this.Note;
+        return Note;
     }
 
-    public void setClaimServID(Integer ClaimServID) {
-        this.ClaimServID = ClaimServID;
+    public void setNote(String note) {
+        Note = note;
     }
-
-    public void setClaimID(Integer ClaimID) {
-        this.ClaimID = ClaimID;
-    }
-
-    public void setServiceID(WarrantyService ServiceID) {
-        this.ServiceID = ServiceID;
-    }
-
-    public void setResult(String Result) {
-        this.Result = Result;
-    }
-
-    public void setDetail(String Note) {
-        this.Note = Note;
-    }
-
 }

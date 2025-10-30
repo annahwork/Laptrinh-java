@@ -10,11 +10,11 @@ public class RecallVehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RecallVehicleID")
-    private Integer recallVehicleID;
+    private Integer RecallVehicleID;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CampaignID", nullable = false)
-    private RecallCampaign recallCampaign;
+    private RecallCampaign RecallCampaign;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "VIN", referencedColumnName = "VIN", nullable = false)
@@ -30,28 +30,28 @@ public class RecallVehicle {
     public RecallVehicle(){
     }
 
-    public RecallVehicle(Integer recallVehicleID, RecallCampaign recallCampaign, Vehicle vehicle, Date appointmentDate, String status) {
-        this.recallVehicleID = recallVehicleID;
-        this.recallCampaign = recallCampaign;
+    public RecallVehicle(Integer RecallVehicleID, RecallCampaign RecallCampaign, Vehicle vehicle, Date appointmentDate, String status) {
+        this.RecallVehicleID = RecallVehicleID;
+        this.RecallCampaign = RecallCampaign;
         this.vehicle = vehicle;
         AppointmentDate = appointmentDate;
         Status = status;
     }
 
     public Integer getRecallVehicleID() {
-        return recallVehicleID;
+        return RecallVehicleID;
     }
 
-    public void setRecallVehicleID(Integer recallVehicleID) {
-        this.recallVehicleID = recallVehicleID;
+    public void setRecallVehicleID(Integer RecallVehicleID) {
+        this.RecallVehicleID = RecallVehicleID;
     }
 
     public RecallCampaign getRecallCampaign() {
-        return recallCampaign;
+        return RecallCampaign;
     }
 
     public void setRecallCampaign(RecallCampaign recallCampaign) {
-        this.recallCampaign = recallCampaign;
+        this.RecallCampaign = recallCampaign;
     }
 
     public Vehicle getVehicle() {

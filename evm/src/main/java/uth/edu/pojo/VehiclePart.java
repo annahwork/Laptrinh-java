@@ -16,11 +16,11 @@ public class VehiclePart {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PartID", nullable = false)
-    private Part part;
+    private Part Part;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "VIN", nullable = false)
-    private Vehicle vehicle;
+    private Vehicle Vehicle;
 
     @Column(name = "SerialNumber", length = 50)
     private String SerialNumber;
@@ -42,10 +42,10 @@ public class VehiclePart {
 
     public VehiclePart() {}
 
-    public VehiclePart(Integer VehiclePartID, Part part, Vehicle vehicle, String SerialNumber, Date InstallDate, Date RemoveDate, User InstalledBy, String Status) {
+    public VehiclePart(Integer VehiclePartID, Part Part, Vehicle Vehicle, String SerialNumber, Date InstallDate, Date RemoveDate, User InstalledBy, String Status) {
         this.VehiclePartID = VehiclePartID;
-        this.PartID = part;
-        this.VIN = vehicle;
+        this.Part = Part;
+        this.Vehicle = Vehicle;
         this.SerialNumber = SerialNumber;
         this.InstallDate = InstallDate;
         this.RemoveDate = RemoveDate;
@@ -58,14 +58,14 @@ public class VehiclePart {
     }
 
     public Part getPart() {
-        return this.PartID;
+        return this.Part;
     }
 
     public Vehicle getVehicle() {
-        return this.VIN;
+        return this.Vehicle;
     }
 
-    public String SerialNumber() {
+    public String getSerialNumber() {
         return this.SerialNumber;
     }
 
@@ -81,7 +81,7 @@ public class VehiclePart {
         return this.InstalledBy;
     }
 
-    public String Status() {
+    public String getStatus() {
         return this.Status;
     }
 
@@ -89,15 +89,15 @@ public class VehiclePart {
         this.VehiclePartID = VehiclePartID;
     }
 
-    public void setPart(Part PartID) {
-        this.PartID = PartID;
+    public void setPart(Part Part) {
+        this.Part = Part;
     }
 
-    public void setVehicle(Vehicle vehicle) {
-        this.VIN = vehicle;
+    public void setVehicle(Vehicle Vehicle) {
+        this.Vehicle = Vehicle;
     }
 
-    public void SerialNumber(String SerialNumber) {
+    public void setSerialNumber(String SerialNumber) {
         this.SerialNumber = SerialNumber;
     }
 

@@ -9,10 +9,10 @@ import java.util.ArrayList;
 public class SCStaff extends User {
 
     @OneToMany(
-            mappedBy = "createdByStaff",
+            mappedBy = "CreatedByStaff",
             fetch = FetchType.LAZY
     )
-    private List<Schedule> createdSchedules = new ArrayList<>();
+    private List<Schedule> CreatedSchedules = new ArrayList<>();
     public SCStaff(){}
 
     public SCStaff(String UserName, String Password, String ManufacturerID, String Name, String Email)

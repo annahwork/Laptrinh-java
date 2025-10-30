@@ -1,11 +1,18 @@
 package uth.edu.pojo;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.ArrayList;
 
 @Entity
-@Table(name = "SCStaff")
+@DiscriminatorValue("SC_STAFF")
 public class SCStaff extends User {
 
+    @OneToMany(
+            mappedBy = "createdByStaff",
+            fetch = FetchType.LAZY
+    )
+    private List<Schedule> createdSchedules = new ArrayList<>();
     public SCStaff(){}
 
     public SCStaff(String UserName, String Password, String ManufacturerID, String Name, String Email)

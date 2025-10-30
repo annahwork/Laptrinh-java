@@ -6,13 +6,19 @@ import java.util.Date;
 @Entity
 @Table(name = "RecallVehicle")
 public class RecallVehicle {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer CampaignID;
+    @Column(name = "RecallVehicleID")
+    private Integer recallVehicleID;
 
-    @Column(name = "VIN", nullable = false, length = 20)
-    private String VIN;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CampaignID", nullable = false)
+    private RecallCampaign recallCampaign;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "VIN", referencedColumnName = "VIN", nullable = false)
+    private Vehicle vehicle;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "AppointmentDate")
@@ -24,47 +30,51 @@ public class RecallVehicle {
     public RecallVehicle(){
     }
 
-    public RecallVehicle(Integer CampaignID, String VIN, Date AppointmentDate, String Status){
-        this.CampaignID = CampaignID;
-        this.VIN = VIN;
-        this.AppointmentDate = AppointmentDate;
-        this.Status = Status;
+    public RecallVehicle(Integer recallVehicleID, RecallCampaign recallCampaign, Vehicle vehicle, Date appointmentDate, String status) {
+        this.recallVehicleID = recallVehicleID;
+        this.recallCampaign = recallCampaign;
+        this.vehicle = vehicle;
+        AppointmentDate = appointmentDate;
+        Status = status;
     }
 
-    public Integer getCampaignID(){
-        return CampaignID;
+    public Integer getRecallVehicleID() {
+        return recallVehicleID;
     }
 
-    public String getVIN(){
-        return VIN;
+    public void setRecallVehicleID(Integer recallVehicleID) {
+        this.recallVehicleID = recallVehicleID;
     }
 
-    public Date AppointmentDate(){
+    public RecallCampaign getRecallCampaign() {
+        return recallCampaign;
+    }
+
+    public void setRecallCampaign(RecallCampaign recallCampaign) {
+        this.recallCampaign = recallCampaign;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+
+    public Date getAppointmentDate() {
         return AppointmentDate;
     }
 
-    public String Status()
-    {
+    public void setAppointmentDate(Date appointmentDate) {
+        AppointmentDate = appointmentDate;
+    }
+
+    public String getStatus() {
         return Status;
     }
 
-    public void setCampaignID(Integer CampaignID)
-    {
-        this.CampaignID = CampaignID;
-    }
-
-    public void setVIN(String VIN)
-    {
-        this.VIN = VIN;
-    }
-
-    public void setAppointmentDate(Date AppointmentDate)
-    {
-        this.AppointmentDate = AppointmentDate;
-    }
-
-    public void setStatus(String Status)
-    {
-        this.Status = Status;
+    public void setStatus(String status) {
+        Status = status;
     }
 }

@@ -2,7 +2,7 @@ package uth.edu.pojo;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "SCTechnician")
+@DiscriminatorValue("SC_TECHNICIAN")
 public class SCTechnician extends User {
 
     public SCTechnician(){}

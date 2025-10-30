@@ -1,14 +1,17 @@
 package uth.edu.pojo;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "Part")
 public class Part {
 
     @Id
-    @Column(name = "PartID", nullable = false, length = 20)
-    private String PartID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "PartID")
+    private Integer PartID;
 
     @Column(name = "Name", nullable = false, length = 100)
     private String Name;
@@ -22,9 +25,23 @@ public class Part {
     @Column(name = "Manufacturer", length = 100)
     private String Manufacturer;
 
+    @OneToMany(
+            mappedBy = "part",
+            fetch = FetchType.LAZY
+    )
+    private List<VehiclePart> vehicleParts = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "part",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    private List<Inventory> inventoryRecords = new ArrayList<>();
+
     public Part(){}
 
-    public Part(String PartID, String Name, String Type, String WarrantyPeriod, String Manufacturer)
+    public Part(Integer PartID, String Name, String Type, String WarrantyPeriod, String Manufacturer)
     {
         this.PartID = PartID;
         this.Name = Name;
@@ -33,7 +50,7 @@ public class Part {
         this.Manufacturer = Manufacturer;
     }
 
-    public String getPartID(){
+    public Integer getPartID(){
         return this.PartID;
     }
 
@@ -53,7 +70,7 @@ public class Part {
         return this.Manufacturer;
     }
 
-    public void setPartID(String PartID){
+    public void setPartID(Integer PartID){
         this.PartID = PartID;
     }
 

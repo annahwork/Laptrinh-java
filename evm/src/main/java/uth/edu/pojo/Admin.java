@@ -3,7 +3,7 @@ package uth.edu.pojo;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Admin")
+@DiscriminatorValue("ADMIN")
 public class Admin extends User {
 
     public Admin() {}

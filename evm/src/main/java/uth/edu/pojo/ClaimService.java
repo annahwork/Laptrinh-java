@@ -12,11 +12,11 @@ public class ClaimService {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ClaimID", nullable = false)
-    private WarrantyClaim warrantyClaim;
+    private WarrantyClaim WarrantyClaim;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ServiceID", nullable = false)
-    private WarrantyService warrantyService;
+    private WarrantyService WarrantyService;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TechnicianID")
@@ -30,37 +30,37 @@ public class ClaimService {
 
     public ClaimService() {}
 
-    public ClaimService(Integer claimServID, WarrantyClaim warrantyClaim, WarrantyService warrantyService, SCTechnician technician, String result, String note) {
-        ClaimServID = claimServID;
-        this.warrantyClaim = warrantyClaim;
-        this.warrantyService = warrantyService;
+    public ClaimService(Integer ClaimServID, WarrantyClaim WarrantyClaim, WarrantyService WarrantyService, SCTechnician technician, String result, String note) {
+        this.ClaimServID = ClaimServID;
+        this.WarrantyClaim = WarrantyClaim;
+        this.WarrantyService = WarrantyService;
         this.technician = technician;
-        Result = result;
-        Note = note;
+        this.Result = result;
+        this.Note = note;
     }
 
     public Integer getClaimServID() {
         return ClaimServID;
     }
 
-    public void setClaimServID(Integer claimServID) {
-        ClaimServID = claimServID;
+    public void setClaimServID(Integer ClaimServID) {
+        this.ClaimServID = ClaimServID;
     }
 
     public WarrantyClaim getWarrantyClaim() {
-        return warrantyClaim;
+        return WarrantyClaim;
     }
 
-    public void setWarrantyClaim(WarrantyClaim warrantyClaim) {
-        this.warrantyClaim = warrantyClaim;
+    public void setWarrantyClaim(WarrantyClaim WarrantyClaim) {
+        this.WarrantyClaim = WarrantyClaim;
     }
 
     public WarrantyService getWarrantyService() {
-        return warrantyService;
+        return this.WarrantyService;
     }
 
-    public void setWarrantyService(WarrantyService warrantyService) {
-        this.warrantyService = warrantyService;
+    public void setWarrantyService(WarrantyService WarrantyService) {
+        this.WarrantyService = WarrantyService;
     }
 
     public SCTechnician getTechnician() {

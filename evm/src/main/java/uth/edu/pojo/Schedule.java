@@ -14,15 +14,15 @@ public class Schedule {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CampaignID", nullable = false)
-    private RecallCampaign recallCampaign;
+    private RecallCampaign RecallCampaign;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CustomerID", nullable = false)
-    private Customer customer;
+    private Customer Customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "UserID", nullable = false) // FK đến System_User
-    private SCStaff createdByStaff;
+    private SCStaff CreatedByStaff;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "Date", nullable = false)
@@ -33,25 +33,25 @@ public class Schedule {
 
     public Schedule(){}
 
-    public Schedule(String ScheduleID, RecallCampaign recallCampaign, Customer customer, Date Date, String Note)
+    public Schedule(Integer ScheduleID, RecallCampaign RecallCampaign, Customer customer, Date Date, String Note)
     {
         this.ScheduleID = ScheduleID;
-        this.CampaignID = recallCampaign;
-        this.CustomerID = customer;
+        this.RecallCampaign = RecallCampaign;
+        this.Customer = customer;
         this.Date = Date;
         this.Note = Note;
     }
 
-    public String getScheduleID(){
+    public Integer getScheduleID(){
         return this.ScheduleID;
     }
 
-    public RecallCampaign CampaignID(){
-        return this.CampaignID;
+    public RecallCampaign getRecallCampaign(){
+        return this.RecallCampaign;
     }
 
-    public Customer CustomerID(){
-        return this.CustomerID;
+    public Customer getCustomer(){
+        return this.Customer;
     }
 
     public Date getDate(){
@@ -62,18 +62,22 @@ public class Schedule {
         return this.Note;
     }
 
-    public void setScheduleID(String ScheduleID){
+    public SCStaff getCreatedByStaff(){
+        return this.CreatedByStaff;
+    }
+
+    public void setScheduleID(Integer ScheduleID){
         this.ScheduleID = ScheduleID;
     }
 
-    public void setRecallCampaign(RecallCampaign CampaignID)
+    public void setRecallCampaign(RecallCampaign RecallCampaign)
     {
-        this.CampaignID = CampaignID;
+        this.RecallCampaign = RecallCampaign;
     }
 
-    public void setCustomer(Customer CustomerID)
+    public void setCustomer(Customer Customer)
     {
-        this.CustomerID = CustomerID;
+        this.Customer = Customer;
     }
 
     public void setDate(Date Date){
@@ -84,4 +88,7 @@ public class Schedule {
         this.Note = Note;
     }
 
+    public void setCreatedByStaff(SCStaff CreatedByStaff){
+        this.CreatedByStaff = CreatedByStaff;
+    }
 }

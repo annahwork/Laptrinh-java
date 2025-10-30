@@ -1,7 +1,10 @@
 package uth.edu.pojo;
 
 import javax.persistence.*;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "RecallCampaign")
@@ -13,8 +16,8 @@ public class RecallCampaign {
     private Integer CampaignID;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Creator_UserID") // Tên cột khóa ngoại trong bảng Recall_Campaign
-    private EVMStaff createdByStaff;
+    @JoinColumn(name = "UserID") // Tên cột khóa ngoại trong bảng Recall_Campaign
+    private EVMStaff CreatedByStaff;
 
     @Column(name = "Name", nullable = false, length = 100)
     private String Name;
@@ -30,26 +33,27 @@ public class RecallCampaign {
     private String Description;
 
     @OneToMany(
-            mappedBy = "recallCampaign",
+            mappedBy = "RecallCampaign",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
-    private List<RecallVehicle> vehiclesInCampaign = new ArrayList<>();
+
+    private List<RecallVehicle> VehiclesInCampaign = new ArrayList<>();
 
     @OneToMany(
-            mappedBy = "recallCampaign",
+            mappedBy = "RecallCampaign",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL
     )
-    private List<Schedule> schedules = new ArrayList<>();
+    private List<Schedule> Schedules = new ArrayList<>();
 
     public RecallCampaign(){}
 
-    public RecallCampaign(Integer CampaignID, EVMStaff createdByStaff, String Name, String Status, Date Date, String Description)
+    public RecallCampaign(Integer CampaignID, EVMStaff CreatedByStaff, String Name, String Status, Date Date, String Description)
     {
         this.CampaignID = CampaignID;
-        this.createdByStaff = createdByStaff;
+        this.CreatedByStaff = CreatedByStaff;
         this.Name = Name;
         this.Status = Status;
         this.Date = Date;

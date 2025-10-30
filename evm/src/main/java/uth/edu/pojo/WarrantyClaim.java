@@ -15,11 +15,11 @@ public class WarrantyClaim {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "VehiclePartID", nullable = false)
-    private VehiclePart vehiclePart;
+    private VehiclePart VehiclePart;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "UserID") // Người tạo claim (SCStaff)
-    private SCStaff createdByStaff;
+    private SCStaff CreatedByStaff;
 
     @Column(name = "Description", length = 500)
     private String Description;
@@ -35,27 +35,27 @@ public class WarrantyClaim {
     private String Attachment;
 
     @OneToMany(
-            mappedBy = "warrantyClaim",
+            mappedBy = "WarrantyClaim",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
-    private List<WarrantyHistory> history = new ArrayList<>();
+    private List<WarrantyHistory> History = new ArrayList<>();
 
     @OneToMany(
-            mappedBy = "warrantyClaim",
+            mappedBy = "WarrantyClaim",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
-    private List<ClaimService> claimServices = new ArrayList<>();
+    private List<ClaimService> ClaimServices = new ArrayList<>();
 
     public WarrantyClaim() {}
 
-    public WarrantyClaim(Integer ClaimID, VehiclePart vehiclePart, SCStaff createdByStaff, String Description, String Status, Date Date, String Attachment) {
+    public WarrantyClaim(Integer ClaimID, VehiclePart VehiclePart, SCStaff CreatedByStaff, String Description, String Status, Date Date, String Attachment) {
         this.ClaimID = ClaimID;
-        this.VehiclePartID = vehiclePart;
-        this.createdByStaff = createdByStaff;
+        this.VehiclePart = VehiclePart;
+        this.CreatedByStaff = CreatedByStaff;
         this.Description = Description;
         this.Status = Status;
         this.Date = Date;
@@ -67,11 +67,11 @@ public class WarrantyClaim {
     }
 
     public VehiclePart getVehiclePart() {
-        return this.VehiclePartID;
+        return this.VehiclePart;
     }
 
-    public User getUser() {
-        return this.UserID;
+    public User getCreatedByStaff() {
+        return this.CreatedByStaff;
     }
 
     public String getDescription() {
@@ -94,12 +94,12 @@ public class WarrantyClaim {
         this.ClaimID = ClaimID;
     }
 
-    public void setVehiclePart(VehiclePart VehiclePartID) {
-        this.VehiclePartID = VehiclePartID;
+    public void setVehiclePart(VehiclePart VehiclePart) {
+        this.VehiclePart = VehiclePart;
     }
 
-    public void setUser(User UserID) {
-        this.UserID = UserID;
+    public void setCreatedByStaff(SCStaff CreatedByStaff) {
+        this.CreatedByStaff = CreatedByStaff;
     }
 
     public void setDescription(String Description) {

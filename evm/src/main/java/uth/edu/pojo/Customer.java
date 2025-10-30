@@ -31,14 +31,14 @@ public class Customer {
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
-    private List<Vehicle> vehicles = new ArrayList<>();
+    private List<Vehicle> Vehicles = new ArrayList<>();
 
     @OneToMany(
-            mappedBy = "customer",
+            mappedBy = "Customer",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL
     )
-    private List<Schedule> schedules = new ArrayList<>();
+    private List<Schedule> Schedules = new ArrayList<>();
 
     public Customer() {}
 

@@ -9,11 +9,11 @@ public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "InventoryID")
-    private Integer inventoryID;
+    private Integer InventoryID;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PartID", nullable = false)
-    private Part part;
+    private Part Part;
 
     @Column(name = "CurrentStock")
     private Integer CurrentStock;
@@ -23,19 +23,19 @@ public class Inventory {
 
     public Inventory() {}
 
-    public Inventory(Integer inventoryID, Part part, String Location, Integer CurrentStock) {
-        this.InvenStoryID = inventoryID;
-        this.PartID = part;
+    public Inventory(Integer InventoryID, Part Part, String Location, Integer CurrentStock) {
+        this.InventoryID = InventoryID;
+        this.Part = Part;
         this.Location = Location;
         this.CurrentStock = CurrentStock;
     }
 
     public Integer getInventoryID() {
-        return this.InvenStoryID;
+        return this.InventoryID;
     }
 
     public Part getPart() {
-        return this.PartID;
+        return this.Part;
     }
 
     public String getLocation() {
@@ -46,12 +46,12 @@ public class Inventory {
         return this.CurrentStock;
     }
 
-    public void setInventoryID(Integer InvenStoryID) {
-        this.InvenStoryID = InvenStoryID;
+    public void setInventoryID(Integer InventoryID) {
+        this.InventoryID = InventoryID;
     }
 
-    public void setPart(Part PartID) {
-        this.PartID = PartID;
+    public void setPart(Part Part) {
+        this.Part = Part;
     }
 
     public void setLocation(String Location) {

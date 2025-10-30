@@ -26,18 +26,18 @@ public class Part {
     private String Manufacturer;
 
     @OneToMany(
-            mappedBy = "part",
+            mappedBy = "Part",
             fetch = FetchType.LAZY
     )
-    private List<VehiclePart> vehicleParts = new ArrayList<>();
+    private List<VehiclePart> VehicleParts = new ArrayList<>();
 
     @OneToMany(
-            mappedBy = "part",
+            mappedBy = "Part",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
-    private List<Inventory> inventoryRecords = new ArrayList<>();
+    private List<Inventory> InventoryRecords = new ArrayList<>();
 
     public Part(){}
 

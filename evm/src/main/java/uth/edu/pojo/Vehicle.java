@@ -1,12 +1,18 @@
 package uth.edu.pojo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+
 import javax.persistence.JoinColumn;
 
 @Entity
@@ -15,11 +21,11 @@ public class Vehicle {
 
     @Id
     @Column(name = "VIN", nullable = false, unique = true, length = 20)
-    private String Vin;
+    private String VIN;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CustomerID", nullable = false)
-    private Customer customer;
+    private Customer Customer;
 
     @Column(name = "Model", nullable = false, length = 50)
     private String Model;
@@ -34,46 +40,46 @@ public class Vehicle {
     private String Status;
 
     @OneToMany(
-            mappedBy = "vehicle",
+            mappedBy = "Vehicle",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
-    private List<VehiclePart> vehicleParts = new ArrayList<>();
+    private List<VehiclePart> VehicleParts = new ArrayList<>();
 
     @OneToMany(
-            mappedBy = "vehicle",
+            mappedBy = "Vehicle",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
-    private List<WarrantyClaim> warrantyClaims = new ArrayList<>();
+    private List<WarrantyClaim> WarrantyClaims = new ArrayList<>();
 
     @OneToMany(
-            mappedBy = "vehicle",
+            mappedBy = "Vehicle",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
-    private List<RecallVehicle> recalls = new ArrayList<>();
+    private List<RecallVehicle> Recalls = new ArrayList<>();
 
     public Vehicle() {}
 
-    public Vehicle(String Vin, Customer customer, String Model, Integer Year_Of_Manufacture, String Warranty_Time, String Status) {
-        this.Vin = Vin;
-        this.CustomerID = customer;
+    public Vehicle(String VIN, Customer Customer, String Model, Integer Year_Of_Manufacture, String Warranty_Time, String Status) {
+        this.VIN = VIN;
+        this.Customer = Customer;
         this.Model = Model;
         this.Year_Of_Manufacture = Year_Of_Manufacture;
         this.Warranty_Time = Warranty_Time;
         this.Status = Status;
     }
 
-    public String getVin() {
-        return this.Vin;
+    public String getVIN() {
+        return this.VIN;
     }
 
-    public Customer CustomerID() {
-        return this.CustomerID;
+    public Customer Customer() {
+        return this.Customer;
     }
 
     public String getModel() {
@@ -92,12 +98,12 @@ public class Vehicle {
         return this.Status;
     }
 
-    public void setVin(String Vin) {
-        this.Vin = Vin;
+    public void setVIN(String VIN) {
+        this.VIN = VIN;
     }
 
-    public void setCustomer(Customer CustomerID) {
-        this.CustomerID = CustomerID;
+    public void setCustomer(Customer Customer) {
+        this.Customer = Customer;
     }
 
     public void setModel(String Model) {

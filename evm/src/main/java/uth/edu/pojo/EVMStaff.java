@@ -8,10 +8,10 @@ import java.util.List;
 public class EVMStaff extends User {
 
     @OneToMany(
-            mappedBy = "createdByStaff",
+            mappedBy = "CreatedByStaff",
             fetch = FetchType.LAZY
     )
-    private List<RecallCampaign> managedCampaigns = new ArrayList<>();
+    private List<RecallCampaign> ManagedCampaigns = new ArrayList<>();
     public EVMStaff() {}
 
     public EVMStaff(String UserName, String Password, String Name) {

@@ -28,7 +28,7 @@ public class WarrantyService {
             mappedBy = "warrantyService",
             fetch = FetchType.LAZY
     )
-    private List<ClaimService> claimServices = new ArrayList<>();
+    private List<ClaimService> ClaimServices = new ArrayList<>();
 
     public WarrantyService(){}
 

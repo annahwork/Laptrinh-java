@@ -4,60 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c1113d8-0d76-4694-aa47-5f337a0cea98" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/evm/frontend/assets/css/SC-Staff/customer_record_management.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/evm/frontend/assets/css/SC-Staff/vehicle_record_management.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/evm/frontend/assets/js/SC-Staff/customer_record_management.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/evm/frontend/assets/js/SC-Staff/vehicle_record_management.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/evm/frontend/pages/SC-Staff/Section/customer_record_management.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/evm/frontend/pages/SC-Staff/Section/vehicle_record_management.html" afterDir="false" />
+    <list default="true" id="1c1113d8-0d76-4694-aa47-5f337a0cea98" name="Changes" comment="chore: cập nhật lại thư mục trong code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/AdminDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/AdminDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/ClaimServiceDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/ClaimServiceDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/CustomerDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/CustomerDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/EVMStaffDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/EVMStaffDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/InventoryDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/InventoryDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/NotificationDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/NotificationDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/PartDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/PartDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/RecallCampaignDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/RecallCampaignDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/RecallVehicleDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/RecallVehicleDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/SCStaffDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/SCStaffDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/SCTechnicianDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/SCTechnicianDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/ScheduleDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/ScheduleDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/UserDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/UserDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/VehicleDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/VehicleDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/VehiclePartDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/VehiclePartDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/WarrantyClaimDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/WarrantyClaimDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/WarrantyHistoryDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/WarrantyHistoryDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/WarrantyServiceDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/WarrantyServiceDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Admin.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Admin.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/ClaimService.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/ClaimService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Customer.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Customer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/EVMStaff.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/EVMStaff.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Inventory.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Inventory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Notification.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Notification.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Part.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Part.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/RecallCampaign.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/RecallCampaign.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/RecallVehicle.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/RecallVehicle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/SCStaff.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/SCStaff.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/SCTechnician.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/SCTechnician.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Schedule.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Schedule.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Vehicle.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Vehicle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/VehiclePart.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/VehiclePart.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/WarrantyClaim.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/WarrantyClaim.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/WarrantyHistory.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/WarrantyHistory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/WarrantyService.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/WarrantyService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/AdminRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/AdminRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/ClaimServiceRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/ClaimServiceRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/CustomerRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/CustomerRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/EVMStaffRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/EVMStaffRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/InventoryRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/InventoryRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/NotificationRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/NotificationRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/PartRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/PartRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/RecallCampaignRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/RecallCampaignRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/RecallVehicleRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/RecallVehicleRepository.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,6 +21,12 @@
   </component>
   <component name="Git.Settings">
     <branch-grouping />
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--follow-tags" />
+        <option name="title" value="Current Branch" />
+      </GitPushTagMode>
+    </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="gia-han" />
@@ -104,29 +58,29 @@
     <option name="openDirectoriesWithSingleClick" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Latitude/JAVA/Project/Laptrinh-java&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "gia-han",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Latitude/JAVA/Project/Laptrinh-java",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;JAVA&quot;
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "JAVA"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/frontend/js/SC Staff" />
@@ -201,7 +155,63 @@
       <option name="project" value="LOCAL" />
       <updated>1761426023977</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="chore: cập nhật lại thư mục trong code">
+      <option name="closed" value="true" />
+      <created>1761924486286</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1761924486286</updated>
+    </task>
+    <task id="LOCAL-00003" summary="chore: cập nhật lại thư mục trong code">
+      <option name="closed" value="true" />
+      <created>1761924534365</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1761924534365</updated>
+    </task>
+    <task id="LOCAL-00004" summary="chore: cập nhật lại thư mục trong code">
+      <option name="closed" value="true" />
+      <created>1761924590672</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1761924590672</updated>
+    </task>
+    <task id="LOCAL-00005" summary="chore: cập nhật lại thư mục trong code">
+      <option name="closed" value="true" />
+      <created>1761924693936</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1761924693936</updated>
+    </task>
+    <task id="LOCAL-00006" summary="chore: cập nhật lại thư mục trong code">
+      <option name="closed" value="true" />
+      <created>1761924955331</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1761924955331</updated>
+    </task>
+    <task id="LOCAL-00007" summary="chore: cập nhật lại thư mục trong code">
+      <option name="closed" value="true" />
+      <created>1761924995107</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1761924995107</updated>
+    </task>
+    <task id="LOCAL-00008" summary="chore: cập nhật lại thư mục trong code">
+      <option name="closed" value="true" />
+      <created>1761925083143</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1761925083143</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -254,6 +264,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Cập Nhật Lại 1 Số Chức Năng Của SC Staff và SC Technican" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cập Nhật Lại 1 Số Chức Năng Của SC Staff và SC Technican" />
+    <MESSAGE value="chore: cập nhật lại thư mục trong code" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: cập nhật lại thư mục trong code" />
   </component>
 </project>

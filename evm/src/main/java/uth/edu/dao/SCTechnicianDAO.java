@@ -75,12 +75,12 @@ public class SCTechnicianDAO {
         }
     }
 
-    public SCTechnician getTechnicianById(String userName) {
+    public SCTechnician getTechnicianById(int id) {
         Session session = null;
         SCTechnician technician = null;
         try {
             session = sessionFactory.openSession();
-            technician = session.get(SCTechnician.class, userName);
+            technician = session.get(SCTechnician.class, id);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

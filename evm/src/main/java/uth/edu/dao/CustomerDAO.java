@@ -73,7 +73,7 @@ public class CustomerDAO {
         }
     }
 
-    public Customer getCustomerById(String id) {
+    public Customer getCustomerById(int id) {
         Session session = null;
         Customer customer = null;
         try {

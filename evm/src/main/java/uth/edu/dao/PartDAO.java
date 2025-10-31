@@ -74,7 +74,7 @@ public class PartDAO {
         }
     }
 
-    public Part getPartById(String partId) {
+    public Part getPartById(int partId) {
         Session session = null;
         Part part = null;
         try {

@@ -1,0 +1,311 @@
+/* ===============================
+   TRANG BẢO HÀNH - THEME CHUẨN OEM EV
+=============================== */
+.warranty-page {
+  font-family: "Segoe UI", sans-serif;
+  padding: 20px 30px;
+  background-color: #f7f9fc;
+  color: #333;
+}
+
+/* ===============================
+   HEADER TRANG
+=============================== */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.page-header h2 {
+  font-size: 20px;
+  color: #0d47a1;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.page-header .actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.page-header input,
+.page-header select {
+  padding: 8px 10px;
+  border: 1px solid #d0d7e2;
+  border-radius: 8px;
+  background-color: #fff;
+  font-size: 14px;
+  transition: 0.25s ease;
+}
+
+.page-header input:focus,
+.page-header select:focus {
+  border-color: #0a66c2;
+  box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.2);
+  outline: none;
+}
+
+/* ===============================
+   BUTTON STYLES
+=============================== */
+.btn-primary {
+  background: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.15s ease;
+}
+
+.btn-primary:hover {
+  background: #0d47a1;
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  border: 1px solid #1976d2;
+  background: transparent;
+  color: #1976d2;
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+.btn-outline:hover {
+  background: #1976d2;
+  color: #fff;
+}
+
+/* ===============================
+   LƯỚI CARD (DANH SÁCH)
+=============================== */
+.data-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+/* ===============================
+   CARD BẢO HÀNH (Header + Body)
+=============================== */
+.data-card {
+  background: #fff;
+  border: 1px solid #e3e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.25s ease;
+}
+
+.data-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(10, 102, 194, 0.12);
+}
+
+/* Header */
+.card-header {
+  background-color: #f1f5fb;
+  border-bottom: 1px solid #e3e8f0;
+  padding: 10px 16px;
+}
+
+.card-header h3 {
+  color: #0a66c2;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* Body */
+.card-body {
+  padding: 14px 16px 18px 16px;
+}
+
+.card-body p {
+  margin: 6px 0;
+  color: #334155;
+  font-size: 0.95rem;
+}
+
+.card-body strong {
+  color: #0f172a;
+}
+
+.card-body .btn-outline {
+  margin-top: 12px;
+  display: inline-block;
+}
+
+/* ===============================
+   FORM GRID
+=============================== */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.form-card {
+  background: #fff;
+  border: 1px solid #e3e8f0;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  padding: 16px 20px;
+  transition: 0.3s;
+}
+
+.form-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(25, 118, 210, 0.1);
+}
+
+.form-card label {
+  display: block;
+  margin-top: 10px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.form-card input,
+.form-card textarea,
+.form-card select {
+  width: 100%;
+  margin-top: 4px;
+  padding: 8px 10px;
+  border: 1px solid #d0d7e2;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #f9fbff;
+}
+
+/* ===============================
+   PHỤ TÙNG - THẺ LINH KIỆN (CÓ HEADER RIÊNG)
+=============================== */
+.part-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: #ffffff;
+  border: 1px solid #e3e8ef;
+  border-radius: 12px;
+  padding: 0; /* bỏ padding để chia header + body */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.25s ease;
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+
+.part-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(10, 102, 194, 0.15);
+}
+
+/* Header (h3) */
+.part-info h3 {
+  background-color: #f1f5fb;
+  color: #0a66c2;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e3e8ef;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+/* Nội dung (p) */
+.part-info {
+  flex: 1;
+  padding: 10px 16px 14px 16px;
+}
+
+.part-info p {
+  margin: 6px 0;
+  color: #334155;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.part-info strong {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+/* Badge trạng thái */
+.part-status {
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  align-self: flex-start;
+  white-space: nowrap;
+  margin: 14px 16px 0 0;
+  height: fit-content;
+}
+
+/* ===============================
+   CÁC MÀU TRẠNG THÁI
+=============================== */
+.part-status.shipped {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.part-status.received {
+  background: #e8f5e9;
+  color: #388e3c;
+}
+
+.part-status.pending {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.part-status.delayed {
+  background: #fdecea;
+  color: #991b1b;
+}
+
+/* ===============================
+   RESPONSIVE
+=============================== */
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .page-header .actions {
+    width: 100%;
+  }
+
+  .btn-primary,
+  .btn-outline {
+    width: 100%;
+    text-align: center;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .data-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .part-card {
+    flex-direction: column;
+  }
+
+  .part-status {
+    align-self: flex-end;
+    margin: 10px 16px;
+  }
+}

@@ -73,7 +73,7 @@ public class WarrantyClaimDAO {
         }
     }
 
-    public WarrantyClaim getWarrantyClaimById(String claimID) {
+    public WarrantyClaim getWarrantyClaimById(int claimID) {
         Session session = null;
         WarrantyClaim claim = null;
         try {

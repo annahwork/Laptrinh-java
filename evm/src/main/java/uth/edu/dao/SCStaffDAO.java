@@ -75,12 +75,12 @@ public class SCStaffDAO {
         }
     }
 
-    public SCStaff getSCStaffById(String userName) {
+    public SCStaff getSCStaffById(int id) {
         Session session = null;
         SCStaff staff = null;
         try {
             session = sessionFactory.openSession();
-            staff = session.get(SCStaff.class, userName);
+            staff = session.get(SCStaff.class, id);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

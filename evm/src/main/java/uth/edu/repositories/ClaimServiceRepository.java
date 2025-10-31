@@ -29,8 +29,8 @@ public class ClaimServiceRepository implements IClaimServiceRepository {
     }
 
     @Override
-    public ClaimService getClaimServiceById(long id) {
-        return claimServiceDAO.getClaimServiceById((int) id);
+    public ClaimService getClaimServiceById(int id) {
+        return claimServiceDAO.getClaimServiceById(id);
     }
 
     @Override

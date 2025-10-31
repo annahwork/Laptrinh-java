@@ -29,8 +29,8 @@ public class CustomerRepository implements ICustomerRepository {
     }
 
     @Override
-    public Customer getCustomerById(long id) {
-        return customerDAO.getCustomerById((int) id);
+    public Customer getCustomerById(int id) {
+        return customerDAO.getCustomerById(id);
     }
 
     @Override

@@ -29,8 +29,8 @@ public class AdminRepository implements IAdminRepository {
     }
 
     @Override
-    public Admin getAdminById(long id) {
-        return adminDAO.getAdminById((int) id);
+    public Admin getAdminById(int id) {
+        return adminDAO.getAdminById(id);
     }
 
     @Override

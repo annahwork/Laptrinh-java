@@ -1,0 +1,74 @@
+
+<section id="customer_record_management" class="records-section">
+    <header class="records-header">
+        <h2>Hồ sơ khách hàng</h2>
+        <div class="records-controls">
+            <input id="customer-search" placeholder="Tìm theo tên / SĐT / email..." />
+            <button id="btn-add-customer" class="btn primary">+ Thêm khách</button>
+            <button id="btn-export-customers" class="btn">Xuất CSV</button>
+            <input id="file-import-customers" type="file" accept=".json" style="display:none"/>
+            <button id="btn-import-customers" class="btn">Nhập JSON</button>
+        </div>
+    </header>
+
+    <div class="table-card">
+        <table id="customers-table" class="records-table">
+            <thead>
+            <tr>
+                <th>Mã KH</th>
+                <th>Tên</th>
+                <th>Điện thoại</th>
+                <th>Email</th>
+                <th>Địa chỉ</th>
+                <th style="width:130px">Hành động</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div id="customers-empty" class="empty-note">
+            Chưa có khách hàng. Nhấn "Thêm khách" để tạo mới.
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="customer-modal" class="modal modal-hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="customer-modal-title">Thêm khách hàng</h3>
+                <span id="modal-close" class="modal-close">&times;</span>
+            </div>
+
+            <form id="customer-form" class="form-grid">
+                <div class="form-group">
+                    <label>Mã KH</label>
+                    <input id="cust-id" readonly />
+                </div>
+                <div class="form-group">
+                    <label>Tên <span class="text-danger">*</span></label>
+                    <input id="cust-name" required />
+                </div>
+                <div class="form-group">
+                    <label>Điện thoại</label>
+                    <input id="cust-phone" />
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input id="cust-email" type="email" />
+                </div>
+                <div class="form-group">
+                    <label>Địa chỉ</label>
+                    <input id="cust-address" />
+                </div>
+
+                <div class="modal-actions">
+                    <button type="submit" class="btn primary" id="customer-save">Lưu</button>
+                    <button type="button" class="btn" id="customer-cancel">Hủy</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script src="evm/frontend/assets/js/SC-Staff/customer_record_management.js"></script>
+</body>
+</html>

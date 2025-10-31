@@ -1,4 +1,4 @@
-// ====  customer_record_management.js  ====
+// ====  customer_record_management.js ====
 document.addEventListener("DOMContentLoaded", function () {
   // ==== STATE ====
   let customers = [];

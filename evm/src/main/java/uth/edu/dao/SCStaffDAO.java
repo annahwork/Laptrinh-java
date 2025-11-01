@@ -1,11 +1,12 @@
 package uth.edu.dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import uth.edu.pojo.SCStaff;
 
-import java.util.List;
+import uth.edu.pojo.SCStaff;
 
 public class SCStaffDAO {
 
@@ -91,7 +92,7 @@ public class SCStaffDAO {
         return staff;
     }
 
-    public List<SCStaff> getAllSCStaff(int page, int pageSize) {
+    public List<SCStaff> getAllSCStaffs(int page, int pageSize) {
         Session session = null;
         List<SCStaff> staffList = null;
         try {

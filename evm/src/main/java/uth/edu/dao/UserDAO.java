@@ -110,6 +110,24 @@ public class UserDAO {
         return users;
     }
 
+    public User getUserByUserName(String userName) {
+        Session session = null;
+        User user = null;
+        try {
+            session = sessionFactory.openSession();
+            user = session.createQuery("FROM User WHERE UserName = :userName", User.class)
+                    .setParameter("userName", userName)
+                    .uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return user;
+    }
+
     public void closeSessionFactory() {
         if (sessionFactory != null) {
             sessionFactory.close();

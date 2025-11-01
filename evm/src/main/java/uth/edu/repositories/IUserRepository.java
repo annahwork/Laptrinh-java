@@ -1,9 +1,14 @@
 package uth.edu.repositories;
 
+import java.util.List;
+import uth.edu.pojo.User;
+
 public interface IUserRepository {
-    public void addUser(uth.edu.pojo.User User);
-    public void updateUser(uth.edu.pojo.User User);
-    public void deleteUser(uth.edu.pojo.User User);
-    public uth.edu.pojo.User getUserById(int id);
-    public java.util.List<uth.edu.pojo.User> getAllUsers(int page, int pageSize);
+    public void addUser(User user);
+    public void updateUser(User user);
+    public void deleteUser(User user);
+    public User getUserById(int id);
+    public List<User> getAllUsers(int page, int pageSize);
+    public User getUserByUserName(String userName);
 }
+

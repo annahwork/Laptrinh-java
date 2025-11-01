@@ -35,6 +35,6 @@ public class SCStaffRepository implements ISCStaffRepository {
 
     @Override
     public List<SCStaff> getAllSCStaffs(int page, int pageSize) {
-        return SCStaffDAO.getAllSCStaffs(page, pageSize);
+        return SCStaffDAO.getAllSCStaff(page, pageSize);
     }
 }

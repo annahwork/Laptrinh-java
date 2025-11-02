@@ -15,7 +15,7 @@
     color: #1a1a1a;
     margin-bottom: 1rem;
     text-align: center;
-    border-bottom: 3px solid #007bff;
+    border-bottom: 3px solid #1a1a1a;
     padding-bottom: 1rem;
 }
 
@@ -42,10 +42,10 @@
 .privacy-policy__section-title {
     font-size: 1.5rem;
     font-weight: 600;
-    color: #007bff;
+    color: #1a1a1a;
     margin-bottom: 1rem;
     padding-left: 0.5rem;
-    border-left: 4px solid #007bff;
+    border-left: 4px solid #1a1a1a;
 }
 
 .privacy-policy__list {

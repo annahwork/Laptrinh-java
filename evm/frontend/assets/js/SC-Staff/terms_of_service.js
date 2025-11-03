@@ -1,9 +1,6 @@
-// Terms of Service JavaScript
-
 document.addEventListener('DOMContentLoaded', function () {
     console.log('Terms of Service page loaded');
 
-    // Smooth scroll for anchor links
     const links = document.querySelectorAll('a[href^="#"]');
     links.forEach(link => {
         link.addEventListener('click', function (e) {
@@ -20,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Highlight current section while scrolling
     const sections = document.querySelectorAll('.terms-of-service__section');
     const observerOptions = {
         root: null,
@@ -41,7 +37,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const observer = new IntersectionObserver(observerCallback, observerOptions);
     sections.forEach(section => observer.observe(section));
 
-    // Add animation to sections on scroll
     const animateOnScroll = () => {
         sections.forEach(section => {
             const sectionTop = section.getBoundingClientRect().top;
@@ -54,16 +49,14 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     };
 
-    // Initial styling for animation
     sections.forEach(section => {
         section.style.opacity = '0';
         section.style.transform = 'translateY(20px)';
         section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
     });
 
-    // Run animation on load and scroll
     animateOnScroll();
-    window.addEventListener('scroll', animateOnScroll);    // Back to top button
+    window.addEventListener('scroll', animateOnScroll);
     const addBackToTopButton = () => {
         const backToTopBtn = document.createElement('button');
         backToTopBtn.innerHTML = '↑';

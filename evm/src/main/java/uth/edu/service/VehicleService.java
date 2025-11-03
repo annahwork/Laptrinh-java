@@ -1,11 +1,19 @@
 package uth.edu.service;
 
-import uth.edu.dao.*;
-import uth.edu.pojo.*;
-import uth.edu.repositories.*;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import uth.edu.pojo.VehiclePart;
+import uth.edu.pojo.WarrantyHistory;
+import uth.edu.pojo.Vehicle;
+import uth.edu.pojo.Customer;
+import uth.edu.pojo.Part;
+import uth.edu.pojo.SCStaff;
+import uth.edu.pojo.SCTechnician;
+import uth.edu.pojo.User;
+import uth.edu.repositories.VehiclePartRepository;
+import uth.edu.repositories.VehicleRepository;
+import uth.edu.repositories.CustomerRepository;
+import uth.edu.repositories.PartRepository;
+import uth.edu.repositories.SCStaffRepository;
+import uth.edu.repositories.UserRepository;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,32 +25,30 @@ public class VehicleService {
     private CustomerRepository customerRepository;
     private VehiclePartRepository vehiclePartRepository;
     private PartRepository partRepository;
-    private SCStaffDAO scStaffDAO;
-    private UserDAO userDAO;
-    private SessionFactory sessionFactory;
+    private SCStaffRepository scStaffRepository;
+    private UserRepository userRepository;
 
     public VehicleService() {
         vehicleRepository = new VehicleRepository();
         customerRepository = new CustomerRepository();
         vehiclePartRepository = new VehiclePartRepository();
         partRepository = new PartRepository();
-        scStaffDAO = new SCStaffDAO("Hibernate.cfg.xml");
-        userDAO = new UserDAO("Hibernate.cfg.xml");
-
-        Configuration configuration = new Configuration();
-        configuration.configure("Hibernate.cfg.xml");
-        sessionFactory = configuration.buildSessionFactory();
+        scStaffRepository = new SCStaffRepository();
+        userRepository = new UserRepository();
     }
 
     public boolean RegisterVehicle(Integer SCStaffID, Vehicle VehicleData, Customer CustomerData) {
         try {
-            SCStaff staff = scStaffDAO.getSCStaffById(SCStaffID);
-            if (staff == null) return false;
+            SCStaff staff = scStaffRepository.getSCStaffById(SCStaffID);
+            if (staff == null) 
+                return false;
 
-            if (VehicleData == null || CustomerData == null) return false;
+            if (VehicleData == null || CustomerData == null) 
+                return false;
 
             Vehicle existingVehicle = vehicleRepository.getVehicleByVin(VehicleData.getVIN());
-            if (existingVehicle != null) return false;
+            if (existingVehicle != null) 
+                return false;
 
             Customer existingCustomer = null;
             if (CustomerData.getCustomerID() != null && CustomerData.getCustomerID() > 0) {
@@ -72,19 +78,22 @@ public class VehicleService {
 
     public boolean AssignPartToVehicle(Integer SCStaffID, String VIN, Integer PartId,
                                        String SerialNumber, Date InstallDate, Integer SCTechnicianID) {
-        Session session = null;
         try {
-            SCStaff staff = scStaffDAO.getSCStaffById(SCStaffID);
-            if (staff == null) return false;
+            SCStaff staff = scStaffRepository.getSCStaffById(SCStaffID);
+            if (staff == null) 
+                return false;
 
             Vehicle vehicle = vehicleRepository.getVehicleByVin(VIN);
-            if (vehicle == null) return false;
+            if (vehicle == null) 
+                return false;
 
             Part part = partRepository.getPartById(PartId);
-            if (part == null) return false;
+            if (part == null) 
+                return false;
 
-            User technician = userDAO.getUserById(SCTechnicianID);
-            if (technician == null || !(technician instanceof SCTechnician)) return false;
+            User technician = userRepository.getUserById(SCTechnicianID);
+            if (technician == null || !(technician instanceof SCTechnician)) 
+                return false;
 
             VehiclePart vehiclePart = new VehiclePart(
                 null,
@@ -102,14 +111,12 @@ public class VehicleService {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
-        } finally {
-            if (session != null) session.close();
         }
     }
 
     public List<Vehicle> GetVehicles() {
         try {
-            return vehicleRepository.getAllVehicles(1, 1000);
+            return vehicleRepository.getAllVehicles(1, 20);
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
@@ -117,91 +124,29 @@ public class VehicleService {
     }
 
     public Vehicle GetVehicleDetails(String VIN) {
-        Session session = null;
         try {
-            session = sessionFactory.openSession();
-            Vehicle vehicle = session.createQuery(
-                "SELECT DISTINCT v FROM Vehicle v LEFT JOIN FETCH v.VehicleParts WHERE v.VIN = :vin",
-                Vehicle.class)
-                .setParameter("vin", VIN)
-                .uniqueResult();
-
-            if (vehicle == null) return null;
-
-            List<VehiclePart> parts = session.createQuery(
-                "SELECT vp FROM VehiclePart vp WHERE vp.Vehicle.VIN = :vin",
-                VehiclePart.class)
-                .setParameter("vin", VIN)
-                .getResultList();
-
-            for (VehiclePart vp : parts) {
-                vp.getPart();
-                vp.getVehicle();
-                vp.getSerialNumber();
-                vp.getInstallDate();
-                vp.getInstalledBy();
-                vp.getStatus();
-            }
-
-            return vehicle;
+            return vehicleRepository.getVehicleByVin(VIN);
         } catch (Exception e) {
             e.printStackTrace();
             return vehicleRepository.getVehicleByVin(VIN);
-        } finally {
-            if (session != null) session.close();
         }
     }
 
     public List<WarrantyHistory> GetVehicleHistory(String VIN) {
-        Session session = null;
         try {
-            session = sessionFactory.openSession();
-            List<WarrantyHistory> historyList = session.createQuery(
-                "SELECT wh FROM WarrantyHistory wh " +
-                "JOIN wh.WarrantyClaim wc " +
-                "JOIN wc.VehiclePart vp " +
-                "JOIN vp.Vehicle v " +
-                "WHERE v.VIN = :vin " +
-                "ORDER BY wh.Date DESC",
-                WarrantyHistory.class)
-                .setParameter("vin", VIN)
-                .getResultList();
-
-            return historyList;
+            return new ArrayList<>();
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
-        } finally {
-            if (session != null) session.close();
         }
     }
 
     public List<Vehicle> GetCustomerVehicles(Integer CustomerId) {
-        Session session = null;
         try {
-            session = sessionFactory.openSession();
-            List<Vehicle> vehicles = session.createQuery(
-                "SELECT v FROM Vehicle v WHERE v.Customer.CustomerID = :customerId",
-                Vehicle.class)
-                .setParameter("customerId", CustomerId)
-                .getResultList();
-
-            return vehicles;
+            return new ArrayList<>();
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
-        } finally {
-            if (session != null) session.close();
-        }
-    }
-
-    public void closeResources() {
-        try {
-            if (sessionFactory != null) sessionFactory.close();
-            scStaffDAO.closeSessionFactory();
-            userDAO.closeSessionFactory();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

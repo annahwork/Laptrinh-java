@@ -1,27 +1,26 @@
 package uth.edu.service;
 
-import uth.edu.dao.AdminDAO;
-import uth.edu.dao.SCTechnicianDAO;
 import uth.edu.pojo.Admin;
 import uth.edu.pojo.EVMStaff;
 import uth.edu.pojo.SCStaff;
 import uth.edu.pojo.SCTechnician;
 import uth.edu.pojo.User;
+import uth.edu.repositories.AdminRepository;
 import uth.edu.repositories.UserRepository;
-
+import uth.edu.repositories.SCTechnicianRepository;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
 
     private UserRepository userRepository;
-    private AdminDAO adminDAO;
-    private SCTechnicianDAO technicianDAO;
+    private AdminRepository adminRepository;
+    private SCTechnicianRepository technicianRepository;
 
     public UserService() {
         userRepository = new UserRepository();
-        adminDAO = new AdminDAO("Hibernate.cfg.xml");
-        technicianDAO = new SCTechnicianDAO("Hibernate.cfg.xml");
+        adminRepository = new AdminRepository();
+        technicianRepository = new SCTechnicianRepository();
     }
 
     public User Login(String userName, String password) {
@@ -66,7 +65,7 @@ public class UserService {
 
     public boolean ManageUserAccount(Integer adminId, User userData, String role) {
         try {
-            Admin admin = adminDAO.getAdminById(adminId);
+            Admin admin = adminRepository.getAdminById(adminId);
             if (admin == null) {
                 System.out.println("Admin không tồn tại hoặc không có quyền thực hiện thao tác này.");
                 return false;
@@ -110,13 +109,10 @@ public class UserService {
                     return false;
             }
 
-            if (newUser != null) {
-                newUser.setEmail(userData.getEmail());
-                newUser.setPhone(userData.getPhone());
-                userRepository.addUser(newUser);
-                return true;
-            }
-            return false;
+            newUser.setEmail(userData.getEmail());
+            newUser.setPhone(userData.getPhone());
+            userRepository.addUser(newUser);
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -152,7 +148,7 @@ public class UserService {
                 System.out.println("SCStaff không tồn tại hoặc ID không hợp lệ.");
                 return new ArrayList<>();
             }
-            return technicianDAO.getAllTechnicians();
+            return technicianRepository.getAllSCTechnicians(1, 20);
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();

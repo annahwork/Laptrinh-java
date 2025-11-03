@@ -1,0 +1,39 @@
+/* sc-admin-layout.css - Layout riêng cho SC-Admin */
+
+/* Layout wrapper cho SC-Admin */
+.layout-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar cố định bên trái */
+.layout-wrapper .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 100;
+}
+
+/* Main content area - chiếm phần còn lại */
+.layout-wrapper .main {
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    flex: 1;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+/* Responsive - màn hình nhỏ */
+@media (max-width: 768px) {
+    .layout-wrapper .sidebar {
+        width: 220px;
+    }
+
+    .layout-wrapper .main {
+        margin-left: 220px;
+        width: calc(100% - 220px);
+    }
+}

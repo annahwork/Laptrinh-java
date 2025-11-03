@@ -1,386 +1,289 @@
-/* ===  TOKENS  === */
-:root {
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
-  --danger: #dc2626;
-  --success: #16a34a;
-  --warning: #d97706;
-  --gray: #6b7280;
-  --light: #f3f4f6;
-  --border: #d1d5db;
-  --bg: #ffffff;
-  --shadow: 0 4px 12px rgba(0,0,0,0.08);
-  --radius: 12px;
-  --transition: all 0.25s ease;
+.vehicle_record_management__section {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px; /* giữ 1 padding duy nhất */
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  margin-top: 1rem;
+  color: var(--text);
+  font-family: var(--font-sans);
+  animation: fadeIn 0.3s ease;
 }
 
-/* === RESET === */
-vehicle_record_management {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* -------------------------------
+   Form rows / textarea
+   Mô tả: layout hàng form, khoảng cách giữa các field, chiều cao textarea
+   ------------------------------- */
+.vehicle_record_management__form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
-body {
-  background: #f8fafc;
-  color: #1f2937;
-  line-height: 1.6;
+.vehicle_record_management__textarea {
+  resize: vertical;
+  min-height: 80px;
 }
 
-/* ====== LAYOUT ====== */
-.app-layout,
-.content-wrapper,
-.main-content-area {
-  width: 100%;
-}
-
-.main-content-area {
-  padding: 1.5rem;
-}
-
-/* ====== SEARCH BAR ====== */
-.search-bar {
-  margin-bottom: 1.5rem;
-}
-
-.search-bar__wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 400px;
-}
-
-.search-icon {
-  position: absolute;
-  top: 50%;
-  left: 12px;
-  transform: translateY(-50%);
-  color: #9ca3af; /* xám nhạt */
-  font-size: 0.95rem;
-}
-
-.search-input-with-icon {
-  width: 100%;
-  padding: 0.5rem 0.75rem 0.5rem 2rem;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  transition: 0.2s ease;
-}
-
-.search-input-with-icon:focus {
-  border-color: var(--primary, #2563eb);
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
-  outline: none;
-}
-
-/* === BUTTONS === */
-.btn {
-  padding: 0.65rem 1.2rem;
-  border: 1px solid var(--border, #e5e7eb);
-  border-radius: 8px;
-  font-weight: 500;
+/* textarea module */
+.vehicle_record_management__button {
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: none;
   cursor: pointer;
-  transition: var(--transition, 0.15s ease);
+  font-weight: 600;
   font-size: 0.95rem;
-  margin: 0;                   /* dùng gap trên wrapper thay margin cá nhân */
-  background: var(--light, #fff);
-  color: var(--gray, #374151);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 40px;
-  padding-left: 14px;
-  padding-right: 14px;
-  box-sizing: border-box;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* hover */
-.btn:hover { background: #f3f4f6; }
-
-/* focus (truy cập bàn phím) */
-.btn:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
-  border-color: var(--primary, #2563eb);
-}
-
-/* disabled */
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-/* primary variant */
-.btn--primary {
-  background: var(--primary, #2563eb);
+/* Biến thể nút submit (nếu cần dùng chung) */
+.vehicle_record_management__button--submit {
+  background: #007bff;
   color: #fff;
-  border-color: var(--primary, #2563eb);
 }
-.btn--primary:hover { background: var(--primary-hover, #1e40af); }
-
-/* small variant */
-.btn--sm {
-  padding: 0.35rem 0.6rem;
-  font-size: 0.8rem;
-  min-height: 32px;
+.vehicle_record_management__button--submit:hover {
+  background: #0056b3;
+  box-shadow: 0 3px 8px rgba(0, 123, 255, 0.25);
 }
 
-/* === BUTTON WRAPPER === */
-.btn-wrapper {
+/* Hover cho nút cancel (nếu dùng) */
+.vehicle_record_management__button--cancel:hover {
+  background: #e9ecef;
+}
+
+/* -------------------------------
+   Filter bar (left + right)
+   Mô tả: left chứa select + date (mở rộng), right chứa 2 nút (không mở rộng)
+   - Quan trọng: left có `flex:1` để đẩy right về bên phải
+   ------------------------------- */
+.vehicle_record_management__filter-controls {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 16px;
+  flex-wrap: wrap;
   margin-bottom: 1rem;
-  flex-wrap: wrap;
 }
 
-/* helper: align right / center / left */
-.btn-wrapper--right { justify-content: flex-end; }
-.btn-wrapper--center { justify-content: center; }
-.btn-wrapper--left { justify-content: flex-start; }
-
-
-/* === FORM === */
-/* existing form styles (gốc) */
-.form__group { margin-bottom: 1rem; }
-.form__label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: #374151;
-}
-.form__control {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid var(--border, #e6e6e6);
-  border-radius: 8px;
-  font-size: 0.95rem;
-  transition: var(--transition, 0.15s ease);
-}
-.form__control:focus {
-  outline: none;
-  border-color: var(--primary, #2563eb);
-  box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
-}
-.text--danger, .text-danger { color: var(--danger, #dc2626); }
-
-/* === ALIASES để tương thích với HTML hiện tại === */
-.form-label { /* alias -> form__label */ }
-.form-control { /* alias -> form__control */ }
-
-/* map alias to real rules by reusing the same declarations */
-.form-label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: #374151; }
-.form-control {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid var(--border, #e6e6e6);
-  border-radius: 8px;
-  font-size: 0.95rem;
-  transition: var(--transition, 0.15s ease);
-}
-.form-control:focus {
-  outline: none;
-  border-color: var(--primary, #2563eb);
-  box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
-}
-
-
-/* === CARD (giữ gốc) === */
-.card {
-  background: var(--bg, #fff);
-  border-radius: var(--radius, 8px);
-  box-shadow: var(--shadow, 0 1px 3px rgba(0,0,0,0.06));
-  border: 1px solid var(--border, #e6e6e6);
-  overflow: hidden;
-}
-
-.card--filter { margin-bottom: 1rem; }
-.card__body { padding: 1rem; }
-
-/* controls: container */
-.card__controls {
+/* Left group: mở rộng để đẩy nhóm phải sang phải */
+.vehicle_record_management__filter-group--left {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
   align-items: center;
+  gap: 16px;
+  flex: 1 1 auto; /* flex-grow:1 */
 }
 
-/* elements */
-.card__select,
-.card__input {
-  flex: 1;
-  min-width: 150px;
-  box-sizing: border-box;
-  padding: 0.5rem 0.75rem;
-  border: 1px solid var(--border, #d1d5db);
-  border-radius: 8px;
+/* Right group: chứa 2 nút tạo/xuất, không mở rộng */
+.vehicle_record_management__filter-group--right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+/* Inputs/select trong filter (áp dụng đúng selector trong HTML) */
+.vehicle_record_management__filter-controls select,
+.vehicle_record_management__filter-controls input[type="date"] {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #f8fafc;
   font-size: 0.95rem;
-  background: var(--input-bg, #fff);
-  color: var(--text, #111827);
-  transition: 0.15s ease;
+  height: 36px;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
 }
 
-/* select arrow spacing */
-.card__select {
-  appearance: none;
-  padding-right: 2.25rem;
-  background-image:
-    linear-gradient(45deg, transparent 50%, var(--text, #111827) 50%),
-    linear-gradient(135deg, var(--text, #111827) 50%, transparent 50%),
-    linear-gradient(to right, rgba(0,0,0,0.03), rgba(0,0,0,0.03));
-  background-position: calc(100% - 1.1rem) calc(1em + 2px),
-                       calc(100% - 0.9rem) calc(1em + 2px),
-                       100% 0;
-  background-size: 6px 6px, 6px 6px, 1px 100%;
-  background-repeat: no-repeat;
+.vehicle_record_management__filter-controls select:focus,
+.vehicle_record_management__filter-controls input[type="date"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.12);
 }
 
-/* focus */
-.card__select:focus,
-.card__input:focus {
-  outline: none;
-  border-color: var(--primary, #2563eb);
-  box-shadow: 0 0 0 3px rgba(37,99,235,0.08);
+/* -------------------------------
+   Nút Tạo (primary) và alias ID
+   Mô tả: nút chính màu xanh; có alias #btnMoFormVehicleRecordManagement để tương thích JS
+   - LƯU Ý: nếu trước có rule ID khác đặt màu xám, xóa rule đó để không bị ghi đè
+   ------------------------------- */
+.vehicle_record_management__button--create,
+#btnMoFormVehicleRecordManagement {
+  background: #007bff;
+  color: #fff;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease, transform 0.15s ease;
 }
 
-/* card footer / pagination */
-.card-footer {
-  padding: 0.5rem 1rem;
-  border-top: 1px solid var(--border, #e6e6e6);
-  background: transparent;
+.vehicle_record_management__button--create:hover,
+#btnMoFormVehicleRecordManagement:hover {
+  background: #0056b3;
+  transform: translateY(-1px);
 }
+
+/* -------------------------------
+   Nút Xuất file (secondary) và alias ID
+   Mô tả: nút phụ màu xám nhẹ; alias #btnXuatFileVehicleRecordManagement để tương thích JS
+   ------------------------------- */
+.vehicle_record_management__button--export,
+#btnXuatFileVehicleRecordManagement {
+  background-color: #f1f5f9;
+  color: #333;
+  padding: 8px 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.vehicle_record_management__button--export:hover,
+#btnXuatFileVehicleRecordManagement:hover {
+  background-color: #e2e8f0;
+}
+
+/* -------------------------------
+   Table placeholder / pagination
+   Mô tả: style cho ô placeholder khi chưa có dữ liệu và phân trang
+   ------------------------------- */
+.table-placeholder-cell {
+  color: #666;
+  padding: 18px;
+  text-align: center;
+  font-style: italic;
+}
+
 .pagination-wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1rem;
+  padding: 10px 16px;
 }
-
-
-/* === TABLE === */
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.95rem;
-}
-.table__head { background: #f1f5f9; }
-.table__th {
-  padding: 1rem;
-  text-align: center;
-  font-weight: 600;
-  border-bottom: 2px solid var(--border);
-  color: #374151;
-}
-.table__td {
-  padding: 1rem;
-  border-bottom: 1px solid #e5e7eb;
-  text-align: center;
-}
-.table__row:hover { background: #f8fafc; }
-.table__row:nth-child(odd) { background: #f9fafb; }
-.table__placeholder {
-  text-align: center;
-  padding: 3rem 1rem;
-  color: var(--gray);
-  font-style: italic;
-}
-
-/* === MODAL === */
-.modal {
-  display: none;
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(4px);
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  padding: 1rem;
-}
-.modal--active { display: flex !important; }
-
-.modal__content {
-  background: white;
-  border-radius: var(--radius);
-  width: 100%;
-  max-width: 700px;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-}
-.modal__header {
-  padding: 1.5rem;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.modal__close {
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: var(--gray);
-}
-.modal__close:hover { color: #374151; }
-.modal__body { padding: 1.5rem; }
-.modal__footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-  padding: 1rem 1.5rem;
-  border-top: 1px solid var(--border);
-}
-
-/* === STATUS BADGE === */
-.badge {
-  padding: 0.35rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 500;
-}
-.badge--active { background: #d1fae5; color: var(--success); }
-.badge--maintenance { background: #fef3c7; color: var(--warning); }
-.badge--inactive { background: #fee2e2; color: var(--danger); }
-
-/* === PAGINATION === */
-.pagination {
-  padding: 1rem;
-  background: #f9fafb;
-  border-top: 1px solid var(--border);
-}
-.pagination__wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.pagination__info { color: var(--gray); font-size: 0.9rem; }
-.pagination__btn {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid var(--border);
-  background: white;
+.pagination-info { color: #555; font-size: 14px; }
+.pagination-controls { display: flex; gap: 8px; align-items: center; }
+.pagination-btn {
+  padding: 6px 12px;
+  border: 1px solid #d1d5db;
+  background-color: #fff;
   border-radius: 6px;
   cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
 }
-.pagination__btn--active {
-  background: var(--primary);
-  color: white;
-  border-color: var(--primary);
+.pagination-btn:hover { background-color: #f3f4f6; }
+.pagination-btn--active {
+  background-color: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+  font-weight: 500;
 }
-.pagination__btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.pagination-btn--active:hover { background-color: #1d4ed8; }
+
+/* -------------------------------
+   Modal (HTML dùng .modal-panel)
+   Mô tả: giữ modal-panel family (backdrop, dialog, close, form)
+   - Nếu JS đang toggle aria-hidden="false" hoặc add .show thì modal hiển thị
+   ------------------------------- */
+.modal-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  display: none; /* bật khi JS set aria-hidden="false" hoặc add .show */
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  background: rgba(15,23,42,0.45);
+  backdrop-filter: blur(3px);
+}
+.modal-panel[aria-hidden="false"],
+.modal-panel.show {
+  display: flex;
+}
+.modal-panel__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15,23,42,0.45);
+  backdrop-filter: blur(3px);
+}
+.modal-panel__dialog {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 720px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 18px 50px rgba(2,6,23,0.25);
+  padding: 22px 28px 20px;
+  box-sizing: border-box;
+  overflow: auto;
+}
+.modal-panel__dialog::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0;
+  width: 100%; height: 6px;
+  background: linear-gradient(90deg,#2563eb,#1d4ed8);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+.modal-panel__close {
+  position: absolute; right: 16px; top: 8px;
+  width: 36px; height: 36px;
+  border: none; background: transparent; font-size: 22px; cursor: pointer; color:#374151;
+  border-radius: 8px;
+}
+.modal-panel__close:hover { color:#111827; }
+
+/* Form bên trong modal: label, input, textarea, actions */
+.modal-panel__form { display: block; }
+.form-row { margin-bottom: 16px; }
+.form-label { display:block; margin-bottom:8px; font-weight:700; color:#111827; }
+.form-input, .form-textarea {
+  width:100%; padding:12px 14px; border-radius:10px; border:1px solid #e6edf3; font-size:14px; box-sizing:border-box;
+  background:#fff; color:#0f172a;
+}
+.form-textarea { min-height:120px; resize:vertical; }
+/* Actions trong modal (nút Lưu / Hủy) */
+.modal-panel__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-start;
+  margin-top: 8px;
+  padding-bottom: 6px;
+}
+.modal-panel__actions {
+  display:flex; gap:12px; justify-content:flex-start; margin-top:8px; padding-bottom:6px;
+}
+.btn { padding:10px 16px; border-radius:10px; font-weight:600; cursor:pointer; border:1px solid transparent; }
+.btn--primary { background:#2563eb; color:#fff; border-color:#2563eb; box-shadow:0 8px 18px rgba(37,99,235,0.12); }
+.btn--primary:hover { background:#1d4ed8; transform: translateY(-1px); }
+.btn--muted { background:#fff; border:1px solid #e6edf3; color:#111827; }
+.btn--muted:hover { background:#f3f4f6; }
+
+/* -------------------------------
+   Responsive tweaks
+   Mô tả: trên mobile, filter-controls xếp dọc; nhóm nút vẫn nằm phải trong hàng
+   ------------------------------- */
+@media (max-width: 520px) {
+  .modal-panel__dialog { max-width: 96%; padding: 16px; }
+  .form-grid-2 { grid-template-columns: 1fr; }
+  .modal-panel__actions { justify-content: space-between; }
 }
 
-/* === RESPONSIVE === */
 @media (max-width: 768px) {
-  .u-flex { flex-direction: column; }
-  .card__controls { flex-direction: column; }
-  .card__select, .card__input { min-width: 100%; }
+  .vehicle_record_management__filter-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .vehicle_record_management__filter-group--right {
+    width: 100%;
+    justify-content: flex-end; /* nút nằm bên phải trong hàng */
+  }
+  /* Nếu muốn nút create full-width trên mobile: bỏ comment dòng dưới */
+  /* #btnMoFormVehicleRecordManagement { margin-left: 0; width: 100%; } */
 }
 
-/* responsive: stack controls vertically on small screens */
 @media (max-width: 640px) {
-  .card__controls { flex-direction: column; align-items: stretch; }
-  .card__select, .card__input { width: 100%; }
+  .modal-panel__dialog { max-width: 92%; padding: 18px; }
+  .form-grid-2 { grid-template-columns: 1fr; }
 }

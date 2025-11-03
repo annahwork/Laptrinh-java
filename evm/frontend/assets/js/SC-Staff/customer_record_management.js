@@ -1,195 +1,107 @@
-// ====  customer_record_management.js  ====
-document.addEventListener("DOMContentLoaded", function () {
-  // ==== STATE ====
-  let customers = [];
-  let editIndex = null;
+(function () {
+  function initCustomerRecordModal() {
+    const btnMo = document.getElementById('btnMoFormCustomerRecordManagement');
+    const btnXuat = document.getElementById('btnXuatFileCustomerRecordManagement');
+    const modal = document.getElementById('modalCreate');
+    const btnClose = modal ? modal.querySelector('.modal-panel__close') : null;
+    // Ghi chú: form có id="modalForm" trong HTML, nên lấy bằng id
+    const form = document.getElementById('modalForm') || (modal ? modal.querySelector('.modal-panel__form') : null);
+    // Hủy trong modal có class="modalCancel" (theo HTML)
+    const btnCancel = modal ? modal.querySelector('.modalCancel, .modal-panel__cancel, .modalCancelBtn') : null;
+    const btnSubmit = modal ? modal.querySelector('.modalSubmit') : null;
 
-  // ==== SELECTORS ====
-  const tableBody = document.querySelector("#customers-table tbody");
-  const emptyNote = document.getElementById("customers-empty");
-  const searchBox = document.getElementById("customer-search");
-  const modal = document.getElementById("customer-modal");
-  const modalTitle = document.getElementById("customer-modal-title");
-  const form = document.getElementById("customer-form");
-
-  const idInput = document.getElementById("cust-id");
-  const nameInput = document.getElementById("cust-name");
-  const phoneInput = document.getElementById("cust-phone");
-  const emailInput = document.getElementById("cust-email");
-  const addressInput = document.getElementById("cust-address");
-
-  const btnAdd = document.getElementById("btn-add-customer");
-  const btnCancel = document.getElementById("customer-cancel");
-  const btnExport = document.getElementById("btn-export-customers");
-  const btnImport = document.getElementById("btn-import-customers");
-  const fileImport = document.getElementById("file-import-customers");
-
-  // ==== FUNCTIONS ====
-
-  // Hiển thị danh sách khách hàng
-  function renderTable(list = customers) {
-    tableBody.innerHTML = "";
-
-    if (list.length === 0) {
-      emptyNote.style.display = "block";
-      return;
+    // === Mở và đóng modal ===
+    function openModal() {
+      if (!modal) return;
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden', 'false'); // cập nhật attribute để hỗ trợ a11y
     }
-    emptyNote.style.display = "none";
+    function closeModal() {
+      if (!modal) return;
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden', 'true');
+      if (form && typeof form.reset === 'function') form.reset();
+    }
 
-    list.forEach((cust, index) => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${cust.id}</td>
-        <td>${cust.name}</td>
-        <td>${cust.phone || "-"}</td>
-        <td>${cust.email || "-"}</td>
-        <td>${cust.address || "-"}</td>
-        <td>
-          <button class="btn btn-sm btn-edit" data-index="${index}">Sửa</button>
-          <button class="btn btn-sm btn-delete" data-index="${index}">Xóa</button>
-        </td>
-      `;
-      tableBody.appendChild(tr);
+    if (btnMo) btnMo.addEventListener('click', openModal);
+    if (btnXuat) btnXuat.addEventListener('click', function () {
+      // placeholder: hành động xuất file
+      alert('Đã xuất file.');
     });
-  }
+    if (btnClose) btnClose.addEventListener('click', closeModal);
+    if (btnCancel) btnCancel.addEventListener('click', closeModal);
 
-  // Mở modal
-  function openModal(isEdit = false) {
-    modal.classList.remove("modal-hidden");
-    modal.setAttribute("aria-hidden", "false");
-    if (isEdit) {
-      modalTitle.textContent = "Chỉnh sửa khách hàng";
-    } else {
-      modalTitle.textContent = "Thêm khách hàng";
-      form.reset();
-      idInput.value = generateId();
-    }
-  }
-
-  // Đóng modal
-  function closeModal() {
-    modal.classList.add("modal-hidden");
-    modal.setAttribute("aria-hidden", "true");
-    editIndex = null;
-  }
-
-  // Sinh ID khách hàng tự động
-  function generateId() {
-    const num = customers.length + 1;
-    return "KH_" + num.toString().padStart(5, "0");
-    // KH_00001
-  }
-
-  // Thêm / Cập nhật khách hàng
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const newCust = {
-      id: idInput.value || generateId(),
-      name: nameInput.value.trim(),
-      phone: phoneInput.value.trim(),
-      email: emailInput.value.trim(),
-      address: addressInput.value.trim(),
-    };
-
-    if (!newCust.name) {
-      alert("Tên khách hàng không được bỏ trống!");
-      return;
+    // Nếu còn muốn nút submit xử lý riêng (không rely vào form submit), có thể lắng nghe btnSubmit
+    if (btnSubmit && !form) {
+      btnSubmit.addEventListener('click', function (e) {
+        e.preventDefault();
+        // fallback: submit qua JS nếu form không tồn tại
+        closeModal();
+      });
     }
 
-    if (editIndex !== null) {
-      customers[editIndex] = newCust;
-    } else {
-      customers.push(newCust);
-    }
+    // === Xử lý lưu form ===
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
 
-    renderTable();
-    closeModal();
-  });
+        // Lấy giá trị từ các input thực tế trong HTML.
+        // HTML mẫu có id: code, name, email, phone, type... điều chỉnh theo form của bạn.
+        const data = {
+          code: document.getElementById('code')?.value || '',
+          name: document.getElementById('name')?.value || '',
+          email: document.getElementById('email')?.value || '',
+          phone: document.getElementById('phone')?.value || '',
+          type: document.getElementById('type')?.value || '',
+        };
 
-  // Nút thêm khách
-  btnAdd.addEventListener("click", () => {
-    editIndex = null;
-    openModal(false);
-  });
+        try {
+          // Lấy tên người tạo (nhiều selector thử qua)
+          const creator = (function () {
+            try {
+              const sel = document.querySelector('#userName, .user-name, .profile-name, .sidebar .name, .account-name');
+              if (sel && sel.textContent && sel.textContent.trim()) return sel.textContent.trim();
+              return 'Ngày tạo';
+            } catch {
+              return 'Ngày tạo';
+            }
+          })();
 
-  // Nút hủy
-  btnCancel.addEventListener("click", closeModal);
+          const title = `Hồ sơ khách hàng "${data.name || data.code || '—'}" đã được tạo`;
+          const meta = `${creator} • ${new Date().toLocaleString()}`;
 
-  // Xử lý sự kiện sửa / xóa
-  tableBody.addEventListener("click", (e) => {
-    const btn = e.target;
-    if (btn.classList.contains("btn-edit")) {
-      editIndex = parseInt(btn.dataset.index);
-      const cust = customers[editIndex];
+          if (window.addNotification) {
+            window.addNotification({
+              title: title,
+              meta: meta,
+              type: 'success',
+            });
+          } else {
+            alert(`${title}\n${meta}`);
+          }
 
-      idInput.value = cust.id;
-      nameInput.value = cust.name;
-      phoneInput.value = cust.phone;
-      emailInput.value = cust.email;
-      addressInput.value = cust.address;
+          // nếu cần: đẩy dữ liệu lên server ở đây (fetch/axios)
+          // fetch('/api/customer', { method: 'POST', body: JSON.stringify(data), headers: {...} })
 
-      openModal(true);
-    }
-
-    if (btn.classList.contains("btn-delete")) {
-      const idx = parseInt(btn.dataset.index);
-      if (confirm("Xóa khách hàng này?")) {
-        customers.splice(idx, 1);
-        renderTable();
-      }
-    }
-  });
-
-  // Tìm kiếm
-  searchBox.addEventListener("input", () => {
-    const keyword = searchBox.value.toLowerCase();
-    const filtered = customers.filter(
-      (c) =>
-        c.name.toLowerCase().includes(keyword) ||
-        (c.phone && c.phone.toLowerCase().includes(keyword)) ||
-        (c.email && c.email.toLowerCase().includes(keyword))
-    );
-    renderTable(filtered);
-  });
-
-  // Xuất JSON
-  btnExport.addEventListener("click", () => {
-    if (customers.length === 0) {
-      alert("Không có dữ liệu để xuất!");
-      return;
-    }
-    const blob = new Blob([JSON.stringify(customers, null, 2)], {
-      type: "application/json",
-    });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "customers.json";
-    a.click();
-    URL.revokeObjectURL(url);
-  });
-
-  // Nhập JSON
-  btnImport.addEventListener("click", () => fileImport.click());
-  fileImport.addEventListener("change", (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      try {
-        const data = JSON.parse(ev.target.result);
-        if (Array.isArray(data)) {
-          customers = data;
-          renderTable();
-          alert("Nhập dữ liệu thành công!");
-        } else {
-          alert("File không đúng định dạng!");
+          closeModal();
+        } catch (error) {
+          console.error('Lỗi khi xử lý form:', error);
+          alert('Đã có lỗi xảy ra. Vui lòng thử lại.');
         }
-      } catch {
-        alert("Lỗi khi đọc file!");
-      }
-    };
-    reader.readAsText(file);
-  });
+      });
+    } else {
+      console.error('Không tìm thấy form (id="modalForm").');
+    }
+  }
 
+  // Khởi tạo khi script load
+  initCustomerRecordModal();
+
+  // --- tiện ích debug: liệt kê script src đang load (in ra console) ---
+  console.log('Các script đang load:', Array.from(document.querySelectorAll('script[src]')).map(s => s.src));
+
+  // --- thử fetch file script (chỉ để debug xem file có load được không) ---
+  fetch('../../assets/js/SC-Staff/customer_record_management.js')
+    .then(r => console.log('Fetch status:', r.status))
+    .catch(err => console.error('Fetch error:', err));
+})();

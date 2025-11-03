@@ -158,4 +158,13 @@ public class UserService {
             return new ArrayList<>();
         }
     }
+
+    public void closeResources() {
+        try {
+            if (adminDAO != null) adminDAO.closeSessionFactory();
+            if (technicianDAO != null) technicianDAO.closeSessionFactory();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

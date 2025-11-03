@@ -5,12 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c1113d8-0d76-4694-aa47-5f337a0cea98" name="Changes" comment="chore: cập nhật lại thư mục trong code">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/evm/frontend/assets/css/SC-Staff/customer_record_management.css" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/assets/css/SC-Staff/customer_record_management.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/frontend/assets/css/SC-Staff/technician_assignment.css" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/assets/css/SC-Staff/technician_assignment.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/evm/frontend/assets/css/SC-Staff/vehicle_record_management.css" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/assets/css/SC-Staff/vehicle_record_management.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/frontend/assets/js/SC-Staff/customer_record_management.js" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/assets/js/SC-Staff/customer_record_management.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/frontend/assets/js/SC-Staff/campaign_management.js" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/assets/js/SC-Staff/campaign_management.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/evm/frontend/assets/js/SC-Staff/vehicle_record_management.js" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/assets/js/SC-Staff/vehicle_record_management.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/frontend/pages/SC-Staff/Section/campaign_management.html" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/pages/SC-Staff/Section/campaign_management.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/evm/frontend/pages/SC-Staff/Section/customer_record_management.html" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/pages/SC-Staff/Section/customer_record_management.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/evm/frontend/pages/SC-Staff/Section/vehicle_record_management.html" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/pages/SC-Staff/Section/vehicle_record_management.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/frontend/pages/SC-Staff/home_sc_staff.html" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/pages/SC-Staff/home_sc_staff.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +68,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;gia-han&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/Latitude/JAVA/Project/Laptrinh-java&quot;,

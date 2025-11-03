@@ -1,74 +1,128 @@
 
-<section id="customer_record_management" class="records-section">
-    <header class="records-header">
-        <h2>Hồ sơ khách hàng</h2>
-        <div class="records-controls">
-            <input id="customer-search" placeholder="Tìm theo tên / SĐT / email..." />
-            <button id="btn-add-customer" class="btn primary">+ Thêm khách</button>
-            <button id="btn-export-customers" class="btn">Xuất CSV</button>
-            <input id="file-import-customers" type="file" accept=".json" style="display:none"/>
-            <button id="btn-import-customers" class="btn">Nhập JSON</button>
-        </div>
-    </header>
+<section id="customer_record_management_page" >
+<div class="app-layout">
+    <!-- page-specific CSS -->
+    <link rel="stylesheet" href="../../assets/css/SC-Staff/customer_record_management.css">
+    <div class="content-wrapper" id="innerContent">
+        <div class="main-content-area">
 
-    <div class="table-card">
-        <table id="customers-table" class="records-table">
-            <thead>
-            <tr>
-                <th>Mã KH</th>
-                <th>Tên</th>
-                <th>Điện thoại</th>
-                <th>Email</th>
-                <th>Địa chỉ</th>
-                <th style="width:130px">Hành động</th>
-            </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-        <div id="customers-empty" class="empty-note">
-            Chưa có khách hàng. Nhấn "Thêm khách" để tạo mới.
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div id="customer-modal" class="modal modal-hidden">
-        <div class="modal-card">
-            <div class="modal-header">
-                <h3 id="customer-modal-title">Thêm khách hàng</h3>
-                <span id="modal-close" class="modal-close">&times;</span>
+        <!-- Tìm kiếm -->
+            <div class="search-filter-bar">
+                <div class="search-box-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchCustomerBox" class="form-control search-input-with-icon"
+                        placeholder="Tìm theo tên, email, số điện thoại...">
+                </div>
             </div>
 
-            <form id="customer-form" class="form-grid">
-                <div class="form-group">
-                    <label>Mã KH</label>
-                    <input id="cust-id" readonly />
-                </div>
-                <div class="form-group">
-                    <label>Tên <span class="text-danger">*</span></label>
-                    <input id="cust-name" required />
-                </div>
-                <div class="form-group">
-                    <label>Điện thoại</label>
-                    <input id="cust-phone" />
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input id="cust-email" type="email" />
-                </div>
-                <div class="form-group">
-                    <label>Địa chỉ</label>
-                    <input id="cust-address" />
+            <!-- Bộ lọc-->
+            <div class="customer_record_management__filter-controls">
+                <div class="customer_record_management__filter-group--left">
+                    <select id="customerRecordStatusFilter" class="filter-select">
+                        <option value="">Tất cả loại khách hàng</option>
+                        <option value="individual">VIP</option>
+                        <option value="corporate">Bình Thường</option>
+                    </select>
+
+                    <input type="date" id="customerRecordDateFilter" class="filter-input">
                 </div>
 
-                <div class="modal-actions">
-                    <button type="submit" class="btn primary" id="customer-save">Lưu</button>
-                    <button type="button" class="btn" id="customer-cancel">Hủy</button>
+                <div class="customer_record_management__filter-group--right">
+                    <button 
+                        type="button" 
+                        id="btnMoFormCustomerRecordManagement" 
+                        class="customer_record_management__button--create">
+                        Tạo hồ sơ khách hàng
+                    </button>
+
+                    <button 
+                        type="button" 
+                        id="btnXuatFileCustomerRecordManagement" 
+                        class="customer_record_management__button--export">
+                        Xuất file
+                    </button>
                 </div>
-            </form>
+            </div>
+
+            <!-- Bảng -->
+            <div class="card">
+                <div class="card-body-no-padding">
+                    <table class="table-zebra table-full-width">
+                        <thead>
+                            <tr class="table-header-row">
+                                <th style="text-align: center;">Mã khách hàng</th>
+                                <th style="text-align: center;">Loại khách hàng</th>
+                                <th style="text-align: center;">Họ Tên khách hàng</th>
+                                <th style="text-align: center;">Email</th>
+                                <th style="text-align: center;">Số điện thoại</th>
+                                <th style="text-align: center;">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customerRecordTbody">
+                        <tr>
+                            <td colspan="6" class="table-placeholder-cell"> Chưa có hồ sơ khách hàng - nhấn "Tạo hồ sơ khách hàng" để tạo mới.
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Phân trang -->
+                <div class="card-footer">
+                    <div class="pagination-wrapper">
+                        <span class="pagination-info">Hiển thị 0 của 0</span>
+                        <div class="pagination-controls">
+                        <button class="pagination-btn">« Trước</button>
+                        <button class="pagination-btn pagination-btn--active">1</button>
+                        <button class="pagination-btn">Sau »</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal -->
+                <div id="modalCreate" class="modal-panel" aria-hidden="true">
+                    <div class="modal-panel__backdrop"></div>
+                    <div class="modal-panel__dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+                        <button class="modal-panel__close" aria-label="Đóng">&times;</button>
+
+                        <form id="modalForm" class="modal-panel__form" autocomplete="off">
+                            <div class="form-row">
+                                <label for="code" class="form-label">Mã khách hàng</label>
+                                <input id="code" name="code" class="form-input" type="text" />
+                            </div>
+
+                            <div class="form-row">
+                                <label for="type" class="form-label">Loại khách hàng</label>
+                                <select id="type" name="type" class="form-input">
+                                    <option value="individual">VIP</option>
+                                    <option value="corporate">Bình Thường</option>
+                                </select>
+                            </div>
+
+                            <div class="form-row">
+                                <label for="name" class="form-label">Họ và tên khách hàng</label>
+                                <input id="name" name="name" class="form-input" type="text" />
+                            </div>
+
+                            <div class="form-row">
+                                <label for="email" class="form-label">Email</label>
+                                <input id="email" name="email" class="form-input" type="email" />
+                            </div>
+
+                            <div class="form-row">
+                                <label for="phone" class="form-label">Số điện thoại</label>
+                                <input id="phone" name="phone" class="form-input" type="tel" />
+                            </div>
+
+                            <div class="modal-panel__actions">
+                                <button type="submit" class="modalSubmit">Lưu hồ sơ khách hàng</button>
+                                <button type="button" class="modalCancel">Hủy</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <script src="../../assets/js/SC-Staff/customer_record_management.js"></script>
 </section>
-
-<script src="evm/frontend/assets/js/SC-Staff/customer_record_management.js"></script>
-</body>
-</html>

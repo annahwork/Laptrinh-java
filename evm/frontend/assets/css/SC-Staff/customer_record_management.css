@@ -1,253 +1,381 @@
-/* ==== BỐ CỤC CHUNG  ==== */
-.customer_record_management {
-  font-family: "Segoe UI", sans-serif;
-  padding: 20px;
-  background-color: #f8f9fa;
-}
-
-.app-layout {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.content-wrapper {
+.customer_record_management__section {
   background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  padding: 20px;
+  border-radius: 10px;
+  padding: 20px; /* giữ 1 padding duy nhất */
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  margin-top: 1rem;
+  color: var(--text);
+  font-family: var(--font-sans);
+  animation: fadeIn 0.3s ease;
 }
 
-/* ==== TIÊU ĐỀ + THANH TÌM KIẾM ==== */
-.d-flex {
+/* -------------------------------
+   Form chung / input / textarea
+   ------------------------------- */
+.customer_record_management__form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* textarea module */
+.customer_record_management__textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Style base cho button trong module */
+.customer_record_management__button {
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Biến thể nút submit (dùng nếu có nút submit chung) */
+.customer_record_management__button--submit {
+  background-color: #007bff;
+  color: #fff;
+}
+.customer_record_management__button--submit:hover {
+  background-color: #0056b3;
+  box-shadow: 0 3px 8px rgba(0, 123, 255, 0.25);
+}
+
+/* Hover cho cancel nếu dùng */
+.customer_record_management__button--cancel:hover {
+  background: #e9ecef;
+}
+
+/* -------------------------------
+   Filter bar (HTML dùng .customer_record_management__filter-controls)
+   - left: select + date
+   - right: 2 nút (create + export)
+   ------------------------------- */
+.customer_record_management__filter-controls {
   display: flex;
   align-items: center;
-}
-
-.justify-content-between {
-  justify-content: space-between;
-}
-
-.mb-3 {
+  gap: 16px;
+  flex-wrap: wrap;
   margin-bottom: 1rem;
 }
 
-.search-filter-bar {
+.customer_record_management__filter-group--left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  /* đây là chỗ quan trọng: left group mở rộng, đẩy right group sang phải */
+  flex: 1 1 auto; /* flex-grow:1 */
+}
+
+/* right group chứa 2 nút */
+.customer_record_management__filter-group--right {
   display: flex;
   align-items: center;
   gap: 10px;
+  /* đảm bảo không bị co lại trên desktop */
+  flex: 0 0 auto;
 }
 
-.search-box-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.search-icon {
-  position: absolute;
-  left: 10px;
-  color: #888;
-}
-
-.search-input-with-icon {
-  padding-left: 30px;
-  height: 36px;
+/* input / select trong filter */
+.customer_record_management__filter-controls select,
+.customer_record_management__filter-controls input[type="date"] {
+  padding: 8px 12px;
   border: 1px solid #ccc;
-  border-radius: 8px;
-  outline: none;
-  transition: border-color 0.2s;
+  border-radius: 6px;
+  background-color: #f8fafc;
+  font-size: 0.95rem;
+  min-width: 200px;
+  height: 36px;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
 }
-
-.search-input-with-icon:focus {
+.customer_record_management__filter-controls select:focus,
+.customer_record_management__filter-controls input[type="date"]:focus {
   border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.12);
 }
 
-/* ==== BUTTONS ==== */
-.btn {
-  display: inline-block;
-  border: none;
-  border-radius: 8px;
+/* Nút "Tạo hồ sơ khách hàng" (class chính, giữ màu xanh) */
+.customer_record_management__button--create {
+  background: #007bff;
+  color: #fff;
   padding: 8px 14px;
-  font-size: 14px;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
-  background-color: #e9ecef;
-  transition: background-color 0.25s, transform 0.1s;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+.customer_record_management__button--create:hover {
+  background-color: #0056b3;
+  transform: translateY(-1px);
 }
 
-.btn:hover {
-  background-color: #dfe3e7;
+/* Nút "Xuất file" */
+.customer_record_management__button--export {
+  background-color: #f1f5f9;
+  color: #333;
+  padding: 8px 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.customer_record_management__button--export:hover {
+  background: #e2e8f0;
 }
 
-.btn:active {
-  transform: scale(0.97);
-}
-
-.btn-primary {
-  background-color: #007bff;
+/* Alias cho ID (JS có thể tham chiếu #btnMoFormCustomerRecordManagement)
+   - KHÔNG để rule khác ghi đè màu (nên ràng buộc cùng style với class)
+   - giữ ngắn gọn để tương thích mà không gây duplicate */
+.customer_record_management__button--create,
+#btnMoFormCustomerRecordManagement {
+  /* alias: áp dụng cùng style như nút create (nếu JS tham chiếu) */
+  background: #007bff;
   color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.25s ease, transform 0.15s ease;
+}
+#btnMoFormCustomerRecordManagement:hover {
+  background: #0056b3;
+  transform: translateY(-1px);
 }
 
-.btn-primary:hover {
-  background-color: #0069d9;
+/* -------------------------------
+   Modal - HTML đang dùng class="modal-panel"
+   (giữ modal-panel + modal-panel__dialog + backdrop + close theo HTML)
+   ------------------------------- */
+.modal-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  display: none; /* bật khi JS set aria-hidden="false" hoặc add class show */
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  background: rgba(15,23,42,0.45);
+  backdrop-filter: blur(3px);
 }
 
-/* ==== CARD & TABLE ==== */
-.card {
-  border-radius: 10px;
-  overflow: hidden;
-  background: #fff;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+/* nếu JS set aria-hidden="false" */
+.modal-panel[aria-hidden="false"],
+.modal-panel.show {
+  display: flex;
 }
 
-.card-body-no-padding {
-  padding: 0;
+/* backdrop (nội bộ) */
+.modal-panel__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15,23,42,0.45);
+  backdrop-filter: blur(3px);
 }
 
-.table-full-width {
+/* dialog / hộp nội dung trong modal */
+.modal-panel__dialog {
+  position: relative;
+  z-index: 2;
   width: 100%;
-  border-collapse: collapse;
+  max-width: 720px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 18px 50px rgba(2,6,23,0.25);
+  padding: 22px 28px 20px;
+  box-sizing: border-box;
+  overflow: auto;
 }
 
-.table-zebra tbody tr:nth-child(odd) {
-  background: #f8f9fa;
+/* thanh thin màu trên dialog */
+.modal-panel__dialog::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(90deg,#2563eb,#1d4ed8);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
 }
 
-.table-zebra th, .table-zebra td {
-  padding: 10px;
-  border-bottom: 1px solid #dee2e6;
-  text-align: left;
+/* nút đóng modal (x) */
+.modal-panel__close {
+  position: absolute;
+  right: 16px;
+  top: 8px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  font-size: 22px;
+  cursor: pointer;
+  color: #374151;
+  border-radius: 8px;
+}
+.modal-panel__close:hover { color: #111827; }
+
+/* form bên trong modal (HTML dùng .form-row, .form-label, .form-input) */
+.modal-panel__form { display: block; }
+
+/* === NÚT HÀNH ĐỘNG TRONG MODAL (LƯU + HỦY) === */
+.modal-panel__actions {
+  display: flex; /* Hiển thị hai nút nằm ngang */
+  justify-content: flex-end; /* Căn nút sang bên phải */
+  gap: 10px; /* Khoảng cách giữa hai nút */
+  margin-top: 20px; /* Cách phần nội dung phía trên một khoảng */
 }
 
-.table-header-row {
-  background-color: #007bff;
+/* === NÚT "LƯU HỒ SƠ KHÁCH HÀNG" === */
+.modalSubmit {
+  background: #007bff; /* Màu nền xanh */
+  color: #fff; /* Chữ trắng */
+  padding: 8px 16px; /* Khoảng cách trong nút */
+  border: none; /* Bỏ viền */
+  border-radius: 6px; /* Bo góc nhẹ */
+  cursor: pointer; /* Con trỏ dạng tay khi rê chuột */
+  font-weight: 500; /* Chữ đậm vừa */
+  transition: background-color 0.2s ease; /* Hiệu ứng mượt khi hover */
+}
+
+/* Hiệu ứng hover cho nút "Lưu hồ sơ khách hàng" */
+.modalSubmit:hover {
+  background-color: #0056b3; /* Màu xanh đậm hơn khi rê chuột */
+}
+
+/* === NÚT "HỦY" === */
+.modalCancel {
+  background-color: #f1f5f9; /* Màu nền xám nhạt */
+  color: #333; /* Chữ xám đậm */
+  padding: 8px 16px; /* Khoảng cách trong nút */
+  border: 1px solid #ccc; /* Viền xám mảnh */
+  border-radius: 6px; /* Bo góc nhẹ */
+  cursor: pointer; /* Con trỏ dạng tay */
+  transition: background-color 0.2s ease; /* Hiệu ứng hover */
+}
+
+/* Hiệu ứng hover cho nút "Hủy" */
+.modalCancel:hover {
+  background-color: #e2e8f0; /* Màu nền đậm hơn khi rê chuột */
+}
+
+.form-row { margin-bottom: 16px; }
+
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.form-input, .form-textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #e6edf3;
+  font-size: 14px;
+  box-sizing: border-box;
+  background: #fff;
+  color: #0f172a;
+}
+
+.form-textarea { min-height: 120px; resize: vertical; }
+
+/* Actions trong modal (nút Lưu / Hủy) */
+.modal-panel__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-start;
+  margin-top: 8px;
+  padding-bottom: 6px;
+}
+
+/* Nếu bạn muốn nút lưu có style "primary" */
+.btn--primary {
+  background: #2563eb;
   color: #fff;
+  border: 1px solid #2563eb;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
 }
+.btn--primary:hover { background: #1d4ed8; transform: translateY(-1px); }
 
+.btn--muted {
+  background: #fff;
+  border: 1px solid #e6edf3;
+  color: #111827;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.btn--muted:hover { background: #f3f4f6; }
+
+/* -------------------------------
+   Bảng / placeholder / phân trang
+   ------------------------------- */
 .table-placeholder-cell {
+  color: #666;
+  padding: 18px;
   text-align: center;
-  color: #888;
-  padding: 20px;
+  font-style: italic;
 }
 
-/* ==== PAGINATION ==== */
+/* pagination */
 .pagination-wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px;
+  padding: 10px 16px;
 }
-
+.pagination-info { color: #555; font-size: 14px; }
+.pagination-controls { display: flex; gap: 8px; align-items: center; }
 .pagination-btn {
-  background: #e9ecef;
-  border: none;
-  padding: 6px 10px;
+  padding: 6px 12px;
+  border: 1px solid #d1d5db;
+  background-color: #fff;
   border-radius: 6px;
   cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
 }
-
-.pagination-btn:hover {
-  background: #dee2e6;
-}
-
-.pagination-btn-active {
-  background: #007bff;
+.pagination-btn:hover { background-color: #f3f4f6; }
+.pagination-btn--active {
+  background-color: #2563eb;
   color: #fff;
+  border-color: #2563eb;
+  font-weight: 500;
+}
+.pagination-btn--active:hover { background-color: #1d4ed8; }
+
+/* -------------------------------
+   Responsive tweaks
+   ------------------------------- */
+@media (max-width: 520px) {
+  .modal-panel__dialog { max-width: 96%; padding: 16px; }
+  .customer_record_management__grid-2 { grid-template-columns: 1fr; }
+  .modal-panel__actions { justify-content: space-between; }
 }
 
-/* ==== MODAL ==== */
-.modal {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  background: rgba(0,0,0,0.45);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 200;
-  opacity: 1;
-  transition: opacity 0.25s ease;
+@media (max-width: 768px) {
+  .customer_record_management__filter-group--right {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  /* Nếu muốn nút create full-width trên mobile, uncomment:
+  #btnMoFormCustomerRecordManagement { margin-left: 0; width: 100%; }
+  */
 }
 
-.modal-hidden {
-  display: none !important;
-}
-
-.modal-content {
-  background: #fff;
-  width: 480px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  overflow: hidden;
-  animation: slideDown 0.25s ease;
-}
-
-@keyframes slideDown {
-  from { transform: translateY(-30px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-.modal-header {
-  background-color: #007bff;
-  color: white;
-  padding: 12px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.modal-header h3 {
-  margin: 0;
-  font-size: 18px;
-}
-
-.modal-close {
-  font-size: 22px;
-  cursor: pointer;
-}
-
-.modal-close:hover {
-  color: #ffd700;
-}
-
-.modal-body {
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.form-label {
-  font-weight: 600;
-}
-
-.form-control {
-  padding: 8px 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  outline: none;
-  transition: border-color 0.2s;
-}
-
-.form-control:focus {
-  border-color: #007bff;
-}
-
-.modal-footer-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  padding: 12px 16px;
-  border-top: 1px solid #ddd;
-}
-
-/* ==== EMPTY STATE ==== */
-.table-placeholder-cell strong {
-  color: #007bff;
+@media (max-width: 640px) {
+  .modal-panel__dialog { max-width: 92%; padding: 18px; }
+  .customer_record_management__grid-2 { grid-template-columns: 1fr; }
 }

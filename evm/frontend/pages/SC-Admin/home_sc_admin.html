@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ - SC Admin</title>
+
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/SC-Admin/sc-admin-layout.css">
+    <link rel="stylesheet" href="../../assets/css/SC-Admin/dashboard.css">
+    <link rel="stylesheet" href="../../assets/css/SC-Admin/user_management.css">
+
+    <!-- Chart.js for dashboard charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+
+    <div class="layout-wrapper">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar__header">
+                <h2 class="sidebar__logo">OEM EV</h2>
+                <img src="../../assets/pic/logo_EVM.png" alt="Logo" class="sidebar__avatar">
+            </div>
+
+            <div class="sidebar__user">
+                <img src="../../assets/pic/avatar.png" alt="Avatar" class="sidebar__user-avatar">
+                <div class="sidebar__userinfo">
+                    <h4 class="sidebar__username">Admin User</h4>
+                    <p class="sidebar__role">SC Admin</p>
+                </div>
+            </div>
+
+            <nav class="sidebar__nav">
+                <ul>
+                    <li class="sidebar__item">
+                        <a href="#" data-page="dashboard.html" class="sidebar__link">
+                            Trang chủ
+                        </a>
+                    </li>
+                    <li class="sidebar__item">
+                        <a href="#" data-page="user_management.html" class="sidebar__link">
+                            Quản lý người dùng
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main id="main-content" class="main"></main>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+   
+    <script src="../../assets/js/SC-Admin/home_sc_admin.js"></script>
+
+    <script>
+    fetch('../../components/footer.html')
+        .then(res => res.text())
+        .then(html => {
+            // Fix duong dan: Section/ -> ../SC-Staff/Section/
+            html = html.replace(/href="Section\//g, 'href="../SC-Staff/Section/');
+            html = html.replace(/data-page="Section\//g, 'data-page="../SC-Staff/Section/');
+            
+            document.getElementById('footer-placeholder').innerHTML = html;
+        })
+        .catch(err => console.error("Khong tai duoc footer:", err));
+</script>
+</body>
+
+</html>

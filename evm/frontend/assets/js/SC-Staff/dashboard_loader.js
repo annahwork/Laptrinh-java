@@ -47,7 +47,7 @@
                 })
                 .catch(err => {
                     console.error('Dashboard load error:', err);
-                    mainContent.innerHTML = '<p style="text-align:center; color:#666; padding:2rem;">⚠️ Không thể tải dashboard. Vui lòng thử lại.</p>';
+                    mainContent.innerHTML = '<p style="text-align:center; color:#666; padding:2rem;"> Không thể tải dashboard. Vui lòng thử lại.</p>';
                 });
         } else {
             console.log('Dashboard Loader: Skipped (main-content not empty)');

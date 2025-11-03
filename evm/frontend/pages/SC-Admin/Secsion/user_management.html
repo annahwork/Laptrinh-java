@@ -1,0 +1,142 @@
+<section>
+    <div class="user-management-container">
+        <div class="page-header">
+            <div>
+                <h1>Quan ly nguoi dung</h1>
+                <p class="page-subtitle">Quan ly tat ca nguoi dung trong he thong</p>
+            </div>
+            <button class="btn btn-primary" id="btnAddUser" onclick="openUserModal()">
+                Them nguoi dung
+            </button>
+        </div>
+
+        <div class="filter-section">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Tim kiem theo ten, email, username..." />
+            </div>
+
+            <div class="filter-controls">
+                <select id="roleFilter" class="filter-select">
+                    <option value="">Tat ca vai tro</option>
+                    <option value="ADMIN">Admin</option>
+                    <option value="SC_STAFF">SC Staff</option>
+                    <option value="SC_TECHNICIAN">SC Technician</option>
+                    <option value="EVM_STAFF">EVM Staff</option>
+                </select>
+
+                <button class="btn btn-secondary" id="btnResetFilter" onclick="resetFilters()">
+                    Reset
+                </button>
+            </div>
+        </div>
+
+        <div class="table-section">
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Ho ten</th>
+                            <th>Email</th>
+                            <th>So dien thoai</th>
+                            <th>Vai tro</th>
+                            <th>Hanh dong</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <tr>
+                            <td colspan="7" class="no-data">
+                                <p>Chua co du lieu tu database</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination-section">
+                <div class="pagination-info">
+                    Hien thi <span id="startRecord">0</span> - <span id="endRecord">0</span> cua <span id="totalRecords">0</span> nguoi dung
+                </div>
+                <div class="pagination-controls">
+                    <button class="btn-pagination" id="prevBtn" disabled>Truoc</button>
+                    <div id="pageNumbers" class="page-numbers"></div>
+                    <button class="btn-pagination" id="nextBtn" disabled>Sau</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Them nguoi dung moi</h2>
+                <button class="modal-close" id="btnCloseModal" onclick="closeUserModal()">&times;</button>
+            </div>
+            <form id="userForm">
+                <div class="modal-body">
+                    <input type="hidden" id="userId" />
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="userName">Username <span class="required">*</span></label>
+                        <input type="text" id="userName" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Mat khau <span class="required">*</span></label>
+                        <input type="password" id="password" required />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="userRole">Vai tro <span class="required">*</span></label>
+                        <select id="userRole" required>
+                            <option value="">Chon vai tro</option>
+                            <option value="ADMIN">Admin</option>
+                            <option value="SC_STAFF">SC Staff</option>
+                            <option value="SC_TECHNICIAN">SC Technician</option>
+                            <option value="EVM_STAFF">EVM Staff</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">So dien thoai</label>
+                        <input type="tel" id="phone" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="btnCancelModal" onclick="closeUserModal()">Huy</button>
+                <button type="submit" class="btn btn-primary">Luu</button>
+            </div>
+        </form>
+        </div>
+    </div>
+
+    <div id="deleteModal" class="modal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h2>Xac nhan xoa</h2>
+                <button class="modal-close" id="btnCloseDeleteModal" onclick="closeDeleteModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Ban co chac chan muon xoa nguoi dung nay khong?</p>
+                <p class="warning-text">Hanh dong nay khong the hoan tac!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="btnCancelDelete" onclick="closeDeleteModal()">Huy</button>
+                <button type="button" class="btn btn-danger" id="btnConfirmDelete" onclick="handleDelete()">Xoa</button>
+            </div>
+        </div>
+    </div>
+</section>

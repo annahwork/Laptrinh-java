@@ -1,12 +1,23 @@
 package uth.edu.pojo;
 
-import java.util.Date;
-import javax.persistence.*;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "jpa_warranty_claim")
+@Table(name = "WarrantyClaim")
 public class WarrantyClaim {
 
     @Id
@@ -90,6 +101,14 @@ public class WarrantyClaim {
         return this.Attachment;
     }
 
+    public List<WarrantyHistory> getHistory() {
+        return this.History;
+    }
+
+    public List<ClaimService> getClaimServices() {
+        return this.ClaimServices;
+    }
+
     public void setClaimID(Integer ClaimID) {
         this.ClaimID = ClaimID;
     }
@@ -117,6 +136,15 @@ public class WarrantyClaim {
     public void setAttachment(String Attachment) {
         this.Attachment = Attachment;
     }
+    
+
+    public void setHistory(List<WarrantyHistory> history) {
+        History = history;
+    }
+
+    public void setClaimServices(List<ClaimService> claimServices) {
+        ClaimServices = claimServices;
+    }
 
     public void updateStatus(String newStatus, String note) 
     {
@@ -137,4 +165,5 @@ public class WarrantyClaim {
     {
 
     }
+
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import uth.edu.dao.WarrantyClaimDAO;
 import uth.edu.pojo.WarrantyClaim;
+import uth.edu.pojo.WarrantyHistory;
 
 public class WarrantyClaimRepository implements IWarrantyClaimRepository {
 
@@ -14,27 +15,48 @@ public class WarrantyClaimRepository implements IWarrantyClaimRepository {
     }
 
     @Override
-    public void addWarrantyClaim(WarrantyClaim WarrantyClaim) {
-        WarrantyClaimDAO.addWarrantyClaim(WarrantyClaim);
+    public boolean addWarrantyClaim(WarrantyClaim WarrantyClaim, WarrantyHistory history) {
+        return WarrantyClaimDAO.addWarrantyClaim(WarrantyClaim, history);
     }
 
     @Override
-    public void updateWarrantyClaim(WarrantyClaim WarrantyClaim) {
-        WarrantyClaimDAO.updateWarrantyClaim(WarrantyClaim);
+    public boolean updateWarrantyClaim(WarrantyClaim WarrantyClaim, WarrantyHistory history) {
+        return WarrantyClaimDAO.updateWarrantyClaim(WarrantyClaim, history);
     }
 
     @Override
-    public void deleteWarrantyClaim(WarrantyClaim WarrantyClaim) {
-        WarrantyClaimDAO.deleteWarrantyClaim(WarrantyClaim);
+    public boolean deleteWarrantyClaim(WarrantyClaim WarrantyClaim) {
+        return WarrantyClaimDAO.deleteWarrantyClaim(WarrantyClaim);
     }
 
     @Override
     public WarrantyClaim getWarrantyClaimById(int WarrantyClaimId) {
         return WarrantyClaimDAO.getWarrantyClaimById(WarrantyClaimId);
     }
-
+    @Override
+    public List<WarrantyClaim> getClaimsByStatus(String status, int page, int pageSize) {
+        return WarrantyClaimDAO.getClaimsByStatus(status, page, pageSize);
+    }
     @Override
     public List<WarrantyClaim> getAllWarrantyClaims(int page, int pageSize) {
         return WarrantyClaimDAO.getAllWarrantyClaims(page, pageSize);
+    }
+    @Override
+    public List<WarrantyClaim> getClaimsByUserID(Integer userID, int page, int pageSize) {
+        return WarrantyClaimDAO.getClaimsByUserID(userID, page, pageSize);
+    }
+    @Override
+    public List<WarrantyHistory> getHistoryByClaimId(Integer claimId, int page, int pageSize) {
+        return WarrantyClaimDAO.getHistoryByClaimId(claimId, page, pageSize);
+    }
+    @Override
+    public WarrantyClaim getClaimDetailsById(Integer claimId) {
+        return WarrantyClaimDAO.getClaimDetailsById(claimId);
+    }
+    @Override
+    public void closeResources() {
+        if (WarrantyClaimDAO != null) {
+            WarrantyClaimDAO.closeSessionFactory();
+        }
     }
 }

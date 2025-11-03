@@ -1,6 +1,7 @@
 package uth.edu.repositories;
 
 import java.util.List;
+
 import uth.edu.dao.UserDAO;
 import uth.edu.pojo.User;
 
@@ -41,5 +42,9 @@ public class UserRepository implements IUserRepository {
     public User getUserByUserName(String userName) {
         return userDAO.getUserByUserName(userName);
     }
+    @Override
+    public void closeResources() {
+        userDAO.closeSessionFactory();
+    }   
 }
 

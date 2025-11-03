@@ -37,12 +37,15 @@ public class VehicleService {
     public boolean RegisterVehicle(Integer SCStaffID, Vehicle VehicleData, Customer CustomerData) {
         try {
             SCStaff staff = scStaffDAO.getSCStaffById(SCStaffID);
-            if (staff == null) return false;
+            if (staff == null) 
+                return false;
 
-            if (VehicleData == null || CustomerData == null) return false;
+            if (VehicleData == null || CustomerData == null) 
+                return false;
 
             Vehicle existingVehicle = vehicleRepository.getVehicleByVin(VehicleData.getVIN());
-            if (existingVehicle != null) return false;
+            if (existingVehicle != null) 
+                return false;
 
             Customer existingCustomer = null;
             if (CustomerData.getCustomerID() != null && CustomerData.getCustomerID() > 0) {
@@ -75,16 +78,20 @@ public class VehicleService {
         Session session = null;
         try {
             SCStaff staff = scStaffDAO.getSCStaffById(SCStaffID);
-            if (staff == null) return false;
+            if (staff == null) 
+                return false;
 
             Vehicle vehicle = vehicleRepository.getVehicleByVin(VIN);
-            if (vehicle == null) return false;
+            if (vehicle == null) 
+                return false;
 
             Part part = partRepository.getPartById(PartId);
-            if (part == null) return false;
+            if (part == null) 
+                return false;
 
             User technician = userDAO.getUserById(SCTechnicianID);
-            if (technician == null || !(technician instanceof SCTechnician)) return false;
+            if (technician == null || !(technician instanceof SCTechnician)) 
+                return false;
 
             VehiclePart vehiclePart = new VehiclePart(
                 null,
@@ -126,7 +133,8 @@ public class VehicleService {
                 .setParameter("vin", VIN)
                 .uniqueResult();
 
-            if (vehicle == null) return null;
+            if (vehicle == null) 
+                return null;
 
             List<VehiclePart> parts = session.createQuery(
                 "SELECT vp FROM VehiclePart vp WHERE vp.Vehicle.VIN = :vin",

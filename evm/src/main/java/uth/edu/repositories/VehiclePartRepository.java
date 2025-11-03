@@ -37,4 +37,8 @@ public class VehiclePartRepository implements IVehiclePartRepository {
     public List<VehiclePart> getAllVehicleParts(int page, int pageSize) {
         return VehiclePartDAO.getAllVehicleParts(page, pageSize);
     }
+    @Override
+    public void closeResources() {
+        VehiclePartDAO.closeSessionFactory();
+    }
 }

@@ -1,9 +1,17 @@
 package uth.edu.repositories;
+import java.util.List;
 
+import uth.edu.pojo.WarrantyClaim;
+import uth.edu.pojo.WarrantyHistory;
 public interface IWarrantyClaimRepository {
-    public void addWarrantyClaim(uth.edu.pojo.WarrantyClaim WarrantyClaim);
-    public void updateWarrantyClaim(uth.edu.pojo.WarrantyClaim WarrantyClaim);
-    public void deleteWarrantyClaim(uth.edu.pojo.WarrantyClaim WarrantyClaim);
-    public uth.edu.pojo.WarrantyClaim getWarrantyClaimById(int id);
-    public java.util.List<uth.edu.pojo.WarrantyClaim> getAllWarrantyClaims(int page, int pageSize);
+    public boolean addWarrantyClaim(WarrantyClaim WarrantyClaim, WarrantyHistory WarrantyHistory);
+    public boolean updateWarrantyClaim(WarrantyClaim WarrantyClaim, WarrantyHistory WarrantyHistory);
+    public boolean deleteWarrantyClaim(WarrantyClaim WarrantyClaim);
+    public WarrantyClaim getWarrantyClaimById(int id);
+    public WarrantyClaim getClaimDetailsById(Integer claimId);
+    public List<WarrantyClaim> getAllWarrantyClaims(int page, int pageSize);
+    public List<WarrantyClaim> getClaimsByStatus(String status, int page, int pageSize);
+    public List<WarrantyClaim> getClaimsByUserID(Integer userID, int page, int pageSize);
+    public List<WarrantyHistory> getHistoryByClaimId(Integer claimId, int page, int pageSize);
+    public void closeResources();
 }

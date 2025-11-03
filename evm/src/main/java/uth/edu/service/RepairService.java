@@ -1,17 +1,17 @@
 package uth.edu.service;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-
-import uth.edu.pojo.ClaimService;
-import uth.edu.pojo.SCTechnician;
-import uth.edu.pojo.WarrantyClaim;
-import uth.edu.pojo.WarrantyHistory;
 import uth.edu.repositories.ClaimServiceRepository;
 import uth.edu.repositories.SCTechnicianRepository;
 import uth.edu.repositories.WarrantyClaimRepository;
 import uth.edu.repositories.WarrantyHistoryRepository;
+import uth.edu.pojo.ClaimService;
+import uth.edu.pojo.SCTechnician;
+import uth.edu.pojo.WarrantyClaim;
+import uth.edu.pojo.WarrantyHistory;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Comparator;
 
 public class RepairService {
 
@@ -100,7 +100,7 @@ public class RepairService {
             WarrantyHistory history = new WarrantyHistory(null, claim, new Date(), FinalNote);
 
             claimServiceRepository.updateClaimService(claimService);
-            warrantyClaimRepository.updateWarrantyClaim(claim,history);
+            warrantyClaimRepository.updateWarrantyClaim(claim);
             warrantyHistoryRepository.addWarrantyHistory(history);
 
             return true;

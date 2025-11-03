@@ -5,17 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c1113d8-0d76-4694-aa47-5f337a0cea98" name="Changes" comment="chore: cập nhật lại thư mục trong code">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/frontend/assets/css/SC-Staff/customer_record_management.css" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/assets/css/SC-Staff/customer_record_management.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/frontend/assets/css/SC-Staff/technician_assignment.css" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/assets/css/SC-Staff/technician_assignment.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/frontend/assets/css/SC-Staff/vehicle_record_management.css" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/assets/css/SC-Staff/vehicle_record_management.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/frontend/assets/js/SC-Staff/campaign_management.js" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/assets/js/SC-Staff/campaign_management.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/frontend/assets/js/SC-Staff/vehicle_record_management.js" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/assets/js/SC-Staff/vehicle_record_management.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/frontend/pages/SC-Staff/Section/campaign_management.html" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/pages/SC-Staff/Section/campaign_management.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/frontend/pages/SC-Staff/Section/customer_record_management.html" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/pages/SC-Staff/Section/customer_record_management.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/frontend/pages/SC-Staff/Section/vehicle_record_management.html" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/pages/SC-Staff/Section/vehicle_record_management.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/frontend/pages/SC-Staff/home_sc_staff.html" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/pages/SC-Staff/home_sc_staff.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/dao/WarrantyClaimDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/dao/WarrantyClaimDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/WarrantyClaim.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/WarrantyClaim.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/WarrantyClaimDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/WarrantyClaimDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/WarrantyClaim.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/WarrantyClaim.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,29 +56,30 @@
     <option name="openDirectoriesWithSingleClick" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Latitude/JAVA/Project/Laptrinh-java&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Latitude/JAVA/Project/Laptrinh-java",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;JAVA&quot;
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "JAVA"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/frontend/js/SC Staff" />
@@ -140,6 +135,14 @@
       <method v="2" />
     </configuration>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
+        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -150,6 +153,7 @@
       <updated>1761403354503</updated>
       <workItem from="1761750853362" duration="75000" />
       <workItem from="1761751739750" duration="3013000" />
+      <workItem from="1762175921383" duration="1211000" />
     </task>
     <task id="LOCAL-00001" summary="Cập Nhật Lại 1 Số Chức Năng Của SC Staff và SC Technican">
       <option name="closed" value="true" />

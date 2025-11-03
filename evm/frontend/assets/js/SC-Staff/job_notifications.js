@@ -30,13 +30,11 @@
         const n = Object.assign({ id: Date.now(), title: '', meta: '', body: '', unread: true }, notification);
         arr.unshift(n);
         saveNotifications(arr);
-        // try to update UI if list present
         const list = document.getElementById('notificationsList');
         if (list) renderNotifications(list);
         return n.id;
     };
 
-    // Try to detect current user name from common DOM locations
     function detectCurrentUserName() {
         const selectors = ['#userName', '.user-name', '.profile-name', '.sidebar .name', '.account-name'];
         for (let sel of selectors) {
@@ -71,7 +69,6 @@
             document.getElementById('notifBody').innerText = body;
             modal.style.display = 'block';
 
-            // persist read state
             const arr = loadNotifications();
             const id = Number(item.dataset.id);
             arr.forEach(n => { if (n.id === id) n.unread = false; });
@@ -80,7 +77,6 @@
         }
 
         if (list) {
-            // render stored notifications
             renderNotifications(list);
 
             list.addEventListener('click', function (e) {
@@ -100,7 +96,6 @@
         });
         if (markAllBtn) markAllBtn.addEventListener('click', function () { const arr = loadNotifications(); arr.forEach(n => n.unread = false); saveNotifications(arr); if (list) renderNotifications(list); });
         if (deleteReadBtn) deleteReadBtn.addEventListener('click', function () { let arr = loadNotifications(); arr = arr.filter(n => n.unread); saveNotifications(arr); if (list) renderNotifications(list); });
-        // Open create modal when user clicks create button
         if (createBtn) createBtn.addEventListener('click', function () {
             if (createModal) createModal.style.display = 'block';
             if (createForm) createForm.reset();

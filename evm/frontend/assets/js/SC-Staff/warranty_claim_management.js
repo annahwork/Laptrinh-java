@@ -1,12 +1,9 @@
-
 function initWarrantyModal() {
-    console.log('[warranty] initWarrantyModal start');
     const btnMoForm = document.getElementById('btnMoFormYeuCau');
     const modal = document.getElementById('modalYeuCauBaoHanh');
     const btnDongModal = modal ? modal.querySelector('.warranty-claim__close-button') : null;
     const btnHuyYeuCau = document.getElementById('warrantyCancelBtn');
     const form = modal ? modal.querySelector('.warranty-claim__form') : null;
-    console.log('[warranty] elements:', { btnMoForm: !!btnMoForm, modal: !!modal, btnDongModal: !!btnDongModal, btnHuyYeuCau: !!btnHuyYeuCau, form: !!form });
 
     function hienModal() {
         if (modal) modal.style.display = 'block';
@@ -19,15 +16,13 @@ function initWarrantyModal() {
         }
     }
 
-    if (btnMoForm) btnMoForm.addEventListener('click', function () { console.log('[warranty] btnMoForm clicked'); hienModal(); });
-    else console.warn('[warranty] btnMoForm not found');
-    if (btnDongModal) btnDongModal.addEventListener('click', function(){ console.log('[warranty] close clicked'); anModal(); });
-    if (btnHuyYeuCau) btnHuyYeuCau.addEventListener('click', function(){ console.log('[warranty] cancel clicked'); anModal(); });
+    if (btnMoForm) btnMoForm.addEventListener('click', function () { hienModal(); });
+    if (btnDongModal) btnDongModal.addEventListener('click', anModal);
+    if (btnHuyYeuCau) btnHuyYeuCau.addEventListener('click', anModal);
 
     if (form) {
         form.addEventListener('submit', function (event) {
             event.preventDefault();
-
             const warrantyCode = document.getElementById('warranty_code')?.value || '';
             const vin = document.getElementById('warranty_vin')?.value || '';
             const date = document.getElementById('warranty_date')?.value || '';

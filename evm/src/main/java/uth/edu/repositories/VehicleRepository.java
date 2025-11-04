@@ -32,9 +32,18 @@ public class VehicleRepository implements IVehicleRepository {
     public Vehicle getVehicleByVin(String Vin) {
         return VehicleDAO.getVehicleByVin(Vin);
     }
-
+    @Override
+    public List<Vehicle> getVehiclesByModel(String model, int page, int pageSize) {
+        return VehicleDAO.getVehiclesByModel(model, page, pageSize);
+    }
     @Override
     public List<Vehicle> getAllVehicles(int page, int pageSize) {
         return VehicleDAO.getAllVehicles(page, pageSize);
+    }
+    @Override
+    public void closeResources() {
+        if (VehicleDAO != null) {
+            VehicleDAO.closeSessionFactory();
+        }
     }
 }

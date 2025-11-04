@@ -32,9 +32,23 @@ public class RecallVehicleRepository implements IRecallVehicleRepository {
     public RecallVehicle getRecallVehicleById(int RecallVehicleId) {
         return RecallVehicleDAO.getRecallVehicleById(RecallVehicleId);
     }
+    @Override
+    public List<RecallVehicle> getRecallVehiclesByVIN(String vin, int page, int pageSize) {
+        return RecallVehicleDAO.getRecallVehiclesByVIN(vin, page, pageSize);
+    }
+    @Override
+    public List<RecallVehicle> getRecallVehiclesByCampaignID(Integer campaignID, int page, int pageSize) {
+        return RecallVehicleDAO.getRecallVehiclesByCampaignID(campaignID, page, pageSize);
+    }
 
     @Override
     public List<RecallVehicle> getAllRecallVehicles(int page, int pageSize) {
         return RecallVehicleDAO.getAllRecallVehicles(page, pageSize);
+    }
+    @Override
+    public void closeResources() {
+        if (RecallVehicleDAO != null) {
+            RecallVehicleDAO.closeSessionFactory();
+        }
     }
 }

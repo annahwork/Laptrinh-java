@@ -1,11 +1,13 @@
 package uth.edu.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import uth.edu.pojo.RecallVehicle;
 
-import java.util.List;
+import uth.edu.pojo.RecallVehicle;
 
 public class RecallVehicleDAO {
     private Configuration configuration = null;
@@ -88,6 +90,48 @@ public class RecallVehicleDAO {
             }
         }
         return recallVehicle;
+    }
+    public List<RecallVehicle> getRecallVehiclesByVIN(String vin, int page, int pageSize) {
+        Session session = null;
+        List<RecallVehicle> recallVehicles = null;
+        try {
+            session = sessionFactory.openSession();
+            // Lưu ý: Tên thuộc tính "vehicle.VIN" phải khớp POJO
+            recallVehicles = session.createQuery("FROM RecallVehicle rv WHERE rv.vehicle.VIN = :vin", RecallVehicle.class)
+                    .setParameter("vin", vin)
+                    .setFirstResult((page - 1) * pageSize)
+                    .setMaxResults(pageSize)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>(); // Trả về list rỗng
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return recallVehicles;
+    }
+    public List<RecallVehicle> getRecallVehiclesByCampaignID(Integer campaignID, int page, int pageSize) {
+        Session session = null;
+        List<RecallVehicle> recallVehicles = null;
+        try {
+            session = sessionFactory.openSession();
+            // Lưu ý: Tên thuộc tính "RecallCampaign.CampaignID" phải khớp POJO
+            recallVehicles = session.createQuery("FROM RecallVehicle rv WHERE rv.RecallCampaign.CampaignID = :campaignID", RecallVehicle.class)
+                    .setParameter("campaignID", campaignID)
+                    .setFirstResult((page - 1) * pageSize)
+                    .setMaxResults(pageSize)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>(); // Trả về list rỗng
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return recallVehicles;
     }
 
     public List<RecallVehicle> getAllRecallVehicles(int page, int pageSize) {

@@ -1,8 +1,16 @@
 package uth.edu.pojo;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 @Entity
 @Table(name = "WarrantyService")
 public class WarrantyService {
@@ -24,21 +32,25 @@ public class WarrantyService {
     @Column(name = "Condition", length = 255)
     private String Condition;
 
+    @Column(name ="Cost")
+    private Double Cost;
+
     @OneToMany(
-            mappedBy = "warrantyService",
+            mappedBy = "WarrantyService",
             fetch = FetchType.LAZY
     )
     private List<ClaimService> ClaimServices = new ArrayList<>();
 
     public WarrantyService(){}
 
-    public WarrantyService(Integer ServiceID, String Name, String Detail, String Duration, String Condition)
+    public WarrantyService(Integer ServiceID, String Name, String Detail, String Duration, String Condition, Double Cost)
     {
         this.ServiceID = ServiceID;
         this.Name = Name;
         this.Detail = Detail;
         this.Duration = Duration;
         this.Condition = Condition;
+        this.Cost = Cost;
     }
 
     public Integer getServiceID(){
@@ -60,6 +72,9 @@ public class WarrantyService {
     public String getCondition(){
         return this.Condition;
     }
+    public Double getCost(){
+        return this.Cost;
+    }
 
     public void setServiceID(Integer ServiceID){
         this.ServiceID = ServiceID;
@@ -79,6 +94,9 @@ public class WarrantyService {
 
     public void setCondition(String Condition){
         this.Condition = Condition;
+    }
+    public void setCost(Double Cost){
+        this.Cost = Cost;
     }
 
 }

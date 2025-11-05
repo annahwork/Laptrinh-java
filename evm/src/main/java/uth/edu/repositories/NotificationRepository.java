@@ -37,4 +37,12 @@ public class NotificationRepository implements INotificationRepository {
     public List<Notification> getAllNotifications(int page, int pageSize) {
         return NotificationDAO.getAllNotifications(page, pageSize);
     }
+    @Override
+    public List<Notification> getUnreadNotificationsByUserID(int userID, int page, int pageSize) {
+        return NotificationDAO.getUnreadNotificationsByUserID(userID, page, pageSize);
+    }
+    @Override
+    public void closeResources() {
+        NotificationDAO.closeSessionFactory();
+    }
 }

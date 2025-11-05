@@ -11,6 +11,8 @@ public interface IUserRepository {
     public User getUserById(int id);
     public List<User> getAllUsers(int page, int pageSize);
     public User getUserByUserName(String userName);
+    public List<User> getUsersByRole(String role);
+    public List<User> getUsersByRoleAndSC(String role, int scId);
     public void closeResources();
 }
 

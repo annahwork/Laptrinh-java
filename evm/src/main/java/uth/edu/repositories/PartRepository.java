@@ -37,4 +37,8 @@ public class PartRepository implements IPartRepository {
     public List<Part> getAllParts(int page, int pageSize) {
         return PartDAO.getAllParts(page, pageSize);
     }
+    @Override
+    public void closeResources() {
+        PartDAO.closeSessionFactory();
+    }
 }

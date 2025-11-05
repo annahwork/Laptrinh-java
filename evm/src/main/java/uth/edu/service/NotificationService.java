@@ -42,8 +42,10 @@ public class NotificationService {
 
     public List<Notification> GetUnreadNotifications(Integer UserID, int page, int pageSize) {
         try {
-            if (page <= 0) page = DEFAULT_PAGE;
-            if (pageSize <= 0) pageSize = DEFAULT_PAGE_SIZE;
+            if (page <= 0) 
+                page = DEFAULT_PAGE;
+            if (pageSize <= 0) 
+                pageSize = DEFAULT_PAGE_SIZE;
 
             return notificationRepository.getUnreadNotificationsByUserID(UserID, page, pageSize);
             

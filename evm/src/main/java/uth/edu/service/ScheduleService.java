@@ -2,7 +2,6 @@ package uth.edu.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -71,9 +70,9 @@ public class ScheduleService {
 
 			List<Schedule> all = getAllSchedules();
 			List<Schedule> filtered = new ArrayList<>();
-			for (Schedule s : all) {
-				if (s.getCreatedByStaff() != null && s.getCreatedByStaff().getUserID() == scStaffID) {
-					filtered.add(s);
+			for (Schedule schedule : all) {
+				if (schedule.getCreatedByStaff() != null && schedule.getCreatedByStaff().getUserID() == scStaffID) {
+					filtered.add(schedule);
 				}
 			}
 

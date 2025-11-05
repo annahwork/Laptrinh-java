@@ -1,11 +1,13 @@
 package uth.edu.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import uth.edu.pojo.User;
 
-import java.util.List;
+import uth.edu.pojo.User;
 
 public class UserDAO {
 
@@ -127,6 +129,44 @@ public class UserDAO {
         }
         return user;
     }
+    public List<User> getUsersByRoleAndSC(String role, Integer scId) {
+        Session session = null;
+        List<User> users = null;
+        try {
+            session = sessionFactory.openSession();
+            users = session.createQuery(
+                "FROM User u WHERE u.User_Role = :role AND u.ServiceCenter.SCID = :scId", 
+                User.class)
+                .setParameter("role", role)
+                .setParameter("scId", scId)
+                .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>(); 
+        } finally {
+            if (session != null) session.close();
+        }
+        return users;
+    }
+    public List<User> getUsersByRole(String role) {
+        Session session = null;
+        List<User> users = null;
+        try {
+            session = sessionFactory.openSession();
+            users = session.createQuery("FROM User u WHERE u.User_Role = :role", User.class)
+                    .setParameter("role", role)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return users;
+    }
+
 
     public void closeSessionFactory() {
         if (sessionFactory != null) {

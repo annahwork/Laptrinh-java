@@ -1,10 +1,13 @@
 package uth.edu.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
 import uth.edu.pojo.Notification;
-import java.util.List;
 
 public class NotificationDAO {
     private Configuration configuration = null;
@@ -100,6 +103,28 @@ public class NotificationDAO {
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return notifications;
+    }
+    public List<Notification> getUnreadNotificationsByUserID(int userID, int page, int pageSize) {
+        Session session = null;
+        List<Notification> notifications = null;
+        try {
+            session = sessionFactory.openSession();
+            notifications = session.createQuery(
+                "FROM Notification n WHERE n.Receiver.UserID = :userId AND n.IsRead = false ORDER BY n.NotificationID DESC", 
+                Notification.class)
+                    .setParameter("userId", userID)
+                    .setFirstResult((page - 1) * pageSize)
+                    .setMaxResults(pageSize)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
         } finally {
             if (session != null) {
                 session.close();

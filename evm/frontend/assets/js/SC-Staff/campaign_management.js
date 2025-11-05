@@ -44,7 +44,8 @@
             closeModal();
         });
 
-        window.addEventListener('click', function (e) { if (modal && modal.style.display === 'block' && e.target == modal) closeModal(); });
+        window.addEventListener('click', function (e) { 
+            if (modal && modal.style.display === 'block' && e.target == modal) closeModal(); });
     }
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initCampaignModal); else initCampaignModal();

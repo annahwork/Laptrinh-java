@@ -1,0 +1,112 @@
+<section id="claim_tracking_page" class="claim_tracking__section">
+  <div class="app-layout">
+    <link rel="stylesheet" href="../../assets/css/EVM-Staff/claim_tracking.css">
+
+    <div class="content-wrapper" id="innerContent">
+      <div class="main-content-area">
+
+        <h2 class="page-title">Theo dõi yêu cầu bảo hành</h2>
+
+        <!-- Bảng yêu cầu -->
+        <div class="card">
+          <div class="card-body-no-padding">
+            <table class="table-zebra table-full-width" id="trackingTable">
+              <thead>
+                <tr class="table-header-row">
+                  <th>Mã yêu cầu</th>
+                  <th>Mã xe</th>
+                  <th>Người yêu cầu</th>
+                  <th>Ngày tạo</th>
+                  <th>Trạng thái</th>
+                  <th>Tiến trình</th>
+                </tr>
+              </thead>
+              <tbody id="trackingTableBody">
+                <!-- Dữ liệu ví dụ -->
+                <tr>
+                  <td>CR001</td>
+                  <td>V001</td>
+                  <td>Nguyễn A</td>
+                  <td>2025-11-05</td>
+                  <td>Chờ duyệt</td>
+                  <td><button class="btn-view" data-id="CR001">Xem tiến trình</button></td>
+                </tr>
+                <tr>
+                  <td>CR002</td>
+                  <td>V002</td>
+                  <td>Trần B</td>
+                  <td>2025-11-04</td>
+                  <td>Đã duyệt</td>
+                  <td><button class="btn-view" data-id="CR002">Xem tiến trình</button></td>
+                </tr>
+                <tr>
+                  <td>CR003</td>
+                  <td>V003</td>
+                  <td>Lê C</td>
+                  <td>2025-11-03</td>
+                  <td>Chờ duyệt</td>
+                  <td><button class="btn-view" data-id="CR003">Xem tiến trình</button></td>
+                </tr>
+                <tr>
+                  <td>CR004</td>
+                  <td>V004</td>
+                  <td>Phạm D</td>
+                  <td>2025-11-02</td>
+                  <td>Đã từ chối</td>
+                  <td><button class="btn-view" data-id="CR004">Xem tiến trình</button></td>
+                </tr>
+                <tr>
+                  <td>CR005</td>
+                  <td>V005</td>
+                  <td>Hoàng E</td>
+                  <td>2025-11-01</td>
+                  <td>Đã duyệt</td>
+                  <td><button class="btn-view" data-id="CR005">Xem tiến trình</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Phân trang -->
+          <div class="card-footer">
+            <div class="pagination-wrapper">
+              <span class="pagination-info">Hiển thị <span id="pageInfo">0</span> của <span id="totalItems">0</span></span>
+              <div class="pagination-controls">
+                <button class="pagination-btn" id="prevPage">« Trước</button>
+                <button class="pagination-btn pagination-btn--active" id="currentPage">1</button>
+               <button class="pagination-btn" id="nextPage">Sau »</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal chi tiết tiến trình -->
+            <div class="modal" id="trackingModal">
+            <div class="modal-content">
+                <span class="modal-close" id="closeModal">&times;</span>
+                <h3>Tiến trình yêu cầu <span id="modalClaimId"></span></h3>
+                
+                <!-- Bảng tiến trình -->
+                <table class="table-zebra table-full-width" id="modalProgressTable">
+                <thead>
+                    <tr>
+                    <th>Bước</th>
+                    <th>Người thực hiện</th>
+                    <th>Ngày</th>
+                    <th>Trạng thái</th>
+                    </tr>
+                </thead>
+                <tbody id="modalProgressBody">
+                    <!-- Dữ liệu sẽ render bằng JS -->
+                </tbody>
+                </table>
+            </div>
+            </div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <script src="../../assets/js/EVM-Staff/claim_tracking.js"></script>
+</section>

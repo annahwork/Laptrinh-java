@@ -3,12 +3,9 @@ package uth.edu.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-
 import uth.edu.pojo.Schedule;
 
 import java.util.List;
-
-import com.sun.jdi.connect.Connector;
 
 public class ScheduleDAO {
     private Configuration configuration = null;
@@ -77,7 +74,7 @@ public class ScheduleDAO {
         }
     }
 
-    public Schedule getScheduleById(Connector.IntegerArgument scheduleID) {
+    public Schedule getScheduleById(int scheduleID) {
         Session session = null;
         Schedule schedule = null;
         try {

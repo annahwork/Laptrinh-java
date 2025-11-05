@@ -141,4 +141,3 @@ Array.from(document.querySelectorAll('script[src]')).map(s => s.src);
 
 // test fetch file script từ browser (path relative to page)
 fetch('../../assets/js/SC-Staff/vehicle_record_management.js').then(r=>console.log(r.status)).catch(e=>console.error(e));
-

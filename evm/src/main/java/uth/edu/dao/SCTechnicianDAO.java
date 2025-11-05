@@ -110,6 +110,23 @@ public class SCTechnicianDAO {
         return technicians;
     }
 
+    public List<SCTechnician> getAllTechnicians() {
+        Session session = null;
+        List<SCTechnician> technicians = null;
+        try {
+            session = sessionFactory.openSession();
+            technicians = session.createQuery("FROM SCTechnician", SCTechnician.class)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return technicians;
+    }
+
     public void closeSessionFactory() {
         if (sessionFactory != null) {
             sessionFactory.close();

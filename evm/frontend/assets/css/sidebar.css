@@ -7,6 +7,7 @@
     display: flex;
     flex-direction: column;
     transition: background var(--transition), border var(--transition);
+    flex-shrink: 0;
 }
 
 .sidebar__header {
@@ -16,12 +17,14 @@
     padding: 1rem;
     border-bottom: 1px solid var(--border);
 }
+
 .sidebar__logo {
     font-size: 1.25rem;
     font-weight: 700;
     color: var(--primary);
     letter-spacing: 0.03rem;
 }
+
 .sidebar__avatar {
     width: 36px;
     height: 36px;
@@ -38,15 +41,28 @@
     border-bottom: 1px solid var(--border);
     background: var(--page-bg);
 }
+
+/* Avatar của user - giống size logo */
+.sidebar__user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary);
+    flex-shrink: 0;
+}
+
 .sidebar__userinfo {
     display: flex;
     flex-direction: column;
 }
+
 .sidebar__username {
     font-size: 1rem;
     font-weight: 600;
     color: var(--text);
 }
+
 .sidebar__role {
     font-size: 0.875rem;
     color: var(--text-muted);
@@ -61,6 +77,7 @@
 .menu-group {
     border-top: 1px solid var(--border);
 }
+
 .menu-group:first-child {
     border-top: none;
 }
@@ -75,10 +92,12 @@
     font-weight: 400;
     transition: background var(--transition), color var(--transition);
 }
+
 .menu-group-toggle:hover {
     color: var(--text);
     background: var(--p-50);
 }
+
 .menu-group.open .menu-group-toggle .arrow {
     transform: rotate(90deg);
 }
@@ -89,6 +108,7 @@
     transition: max-height 0.25s ease;
     background: var(--page-bg);
 }
+
 .menu-group.open .submenu {
     max-height: 500px;
 }
@@ -96,6 +116,7 @@
 .sidebar__item {
     display: block;
 }
+
 .sidebar__link {
     display: block;
     padding: 0.625rem 1.5rem;
@@ -104,13 +125,15 @@
     font-size: 0.95rem;
     border-left: 3px solid transparent;
     transition: background var(--transition), color var(--transition),
-    border var(--transition);
+        border var(--transition);
     font-weight: 400;
 }
+
 .sidebar__link:hover {
     color: var(--text);
     background: var(--p-50);
 }
+
 .sidebar__link.active {
     color: var(--primary);
     background: var(--p-100);
@@ -121,6 +144,7 @@
 .sidebar__nav::-webkit-scrollbar {
     width: 6px;
 }
+
 .sidebar__nav::-webkit-scrollbar-thumb {
     background: var(--gray-300);
     border-radius: var(--radius-sm);
@@ -130,15 +154,19 @@
     background: var(--card-bg);
     border-color: var(--border);
 }
+
 :root[data-theme="dark"] .sidebar__logo {
     color: var(--primary);
 }
+
 :root[data-theme="dark"] .menu-group-toggle:hover {
     background: rgba(255, 255, 255, 0.05);
 }
+
 :root[data-theme="dark"] .sidebar__link:hover {
     background: rgba(255, 255, 255, 0.05);
 }
+
 :root[data-theme="dark"] .sidebar__link.active {
     background: rgba(59, 130, 246, 0.1);
     border-left-color: var(--primary);

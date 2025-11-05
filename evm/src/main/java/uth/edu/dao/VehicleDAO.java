@@ -1,11 +1,13 @@
 package uth.edu.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import uth.edu.pojo.Vehicle;
 
-import java.util.List;
+import uth.edu.pojo.Vehicle;
 
 public class VehicleDAO {
     private Configuration configuration = null;
@@ -72,6 +74,26 @@ public class VehicleDAO {
                 session.close();
             }
         }
+    }
+    public List<Vehicle> getVehiclesByModel(String model, int page, int pageSize) {
+        Session session = null;
+        List<Vehicle> vehicles = null;
+        try {
+            session = sessionFactory.openSession();
+            vehicles = session.createQuery("FROM Vehicle v WHERE v.Model = :model", Vehicle.class)
+                    .setParameter("model", model)
+                    .setFirstResult((page - 1) * pageSize)
+                    .setMaxResults(pageSize)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>(); 
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return vehicles;
     }
 
     public Vehicle getVehicleByVin(String vin) {

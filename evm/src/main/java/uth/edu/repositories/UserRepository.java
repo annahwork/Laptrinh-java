@@ -43,6 +43,15 @@ public class UserRepository implements IUserRepository {
         return userDAO.getUserByUserName(userName);
     }
     @Override
+    public List<User> getUsersByRole(String role) {
+        return userDAO.getUsersByRole(role);
+    }
+    @Override
+    public List<User> getUsersByRoleAndSC(String role, int scId) {
+        return userDAO.getUsersByRoleAndSC(role, scId);
+    }
+
+    @Override
     public void closeResources() {
         userDAO.closeSessionFactory();
     }   

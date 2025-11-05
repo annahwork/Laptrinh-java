@@ -1,10 +1,13 @@
 package uth.edu.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
 import uth.edu.pojo.Inventory;
-import java.util.List;
 
 public class InventoryDAO {
     private Configuration configuration = null;
@@ -100,6 +103,45 @@ public class InventoryDAO {
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return inventories;
+    }
+    
+    public Inventory getInventoryByPartAndSC(Integer partId, Integer scId) {
+        Session session = null;
+        Inventory inventory = null;
+        try {
+            session = sessionFactory.openSession();
+            inventory = session.createQuery(
+                "FROM Inventory i WHERE i.Part.PartID = :partId AND i.ServiceCenter.SCID = :scId", 
+                Inventory.class)
+                .setParameter("partId", partId)
+                .setParameter("scId", scId)
+                .uniqueResult(); 
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) session.close();
+        }
+        return inventory;
+    }
+    public List<Inventory> getInventoriesByPartID(Integer partId, int page, int pageSize) {
+        Session session = null;
+        List<Inventory> inventories = null;
+        try {
+            session = sessionFactory.openSession();
+            inventories = session.createQuery("FROM Inventory i WHERE i.Part.PartID = :partId", Inventory.class)
+                    .setParameter("partId", partId)
+                    .setFirstResult((page - 1) * pageSize)
+                    .setMaxResults(pageSize)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
         } finally {
             if (session != null) {
                 session.close();

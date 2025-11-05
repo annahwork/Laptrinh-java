@@ -141,6 +141,16 @@
       <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/IRecallVehicleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/IRecallVehicleRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/RecallCampaignRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/RecallCampaignRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/RecallVehicleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/RecallVehicleRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/dao/InventoryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/dao/InventoryDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/dao/UserDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/Inventory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/IInventoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/IInventoryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/IPartRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/IPartRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/IUserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/IUserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/InventoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/InventoryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/PartRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/PartRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/AdminDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/AdminDAO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/ClaimServiceDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/ClaimServiceDAO.class" afterDir="false" />
@@ -182,13 +192,28 @@
       <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/ClaimServiceRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/ClaimServiceRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/CustomerRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/CustomerRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/EVMStaffRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/EVMStaffRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/IRecallCampaignRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/IRecallCampaignRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/IRecallVehicleRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/IRecallVehicleRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/IInventoryRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/IInventoryRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/IPartRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/IPartRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/IUserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/IUserRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/InventoryRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/InventoryRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/NotificationRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/NotificationRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/PartRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/PartRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/RecallCampaignRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/RecallCampaignRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/RecallVehicleRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/RecallVehicleRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/SCStaffRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/SCStaffRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/SCTechnicianRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/SCTechnicianRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/ScheduleRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/ScheduleRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/UserRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/VehiclePartRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/VehiclePartRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/VehicleRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/VehicleRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/WarrantyClaimRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/WarrantyClaimRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/WarrantyHistoryRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/WarrantyHistoryRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/WarrantyServiceRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/WarrantyServiceRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/service/CampaignService.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/service/CampaignService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/service/RepairService.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/service/RepairService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/service/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/service/VehicleService.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/service/VehicleService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/service/WarrantyClaimService.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/service/WarrantyClaimService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -235,31 +260,30 @@
     <option name="openDirectoriesWithSingleClick" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "Merging gia-han",
-    "ignore_missing_gitignore": "true",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/hongocgiahan/MÔN JAVA/Laptrinh-java",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "to.speed.mode.migration.done": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Latitude/JAVA/Project/Laptrinh-java&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "JAVA"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;JAVA&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/frontend/js/SC Staff" />
@@ -326,6 +350,8 @@
       <workItem from="1761750853362" duration="75000" />
       <workItem from="1761751739750" duration="3013000" />
       <workItem from="1762175921383" duration="1211000" />
+      <workItem from="1762320714457" duration="2000" />
+      <workItem from="1762322223927" duration="595000" />
     </task>
     <task id="LOCAL-00001" summary="Cập Nhật Lại 1 Số Chức Năng Của SC Staff và SC Technican">
       <option name="closed" value="true" />

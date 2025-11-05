@@ -1,25 +1,23 @@
 package uth.edu.pojo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import uth.edu.dao.NotificationDAO;
-
-import javax.persistence.DiscriminatorColumn;
-
-import javax.persistence.Inheritance;
-
-import java.util.List;
-import java.util.ArrayList;
-import javax.persistence.DiscriminatorType;
 
 @Entity
 @Table(name = "User")
@@ -46,16 +44,15 @@ public abstract class User {
 
     @Column(name = "Phone", length = 20)
     private String Phone;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "SCID") 
+    private ServiceCenter ServiceCenter;
 
-    @OneToMany(
-            mappedBy = "User",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY
-    )
-    private List<NotificationDAO> Notifications = new ArrayList<>();
+    @OneToMany(mappedBy = "Receiver", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Notification> Notifications = new ArrayList<>();
 
-    public User() {}
+    public User() {
+    }
 
     public User(String UserName, String Password, String Name) {
         this.UserName = UserName;
@@ -87,6 +84,14 @@ public abstract class User {
         return this.Phone;
     }
 
+    public ServiceCenter getServiceCenter() {
+        return ServiceCenter;
+    }
+
+    public List<Notification> getNotifications() {
+        return Notifications;
+    }
+
     public void setUserID(int UserID) {
         this.UserID = UserID;
     }
@@ -109,6 +114,12 @@ public abstract class User {
 
     public void setPhone(String Phone) {
         this.Phone = Phone;
+    }
+    public void setServiceCenter(ServiceCenter serviceCenter) {
+        this.ServiceCenter = serviceCenter;
+    }
+    public void setNotifications(List<Notification> notifications) {
+        this.Notifications = notifications;
     }
 
     @Override

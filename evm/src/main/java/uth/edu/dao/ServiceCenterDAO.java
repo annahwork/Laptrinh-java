@@ -5,32 +5,32 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction; // Đảm bảo POJO đã được tạo
 import org.hibernate.cfg.Configuration;
 
-import uth.edu.pojo.Notification;
+import uth.edu.pojo.ServiceCenter; // Import
 
-public class NotificationDAO {
+public class ServiceCenterDAO {
     private Configuration configuration = null;
     private SessionFactory sessionFactory = null;
 
-    public NotificationDAO(String configFile) {
+    public ServiceCenterDAO(String configFile) {
         configuration = new Configuration();
         configuration.configure(configFile);
         sessionFactory = configuration.buildSessionFactory();
     }
 
-    public void addNotification(Notification notification) {
+    public void addServiceCenter(ServiceCenter serviceCenter) {
         Session session = null;
+        Transaction tx = null;
         try {
             session = sessionFactory.openSession();
-            session.beginTransaction();
-            session.persist(notification);
-            session.getTransaction().commit();
+            tx = session.beginTransaction();
+            session.persist(serviceCenter);
+            tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
-            if (session != null && session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
+            if (tx != null) tx.rollback();
         } finally {
             if (session != null) {
                 session.close();
@@ -38,18 +38,17 @@ public class NotificationDAO {
         }
     }
 
-    public void updateNotification(Notification notification) {
+    public void updateServiceCenter(ServiceCenter serviceCenter) {
         Session session = null;
+        Transaction tx = null;
         try {
             session = sessionFactory.openSession();
-            session.beginTransaction();
-            session.merge(notification);
-            session.getTransaction().commit();
+            tx = session.beginTransaction();
+            session.merge(serviceCenter);
+            tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
-            if (session != null && session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
+            if (tx != null) tx.rollback();
         } finally {
             if (session != null) {
                 session.close();
@@ -57,18 +56,18 @@ public class NotificationDAO {
         }
     }
 
-    public void deleteNotification(Notification notification) {
+
+    public void deleteServiceCenter(ServiceCenter serviceCenter) {
         Session session = null;
+        Transaction tx = null;
         try {
             session = sessionFactory.openSession();
-            session.beginTransaction();
-            session.remove(notification);
-            session.getTransaction().commit();
+            tx = session.beginTransaction();
+            session.remove(serviceCenter);
+            tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
-            if (session != null && session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
+            if (tx != null) tx.rollback();
         } finally {
             if (session != null) {
                 session.close();
@@ -76,12 +75,12 @@ public class NotificationDAO {
         }
     }
 
-    public Notification getNotificationById(int id) {
+    public ServiceCenter getServiceCenterById(int id) {
         Session session = null;
-        Notification notification = null;
+        ServiceCenter serviceCenter = null;
         try {
             session = sessionFactory.openSession();
-            notification = session.get(Notification.class, id);
+            serviceCenter = session.get(ServiceCenter.class, id);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -89,48 +88,45 @@ public class NotificationDAO {
                 session.close();
             }
         }
-        return notification;
+        return serviceCenter;
     }
 
-    public List<Notification> getAllNotifications(int page, int pageSize) {
+    public List<ServiceCenter> getAllServiceCenters(int page, int pageSize) {
         Session session = null;
-        List<Notification> notifications = null;
+        List<ServiceCenter> serviceCenters = null;
         try {
             session = sessionFactory.openSession();
-            notifications = session.createQuery("FROM Notification", Notification.class)
+            serviceCenters = session.createQuery("FROM ServiceCenter", ServiceCenter.class)
                     .setFirstResult((page - 1) * pageSize)
                     .setMaxResults(pageSize)
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
+            return new ArrayList<>(); // Trả về list rỗng nếu lỗi
         } finally {
             if (session != null) {
                 session.close();
             }
         }
-        return notifications;
+        return serviceCenters;
     }
-    public List<Notification> getUnreadNotificationsByUserID(int userID, int page, int pageSize) {
+    public ServiceCenter getServiceCenterByType(String type) {
         Session session = null;
-        List<Notification> notifications = null;
+        ServiceCenter serviceCenter = null;
         try {
             session = sessionFactory.openSession();
-            notifications = session.createQuery(
-                "FROM Notification n WHERE n.Receiver.UserID = :userId AND n.IsRead = false ORDER BY n.NotificationID DESC", 
-                Notification.class)
-                    .setParameter("userId", userID)
-                    .setFirstResult((page - 1) * pageSize)
-                    .setMaxResults(pageSize)
-                    .getResultList();
+            serviceCenter = session.createQuery("FROM ServiceCenter sc WHERE sc.Type = :type", ServiceCenter.class)
+                    .setParameter("type", type)
+                    .setMaxResults(1) 
+                    .uniqueResult();
         } catch (Exception e) {
             e.printStackTrace();
-            return new ArrayList<>();
         } finally {
             if (session != null) {
                 session.close();
             }
         }
-        return notifications;
+        return serviceCenter;
     }
 
     public void closeSessionFactory() {

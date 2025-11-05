@@ -35,12 +35,12 @@ public class RepairService {
 
             List<ClaimService> all = claimServiceRepository.getAllClaimServices(1, 20);
             List<ClaimService> tasks = new ArrayList<>();
-            for (ClaimService cs : all) {
-                if (cs.getTechnician() != null && cs.getTechnician().getUserID() == SCTechnicianID) {
-                    WarrantyClaim wc = cs.getWarrantyClaim();
-                    String status = wc == null ? null : wc.getStatus();
+            for (ClaimService claimservice : all) {
+                if (claimservice.getTechnician() != null && claimservice.getTechnician().getUserID() == SCTechnicianID) {
+                    WarrantyClaim warrantyclaim = claimservice.getWarrantyClaim();
+                    String status = warrantyclaim == null ? null : warrantyclaim.getStatus();
                     if (status == null || !"Completed".equalsIgnoreCase(status)) {
-                        tasks.add(cs);
+                        tasks.add(claimservice);
                     }
                 }
             }
@@ -61,12 +61,13 @@ public class RepairService {
             if (claimService == null) 
 				return false;
 
-            if (claimService.getTechnician() == null ||
-                claimService.getTechnician().getUserID() != SCTechnicianID)
+            if (claimService.getTechnician() == null || claimService.getTechnician().getUserID() != SCTechnicianID)
                 return false;
 
-            if (Result != null) claimService.setResult(Result);
-            if (Note != null) claimService.setNote(Note);
+            if (Result != null) 
+                claimService.setResult(Result);
+            if (Note != null) 
+                claimService.setNote(Note);
 
             claimServiceRepository.updateClaimService(claimService);
             return true;
@@ -86,15 +87,16 @@ public class RepairService {
             if (claimService == null) 
 				return false;
 
-            if (claimService.getTechnician() == null ||
-                claimService.getTechnician().getUserID() != SCTechnicianID)
+            if (claimService.getTechnician() == null || claimService.getTechnician().getUserID() != SCTechnicianID)
                 return false;
 
             WarrantyClaim claim = claimService.getWarrantyClaim();
-            if (claim == null) return false;
+            if (claim == null) 
+                return false;
 
             claimService.setResult("Completed");
-            if (FinalNote != null) claimService.setNote(FinalNote);
+            if (FinalNote != null) 
+                claimService.setNote(FinalNote);
 
             claim.setStatus("Completed");
             WarrantyHistory history = new WarrantyHistory(null, claim, new Date(), FinalNote);
@@ -115,9 +117,7 @@ public class RepairService {
             if (claimservice == null) 
 				return null;
 
-            if (claimservice.getTechnician() == null ||
-                (SCTechnicianID != null &&
-                 claimservice.getTechnician().getUserID() != SCTechnicianID))
+            if (claimservice.getTechnician() == null || (SCTechnicianID != null && claimservice.getTechnician().getUserID() != SCTechnicianID))
                 return null;
 
             return claimservice;
@@ -140,8 +140,7 @@ public class RepairService {
             if (claimService == null) 
 				return false;
 
-            if (claimService.getTechnician() == null ||
-                claimService.getTechnician().getUserID() != SCTechnicianID)
+            if (claimService.getTechnician() == null || claimService.getTechnician().getUserID() != SCTechnicianID)
                 return false;
 
             WarrantyClaim claim = claimService.getWarrantyClaim();
@@ -169,8 +168,7 @@ public class RepairService {
             if (claimService == null) 
 				return false;
 
-            if (claimService.getTechnician() == null ||
-                claimService.getTechnician().getUserID() != FromTechnicianID)
+            if (claimService.getTechnician() == null || claimService.getTechnician().getUserID() != FromTechnicianID)
                 return false;
 
             claimService.setTechnician(toTech);
@@ -198,15 +196,18 @@ public class RepairService {
             Integer claimId = claimservice.getWarrantyClaim().getClaimID();
             List<WarrantyHistory> all = warrantyHistoryRepository.getAllWarrantyHistories(1, 20);
             List<WarrantyHistory> result = new ArrayList<>();
-            for (WarrantyHistory wh : all) {
-                if (wh.getWarrantyClaim() != null && wh.getWarrantyClaim().getClaimID().equals(claimId)) {
-                    result.add(wh);
+            for (WarrantyHistory warrantyhistory : all) {
+                if (warrantyhistory.getWarrantyClaim() != null && warrantyhistory.getWarrantyClaim().getClaimID().equals(claimId)) {
+                    result.add(warrantyhistory);
                 }
             }
             result.sort(Comparator.comparing(WarrantyHistory::getDate, (d1, d2) -> {
-                if (d1 == null && d2 == null) return 0;
-                if (d1 == null) return 1;
-                if (d2 == null) return -1;
+                if (d1 == null && d2 == null) 
+                    return 0;
+                if (d1 == null) 
+                    return 1;
+                if (d2 == null) 
+                    return -1;
                 return d2.compareTo(d1);
             }));
             return result;

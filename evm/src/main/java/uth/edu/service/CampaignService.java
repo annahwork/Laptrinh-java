@@ -22,7 +22,7 @@ private RecallCampaignRepository recallCampaignRepository;
 
     private static final int DEFAULT_PAGE = 1;
     private static final int DEFAULT_PAGE_SIZE = 20;
-    private static final int MAX_PAGE_SIZE = 9999;
+    private static final int MAX_PAGE_SIZE = 50;
 
     public CampaignService() {
         recallCampaignRepository = new RecallCampaignRepository();
@@ -84,8 +84,10 @@ private RecallCampaignRepository recallCampaignRepository;
 
     public List<RecallVehicle> GetRecallVehicles(int page, int pageSize) {
         try {
-            if (page <= 0) page = DEFAULT_PAGE;
-            if (pageSize <= 0) pageSize = DEFAULT_PAGE_SIZE;
+            if (page <= 0) 
+                page = DEFAULT_PAGE;
+            if (pageSize <= 0) 
+                pageSize = DEFAULT_PAGE_SIZE;
 
             return recallVehicleRepository.getAllRecallVehicles(page, pageSize);
         } catch (Exception e) {
@@ -107,8 +109,10 @@ private RecallCampaignRepository recallCampaignRepository;
 
     public List<RecallCampaign> GetCampaigns(int page, int pageSize) {
         try {
-            if (page <= 0) page = DEFAULT_PAGE;
-            if (pageSize <= 0) pageSize = DEFAULT_PAGE_SIZE; 
+            if (page <= 0) 
+                page = DEFAULT_PAGE;
+            if (pageSize <= 0) 
+                pageSize = DEFAULT_PAGE_SIZE; 
 
             return recallCampaignRepository.getAllRecallCampaigns(page, pageSize);
         } catch (Exception e) {

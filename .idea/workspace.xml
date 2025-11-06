@@ -5,80 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c1113d8-0d76-4694-aa47-5f337a0cea98" name="Changes" comment="chore: cập nhật lại thư mục trong code">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/dao/InventoryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/dao/InventoryDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/dao/UserDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/Inventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/pojo/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/IInventoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/IInventoryRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/IPartRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/IPartRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/IUserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/IUserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/InventoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/InventoryRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/PartRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/PartRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/evm/src/main/java/uth/edu/repositories/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/AdminDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/AdminDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/ClaimServiceDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/ClaimServiceDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/CustomerDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/CustomerDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/EVMStaffDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/EVMStaffDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/InventoryDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/InventoryDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/NotificationDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/NotificationDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/PartDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/PartDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/RecallCampaignDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/RecallCampaignDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/RecallVehicleDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/RecallVehicleDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/SCStaffDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/SCStaffDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/SCTechnicianDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/SCTechnicianDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/ScheduleDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/ScheduleDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/UserDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/UserDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/VehicleDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/VehicleDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/VehiclePartDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/VehiclePartDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/WarrantyClaimDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/WarrantyClaimDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/WarrantyHistoryDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/WarrantyHistoryDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/WarrantyServiceDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/dao/WarrantyServiceDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Admin.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Admin.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/ClaimService.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/ClaimService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Customer.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Customer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/EVMStaff.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/EVMStaff.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Inventory.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Inventory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Notification.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Notification.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Part.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Part.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/RecallCampaign.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/RecallCampaign.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/RecallVehicle.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/RecallVehicle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/SCStaff.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/SCStaff.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/SCTechnician.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/SCTechnician.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Schedule.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Schedule.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Vehicle.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/Vehicle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/VehiclePart.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/VehiclePart.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/WarrantyClaim.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/WarrantyClaim.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/WarrantyHistory.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/WarrantyHistory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/WarrantyService.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/pojo/WarrantyService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/AdminRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/AdminRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/ClaimServiceRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/ClaimServiceRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/CustomerRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/CustomerRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/EVMStaffRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/EVMStaffRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/IInventoryRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/IInventoryRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/IPartRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/IPartRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/IUserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/IUserRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/InventoryRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/InventoryRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/NotificationRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/NotificationRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/PartRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/PartRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/RecallCampaignRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/RecallCampaignRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/RecallVehicleRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/RecallVehicleRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/SCStaffRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/SCStaffRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/SCTechnicianRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/SCTechnicianRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/ScheduleRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/ScheduleRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/UserRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/VehiclePartRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/VehiclePartRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/VehicleRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/VehicleRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/WarrantyClaimRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/WarrantyClaimRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/WarrantyHistoryRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/WarrantyHistoryRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/WarrantyServiceRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/repositories/WarrantyServiceRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/service/CampaignService.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/service/CampaignService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/service/RepairService.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/service/RepairService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/service/UserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/service/VehicleService.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/service/VehicleService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evm/target/classes/uth/edu/service/WarrantyClaimService.class" beforeDir="false" afterPath="$PROJECT_DIR$/evm/target/classes/uth/edu/service/WarrantyClaimService.class" afterDir="false" />
+      <changelist_data name="GiaHan-coder" email="hngiahan24k10@gmail.com" automatic="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,30 +53,30 @@
     <option name="openDirectoriesWithSingleClick" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Latitude/JAVA/Project/Laptrinh-java&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "gia-han",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Latitude/JAVA/Project/Laptrinh-java",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;JAVA&quot;
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "JAVA"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/frontend/js/SC Staff" />
@@ -203,14 +131,6 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <method v="2" />
     </configuration>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
-        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -351,7 +271,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Cập Nhật Lại 1 Số Chức Năng Của SC Staff và SC Technican" />
+    <MESSAGE value="chore: cập nhật lại từ main" />
     <MESSAGE value="chore: cập nhật lại thư mục trong code" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: cập nhật lại thư mục trong code" />
+    <MESSAGE value="Merge branch 'main' into gia-han&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;evm/frontend/assets/css/EVM-Staff/allocate_parts.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/attach_serial.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/campaigns.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/claim_requests.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/claim_tracking.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/dashboard.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/inventory.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/manage_ev_parts.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/reports.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/statistics.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/warranty_cost.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/warranty_policy.css&#10;#&#9;evm/frontend/assets/js/EVM-Staff/allocate_parts.js&#10;#&#9;evm/frontend/assets/js/EVM-Staff/attach_serial.js&#10;#&#9;evm/frontend/assets/js/EVM-Staff/claim_request.js&#10;#&#9;evm/frontend/assets/js/EVM-Staff/dashboard.js&#10;#&#9;evm/frontend/assets/js/EVM-Staff/inventory.js&#10;#&#9;evm/frontend/assets/js/EVM-Staff/manage_ev_parts.js&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/allocate_parts.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/attach_serial.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/campaigns.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/claim_requests.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/claim_tracking.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/dashboard.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/inventory.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/manage_ev_parts.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/reports.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/statistics.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/warranty_cost.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/warranty_policy.html&#10;#&#9;evm/frontend/pages/EVM-Staff/home_evm_staff.html" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'main' into gia-han&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;evm/frontend/assets/css/EVM-Staff/allocate_parts.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/attach_serial.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/campaigns.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/claim_requests.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/claim_tracking.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/dashboard.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/inventory.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/manage_ev_parts.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/reports.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/statistics.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/warranty_cost.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/warranty_policy.css&#10;#&#9;evm/frontend/assets/js/EVM-Staff/allocate_parts.js&#10;#&#9;evm/frontend/assets/js/EVM-Staff/attach_serial.js&#10;#&#9;evm/frontend/assets/js/EVM-Staff/claim_request.js&#10;#&#9;evm/frontend/assets/js/EVM-Staff/dashboard.js&#10;#&#9;evm/frontend/assets/js/EVM-Staff/inventory.js&#10;#&#9;evm/frontend/assets/js/EVM-Staff/manage_ev_parts.js&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/allocate_parts.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/attach_serial.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/campaigns.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/claim_requests.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/claim_tracking.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/dashboard.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/inventory.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/manage_ev_parts.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/reports.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/statistics.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/warranty_cost.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/warranty_policy.html&#10;#&#9;evm/frontend/pages/EVM-Staff/home_evm_staff.html" />
   </component>
 </project>

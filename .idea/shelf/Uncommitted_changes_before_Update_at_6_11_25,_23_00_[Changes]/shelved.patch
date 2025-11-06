@@ -1,0 +1,158 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"1c1113d8-0d76-4694-aa47-5f337a0cea98\" name=\"Changes\" comment=\"chore: cập nhật lại thư mục trong code\">\n      <changelist_data name=\"GiHana\" email=\"156551189+hanafs@users.noreply.github.com\" automatic=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"FileTemplateManagerImpl\">\n    <option name=\"RECENT_TEMPLATES\">\n      <list>\n        <option value=\"HTML File\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"Git.Settings\">\n    <branch-grouping />\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\n      <map>\n        <entry key=\"$PROJECT_DIR$\" value=\"gia-han\" />\n      </map>\n    </option>\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"GitHubPullRequestSearchHistory\">{\n  &quot;lastFilter&quot;: {\n    &quot;state&quot;: &quot;OPEN&quot;,\n    &quot;assignee&quot;: &quot;HanaFS&quot;\n  }\n}</component>\n  <component name=\"GithubPullRequestsUISettings\">{\n  &quot;selectedUrlAndAccountId&quot;: {\n    &quot;url&quot;: &quot;https://github.com/annahwork/Laptrinh-java.git&quot;,\n    &quot;accountId&quot;: &quot;4ba5e288-9a09-43e3-b23b-316ae7b74844&quot;\n  }\n}</component>\n  <component name=\"ProjectColorInfo\">{\n  &quot;customColor&quot;: &quot;&quot;,\n  &quot;associatedIndex&quot;: 6\n}</component>\n  <component name=\"ProjectId\" id=\"34YvWxNHVokjgLKiBphWUElnTFv\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"autoscrollFromSource\" value=\"true\" />\n    <option name=\"autoscrollToSource\" value=\"true\" />\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"openDirectoriesWithSingleClick\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\"><![CDATA[{\n  \"keyToString\": {\n    \"DefaultHtmlFileTemplate\": \"HTML File\",\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\n    \"RunOnceActivity.git.unshallow\": \"true\",\n    \"dart.analysis.tool.window.visible\": \"false\",\n    \"git-widget-placeholder\": \"gia-han\",\n    \"ignore_missing_gitignore\": \"true\",\n    \"junie.onboarding.icon.badge.shown\": \"true\",\n    \"kotlin-language-version-configured\": \"true\",\n    \"last_opened_file_path\": \"/Users/hongocgiahan/MÔN JAVA/Laptrinh-java\",\n    \"node.js.detected.package.eslint\": \"true\",\n    \"node.js.detected.package.tslint\": \"true\",\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\n    \"nodejs_package_manager_path\": \"npm\",\n    \"to.speed.mode.migration.done\": \"true\",\n    \"vue.rearranger.settings.migration\": \"true\"\n  },\n  \"keyToStringList\": {\n    \"com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File\": [\n      \"JAVA\"\n    ]\n  }\n}]]></component>\n  <component name=\"RecentsManager\">\n    <key name=\"MoveFile.RECENT_KEYS\">\n      <recent name=\"$PROJECT_DIR$/frontend/js/SC Staff\" />\n      <recent name=\"$PROJECT_DIR$/frontend/pages/SC Staff\" />\n    </key>\n  </component>\n  <component name=\"RunManager\">\n    <configuration default=\"true\" type=\"JetRunConfigurationType\">\n      <module name=\"Laptrinh-java\" />\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <configuration default=\"true\" type=\"KotlinStandaloneScriptRunConfigurationType\">\n      <module name=\"Laptrinh-java\" />\n      <option name=\"filePath\" />\n      <method v=\"2\" />\n    </configuration>\n    <configuration default=\"true\" type=\"PythonConfigurationType\" factoryName=\"Python\">\n      <module name=\"Laptrinh-java\" />\n      <option name=\"ENV_FILES\" value=\"\" />\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\n      <option name=\"PARENT_ENVS\" value=\"true\" />\n      <envs>\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\n      </envs>\n      <option name=\"SDK_HOME\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"\" />\n      <option name=\"IS_MODULE_SDK\" value=\"false\" />\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\n      <EXTENSION ID=\"PythonCoverageRunConfigurationExtension\" runner=\"coverage.py\" />\n      <option name=\"SCRIPT_NAME\" value=\"\" />\n      <option name=\"PARAMETERS\" value=\"\" />\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\n      <option name=\"MODULE_MODE\" value=\"false\" />\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\n      <option name=\"INPUT_FILE\" value=\"\" />\n      <method v=\"2\" />\n    </configuration>\n    <configuration default=\"true\" type=\"Tox\" factoryName=\"Tox\">\n      <module name=\"Laptrinh-java\" />\n      <option name=\"ENV_FILES\" value=\"\" />\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\n      <option name=\"PARENT_ENVS\" value=\"true\" />\n      <option name=\"SDK_HOME\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"\" />\n      <option name=\"IS_MODULE_SDK\" value=\"false\" />\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\n      <EXTENSION ID=\"PythonCoverageRunConfigurationExtension\" runner=\"coverage.py\" />\n      <method v=\"2\" />\n    </configuration>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"1c1113d8-0d76-4694-aa47-5f337a0cea98\" name=\"Changes\" comment=\"\" />\n      <created>1761403354503</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1761403354503</updated>\n      <workItem from=\"1761750853362\" duration=\"75000\" />\n      <workItem from=\"1761751739750\" duration=\"3013000\" />\n      <workItem from=\"1762175921383\" duration=\"1211000\" />\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"Cập Nhật Lại 1 Số Chức Năng Của SC Staff và SC Technican\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1761426023977</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1761426023977</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"chore: cập nhật lại thư mục trong code\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1761924486286</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1761924486286</updated>\n    </task>\n    <task id=\"LOCAL-00003\" summary=\"chore: cập nhật lại thư mục trong code\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1761924534365</created>\n      <option name=\"number\" value=\"00003\" />\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1761924534365</updated>\n    </task>\n    <task id=\"LOCAL-00004\" summary=\"chore: cập nhật lại thư mục trong code\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1761924590672</created>\n      <option name=\"number\" value=\"00004\" />\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1761924590672</updated>\n    </task>\n    <task id=\"LOCAL-00005\" summary=\"chore: cập nhật lại thư mục trong code\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1761924693936</created>\n      <option name=\"number\" value=\"00005\" />\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1761924693936</updated>\n    </task>\n    <task id=\"LOCAL-00006\" summary=\"chore: cập nhật lại thư mục trong code\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1761924955331</created>\n      <option name=\"number\" value=\"00006\" />\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1761924955331</updated>\n    </task>\n    <task id=\"LOCAL-00007\" summary=\"chore: cập nhật lại thư mục trong code\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1761924995107</created>\n      <option name=\"number\" value=\"00007\" />\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1761924995107</updated>\n    </task>\n    <task id=\"LOCAL-00008\" summary=\"chore: cập nhật lại thư mục trong code\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1761925083143</created>\n      <option name=\"number\" value=\"00008\" />\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1761925083143</updated>\n    </task>\n    <task id=\"LOCAL-00009\" summary=\"chore: cập nhật lại thư mục trong code\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1761925900755</created>\n      <option name=\"number\" value=\"00009\" />\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1761925900755</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"10\" />\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"OPEN_GENERIC_TABS\">\n      <map>\n        <entry key=\"52f33be1-8f9b-44bc-be0b-61d835024052\" value=\"TOOL_WINDOW\" />\n      </map>\n    </option>\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"52f33be1-8f9b-44bc-be0b-61d835024052\">\n          <value>\n            <State>\n              <option name=\"FILTERS\">\n                <map>\n                  <entry key=\"branch\">\n                    <value>\n                      <list>\n                        <option value=\"origin/ho-ngoc-gia-han\" />\n                      </list>\n                    </value>\n                  </entry>\n                </map>\n              </option>\n            </State>\n          </value>\n        </entry>\n        <entry key=\"MAIN\">\n          <value>\n            <State>\n              <option name=\"FILTERS\">\n                <map>\n                  <entry key=\"branch\">\n                    <value>\n                      <list>\n                        <option value=\"gia-han\" />\n                      </list>\n                    </value>\n                  </entry>\n                </map>\n              </option>\n            </State>\n          </value>\n        </entry>\n      </map>\n    </option>\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <MESSAGE value=\"Cập Nhật Lại 1 Số Chức Năng Của SC Staff và SC Technican\" />\n    <MESSAGE value=\"chore: cập nhật lại thư mục trong code\" />\n    <MESSAGE value=\"chore: cập nhật lại từ main\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"chore: cập nhật lại từ main\" />\n    <option name=\"GROUP_MULTIFILE_MERGE_BY_DIRECTORY\" value=\"true\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 7b82809651506fdff1f80cb4a89b356091e40b73)
++++ b/.idea/workspace.xml	(date 1762444403604)
+@@ -4,9 +4,15 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="1c1113d8-0d76-4694-aa47-5f337a0cea98" name="Changes" comment="chore: cập nhật lại thư mục trong code">
+-      <changelist_data name="GiHana" email="156551189+hanafs@users.noreply.github.com" automatic="false" />
++    <list default="true" id="1c1113d8-0d76-4694-aa47-5f337a0cea98" name="Changes" comment="feat: add EVM-Staff frontend files (css/js/pages)">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/evm/frontend/pages/EVM-Staff/Section/allocate_parts.html" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/pages/EVM-Staff/Section/allocate_parts.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/evm/frontend/pages/EVM-Staff/Section/attach_serial.html" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/pages/EVM-Staff/Section/attach_serial.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/evm/frontend/pages/EVM-Staff/Section/campaigns.html" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/pages/EVM-Staff/Section/campaigns.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/evm/frontend/pages/EVM-Staff/Section/claim_requests.html" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/pages/EVM-Staff/Section/claim_requests.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/evm/frontend/pages/EVM-Staff/Section/claim_tracking.html" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/pages/EVM-Staff/Section/claim_tracking.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/evm/frontend/pages/EVM-Staff/Section/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/pages/EVM-Staff/Section/dashboard.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/evm/frontend/pages/EVM-Staff/Section/inventory.html" beforeDir="false" afterPath="$PROJECT_DIR$/evm/frontend/pages/EVM-Staff/Section/inventory.html" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -24,7 +30,7 @@
+     <branch-grouping />
+     <option name="RECENT_BRANCH_BY_REPOSITORY">
+       <map>
+-        <entry key="$PROJECT_DIR$" value="gia-han" />
++        <entry key="$PROJECT_DIR$" value="main" />
+       </map>
+     </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+@@ -38,9 +44,12 @@
+   <component name="GithubPullRequestsUISettings">{
+   &quot;selectedUrlAndAccountId&quot;: {
+     &quot;url&quot;: &quot;https://github.com/annahwork/Laptrinh-java.git&quot;,
+-    &quot;accountId&quot;: &quot;4ba5e288-9a09-43e3-b23b-316ae7b74844&quot;
++    &quot;accountId&quot;: &quot;2adcfc04-a4fa-4522-b28d-28b6413d2cb2&quot;
+   }
+ }</component>
++  <component name="ProblemsViewState">
++    <option name="selectedTabId" value="CurrentFile" />
++  </component>
+   <component name="ProjectColorInfo">{
+   &quot;customColor&quot;: &quot;&quot;,
+   &quot;associatedIndex&quot;: 6
+@@ -53,31 +62,30 @@
+     <option name="openDirectoriesWithSingleClick" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "DefaultHtmlFileTemplate": "HTML File",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "RunOnceActivity.git.unshallow": "true",
+-    "dart.analysis.tool.window.visible": "false",
+-    "git-widget-placeholder": "gia-han",
+-    "ignore_missing_gitignore": "true",
+-    "junie.onboarding.icon.badge.shown": "true",
+-    "kotlin-language-version-configured": "true",
+-    "last_opened_file_path": "/Users/hongocgiahan/MÔN JAVA/Laptrinh-java",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.tslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "nodejs_package_manager_path": "npm",
+-    "to.speed.mode.migration.done": "true",
+-    "vue.rearranger.settings.migration": "true"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
++    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;gia-han&quot;,
++    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
++    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
++    &quot;last_opened_file_path&quot;: &quot;/Users/hongocgiahan/MÔN JAVA/Laptrinh-java&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
++    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   },
+-  "keyToStringList": {
+-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+-      "JAVA"
++  &quot;keyToStringList&quot;: {
++    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
++      &quot;JAVA&quot;
+     ]
+   }
+-}]]></component>
++}</component>
+   <component name="RecentsManager">
+     <key name="MoveFile.RECENT_KEYS">
+       <recent name="$PROJECT_DIR$/frontend/js/SC Staff" />
+@@ -132,6 +140,13 @@
+       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+       <method v="2" />
+     </configuration>
++  </component>
++  <component name="SharedIndexes">
++    <attachedChunks>
++      <set>
++        <option value="bundled-python-sdk-14705d77f0bb-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.25659.43" />
++      </set>
++    </attachedChunks>
+   </component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+@@ -144,6 +159,8 @@
+       <workItem from="1761750853362" duration="75000" />
+       <workItem from="1761751739750" duration="3013000" />
+       <workItem from="1762175921383" duration="1211000" />
++      <workItem from="1762320714457" duration="2000" />
++      <workItem from="1762322223927" duration="595000" />
+     </task>
+     <task id="LOCAL-00001" summary="Cập Nhật Lại 1 Số Chức Năng Của SC Staff và SC Technican">
+       <option name="closed" value="true" />
+@@ -217,7 +234,15 @@
+       <option name="project" value="LOCAL" />
+       <updated>1761925900755</updated>
+     </task>
+-    <option name="localTasksCounter" value="10" />
++    <task id="LOCAL-00010" summary="feat: add EVM-Staff frontend files (css/js/pages)">
++      <option name="closed" value="true" />
++      <created>1762444346534</created>
++      <option name="number" value="00010" />
++      <option name="presentableId" value="LOCAL-00010" />
++      <option name="project" value="LOCAL" />
++      <updated>1762444346534</updated>
++    </task>
++    <option name="localTasksCounter" value="11" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -270,9 +295,9 @@
+   </component>
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="Cập Nhật Lại 1 Số Chức Năng Của SC Staff và SC Technican" />
++    <MESSAGE value="Lưu tạm các thay đổi local trước khi revert" />
+     <MESSAGE value="chore: cập nhật lại thư mục trong code" />
+-    <MESSAGE value="chore: cập nhật lại từ main" />
+-    <option name="LAST_COMMIT_MESSAGE" value="chore: cập nhật lại từ main" />
+-    <option name="GROUP_MULTIFILE_MERGE_BY_DIRECTORY" value="true" />
++    <MESSAGE value="feat: add EVM-Staff frontend files (css/js/pages)" />
++    <option name="LAST_COMMIT_MESSAGE" value="feat: add EVM-Staff frontend files (css/js/pages)" />
+   </component>
+ </project>
+\ No newline at end of file

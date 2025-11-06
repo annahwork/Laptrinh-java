@@ -28,118 +28,109 @@
 
             <!-- DANH SÁCH PHỤ TÙNG -->
             <div class="parts-list-section">
-            <!-- header -->
-            <div class="section-header parts-list-section__header">
-                <div class="parts-list-section__title-group">
-                <h2 class="parts-list-section__title">Danh sách phụ tùng khả dụng</h2>
+                <div class="section-header parts-list-section__header">
+                    <div class="parts-list-section__title-group">
+                        <h2 class="parts-list-section__title">Danh sách phụ tùng khả dụng</h2>
+                    </div>
+
+                    <div class="parts-list-section__actions">
+                        <button class="btn btn-refresh" id="refreshPartsList">
+                            <!-- svg ngắn gọn -->
+                            Làm mới
+                        </button>
+
+                        <button class="btn btn-allocate" id="openAllocateModal">
+                            Phân bổ phụ tùng
+                        </button>
+                    </div>
                 </div>
 
-                <!-- nút thao tác góc phải -->
-                <div class="parts-list-section__actions">
-                <button class="btn btn-refresh" id="refreshPartsList">
-                    <svg viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 110 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
-                        clip-rule="evenodd" />
-                    </svg>
-                    Làm mới
-                </button>
+                <!-- bảng phụ tùng -->
+                <table class="parts-table">
+                    <thead>
+                    <tr>
+                        <th class="text-center">Mã phụ tùng</th>
+                        <th class="text-center">Tên phụ tùng</th>
+                        <th class="text-center">Loại</th>
+                        <th class="text-center">Số lượng tồn</th>
+                        <th class="text-center">Vị trí kho</th>
+                    </tr>
+                    </thead>
 
-                <button class="btn btn-allocate" id="openAllocateModal">
-                    <svg viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"
-                        clip-rule="evenodd" />
-                    </svg>
-                    Phân bổ phụ tùng
-                </button>
-                </div>
-            </div>
+                    <tbody id="partsTableBody">
+                    <!-- chỉ hiển thị tối đa 2 phụ tùng -->
+                    <tr>
+                        <td class="text-center">PT-001</td>
+                        <td class="text-center">Bộ lọc dầu</td>
+                        <td class="text-center">Động cơ</td>
+                        <td class="text-center">25</td>
+                        <td class="text-center">K1-R2</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">PT-002</td>
+                        <td class="text-center">Bình ắc quy</td>
+                        <td class="text-center">Điện tử</td>
+                        <td class="text-center">8</td>
+                        <td class="text-center">K2-R1</td>
+                    </tr>
 
-            <!-- bảng phụ tùng -->
-            <table class="parts-table">
-                <thead>
-                <tr>
-                    <th class="text-center">Mã phụ tùng</th>
-                    <th class="text-center">Tên phụ tùng</th>
-                    <th class="text-center">Loại</th>
-                    <th class="text-center">Số lượng tồn</th>
-                    <th class="text-center">Vị trí kho</th>
-                    
-                </tr>
-                </thead>
-
-                <tbody id="partsTableBody">
-                <!-- chỉ hiển thị tối đa 2 phụ tùng -->
-                <tr>
-                    <td class="text-center">PT-001</td>
-                    <td class="text-center">Bộ lọc dầu</td>
-                    <td class="text-center">Động cơ</td>
-                    <td class="text-center">25</td>
-                    <td class="text-center">K1-R2</td>
-                </tr>
-                <tr>
-                    <td class="text-center">PT-002</td>
-                    <td class="text-center">Bình ắc quy</td>
-                    <td class="text-center">Điện tử</td>
-                    <td class="text-center">8</td>
-                    <td class="text-center">K2-R1</td>
-                </tr>
-                <tr>
-                    <td colspan="5" class="no-data">
-                    <button class="btn btn-view-more" onclick="window.location.href='manage_parts.html'">
-                        Xem thêm phụ tùng khác →
-                    </button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                    <!-- hàng "Xem thêm" (giữ lại nhưng có id để JS điều khiển) -->
+                    <tr class="parts-more-row" style="display: none;">
+                        <td colspan="5" class="no-data">
+                            <button id="partsViewMoreBtn" class="btn btn-view-more">
+                                Xem thêm phụ tùng khác →
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
 
             <!-- LỊCH SỬ PHÂN BỔ -->
             <div class="allocation-history-section">
-            <div class="section-header">
-                <h2>Lịch sử phân bổ gần đây</h2>
-                <p>Theo dõi các đợt chuyển kho gần nhất</p>
-            </div>
+                <div class="section-header">
+                    <h2>Lịch sử phân bổ gần đây</h2>
+                    <p>Theo dõi các đợt chuyển kho gần nhất</p>
+                </div>
 
-            <table class="history-table">
-                <thead>
-                <tr>
-                    <th>Mã phân bổ</th>
-                    <th>Ngày</th>
-                    <th>Trung tâm nhận</th>
-                    <th>Số lượng</th>
-                    <th>Người thực hiện</th>
-                </tr>
-                </thead>
-                <tbody id="allocationHistoryBody">
-                <tr>
-                    <td>ALLOC-20251103-01</td>
-                    <td>03/11/2025</td>
-                    <td>SC001 - Trung tâm TP.HCM</td>
-                    <td>10</td>
-                    <td>Nguyễn Văn A</td>
-                </tr>
-                <tr>
-                    <td>ALLOC-20251104-02</td>
-                    <td>04/11/2025</td>
-                    <td>SC002 - Trung tâm Hà Nội</td>
-                    <td>5</td>
-                    <td>Trần Thị B</td>
-                </tr>
-                
-                </tbody>
-            </table>
+                <table class="history-table">
+                    <thead>
+                    <tr>
+                        <th>Mã phân bổ</th>
+                        <th>Ngày</th>
+                        <th>Trung tâm nhận</th>
+                        <th>Số lượng</th>
+                        <th>Người thực hiện</th>
+                    </tr>
+                    </thead>
+                    <tbody id="allocationHistoryBody">
+                    <tr>
+                        <td>ALLOC-20251103-01</td>
+                        <td>03/11/2025</td>
+                        <td>SC001 - Trung tâm TP.HCM</td>
+                        <td>10</td>
+                        <td>Nguyễn Văn A</td>
+                    </tr>
+                    <tr>
+                        <td>ALLOC-20251104-02</td>
+                        <td>04/11/2025</td>
+                        <td>SC002 - Trung tâm Hà Nội</td>
+                        <td>5</td>
+                        <td>Trần Thị B</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
 
             <!-- MODAL PHÂN BỔ -->
             <div class="modal" id="allocateModal" style="display: none;">
-                <div class="modal-content">
+                <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="allocateModalTitle">
                     <div class="modal-header">
-                        <h3>Phân bổ phụ tùng</h3>
-                        <button type="button" class="modal-close" id="closeAllocateModal">×</button>
+                        <h3 id="allocateModalTitle">Phân bổ phụ tùng</h3>
+                        <!-- nút đóng header (id khác) và class chung -->
+                        <button type="button" class="modal-close-btn" id="closeAllocateModalHeader" aria-label="Đóng modal">×</button>
                     </div>
+
                     <form id="allocateForm">
                         <div class="form-group">
                             <label for="scCenterSelect">Trung tâm nhận</label>
@@ -150,17 +141,21 @@
                                 <option value="SC003">SC003 - Trung tâm Đà Nẵng</option>
                             </select>
                         </div>
+
                         <div class="form-group">
                             <label for="quantity">Số lượng phân bổ</label>
                             <input type="number" id="quantity" min="1" required placeholder="Nhập số lượng">
                         </div>
+
                         <div class="form-footer">
                             <button type="submit" class="btn btn-confirm">Xác nhận</button>
-                            <button type="button" class="btn btn-cancel" id="closeAllocateModal">Hủy</button>
+                            <!-- nút Hủy footer: class chung để đóng -->
+                            <button type="button" class="btn btn-cancel modal-close-btn" id="cancelAllocateModal">Hủy</button>
                         </div>
                     </form>
                 </div>
             </div>
+
         </div>
     </div>
 </section>

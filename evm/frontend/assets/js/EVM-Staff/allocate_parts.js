@@ -1,79 +1,100 @@
-<script>
-  // Giới hạn hiển thị phụ tùng: hiển thị tối đa 2 rows, nếu >2 hiện nút "Xem thêm"
-  (function(){
-    const partsTable = document.querySelector('.parts-table');
-    const partsRows = partsTable ? partsTable.querySelectorAll('.parts-table__row') : [];
-    const partsMoreRow = partsTable ? partsTable.querySelector('.parts-table__more-row') : null;
-    const partsViewMoreBtn = document.getElementById('partsViewMoreBtn');
-    const refreshBtn = document.getElementById('refreshPartsList');
-    const openModalBtn = document.getElementById('openAllocateModal');
+(function(){
+      const partsTableBody = document.getElementById('partsTableBody');
+      const refreshBtn = document.getElementById('refreshPartsList');
+      const openModalBtn = document.getElementById('openAllocateModal');
+      const allocateModal = document.getElementById('allocateModal');
+      const modalCloseBtns = document.querySelectorAll('.modal-close-btn');
+      const allocateForm = document.getElementById('allocateForm');
+      const partsMoreRow = document.querySelector('.parts-more-row');
+      const partsViewMoreBtn = document.getElementById('partsViewMoreBtn');
 
-    // Ẩn hàng >2 và show nút Xem thêm nếu cần
-    function updatePartsVisibility(){
-      if(!partsTable) return;
-      const total = partsRows.length;
-      if(total > 2){
-        partsTable.classList.add('is-collapsed');
-        if(partsMoreRow) partsMoreRow.style.display = '';
-        // show view-more button inside more-row as fallback
-        const viewBtn = document.getElementById('partsViewMoreBtn');
-        if(viewBtn) viewBtn.style.display = '';
-      } else {
-        partsTable.classList.remove('is-collapsed');
-        if(partsMoreRow) partsMoreRow.style.display = 'none';
+      // Tính số hàng dữ liệu thực (loại trống / more-row)
+      function getDataRows() {
+        if(!partsTableBody) return [];
+        // lấy tất cả tr trong tbody trừ .parts-more-row
+        return Array.from(partsTableBody.querySelectorAll('tr')).filter(tr => !tr.classList.contains('parts-more-row'));
       }
-    }
 
-    // Nút xem thêm: chuyển sang trang quản lý phụ tùng
-    document.getElementById('partsViewMoreBtn')?.addEventListener('click', () => {
-      window.location.href = '/Laptrinh-java/evm/frontend/pages/EVM-Staff/Secsion/manage_ev_parts.html';
-      // hoặc set đúng đường dẫn quản lý phụ tùng của bạn
-    });
-
-    // Nút xem thêm lịch
-    document.getElementById('historyViewMoreBtn')?.addEventListener('click', () => {
-      window.location.href = '/Laptrinh-java/evm/frontend/pages/EVM-Staff/Secsion/allocate_parts.html'; // thay bằng trang lịch sử nếu có
-    });
-    document.getElementById('historyViewMoreBtnInner')?.addEventListener('click', () => {
-      document.getElementById('historyViewMoreBtn')?.click();
-    });
-
-    // Mở modal phân bổ
-    openModalBtn?.addEventListener('click', () => {
-      const modal = document.getElementById('allocateModal');
-      if(modal){
-        modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
+      // Ẩn hàng >2 và show nút Xem thêm nếu cần
+      function updatePartsVisibility(){
+        const dataRows = getDataRows();
+        if(dataRows.length > 2){
+          dataRows.forEach((tr, idx) => {
+            if(idx >= 2) tr.style.display = 'none';
+            else tr.style.display = '';
+          });
+          if(partsMoreRow) partsMoreRow.style.display = ''; // hiện hàng xem thêm
+        } else {
+          dataRows.forEach(tr => tr.style.display = '');
+          if(partsMoreRow) partsMoreRow.style.display = 'none';
+        }
       }
-    });
 
-    // Đóng modal
-    document.querySelectorAll('#closeAllocateModal').forEach(btn=>{
-      btn.addEventListener('click', ()=> {
-        const modal = document.getElementById('allocateModal');
-        if(modal){
-          modal.style.display = 'none';
+      // Nút xem thêm: chuyển sang trang quản lý phụ tùng (thay bằng route thực tế)
+      partsViewMoreBtn?.addEventListener('click', () => {
+        window.location.href = '/Laptrinh-java/evm/frontend/pages/EVM-Staff/Secsion/manage_ev_parts.html';
+      });
+
+      // Mở modal phân bổ
+      openModalBtn?.addEventListener('click', () => {
+        if(allocateModal){
+          allocateModal.style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+          // focus vào trường đầu
+          const first = allocateModal.querySelector('select, input, button');
+          if(first) first.focus();
+        }
+      });
+
+      // Đóng modal cho mọi nút có class .modal-close-btn
+      modalCloseBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          if(allocateModal){
+            allocateModal.style.display = 'none';
+            document.body.style.overflow = '';
+          }
+        });
+      });
+
+      // Click ra ngoài để đóng
+      allocateModal?.addEventListener('click', (e) => {
+        if(e.target === allocateModal){
+          allocateModal.style.display = 'none';
           document.body.style.overflow = '';
         }
       });
-    });
 
-    // Click ra ngoài để đóng
-    window.addEventListener('click', (e)=> {
-      const modal = document.getElementById('allocateModal');
-      if(modal && e.target === modal){
-        modal.style.display = 'none';
+      // ESC để đóng modal
+      document.addEventListener('keydown', (e) => {
+        if(e.key === 'Escape' && allocateModal && allocateModal.style.display !== 'none'){
+          allocateModal.style.display = 'none';
+          document.body.style.overflow = '';
+        }
+      });
+
+      // submit form phân bổ (ví dụ demo)
+      allocateForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const center = document.getElementById('scCenterSelect')?.value;
+        const qty = Number(document.getElementById('quantity')?.value || 0);
+        if(!center || qty <= 0){
+          alert('Vui lòng điền trung tâm nhận và số lượng hợp lệ.');
+          return;
+        }
+        // TODO: call API để gửi phân bổ
+        console.log('Gửi phân bổ:', { center, qty });
+        // đóng modal và reset
+        allocateModal.style.display = 'none';
         document.body.style.overflow = '';
-      }
-    });
+        allocateForm.reset();
+        // (tùy bạn có thể thêm cập nhật UI lịch sử phân bổ ở đây)
+      });
 
-    // nút Refresh - ví dụ reload data (ở đây chỉ làm demo: reload trang)
-    refreshBtn?.addEventListener('click', ()=> {
-      // TODO: gọi endpoint / load lại data. Tạm thời reload:
-      window.location.reload();
-    });
+      // refresh (demo)
+      refreshBtn?.addEventListener('click', () => {
+        window.location.reload();
+      });
 
-    // Khởi tạo
-    updatePartsVisibility();
-  })();
-</script>
+      // Khởi tạo hiển thị
+      updatePartsVisibility();
+    })();

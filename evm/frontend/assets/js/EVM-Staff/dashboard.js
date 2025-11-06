@@ -1,4 +1,3 @@
-// file: /assets/js/JS.js  (hoặc file JS đang load trong page)
 (function () {
   // --- helper load page into main-content ---
   function loadPage(page) {

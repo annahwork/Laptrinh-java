@@ -32,9 +32,24 @@ public class InventoryRepository implements IInventoryRepository {
     public Inventory getInventoryById(int id) {
         return InventoryDAO.getInventoryById(id);
     }
+    @Override
+    public Inventory getInventoryByPartAndSC(Integer partId, Integer scId) {
+        return InventoryDAO.getInventoryByPartAndSC(partId, scId);
+    }
+
+    @Override
+    public List<Inventory> getInventoriesByPartID(Integer partId, int page, int pageSize) {
+        return InventoryDAO.getInventoriesByPartID(partId, page, pageSize);
+    }
 
     @Override
     public List<Inventory> getAllInventories(int page, int pageSize) {
         return InventoryDAO.getAllInventories(page, pageSize);
+    }
+    @Override
+    public void closeResources() {
+        if (InventoryDAO != null) {
+            InventoryDAO.closeSessionFactory();
+        }
     }
 }

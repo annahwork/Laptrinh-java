@@ -1,6 +1,14 @@
 package uth.edu.pojo;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "Inventory")
@@ -18,15 +26,16 @@ public class Inventory {
     @Column(name = "CurrentStock")
     private Integer CurrentStock;
 
-    @Column(name = "Location", length = 100)
-    private String Location;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "SCID", nullable = false) 
+    private ServiceCenter ServiceCenter;
 
     public Inventory() {}
 
-    public Inventory(Integer InventoryID, Part Part, String Location, Integer CurrentStock) {
+    public Inventory(Integer InventoryID, Part Part, ServiceCenter ServiceCenter, Integer CurrentStock) {
         this.InventoryID = InventoryID;
         this.Part = Part;
-        this.Location = Location;
+        this.ServiceCenter = ServiceCenter;
         this.CurrentStock = CurrentStock;
     }
 
@@ -37,9 +46,8 @@ public class Inventory {
     public Part getPart() {
         return this.Part;
     }
-
-    public String getLocation() {
-        return this.Location;
+    public ServiceCenter getServiceCenter() {
+        return this.ServiceCenter;
     }
 
     public Integer getCurrentStock() {
@@ -54,14 +62,15 @@ public class Inventory {
         this.Part = Part;
     }
 
-    public void setLocation(String Location) {
-        this.Location = Location;
-    }
-
     public void setCurrentStock(Integer CurrentStock) {
         this.CurrentStock = CurrentStock;
     }
 
+    
+    public void setServiceCenter(ServiceCenter serviceCenter) {
+        ServiceCenter = serviceCenter;
+    }
+    
     public void updateStock(Integer quantity) {
 
     }
@@ -69,4 +78,5 @@ public class Inventory {
     public void checkStockLevel() {
         
     }
+
 }

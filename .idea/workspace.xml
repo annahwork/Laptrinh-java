@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c1113d8-0d76-4694-aa47-5f337a0cea98" name="Changes" comment="chore: cập nhật lại thư mục trong code">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="1c1113d8-0d76-4694-aa47-5f337a0cea98" name="Changes" comment="feat: add EVM-Staff frontend files" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,11 +19,6 @@
   </component>
   <component name="Git.Settings">
     <branch-grouping />
-    <option name="PREVIOUS_COMMIT_AUTHORS">
-      <list>
-        <option value="GiHana &lt;156551189+hanafs@users.noreply.github.com&gt;" />
-      </list>
-    </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="gia-han" />
@@ -67,7 +59,7 @@
     "git-widget-placeholder": "gia-han",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/hongocgiahan/MÔN JAVA/Laptrinh-java",
+    "last_opened_file_path": "C:/Users/Latitude/JAVA/Project/Laptrinh-java",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -89,6 +81,16 @@
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="GroovyScriptRunConfiguration" factoryName="Groovy">
+      <setting name="path" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workDir" value="file://$PROJECT_DIR$" />
+      <setting name="debug" value="false" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="Laptrinh-java" />
       <method v="2">
@@ -136,6 +138,14 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <method v="2" />
     </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
+        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -223,15 +233,7 @@
       <option name="project" value="LOCAL" />
       <updated>1761925900755</updated>
     </task>
-    <task id="LOCAL-00010" summary="chore: cập nhật lại thư mục trong code">
-      <option name="closed" value="true" />
-      <created>1762446275357</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1762446275357</updated>
-    </task>
-    <option name="localTasksCounter" value="11" />
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -284,8 +286,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Cập Nhật Lại 1 Số Chức Năng Của SC Staff và SC Technican" />
-    <MESSAGE value="chore: cập nhật lại từ main" />
-    <MESSAGE value="Merge branch 'main' into gia-han&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;evm/frontend/assets/css/EVM-Staff/allocate_parts.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/attach_serial.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/campaigns.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/claim_requests.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/claim_tracking.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/dashboard.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/inventory.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/manage_ev_parts.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/reports.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/statistics.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/warranty_cost.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/warranty_policy.css&#10;#&#9;evm/frontend/assets/js/EVM-Staff/allocate_parts.js&#10;#&#9;evm/frontend/assets/js/EVM-Staff/attach_serial.js&#10;#&#9;evm/frontend/assets/js/EVM-Staff/claim_request.js&#10;#&#9;evm/frontend/assets/js/EVM-Staff/dashboard.js&#10;#&#9;evm/frontend/assets/js/EVM-Staff/inventory.js&#10;#&#9;evm/frontend/assets/js/EVM-Staff/manage_ev_parts.js&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/allocate_parts.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/attach_serial.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/campaigns.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/claim_requests.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/claim_tracking.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/dashboard.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/inventory.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/manage_ev_parts.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/reports.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/statistics.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/warranty_cost.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/warranty_policy.html&#10;#&#9;evm/frontend/pages/EVM-Staff/home_evm_staff.html" />
     <MESSAGE value="chore: cập nhật lại thư mục trong code" />
     <option name="LAST_COMMIT_MESSAGE" value="chore: cập nhật lại thư mục trong code" />
   </component>

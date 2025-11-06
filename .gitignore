@@ -5114,3 +5114,7 @@ Sessionx.vim
 .netrwhist
 [._]*.un~
 nohup.out
+
+# allow EVM-Staff js folder
+!evm/frontend/assets/js/EVM-Staff/
+!evm/frontend/assets/js/EVM-Staff/*

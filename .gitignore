@@ -5118,3 +5118,7 @@ nohup.out
 # allow EVM-Staff js folder
 !evm/frontend/assets/js/EVM-Staff/
 !evm/frontend/assets/js/EVM-Staff/*
+
+# Allow EVM-Staff js folder
+!evm/frontend/assets/js/EVM-Staff/
+!evm/frontend/assets/js/EVM-Staff/*

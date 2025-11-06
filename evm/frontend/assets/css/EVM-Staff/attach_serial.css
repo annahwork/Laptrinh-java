@@ -1,70 +1,71 @@
- /* ================= KHỐI CHUNG ================= */
+/* ================= KHỐI CHUNG ================= */
 .attach_serial__section {
-    background: #fff;
-    border-radius: 10px;
-    padding: 20px;
+    background: #fff; /* màu nền trắng */
+    border-radius: 10px; /* bo góc */
+    padding: 20px; /* khoảng cách bên trong */
     box-shadow: 0 3px 10px rgba(0,0,0,0.08); 
-    margin-top: 1rem;
-    color: #111827;
-    font-family: Arial, sans-serif;
+    margin-top: 1rem; /* khoảng cách phía trên */
+    color: #111827; /* màu chữ chính */
+    font-family: Arial, sans-serif; /* font chữ */
 }
 
 /* ================= TÌM KIẾM ================= */
 /* Wrapper cho ô tìm kiếm */
 .attach_serial-search {
-    margin-bottom: 1rem;
+    margin-bottom: 1rem; /* khoảng cách dưới */
 }
 
+/* Ô input tìm kiếm */
 .attach_serial-search__input {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 0.95rem;
-    outline: none;
+    width: 100%; /* chiếm full chiều rộng */
+    padding: 8px 12px; /* padding bên trong */
+    border: 1px solid #ccc; /* viền xám nhạt */
+    border-radius: 6px; /* bo góc */
+    font-size: 0.95rem; /* cỡ chữ */
+    outline: none; /* tắt viền focus mặc định */
 }
 
 /* Hiệu ứng focus cho ô tìm kiếm */
 .attach_serial-search__input:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 2px rgba(37,99,235,0.12);
+    border-color: #2563eb; /* đổi màu viền khi focus */
+    box-shadow: 0 0 0 2px rgba(37,99,235,0.12); /* bóng xanh mờ */
 }
 
 /* ================= NÚT ================= */
 /* Nút Gắn Serial */
 .attach_serial__button--create {
-    background: #007bff;
-    color: #fff;
-    padding: 8px 14px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.2s ease, transform 0.15s ease;
-    margin-bottom: 16px;
+    background: #007bff; /* màu xanh chính */
+    color: #fff; /* chữ trắng */
+    padding: 8px 14px; /* padding bên trong */
+    border: none; /* không viền */
+    border-radius: 6px; /* bo góc */
+    cursor: pointer; /* con trỏ khi hover */
+    font-weight: 600; /* chữ đậm vừa phải */
+    transition: background-color 0.2s ease, transform 0.15s ease; /* hiệu ứng hover */
+    margin-bottom: 16px; /* khoảng cách dưới */
 }
 
 /* Hiệu ứng hover cho nút */
 .attach_serial__button--create:hover {
-    background-color: #0056b3;
-    transform: translateY(-1px);
+    background-color: #0056b3; /* đổi màu khi hover */
+    transform: translateY(-1px); /* nhấc nút lên */
 }
 
 /* ================= BẢNG ================= */
 /* Bảng dữ liệu kiểu zebra */
 .table-zebra {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: collapse; /* gộp viền */
 }
 
 /* Th và td chung */
 .table-zebra th,
 .table-zebra td {
-    padding: 10px;
-    border: 1px solid #e5e7eb;
-    text-align: center;
-    background-color: #fff;
-    color: #111827;
+    padding: 10px; /* padding trong ô */
+    border: 1px solid #e5e7eb; /* viền bảng xám nhạt */
+    text-align: center; /* chữ căn giữa */
+    background-color: #fff; /* reset màu nền */
+    color: #111827; /* màu chữ */
 }
 
 /* Zebra: màu nền cho các dòng chẵn */
@@ -74,8 +75,8 @@
 
 /* Thẻ header */
 .table-zebra th {
-    background-color: #f3f4f6;
-    font-weight: 600;
+    background-color: #f3f4f6; /* màu header nhạt */
+    font-weight: 600; /* chữ đậm */
 }
 
 /* Khi không có dữ liệu */

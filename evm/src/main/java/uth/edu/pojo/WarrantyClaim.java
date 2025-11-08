@@ -25,11 +25,15 @@ public class WarrantyClaim {
     private Integer ClaimID;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "VIN", referencedColumnName = "VIN", nullable = false)
+    private Vehicle vehicle;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "VehiclePartID", nullable = false)
     private VehiclePart VehiclePart;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "UserID") // Người tạo claim (SCStaff)
+    @JoinColumn(name = "UserID") 
     private SCStaff CreatedByStaff;
 
     @Column(name = "Description", length = 500)
@@ -77,6 +81,10 @@ public class WarrantyClaim {
         return this.ClaimID;
     }
 
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
     public VehiclePart getVehiclePart() {
         return this.VehiclePart;
     }
@@ -111,6 +119,10 @@ public class WarrantyClaim {
 
     public void setClaimID(Integer ClaimID) {
         this.ClaimID = ClaimID;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 
     public void setVehiclePart(VehiclePart VehiclePart) {

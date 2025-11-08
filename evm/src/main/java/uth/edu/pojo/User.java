@@ -20,7 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "User")
+@Table(name = "User_Table")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "User_Role", discriminatorType = DiscriminatorType.STRING)
 public abstract class User {

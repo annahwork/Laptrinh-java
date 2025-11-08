@@ -28,7 +28,7 @@ public class RecallCampaign {
     private Integer CampaignID;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "UserID") // Tên cột khóa ngoại trong bảng Recall_Campaign
+    @JoinColumn(name = "UserID") 
     private EVMStaff CreatedByStaff;
 
     @Column(name = "Name", nullable = false, length = 100)

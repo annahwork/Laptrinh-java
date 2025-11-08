@@ -1,9 +1,17 @@
 package uth.edu.pojo;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
 @DiscriminatorValue("SC_TECHNICIAN")
 public class SCTechnician extends User {
+
+    @OneToMany(mappedBy = "technician", fetch = FetchType.LAZY)
+    private List<ClaimService> claimServices = new ArrayList<>();
+    @OneToMany(mappedBy = "InstalledBy", fetch = FetchType.LAZY)
+    private List<VehiclePart> vehicleParts = new ArrayList<>();
 
     public SCTechnician(){}
 
@@ -46,4 +54,21 @@ public class SCTechnician extends User {
     {
 
     }
+
+    public List<ClaimService> getClaimServices() {
+        return claimServices;
+    }
+
+    public void setClaimServices(List<ClaimService> claimServices) {
+        this.claimServices = claimServices;
+    }
+
+    public List<VehiclePart> getVehicleParts() {
+        return vehicleParts;
+    }
+
+    public void setVehicleParts(List<VehiclePart> vehicleParts) {
+        this.vehicleParts = vehicleParts;
+    }
+    
 }

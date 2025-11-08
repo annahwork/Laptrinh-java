@@ -1,0 +1,123 @@
+/* ================= KHỐI CHUNG ================= */
+.report-page {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    font-family: Arial, sans-serif;
+    color: #111827;
+}
+
+/* HEADER */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.report__filters {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.report__month-picker,
+.report__select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    font-size: 14px;
+    outline: none;
+}
+
+.report__btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    background-color: #2563eb;
+    color: #fff;
+    transition: all 0.2s ease;
+}
+
+.report__btn:hover {
+    background-color: #1d4ed8;
+}
+
+.report__btn--export {
+    background-color: #10b981;
+}
+
+.report__btn--export:hover {
+    background-color: #059669;
+}
+
+/* GRID CARD */
+.report__cards {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.report__card {
+    flex: 1;
+    min-width: 200px;
+    background: linear-gradient(145deg, #3b82f6, #60a5fa);
+    color: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    transition: transform 0.2s ease;
+}
+
+.report__card:hover {
+    transform: translateY(-6px);
+}
+
+.report__card-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.report__card-value {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* BẢNG CHI TIẾT */
+.report__table-wrapper {
+    overflow-x: auto;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.report__table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.report__th,
+.report__td {
+    padding: 10px;
+    border: 1px solid #e5e7eb;
+    text-align: center;
+}
+
+.report__th {
+    background-color: #f3f4f6;
+    font-weight: 600;
+}
+
+.report__tr:nth-child(even) .report__td {
+    background-color: #f9fafb;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .report__cards {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,76 @@
+<!-- Page Thông báo -->
+<section class="job-notifications-page">
+    <div class="app-layout">
+        <link rel="stylesheet" href="../../assets/css/SC-Staff/job_notifications.css">
+        <div class="content-wrapper" id="innerContent">
+            <div class="main-content-area">
+
+                <div class="search-filter-bar">
+                    <div class="search-box-wrapper">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="searchNotifications" class="form-control search-input-with-icon"
+                            placeholder="Tìm thông báo...">
+                    </div>
+                </div>
+
+                <div class="card notifications-card">
+                    <div class="card-body">
+                        <div class="notifications-header">
+                            <h3>Thông báo công việc</h3>
+                            <div class="notifications-actions">
+                                <button id="btnCreateNotification" class="btn-primary">Tạo thông báo</button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="pagination-wrapper">
+                                <span class="pagination-info">Hiển thị 0 của 0</span>
+                                <div>
+                                    <button class="pagination-btn">« Trước</button>
+                                    <button class="btn-primary pagination-btn-active">1</button>
+                                    <button class="pagination-btn">Sau »</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal xem thông báo -->
+                <div id="modalNotification" class="notification__modal" style="display:none;">
+                    <div class="notification__modal-content">
+                        <button class="notification__close-button" aria-label="Close">&times;</button>
+                        <h2 id="notifTitle" class="notification__modal-title">Tiêu đề</h2>
+                        <p id="notifMeta" class="notification__modal-meta">Meta</p>
+                        <div id="notifBody" class="notification__modal-body">Nội dung thông báo chi tiết...</div>
+                        <div class="notification__modal-actions">
+                            <button id="notifMarkRead" class="btn-primary">Đánh dấu đã đọc</button>
+                            <button id="notifCloseBtn" class="btn-secondary">Đóng</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal tạo thông báo -->
+                <div id="modalCreateNotification" class="notification__modal" style="display:none;">
+                    <div class="notification__modal-content">
+                        <button class="notification__close-button" aria-label="Close">&times;</button>
+                        <form class="notification-create__form">
+                            <div class="form-group">
+                                <label for="create_notif_title">Tiêu đề</label>
+                                <input id="create_notif_title" name="title" type="text" class="form-control" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="create_notif_body">Nội dung</label>
+                                <textarea id="create_notif_body" name="body" class="form-control" rows="5"></textarea>
+                            </div>
+                            <div class="notification__modal-actions">
+                                <button type="button" id="createNotifCancel" class="btn-secondary">Huỷ</button>
+                                <button type="submit" id="createNotifSubmit" class="btn-primary">Tạo</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <script src="../../assets/js/SC-Staff/job_notifications.js"></script>
+    </div>
+</section>

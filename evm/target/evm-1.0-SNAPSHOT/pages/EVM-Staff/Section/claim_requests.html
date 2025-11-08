@@ -1,0 +1,88 @@
+<section id="claim_requests_page" class="claim_requests__section">
+  <div class="app-layout">
+    <link rel="stylesheet" href="../../assets/css/EVM-Staff/claim_requests.css">
+
+    <div class="content-wrapper" id="innerContent">
+      <div class="main-content-area">
+
+        <h2 class="page-title">Yêu cầu bảo hành</h2>
+
+        <!-- Bảng yêu cầu bảo hành -->
+        <div class="card">
+          <div class="card-body-no-padding">
+            <table class="table-zebra table-full-width" id="claimTable">
+              <thead>
+                <tr class="table-header-row">
+                  <th>Mã yêu cầu</th>
+                  <th>Mã xe</th>
+                  <th>Người yêu cầu</th>
+                  <th>Ngày yêu cầu</th>
+                  <th>Trạng thái</th>
+                  <th>Hành động</th>
+                </tr>
+              </thead>
+              <tbody id="claimTableBody">
+                <!-- Dữ liệu ví dụ -->
+                <tr>
+                  <td>CR001</td>
+                  <td>V001</td>
+                  <td>Nguyễn A</td>
+                  <td>2025-11-05</td>
+                  <td>Chờ duyệt</td>
+                  <td><button class="btn-action" data-id="CR001">Duyệt</button></td>
+                </tr>
+                <tr>
+                  <td>CR002</td>
+                  <td>V002</td>
+                  <td>Trần B</td>
+                  <td>2025-11-04</td>
+                  <td>Đã duyệt</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>CR003</td>
+                  <td>V003</td>
+                  <td>Lê C</td>
+                  <td>2025-11-03</td>
+                  <td>Chờ duyệt</td>
+                  <td><button class="btn-action" data-id="CR003">Duyệt</button></td>
+                </tr>
+                <tr>
+                  <td>CR004</td>
+                  <td>V004</td>
+                  <td>Phạm D</td>
+                  <td>2025-11-02</td>
+                  <td>Đã từ chối</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>CR005</td>
+                  <td>V005</td>
+                  <td>Hoàng E</td>
+                  <td>2025-11-01</td>
+                  <td>Chờ duyệt</td>
+                  <td><button class="btn-action" data-id="CR005">Duyệt</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Phân trang -->
+          <div class="card-footer">
+            <div class="pagination-wrapper">
+              <span class="pagination-info">Hiển thị <span id="pageInfo">0</span> của <span id="totalItems">0</span></span>
+              <div class="pagination-controls">
+                <button class="pagination-btn" id="prevPage">« Trước</button>
+                <button class="pagination-btn pagination-btn--active" id="currentPage">1</button>
+                <button class="pagination-btn" id="nextPage">Sau »</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="../../assets/js/EVM-Staff/claim_requests.js"></script>
+</section>

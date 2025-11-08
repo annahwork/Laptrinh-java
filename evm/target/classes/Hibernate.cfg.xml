@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <property name="hbm2ddl.auto">update</property>
+        <property name="dialect">org.hibernate.dialect.SQLServerDialect</property>
+        <property name="connection.url">jdbc:sqlserver://127.0.0.1:1433;DatabaseName=model;
+            encrypt=true;trustServerCertificate=true</property>
+        <property name="connection.username">sa</property>
+        <property name="connection.password">Aesx589999</property>
+        <property name="connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+        <mapping class="uth.edu.pojo.User" />
+        <mapping class="uth.edu.pojo.SCStaff" />
+        <mapping class="uth.edu.pojo.SCTechnician" />
+        <mapping class="uth.edu.pojo.EVMStaff" />
+        <mapping class="uth.edu.pojo.Admin" />
+        <mapping class="uth.edu.pojo.Vehicle" />
+        <mapping class="uth.edu.pojo.Part" />
+        <mapping class="uth.edu.pojo.Customer" />
+        <mapping class="uth.edu.pojo.WarrantyClaim" />
+        <mapping class="uth.edu.pojo.WarrantyHistory" />
+        <mapping class="uth.edu.pojo.ClaimService" />
+        <mapping class="uth.edu.pojo.WarrantyService" />
+        <mapping class="uth.edu.pojo.VehiclePart" />
+        <mapping class="uth.edu.pojo.Inventory" />
+        <mapping class="uth.edu.pojo.RecallCampaign" />
+        <mapping class="uth.edu.pojo.RecallVehicle" />
+        <mapping class="uth.edu.pojo.Schedule" />
+        <mapping class="uth.edu.pojo.Notification" />
+        <mapping class="uth.edu.pojo.ServiceCenter" />
+    </session-factory>
+</hibernate-configuration>

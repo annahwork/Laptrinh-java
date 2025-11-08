@@ -1,15 +1,16 @@
 package uth.edu.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import uth.edu.pojo.Admin;
 import uth.edu.pojo.EVMStaff;
 import uth.edu.pojo.SCStaff;
 import uth.edu.pojo.SCTechnician;
 import uth.edu.pojo.User;
 import uth.edu.repositories.AdminRepository;
-import uth.edu.repositories.UserRepository;
 import uth.edu.repositories.SCTechnicianRepository;
-import java.util.ArrayList;
-import java.util.List;
+import uth.edu.repositories.UserRepository;
 
 public class UserService {
 
@@ -47,7 +48,7 @@ public class UserService {
 
     public List<User> GetUsers(int page) {
         try {
-            return userRepository.getAllUsers(page, 20);
+            return userRepository.getAllUsers(page, 30);
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();

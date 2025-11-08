@@ -98,7 +98,9 @@ public class UserDAO {
         List<User> users = null;
         try {
             session = sessionFactory.openSession();
-            users = session.createQuery("FROM User", User.class)
+            users = session.createQuery(
+                "SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.Notifications",
+                User.class)
                     .setFirstResult((page - 1) * pageSize)
                     .setMaxResults(pageSize)
                     .getResultList();

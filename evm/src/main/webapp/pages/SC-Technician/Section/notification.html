@@ -1,0 +1,35 @@
+<section class="notification-page">
+<link rel="stylesheet" href="../../assets/css/SC-Technician/notification.css">
+
+    <div class="page-header">
+        <h2>Thông báo</h2>
+        <div class="actions">
+        <select id="filterSelect">
+            <option value="all">Tất cả</option>
+            <option value="unread">Chưa đọc</option>
+            <option value="read">Đã đọc</option>
+        </select>
+        <button id="btnMarkAllRead" class="btn-primary">Đánh dấu đã đọc</button>
+        </div>
+    </div>
+
+    <div class="notification-list" id="notificationContainer">
+        <div class="notification-card unread">
+        <div class="notify-content">
+            <h4>Chiến dịch mới được tạo: CD-2025-002</h4>
+            <p>Trung tâm bảo hành vừa khởi động chiến dịch kiểm tra pin xe EV tháng 11.</p>
+            <span class="notify-time">1 giờ trước</span>
+        </div>
+        </div>
+
+        <div class="notification-card read">
+        <div class="notify-content">
+            <h4>Báo cáo tháng 10 đã sẵn sàng</h4>
+            <p>Báo cáo hiệu suất làm việc tháng 10/2025 đã được tổng hợp.</p>
+            <span class="notify-time">Hôm qua</span>
+        </div>
+        </div>
+    </div>
+</section>
+
+<script src="../../assets/js/SC-Technician/notification.js"></script>

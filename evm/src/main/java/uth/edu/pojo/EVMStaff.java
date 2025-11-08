@@ -12,6 +12,15 @@ public class EVMStaff extends User {
             fetch = FetchType.LAZY
     )
     private List<RecallCampaign> ManagedCampaigns = new ArrayList<>();
+    
+    public List<RecallCampaign> getManagedCampaigns() {
+        return ManagedCampaigns;
+    }
+
+    public void setManagedCampaigns(List<RecallCampaign> managedCampaigns) {
+        ManagedCampaigns = managedCampaigns;
+    }
+
     public EVMStaff() {}
 
     public EVMStaff(String UserName, String Password, String Name) {

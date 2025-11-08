@@ -8,10 +8,9 @@ import java.util.ArrayList;
 @DiscriminatorValue("SC_STAFF")
 public class SCStaff extends User {
 
-    @OneToMany(
-            mappedBy = "CreatedByStaff",
-            fetch = FetchType.LAZY
-    )
+    @OneToMany(mappedBy = "CreatedByStaff", fetch = FetchType.LAZY)
+    private List<WarrantyClaim> warrantyClaims = new ArrayList<>();
+    @OneToMany(mappedBy = "CreatedByStaff",fetch = FetchType.LAZY)
     private List<Schedule> CreatedSchedules = new ArrayList<>();
     public SCStaff(){}
 

@@ -8,10 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import javax.persistence.JoinColumn;
 
@@ -25,7 +25,7 @@ public class Vehicle {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CustomerID", nullable = false)
-    private Customer Customer;
+    private Customer customer;
 
     @Column(name = "Model", nullable = false, length = 50)
     private String Model;
@@ -40,7 +40,7 @@ public class Vehicle {
     private String Status;
 
     @OneToMany(
-            mappedBy = "Vehicle",
+            mappedBy = "vehicle",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.LAZY
@@ -48,7 +48,7 @@ public class Vehicle {
     private List<VehiclePart> VehicleParts = new ArrayList<>();
 
     @OneToMany(
-            mappedBy = "Vehicle",
+            mappedBy = "vehicle",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.LAZY
@@ -56,7 +56,7 @@ public class Vehicle {
     private List<WarrantyClaim> WarrantyClaims = new ArrayList<>();
 
     @OneToMany(
-            mappedBy = "Vehicle",
+            mappedBy = "vehicle",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.LAZY
@@ -67,7 +67,7 @@ public class Vehicle {
 
     public Vehicle(String VIN, Customer Customer, String Model, Integer Year_Of_Manufacture, String Warranty_Time, String Status) {
         this.VIN = VIN;
-        this.Customer = Customer;
+        this.customer = Customer;
         this.Model = Model;
         this.Year_Of_Manufacture = Year_Of_Manufacture;
         this.Warranty_Time = Warranty_Time;
@@ -79,7 +79,7 @@ public class Vehicle {
     }
 
     public Customer Customer() {
-        return this.Customer;
+        return this.customer;
     }
 
     public String getModel() {
@@ -103,7 +103,7 @@ public class Vehicle {
     }
 
     public void setCustomer(Customer Customer) {
-        this.Customer = Customer;
+        this.customer = Customer;
     }
 
     public void setModel(String Model) {

@@ -27,7 +27,7 @@ public class Customer {
 
     @OneToMany(
             mappedBy = "customer",
-            cascade = CascadeType.ALL, // Xóa Customer sẽ xóa Vehicle của họ
+            cascade = CascadeType.ALL, 
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )

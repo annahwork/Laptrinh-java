@@ -19,6 +19,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name = "User_Table")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -28,24 +30,31 @@ public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "UserID")
+    @Expose
     private Integer UserID;
 
+    @Expose
     @Column(name = "UserName", nullable = false, unique = true, length = 50)
     private String UserName;
 
+    @Expose
     @Column(name = "Password", nullable = false, length = 100)
     private String Password;
 
+    @Expose
     @Column(name = "Name", nullable = false, length = 100)
     private String Name;
 
+    @Expose
     @Column(name = "Email", length = 100)
     private String Email;
 
+    @Expose
     @Column(name = "Phone", length = 20)
     private String Phone;
+    
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "SCID") 
+    @JoinColumn(name = "SCID")
     private ServiceCenter ServiceCenter;
 
     @OneToMany(mappedBy = "Receiver", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -115,9 +124,11 @@ public abstract class User {
     public void setPhone(String Phone) {
         this.Phone = Phone;
     }
+
     public void setServiceCenter(ServiceCenter serviceCenter) {
         this.ServiceCenter = serviceCenter;
     }
+
     public void setNotifications(List<Notification> notifications) {
         this.Notifications = notifications;
     }

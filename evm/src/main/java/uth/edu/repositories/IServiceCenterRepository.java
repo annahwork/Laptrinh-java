@@ -2,8 +2,11 @@ package uth.edu.repositories;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import uth.edu.pojo.ServiceCenter;
 
+@Repository
 public interface IServiceCenterRepository {
     public void addServiceCenter(ServiceCenter serviceCenter);
     public void updateServiceCenter(ServiceCenter serviceCenter);

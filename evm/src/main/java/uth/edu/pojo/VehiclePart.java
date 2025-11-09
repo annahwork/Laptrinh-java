@@ -1,7 +1,7 @@
 package uth.edu.pojo;
 
 import java.util.Date;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 import java.util.ArrayList;
 

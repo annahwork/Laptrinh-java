@@ -1,5 +1,8 @@
 package uth.edu.repositories;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public interface ISCStaffRepository {
     public void addSCStaff(uth.edu.pojo.SCStaff SCStaff);
     public void updateSCStaff(uth.edu.pojo.SCStaff SCStaff);

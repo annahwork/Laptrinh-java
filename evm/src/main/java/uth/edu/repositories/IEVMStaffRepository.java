@@ -1,5 +1,8 @@
 package uth.edu.repositories;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public interface IEVMStaffRepository {
     public void addEVMStaff(uth.edu.pojo.EVMStaff EVMStaff);
     public void updateEVMStaff(uth.edu.pojo.EVMStaff EVMStaff);

@@ -274,8 +274,7 @@ public class WarrantyClaimService {
                     technician.getName(),
                     claimService.getWarrantyService().getName(),
                     staff.getName()));
-            // Set
-            history.setWarrantyClaim(claimService.getWarrantyClaim()); // Lấy Claim cha từ ClaimService
+            history.setWarrantyClaim(claimService.getWarrantyClaim());
 
             warrantyHistoryRepository.addWarrantyHistory(history);
 
@@ -283,7 +282,6 @@ public class WarrantyClaimService {
 
         } catch (Exception e) {
             e.printStackTrace();
-            // Nếu có lỗi, transaction của update() và add() đã tự rollback
             return false;
         }
     }

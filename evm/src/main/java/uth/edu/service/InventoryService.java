@@ -1,6 +1,6 @@
 package uth.edu.service;
 
-import java.util.ArrayList; // Giả định
+import java.util.ArrayList; 
 import java.util.List;
 
 import uth.edu.pojo.EVMStaff;
@@ -16,13 +16,11 @@ import uth.edu.repositories.UserRepository;
 
 public class InventoryService {
 
-    // Khai báo các Repository cần thiết
     private InventoryRepository inventoryRepository;
     private PartRepository partRepository;
     private ServiceCenterRepository serviceCenterRepository;
-    private UserRepository userRepository; // Dùng để xác thực
+    private UserRepository userRepository; 
     
-    // Giả định có NotificationService để gửi cảnh báo
     private NotificationService notificationService; 
 
     private static final int DEFAULT_PAGE = 1;
@@ -61,7 +59,6 @@ public class InventoryService {
 
     public boolean AllocatePartsToSC(Integer EVMStaffID, Integer PartID, Integer Quantity) {
         try {
-            // 1. Xác thực
             User staff = userRepository.getUserById(EVMStaffID);
             if (staff == null || !(staff instanceof EVMStaff)) {
                 return false; 

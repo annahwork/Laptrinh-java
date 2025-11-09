@@ -1,6 +1,6 @@
 package uth.edu.pojo;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity

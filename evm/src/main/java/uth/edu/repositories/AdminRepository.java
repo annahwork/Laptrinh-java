@@ -2,9 +2,12 @@ package uth.edu.repositories;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import uth.edu.dao.AdminDAO;
 import uth.edu.pojo.Admin;
 
+@Repository
 public class AdminRepository implements IAdminRepository {
 
     private AdminDAO adminDAO = null;

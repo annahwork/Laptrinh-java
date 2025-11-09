@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction; // Đảm bảo POJO đã được tạo
+import org.hibernate.Transaction; 
 import org.hibernate.cfg.Configuration;
 
-import uth.edu.pojo.ServiceCenter; // Import
+import uth.edu.pojo.ServiceCenter; 
 
 public class ServiceCenterDAO {
     private Configuration configuration = null;
@@ -102,7 +102,7 @@ public class ServiceCenterDAO {
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
-            return new ArrayList<>(); // Trả về list rỗng nếu lỗi
+            return new ArrayList<>();  
         } finally {
             if (session != null) {
                 session.close();

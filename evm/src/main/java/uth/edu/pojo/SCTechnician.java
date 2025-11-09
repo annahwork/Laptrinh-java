@@ -2,22 +2,21 @@ package uth.edu.pojo;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @DiscriminatorValue("SC_TECHNICIAN")
 public class SCTechnician extends User {
 
-    @OneToMany(mappedBy = "technician", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "technician", fetch = FetchType.EAGER)
     private List<ClaimService> claimServices = new ArrayList<>();
-    @OneToMany(mappedBy = "InstalledBy", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "InstalledBy", fetch = FetchType.EAGER)
     private List<VehiclePart> vehicleParts = new ArrayList<>();
 
     public SCTechnician(){}
 
-    public SCTechnician(String UserName, String Password, String Name)
-    {
-        super(UserName, Password, Name);
+    public SCTechnician(String userName, String password, String name, String email, String phone) {
+        super(userName, password, name, email, phone);
     }
 
     public void addNewPart(String partData)

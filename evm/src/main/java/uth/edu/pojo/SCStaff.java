@@ -1,6 +1,6 @@
 package uth.edu.pojo;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -8,17 +8,16 @@ import java.util.ArrayList;
 @DiscriminatorValue("SC_STAFF")
 public class SCStaff extends User {
 
-    @OneToMany(mappedBy = "CreatedByStaff", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "CreatedByStaff", fetch = FetchType.EAGER)
     private List<WarrantyClaim> warrantyClaims = new ArrayList<>();
-    @OneToMany(mappedBy = "CreatedByStaff",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "CreatedByStaff",fetch = FetchType.EAGER)
     private List<Schedule> CreatedSchedules = new ArrayList<>();
     public SCStaff(){}
 
-    public SCStaff(String UserName, String Password, String ManufacturerID, String Name, String Email)
-    {
-        super(UserName, Password, Name);
+    public SCStaff(String userName, String password, String name, String email, String phone) {
+        super(userName, password, name, email, phone);
     }
-
+    
     public void EVRegister(String VIN, String CustomerID)
     {
 

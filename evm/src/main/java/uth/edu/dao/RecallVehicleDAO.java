@@ -96,7 +96,6 @@ public class RecallVehicleDAO {
         List<RecallVehicle> recallVehicles = null;
         try {
             session = sessionFactory.openSession();
-            // Lưu ý: Tên thuộc tính "vehicle.VIN" phải khớp POJO
             recallVehicles = session.createQuery("FROM RecallVehicle rv WHERE rv.vehicle.VIN = :vin", RecallVehicle.class)
                     .setParameter("vin", vin)
                     .setFirstResult((page - 1) * pageSize)
@@ -104,7 +103,7 @@ public class RecallVehicleDAO {
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
-            return new ArrayList<>(); // Trả về list rỗng
+            return new ArrayList<>(); 
         } finally {
             if (session != null) {
                 session.close();
@@ -117,7 +116,6 @@ public class RecallVehicleDAO {
         List<RecallVehicle> recallVehicles = null;
         try {
             session = sessionFactory.openSession();
-            // Lưu ý: Tên thuộc tính "RecallCampaign.CampaignID" phải khớp POJO
             recallVehicles = session.createQuery("FROM RecallVehicle rv WHERE rv.RecallCampaign.CampaignID = :campaignID", RecallVehicle.class)
                     .setParameter("campaignID", campaignID)
                     .setFirstResult((page - 1) * pageSize)
@@ -125,7 +123,7 @@ public class RecallVehicleDAO {
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
-            return new ArrayList<>(); // Trả về list rỗng
+            return new ArrayList<>();
         } finally {
             if (session != null) {
                 session.close();

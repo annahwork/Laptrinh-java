@@ -1,114 +1,123 @@
 <link rel="stylesheet" href="../../assets/css/SC-Admin/dashboard.css">
 <section class="dashboard-page">
     <div class="main-content-area">
-
-        <div class="dashboard-header">
-            <h1 class="dashboard-title">Dashboard</h1>
-            <p class="dashboard-subtitle">Tong quan he thong Service Center</p>
-        </div>
-
         <div class="stats-grid">
-            <div class="stat-card stat-card--blue">
-                <div class="stat-icon">👥</div>
-                <div class="stat-info">
-                    <h3 class="stat-number">0</h3>
-                    <p class="stat-label">Tong nhan vien</p>
-                </div>
+        <div class="stat-card stat-card--blue">
+            <div class="stat-info">
+            <h3 class="stat-number">0</h3>
+            <p class="stat-label">Tổng nhân viên</p>
             </div>
+        </div>
 
-            <div class="stat-card stat-card--green">
-                <div class="stat-icon">🚗</div>
-                <div class="stat-info">
-                    <h3 class="stat-number">0</h3>
-                    <p class="stat-label">Xe dien quan ly</p>
-                </div>
+        <div class="stat-card stat-card--green">
+            <div class="stat-info">
+            <h3 class="stat-number">0</h3>
+            <p class="stat-label">Xe điện quản lý</p>
             </div>
+        </div>
 
-            <div class="stat-card stat-card--orange">
-                <div class="stat-icon">⚡</div>
-                <div class="stat-info">
-                    <h3 class="stat-number">0</h3>
-                    <p class="stat-label">Dang sac</p>
-                </div>
+        <div class="stat-card stat-card--orange">
+            <div class="stat-info">
+            <h3 class="stat-number">0</h3>
+            <p class="stat-label">Số lượng khách hàng</p>
             </div>
+        </div>
 
-            <div class="stat-card stat-card--purple">
-                <div class="stat-icon">🔧</div>
-                <div class="stat-info">
-                    <h3 class="stat-number">0</h3>
-                    <p class="stat-label">Bao tri hom nay</p>
-                </div>
+        <div class="stat-card stat-card--purple">
+            <div class="stat-info">
+            <h3 class="stat-number">0</h3>
+            <p class="stat-label">Yêu cầu bảo hành</p>
             </div>
+        </div>
         </div>
 
         <div class="dashboard-section">
-            <h2 class="section-title">Phan bo nhan su</h2>
-            <div class="role-grid">
-                <div class="role-card">
-                    <div class="role-icon role-icon--admin">A</div>
-                    <div class="role-info">
-                        <p class="role-count">0</p>
-                        <p class="role-name">Admin</p>
-                    </div>
-                </div>
-
-                <div class="role-card">
-                    <div class="role-icon role-icon--staff">S</div>
-                    <div class="role-info">
-                        <p class="role-count">0</p>
-                        <p class="role-name">SC Staff</p>
-                    </div>
-                </div>
-
-                <div class="role-card">
-                    <div class="role-icon role-icon--tech">T</div>
-                    <div class="role-info">
-                        <p class="role-count">0</p>
-                        <p class="role-name">SC Technician</p>
-                    </div>
-                </div>
-
-                <div class="role-card">
-                    <div class="role-icon role-icon--evm">E</div>
-                    <div class="role-info">
-                        <p class="role-count">0</p>
-                        <p class="role-name">EVM Staff</p>
-                    </div>
-                </div>
+        <h2 class="section-title">Phân bổ nhân sự</h2>
+        <div class="role-grid">
+            <div class="role-card">
+            <div class="role-icon role-icon--admin">A</div>
+            <div class="role-info">
+                <p class="role-count">0</p>
+                <p class="role-name">Admin</p>
             </div>
+            </div>
+
+            <div class="role-card">
+            <div class="role-icon role-icon--staff">S</div>
+            <div class="role-info">
+                <p class="role-count">0</p>
+                <p class="role-name">SC Staff</p>
+            </div>
+            </div>
+
+            <div class="role-card">
+            <div class="role-icon role-icon--tech">T</div>
+            <div class="role-info">
+                <p class="role-count">0</p>
+                <p class="role-name">SC Technician</p>
+            </div>
+            </div>
+
+            <div class="role-card">
+            <div class="role-icon role-icon--evm">E</div>
+            <div class="role-info">
+                <p class="role-count">0</p>
+                <p class="role-name">EVM Staff</p>
+            </div>
+            </div>
+        </div>
         </div>
 
         <div class="dashboard-section">
-            <h2 class="section-title">Ky thuat vien dang lam viec</h2>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Ten</th>
-                        <th>So dien thoai</th>
-                        <th>Trang thai</th>
-                        <th>Task hom nay</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="4" class="no-data">Chua co du lieu tu database</td>
-                    </tr>
-                </tbody>
-            </table>
+        <h2 class="section-title">Kỹ thuật viên đang làm việc</h2>
+        <table class="data-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên</th>
+                <th>Nhiệm vụ hôm nay</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td colspan="4" class="no-data">Chưa có dữ liệu từ database</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="card-footer">
+            <div class="pagination-wrapper">
+            <span class="pagination-info">Hiển thị 0 của 0</span>
+            <div>
+                <button class="pagination-btn">« Trước</button>
+                <button class="btn-primary pagination-btn-active">1</button>
+                <button class="pagination-btn">Sau »</button>
+            </div>
+            </div>
+        </div>
         </div>
 
         <div class="dashboard-section">
-            <h2 class="section-title">Hoat dong gan day</h2>
-            <div class="activity-list">
-                <div class="activity-item">
-                    <div class="activity-icon activity-icon--info">i</div>
-                    <div class="activity-content">
-                        <p class="activity-text">Chua co hoat dong nao</p>
-                        <p class="activity-time">Du lieu se hien thi khi ket noi database</p>
-                    </div>
-                </div>
+        <h2 class="section-title">Hoạt động gần đây</h2>
+        <div class="activity-list">
+            <div class="activity-item">
+            <div class="activity-icon activity-icon--info">i</div>
+            <div class="activity-content">
+                <p class="activity-text">Chưa có hoạt động nào</p>
+                <p class="activity-time">Dữ liệu sẽ hiển thị khi kết nối database</p>
+            </div>
             </div>
         </div>
-
+        <div class="card-footer">
+            <div class="pagination-wrapper">
+            <span class="pagination-info">Hiển thị 0 của 0</span>
+            <div>
+                <button class="pagination-btn">« Trước</button>
+                <button class="btn-primary pagination-btn-active">1</button>
+                <button class="pagination-btn">Sau »</button>
+            </div>
+            </div>
+        </div>
+        </div>
     </div>
 </section>

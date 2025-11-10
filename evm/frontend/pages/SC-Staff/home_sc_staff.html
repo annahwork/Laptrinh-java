@@ -6,13 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang chủ - SC Staff</title>
 
-    <!-- <link rel="stylesheet" href="/Laptrinh-java/evm/frontend/assets/css/main.css">
-    <link rel="stylesheet" href="/Laptrinh-java/evm/frontend/assets/css/SC-Staff/technician_assignment.css"> -->
     <link rel="stylesheet" href="../../assets/css/main.css">
     <link rel="stylesheet" href="../../assets/css/SC-Staff/technician_assignment.css">
-    <!-- chỉnh link -->
 
-    <!-- Override: Sidebar cố định khi scroll -->
     <link rel="stylesheet" href="../../assets/css/SC-Staff/sidebar-fixed.css">
 </head>
 
@@ -26,17 +22,17 @@
             </div>
 
             <div class="sidebar__user">
-                <img src="../../assets/pic/avatar.png" alt="Avatar" class="sidebar__user-avatar">
                 <div class="sidebar__userinfo">
                     <h4 class="sidebar__username">Name User</h4>
                     <p class="sidebar__role">SC Staff</p>
                 </div>
+                <img src="../../assets/pic/avatar.png" alt="Avatar" class="sidebar__user-avatar">
             </div>
+            
 
             <nav class="sidebar__nav">
                 <ul>
                     <li class="sidebar__item">
-                        <!-- thêm trang chủ -->
                         <a href="dashboard.html" data-page="dashboard.html" class="sidebar__link">Trang chủ</a>
                     </li>
                     <li class="sidebar__item menu-group">
@@ -81,15 +77,7 @@
 
     <div id="footer-placeholder"></div>
 
-
-    <!-- <script src="/Laptrinh-java/evm/frontend/assets/js/JS.js"></script> -->
     <script src="../../assets/js/JS.js"></script>
-    <!-- thêm link này để load đc file privacy_policy.html và terms_of_service.html trong footer -->
-    <script src="../../assets/js/SC-Staff/home_sc_staff.js"></script>
-    <!-- Auto load dashboard when page is empty -->
-    <script src="../../assets/js/SC-Staff/dashboard_loader.js"></script>
-
-
 
     <script>
         fetch('../../components/footer.html')
@@ -97,6 +85,7 @@
             .then(html => document.getElementById('footer-placeholder').innerHTML = html)
             .catch(err => console.error("Không tải được footer:", err));
     </script>
+
 </body>
 
 </html>

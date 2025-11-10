@@ -1,0 +1,37 @@
+<section class="document-page">
+  <link rel="stylesheet" href="../../assets/css/SC-Technician/technical_documents.css">
+
+  <div class="page-header">
+    <h2>Tài liệu kỹ thuật</h2>
+    <div class="actions">
+      <input type="text" id="searchDocs" placeholder="Tìm theo tên tài liệu...">
+      <select id="docTypeFilter">
+        <option value="all">Tất cả loại</option>
+        <option value="manual">Hướng dẫn</option>
+        <option value="diagram">Sơ đồ</option>
+        <option value="form">Biểu mẫu</option>
+      </select>
+      <button id="btnUploadDoc" class="btn-primary">Tải lên tài liệu</button>
+    </div>
+  </div>
+
+  <div class="data-grid" id="docContainer">
+    <div class="data-card">
+      <div class="card-header">
+        <h3>Hướng dẫn kiểm tra pin EV</h3>
+        <span class="doc-type manual">Hướng dẫn</span>
+      </div>
+      <div class="card-body">
+        <p><strong>Mã tài liệu:</strong> DOC-2025-001</p>
+        <p><strong>Ngày phát hành:</strong> 01/11/2025</p>
+        <p><strong>Người đăng:</strong> EV Manufacturer</p>
+      </div>
+      <div class="card-footer">
+        <button class="btn-outline">Xem</button>
+        <button class="btn-light">Tải xuống</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="../../assets/js/SC-Technician/technical_documents.js"></script>

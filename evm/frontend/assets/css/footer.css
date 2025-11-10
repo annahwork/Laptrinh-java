@@ -8,6 +8,9 @@
     bottom: 0;
     left: 0;
     z-index: 200;
+    height: var(--footer-h);
+    z-index: 200;
+    padding-bottom: calc(0.6rem + env(safe-area-inset-bottom));
 }
 
 .footer__container {

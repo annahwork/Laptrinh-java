@@ -13,17 +13,23 @@
 
     function formatRole(roleValue) {
         switch (roleValue) {
-            case 'ADMIN': return 'Admin';
-            case 'SC_STAFF': return 'SC Staff';
-            case 'SC_TECHNICIAN': return 'SC Technician';
-            case 'EVM_STAFF': return 'EVM Staff';
-            default: return roleValue;
+            case 'ADMIN': 
+                return 'Admin';
+            case 'SC_STAFF': 
+                return 'SC Staff';
+            case 'SC_TECHNICIAN': 
+                return 'SC Technician';
+            case 'EVM_STAFF': 
+                return 'EVM Staff';
+            default: 
+                return roleValue;
         }
     }
 
     function renderUsers(users) {
         const tableBody = document.getElementById('usersTableBody');
-        if (!tableBody) return;
+        if (!tableBody) 
+            return;
 
         tableBody.innerHTML = '';
 
@@ -149,7 +155,8 @@
 
         if (deleteModal) deleteModal.classList.remove('modal-open');
 
-        if (!modal) return;
+        if (!modal) 
+            return;
         if (form) form.reset();
 
         if (userId === null) {
@@ -179,7 +186,8 @@
     const deleteModal = document.getElementById('deleteModal');
     const userModal = document.getElementById('userModal');
     const confirmBtn = document.getElementById('btnConfirmDelete');
-    if (!deleteModal) return;
+    if (!deleteModal) 
+        return;
 
     if (userModal) userModal.classList.remove('modal-open');
 

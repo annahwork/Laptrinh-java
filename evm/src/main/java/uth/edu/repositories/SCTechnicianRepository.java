@@ -2,9 +2,12 @@ package uth.edu.repositories;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import uth.edu.dao.SCTechnicianDAO;
 import uth.edu.pojo.SCTechnician;
 
+@Repository
 public class SCTechnicianRepository implements ISCTechnicianRepository {
 
     private SCTechnicianDAO SCTechnicianDAO = null;

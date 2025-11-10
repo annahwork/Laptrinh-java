@@ -2,9 +2,12 @@ package uth.edu.repositories;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import uth.edu.dao.SCStaffDAO;
 import uth.edu.pojo.SCStaff;
 
+@Repository
 public class SCStaffRepository implements ISCStaffRepository {
 
     private SCStaffDAO SCStaffDAO = null;

@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class VehicleService {
 
     private VehicleRepository vehicleRepository;
@@ -149,4 +152,15 @@ public class VehicleService {
             return new ArrayList<>();
         }
     }
+
+    public int countAllVehicles() {
+        try {
+            return vehicleRepository.countAllVehicles();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    
 }

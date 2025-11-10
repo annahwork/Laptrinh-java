@@ -75,6 +75,23 @@ public class VehicleDAO {
             }
         }
     }
+
+    public Vehicle getVehicleByVin(String vin) {
+        Session session = null;
+        Vehicle vehicle = null;
+        try {
+            session = sessionFactory.openSession();
+            vehicle = session.get(Vehicle.class, vin);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return vehicle;
+    }
+
     public List<Vehicle> getVehiclesByModel(String model, int page, int pageSize) {
         Session session = null;
         List<Vehicle> vehicles = null;
@@ -96,22 +113,6 @@ public class VehicleDAO {
         return vehicles;
     }
 
-    public Vehicle getVehicleByVin(String vin) {
-        Session session = null;
-        Vehicle vehicle = null;
-        try {
-            session = sessionFactory.openSession();
-            vehicle = session.get(Vehicle.class, vin);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return vehicle;
-    }
-
     public List<Vehicle> getAllVehicles(int page, int pageSize) {
         Session session = null;
         List<Vehicle> vehicles = null;
@@ -129,6 +130,38 @@ public class VehicleDAO {
             }
         }
         return vehicles;
+    }
+
+    public int countAllVehicles() {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            Long count = (Long) session.createQuery("SELECT COUNT(v) FROM Vehicle v").uniqueResult();
+            System.out.println("[VehicleDAO] countAllVehicles = " + count);
+            return count.intValue();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        } finally {
+            if (session != null) session.close();
+        }
+    }
+
+    public int countVehiclesByStatus(String status) {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            Long count = (Long) session.createQuery(
+                    "SELECT COUNT(v) FROM Vehicle v WHERE v.Status = :status")
+                    .setParameter("status", status)
+                    .uniqueResult();
+            return count.intValue();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        } finally {
+            if (session != null) session.close();
+        }
     }
 
     public void closeSessionFactory() {

@@ -1,6 +1,6 @@
 package uth.edu.pojo;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 @Entity
@@ -9,7 +9,7 @@ public class EVMStaff extends User {
 
     @OneToMany(
             mappedBy = "CreatedByStaff",
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     private List<RecallCampaign> ManagedCampaigns = new ArrayList<>();
     
@@ -23,8 +23,8 @@ public class EVMStaff extends User {
 
     public EVMStaff() {}
 
-    public EVMStaff(String UserName, String Password, String Name) {
-        super(UserName, Password, Name);
+    public EVMStaff(String userName, String password, String name, String email, String phone) {
+        super(userName, password, name, email, phone);
     }
 
     public void updateServiceProgress(Integer serviceId, String result) {

@@ -129,22 +129,23 @@ public class UserDAO {
     }
 
     public User getUserByUserName(String userName) {
-        Session session = null;
-        User user = null;
-        try {
-            session = sessionFactory.openSession();
-            user = session.createQuery("FROM User WHERE UserName = :userName", User.class)
-                    .setParameter("userName", userName)
-                    .uniqueResult();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
+    Session session = null;
+    User user = null;
+    try {
+        session = sessionFactory.openSession();
+        user = session.createQuery("FROM User WHERE userName = :userName", User.class)
+                .setParameter("userName", userName)
+                .uniqueResult();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        if (session != null) {
+            session.close();
         }
-        return user;
     }
+    return user;
+}
     public List<User> getUsersByRoleAndSC(String role, Integer scId) {
         Session session = null;
         List<User> users = null;

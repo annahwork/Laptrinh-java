@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - EV Warranty System</title>
+    
+    <link rel="stylesheet" href="/evm/assets/css/theme.css">
+    
+    <link rel="stylesheet" href="/evm/assets/css/login.css">
+</head>
+
+<body>
+
+    <div class="login-card">
+
+        <div>
+            <h1 class="login-title">
+                EV Warranty System
+            </h1>
+        </div>
+
+        <div class="user-type-wrapper">
+            <label class="user-type-label">Đăng nhập với tư cách:</label>
+            <div class="user-type-tabs">
+                <input type="radio" id="type-hang" name="userType" value="hang" checked>
+                <label for="type-hang" class="tab">
+                    🏢
+                    <span>Hãng</span>
+                </label>
+
+                <input type="radio" id="type-trungtam" name="userType" value="trungtam">
+                <label for="type-trungtam" class="tab">
+                    🔧
+                    <span>Trung tâm</span>
+                </label>
+            </div>
+        </div>
+
+
+        <form id="loginForm" class="login-form">
+            <div class="form-group">
+                <label for="username" class="form-label">
+                    Tên đăng nhập
+                </label>
+                <input type="text" id="username" name="username" required autocomplete="username" class="form-input">
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">
+                    Mật khẩu
+                </label>
+
+                <input type="password" id="password" name="password" required autocomplete="current-password"
+                    class="form-input">
+
+                <button type="button" id="togglePassword" aria-label="Hiện mật khẩu" class="password-toggle">
+                   </button>
+            </div>
+
+            <div class="form-options">
+                <label class="remember-me">
+                    <input type="checkbox" id="remember" name="remember">
+                    <span>Ghi nhớ đăng nhập</span>
+                </label>
+                <a href="ForgotPassWord.html" class="forgot-password-link">Quên mật khẩu?</a>
+            </div>
+
+            <button type="submit" class="btn-primary submit-button">
+                Đăng nhập
+            </button>
+
+            <p class="muted-text">
+                Chưa có tài khoản? Vui lòng liên hệ quản trị viên.
+            </p>
+        </form>
+    </div>
+
+    <script src="/evm/assets/js/login.js"></script>
+
+</body>
+
+</html>

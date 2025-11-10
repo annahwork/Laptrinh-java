@@ -1,12 +1,13 @@
 package uth.edu.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import java.util.List;
+
 import uth.edu.pojo.User;
 import uth.edu.service.UserService;
 
@@ -41,6 +42,10 @@ public class HomeController {
     @GetMapping("/user_management")
     public String showUserManagement() {
         return "/frontend/pages/SC-Admin/Section/user_management"; 
+    }
+    @RequestMapping("/login")
+    public String loginPage() {
+        return "/frontend/pages/login";
     }
 
 }

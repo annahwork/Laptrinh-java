@@ -1,0 +1,43 @@
+<section class="schedule-page">
+  <link rel="stylesheet" href="../../assets/css/SC-Technician/work_schedule.css">
+
+  <div class="page-header">
+    <h2>Lịch làm việc</h2>
+    <div class="actions">
+      <select id="viewMode">
+        <option value="week">Tuần</option>
+        <option value="month">Tháng</option>
+      </select>
+      <input type="date" id="datePicker">
+      <button id="btnAddTask" class="btn-primary">Thêm công việc</button>
+    </div>
+  </div>
+
+  <div class="schedule-container">
+    <div class="schedule-header">
+      <div class="schedule-day">Thứ 2</div>
+      <div class="schedule-day">Thứ 3</div>
+      <div class="schedule-day">Thứ 4</div>
+      <div class="schedule-day">Thứ 5</div>
+      <div class="schedule-day">Thứ 6</div>
+      <div class="schedule-day">Thứ 7</div>
+      <div class="schedule-day">Chủ nhật</div>
+    </div>
+
+    <div class="schedule-grid" id="scheduleGrid">
+      <div class="schedule-item">
+        <h4>Kiểm tra xe VIN: EV2025VN001248</h4>
+        <p>8:00 - 10:00 • Trung tâm EV Hà Nội</p>
+        <span class="tag inprogress">Đang xử lý</span>
+      </div>
+
+      <div class="schedule-item done">
+        <h4>Bảo dưỡng xe VIN: EV2025VN001300</h4>
+        <p>13:30 - 15:00 • Khu kỹ thuật 2</p>
+        <span class="tag done">Hoàn tất</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="../../assets/js/SC-Technician/work_schedule.js"></script>

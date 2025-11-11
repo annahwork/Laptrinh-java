@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -50,7 +52,6 @@ public class RecallCampaign {
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
-
     private List<RecallVehicle> VehiclesInCampaign = new ArrayList<>();
 
     @OneToMany(
@@ -81,6 +82,7 @@ public class RecallCampaign {
         CampaignID = campaignID;
     }
 
+    @JsonIgnore
     public EVMStaff getCreatedByStaff() {
         return CreatedByStaff;
     }
@@ -121,6 +123,7 @@ public class RecallCampaign {
         Description = description;
     }
 
+    @JsonIgnore 
     public List<RecallVehicle> getVehiclesInCampaign() {
         return VehiclesInCampaign;
     }
@@ -129,6 +132,7 @@ public class RecallCampaign {
         VehiclesInCampaign = vehiclesInCampaign;
     }
 
+    @JsonIgnore 
     public List<Schedule> getSchedules() {
         return Schedules;
     }
@@ -137,18 +141,4 @@ public class RecallCampaign {
         Schedules = schedules;
     }
 
-    public void addVehicle(String VIN)
-    {
-
-    }
-
-    public void startCampaign()
-    {
-
-    }
-
-    public void endCampaign()
-    {
-
-    }
 }

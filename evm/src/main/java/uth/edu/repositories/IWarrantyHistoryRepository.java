@@ -1,5 +1,8 @@
 package uth.edu.repositories;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public interface IWarrantyHistoryRepository {
     public void addWarrantyHistory(uth.edu.pojo.WarrantyHistory WarrantyHistory);
     public void updateWarrantyHistory(uth.edu.pojo.WarrantyHistory WarrantyHistory);

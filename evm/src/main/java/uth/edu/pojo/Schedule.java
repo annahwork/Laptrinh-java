@@ -3,6 +3,8 @@ package uth.edu.pojo;
 import jakarta.persistence.*;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "Schedule")
 public class Schedule {
@@ -21,7 +23,7 @@ public class Schedule {
     private Customer Customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "UserID", nullable = false) // FK đến System_User
+    @JoinColumn(name = "UserID", nullable = false) 
     private SCStaff CreatedByStaff;
 
     @Temporal(TemporalType.DATE)
@@ -46,10 +48,12 @@ public class Schedule {
         return this.ScheduleID;
     }
 
+    @JsonIgnore 
     public RecallCampaign getRecallCampaign(){
         return this.RecallCampaign;
     }
 
+    @JsonIgnore 
     public Customer getCustomer(){
         return this.Customer;
     }
@@ -62,6 +66,7 @@ public class Schedule {
         return this.Note;
     }
 
+    @JsonIgnore 
     public SCStaff getCreatedByStaff(){
         return this.CreatedByStaff;
     }

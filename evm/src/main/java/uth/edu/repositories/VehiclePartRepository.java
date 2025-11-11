@@ -2,9 +2,12 @@ package uth.edu.repositories;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import uth.edu.dao.VehiclePartDAO;
 import uth.edu.pojo.VehiclePart;
 
+@Repository
 public class VehiclePartRepository implements IVehiclePartRepository {
 
     private VehiclePartDAO VehiclePartDAO = null;

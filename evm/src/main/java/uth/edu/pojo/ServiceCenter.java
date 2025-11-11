@@ -2,6 +2,8 @@ package uth.edu.pojo;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,10 +40,10 @@ public class ServiceCenter {
     public ServiceCenter() {}
 
     public ServiceCenter(Integer sCID, String name, String address, String type) {
-        SCID = sCID;
-        Name = name;
-        Address = address;
-        Type = type;
+        this.SCID = sCID;
+        this.Name = name;
+        this.Address = address;
+        this.Type = type;
     }
 
     public Integer getSCID() {
@@ -76,6 +78,7 @@ public class ServiceCenter {
         this.Type = type;
     }
 
+    @JsonIgnore 
     public List<User> getStaffs() {
         return this.Staffs;
     }
@@ -84,6 +87,7 @@ public class ServiceCenter {
         this.Staffs = staffs;
     }
 
+    @JsonIgnore 
     public List<Inventory> getInventoryStock() {
         return this.InventoryStock;
     }
@@ -91,7 +95,4 @@ public class ServiceCenter {
     public void setInventoryStock(List<Inventory> inventoryStock) {
         this.InventoryStock = inventoryStock;
     }
-
-    
-    
 }

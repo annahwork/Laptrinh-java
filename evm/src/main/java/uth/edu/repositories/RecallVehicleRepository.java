@@ -2,9 +2,12 @@ package uth.edu.repositories;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import uth.edu.dao.RecallVehicleDAO;
 import uth.edu.pojo.RecallVehicle;
 
+@Repository
 public class RecallVehicleRepository implements IRecallVehicleRepository {
 
     private RecallVehicleDAO RecallVehicleDAO = null;

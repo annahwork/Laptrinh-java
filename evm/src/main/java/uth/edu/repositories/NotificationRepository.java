@@ -2,9 +2,12 @@ package uth.edu.repositories;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import uth.edu.dao.NotificationDAO;
 import uth.edu.pojo.Notification;
 
+@Repository
 public class NotificationRepository implements INotificationRepository {
 
     private NotificationDAO NotificationDAO = null;

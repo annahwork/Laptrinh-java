@@ -91,42 +91,6 @@ public class SCTechnicianDAO {
         return technician;
     }
 
-    public List<SCTechnician> getAllTechnicians(int page, int pageSize) {
-        Session session = null;
-        List<SCTechnician> technicians = null;
-        try {
-            session = sessionFactory.openSession();
-            technicians = session.createQuery("FROM SCTechnician", SCTechnician.class)
-                    .setFirstResult((page - 1) * pageSize)
-                    .setMaxResults(pageSize)
-                    .getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return technicians;
-    }
-
-    public List<SCTechnician> getAllTechnicians() {
-        Session session = null;
-        List<SCTechnician> technicians = null;
-        try {
-            session = sessionFactory.openSession();
-            technicians = session.createQuery("FROM SCTechnician", SCTechnician.class)
-                    .getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return technicians;
-    }
-
     public void closeSessionFactory() {
         if (sessionFactory != null) {
             sessionFactory.close();

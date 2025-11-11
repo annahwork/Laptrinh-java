@@ -1,4 +1,6 @@
 package uth.edu.pojo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -47,6 +49,7 @@ public class ClaimService {
         this.ClaimServID = ClaimServID;
     }
 
+    @JsonIgnore 
     public WarrantyClaim getWarrantyClaim() {
         return WarrantyClaim;
     }
@@ -55,6 +58,7 @@ public class ClaimService {
         this.WarrantyClaim = WarrantyClaim;
     }
 
+    @JsonIgnore
     public WarrantyService getWarrantyService() {
         return this.WarrantyService;
     }
@@ -63,6 +67,7 @@ public class ClaimService {
         this.WarrantyService = WarrantyService;
     }
 
+    @JsonIgnore
     public SCTechnician getTechnician() {
         return technician;
     }

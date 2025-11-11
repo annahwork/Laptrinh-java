@@ -3,6 +3,9 @@ package uth.edu.pojo;
 import java.util.Date;
 import jakarta.persistence.*;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 
 @Entity
@@ -57,10 +60,12 @@ public class VehiclePart {
         return this.VehiclePartID;
     }
 
+    @JsonIgnore
     public Part getPart() {
         return this.Part;
     }
 
+    @JsonIgnore 
     public Vehicle getVehicle() {
         return this.vehicle;
     }
@@ -77,6 +82,7 @@ public class VehiclePart {
         return this.RemoveDate;
     }
 
+    @JsonIgnore
     public User getInstalledBy() {
         return this.InstalledBy;
     }

@@ -2,9 +2,12 @@ package uth.edu.repositories;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import uth.edu.dao.InventoryDAO;
 import uth.edu.pojo.Inventory;
 
+@Repository
 public class InventoryRepository implements IInventoryRepository {
 
     private InventoryDAO InventoryDAO = null;

@@ -3,6 +3,8 @@ package uth.edu.pojo;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -25,6 +27,7 @@ public class Vehicle {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CustomerID", nullable = false)
+    @JsonIgnore
     private Customer customer;
 
     @Column(name = "Model", nullable = false, length = 50)
@@ -45,6 +48,7 @@ public class Vehicle {
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
+    @JsonIgnore
     private List<VehiclePart> VehicleParts = new ArrayList<>();
 
     @OneToMany(
@@ -53,6 +57,7 @@ public class Vehicle {
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
+    @JsonIgnore
     private List<WarrantyClaim> WarrantyClaims = new ArrayList<>();
 
     @OneToMany(
@@ -61,6 +66,7 @@ public class Vehicle {
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
+    @JsonIgnore
     private List<RecallVehicle> Recalls = new ArrayList<>();
 
     public Vehicle() {}

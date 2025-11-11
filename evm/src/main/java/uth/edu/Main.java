@@ -28,6 +28,8 @@ import uth.edu.pojo.VehiclePart;
 import uth.edu.pojo.WarrantyClaim;
 import uth.edu.pojo.WarrantyHistory;
 import uth.edu.pojo.WarrantyService;
+import uth.edu.dao.UserDAO;
+import uth.edu.repositories.UserRepository;
 
 /**
  * Lớp Main này là một kịch bản (script) độc lập để
@@ -37,6 +39,7 @@ import uth.edu.pojo.WarrantyService;
 public class Main {
 
     public static void main(String[] args) {
+        /* 
         SessionFactory sessionFactory = null;
         Session session = null;
         Random rand = new Random();
@@ -349,6 +352,10 @@ public class Main {
             if (sessionFactory != null) {
                 sessionFactory.close();
             }
-        }
+        }*/
+        UserRepository repo = new UserRepository();
+        List<User> users = repo.getAllUsers(1, 30);
+        users.forEach(System.out::println);
+
     }
 }

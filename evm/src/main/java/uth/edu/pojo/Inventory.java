@@ -1,5 +1,7 @@
 package uth.edu.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -38,14 +40,16 @@ public class Inventory {
         this.ServiceCenter = ServiceCenter;
         this.CurrentStock = CurrentStock;
     }
-
     public Integer getInventoryID() {
         return this.InventoryID;
     }
 
+    @JsonIgnore
     public Part getPart() {
         return this.Part;
     }
+    
+    @JsonIgnore 
     public ServiceCenter getServiceCenter() {
         return this.ServiceCenter;
     }
@@ -65,18 +69,9 @@ public class Inventory {
     public void setCurrentStock(Integer CurrentStock) {
         this.CurrentStock = CurrentStock;
     }
-
     
     public void setServiceCenter(ServiceCenter serviceCenter) {
         ServiceCenter = serviceCenter;
     }
     
-    public void updateStock(Integer quantity) {
-
-    }
-
-    public void checkStockLevel() {
-        
-    }
-
 }

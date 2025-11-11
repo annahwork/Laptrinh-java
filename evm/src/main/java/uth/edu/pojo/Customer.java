@@ -2,6 +2,9 @@ package uth.edu.pojo;
 
 import jakarta.persistence.*;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 
 @Entity
@@ -31,6 +34,7 @@ public class Customer {
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
+    @JsonIgnore
     private List<Vehicle> Vehicles = new ArrayList<>();
 
     @OneToMany(
@@ -38,6 +42,7 @@ public class Customer {
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL
     )
+    @JsonIgnore
     private List<Schedule> Schedules = new ArrayList<>();
 
     public Customer() {}
@@ -88,14 +93,6 @@ public class Customer {
 
     public void setAddress(String Address) {
         this.Address = Address;
-    }
-
-    public void updateInfo() {
-
-    }
-
-    public void getVehicleList() {
-
     }
 
 }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -81,14 +83,17 @@ public class WarrantyClaim {
         return this.ClaimID;
     }
 
+    @JsonIgnore 
     public Vehicle getVehicle() {
         return vehicle;
     }
 
+    @JsonIgnore 
     public VehiclePart getVehiclePart() {
         return this.VehiclePart;
     }
 
+    @JsonIgnore 
     public User getCreatedByStaff() {
         return this.CreatedByStaff;
     }
@@ -109,10 +114,12 @@ public class WarrantyClaim {
         return this.Attachment;
     }
 
+    @JsonIgnore
     public List<WarrantyHistory> getHistory() {
         return this.History;
     }
 
+    @JsonIgnore 
     public List<ClaimService> getClaimServices() {
         return this.ClaimServices;
     }
@@ -156,26 +163,6 @@ public class WarrantyClaim {
 
     public void setClaimServices(List<ClaimService> claimServices) {
         ClaimServices = claimServices;
-    }
-
-    public void updateStatus(String newStatus, String note) 
-    {
-
-    }
-
-    public void addPartToClaim(Integer partId, String quantity) 
-    {
-
-    }
-
-    public void addServiceToClaim(String serviceDetails) 
-    {
-
-    }
-
-    public void attachFile(String fileData) 
-    {
-
     }
 
 }

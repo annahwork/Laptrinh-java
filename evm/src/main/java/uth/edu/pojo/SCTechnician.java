@@ -2,16 +2,22 @@ package uth.edu.pojo;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
 @DiscriminatorValue("SC_TECHNICIAN")
 public class SCTechnician extends User {
 
-    @OneToMany(mappedBy = "technician", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "technician", fetch = FetchType.LAZY)
     private List<ClaimService> claimServices = new ArrayList<>();
-    @OneToMany(mappedBy = "InstalledBy", fetch = FetchType.EAGER)
+    
+    @OneToMany(mappedBy = "InstalledBy", fetch = FetchType.LAZY)
     private List<VehiclePart> vehicleParts = new ArrayList<>();
+
+    @Transient 
+    private String currentTask;
 
     public SCTechnician(){}
 
@@ -19,41 +25,7 @@ public class SCTechnician extends User {
         super(userName, password, name, email, phone);
     }
 
-    public void addNewPart(String partData)
-    {
-
-    }
-
-    public void updateWarrantyPolicy(Integer partId, String period, String conditions)
-    {
-
-    }
-
-    public void reviewClaim(Integer claimId, String decision, String note)
-    {
-
-    }
-
-    public void createRecallCampaign(String campaignData)
-    {
-
-    }
-
-    public void addVehicleToRecall(Integer campaignId, String VIN)
-    {
-
-    }
-
-    public void allocatePartsToSC(Integer partId, String quantity, String location)
-    {
-
-    }
-
-    public void generateFailureReport()
-    {
-
-    }
-
+    @JsonIgnore
     public List<ClaimService> getClaimServices() {
         return claimServices;
     }
@@ -62,6 +34,7 @@ public class SCTechnician extends User {
         this.claimServices = claimServices;
     }
 
+    @JsonIgnore 
     public List<VehiclePart> getVehicleParts() {
         return vehicleParts;
     }
@@ -70,4 +43,12 @@ public class SCTechnician extends User {
         this.vehicleParts = vehicleParts;
     }
     
+    public String getCurrentTask() {
+        return currentTask;
+    }
+
+    public void setCurrentTask(String currentTask) {
+        this.currentTask = currentTask;
+    }
+
 }

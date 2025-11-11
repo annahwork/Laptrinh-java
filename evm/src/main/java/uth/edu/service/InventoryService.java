@@ -3,6 +3,8 @@ package uth.edu.service;
 import java.util.ArrayList; 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import uth.edu.pojo.EVMStaff;
 import uth.edu.pojo.Inventory;
 import uth.edu.pojo.Part;
@@ -14,6 +16,7 @@ import uth.edu.repositories.PartRepository;
 import uth.edu.repositories.ServiceCenterRepository;
 import uth.edu.repositories.UserRepository;
 
+@Service
 public class InventoryService {
 
     private InventoryRepository inventoryRepository;

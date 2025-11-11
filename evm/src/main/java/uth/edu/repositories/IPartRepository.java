@@ -1,5 +1,8 @@
 package uth.edu.repositories;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public interface IPartRepository {
     public void addPart(uth.edu.pojo.Part Part);
     public void updatePart(uth.edu.pojo.Part Part);

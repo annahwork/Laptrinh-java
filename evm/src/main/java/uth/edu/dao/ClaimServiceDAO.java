@@ -108,6 +108,28 @@ public class ClaimServiceDAO {
         return claimServices;
     }
 
+    public String getFirstActiveTaskNote(int technicianId) {
+        Session session = null;
+        String note = null;
+        try {
+            session = sessionFactory.openSession();
+            String hql = "SELECT cs.Note FROM ClaimService cs " + "WHERE cs.technician.UserID = :techId " ;
+            
+            note = session.createQuery(hql, String.class)
+                          .setParameter("techId", technicianId)
+                          .setMaxResults(1)
+                          .uniqueResult();
+                          
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return (note != null) ? note : "Sẵn sàng";
+    }
+
     public void closeSessionFactory() {
         if (sessionFactory != null) {
             sessionFactory.close();

@@ -3,16 +3,20 @@ package uth.edu.pojo;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @DiscriminatorValue("EVM_STAFF")
 public class EVMStaff extends User {
 
     @OneToMany(
             mappedBy = "CreatedByStaff",
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     private List<RecallCampaign> ManagedCampaigns = new ArrayList<>();
     
+    @JsonIgnore
     public List<RecallCampaign> getManagedCampaigns() {
         return ManagedCampaigns;
     }
@@ -27,16 +31,4 @@ public class EVMStaff extends User {
         super(userName, password, name, email, phone);
     }
 
-    public void updateServiceProgress(Integer serviceId, String result) {
-
-    }
-
-    public void completeWarrantyService(Integer serviceId, String result) {
-
-    }
-
-    public void performRecallService(Integer recallVehicelId, String notes) {
-
-    }
-    
 }

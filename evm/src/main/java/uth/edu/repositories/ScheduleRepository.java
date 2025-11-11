@@ -2,9 +2,12 @@ package uth.edu.repositories;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import uth.edu.dao.ScheduleDAO;
 import uth.edu.pojo.Schedule;
 
+@Repository
 public class ScheduleRepository implements IScheduleRepository {
 
     private ScheduleDAO ScheduleDAO = null;

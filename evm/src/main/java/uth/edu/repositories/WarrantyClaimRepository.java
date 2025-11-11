@@ -5,7 +5,9 @@ import java.util.List;
 import uth.edu.dao.WarrantyClaimDAO;
 import uth.edu.pojo.WarrantyClaim;
 import uth.edu.pojo.WarrantyHistory;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class WarrantyClaimRepository implements IWarrantyClaimRepository {
 
     private WarrantyClaimDAO WarrantyClaimDAO = null;
@@ -53,6 +55,12 @@ public class WarrantyClaimRepository implements IWarrantyClaimRepository {
     public WarrantyClaim getClaimDetailsById(Integer claimId) {
         return WarrantyClaimDAO.getClaimDetailsById(claimId);
     }
+
+    @Override
+    public int countAllWarrantyClaims() {
+        return WarrantyClaimDAO.countAllWarrantyClaims();
+    }
+
     @Override
     public void closeResources() {
         if (WarrantyClaimDAO != null) {

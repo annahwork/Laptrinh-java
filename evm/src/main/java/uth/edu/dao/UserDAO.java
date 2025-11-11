@@ -109,9 +109,10 @@ public class UserDAO {
         return user;
     }
 
-    public List<User> getAllUsers(int page, int pageSize) {
+        public List<User> getAllUsers(int page, int pageSize) {
         Session session = null;
-        List<User> users = null;
+        List<User> users = new ArrayList<>();
+        
         try {
             session = sessionFactory.openSession();
             users = session.createQuery("FROM User", User.class)
@@ -125,27 +126,30 @@ public class UserDAO {
                 session.close();
             }
         }
+        
         return users;
     }
 
-    public User getUserByUserName(String userName) {
-    Session session = null;
-    User user = null;
-    try {
-        session = sessionFactory.openSession();
-        user = session.createQuery("FROM User WHERE userName = :userName", User.class)
-                .setParameter("userName", userName)
-                .uniqueResult();
 
-    } catch (Exception e) {
-        e.printStackTrace();
-    } finally {
-        if (session != null) {
-            session.close();
+    public User getUserByUserName(String userName) {
+        Session session = null;
+        User user = null;
+        try {
+            session = sessionFactory.openSession();
+            user = session.createQuery("FROM User WHERE userName = :userName", User.class)
+                    .setParameter("userName", userName)
+                    .uniqueResult();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
+        return user;
     }
-    return user;
-}
+    
     public List<User> getUsersByRoleAndSC(String role, Integer scId) {
         Session session = null;
         List<User> users = null;
@@ -216,6 +220,28 @@ public class UserDAO {
         } finally {
             if (session != null) session.close();
         }
+    }
+
+    public List<User> getAllTechnicians(int page, int pageSize) {
+        Session session = null;
+        List<User> users = new ArrayList<>();
+        
+        try {
+            session = sessionFactory.openSession();
+            String hql = "FROM SCTechnician"; 
+            
+            users = session.createQuery(hql, User.class)
+                    .setFirstResult((page - 1) * pageSize)
+                    .setMaxResults(pageSize)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return users;
     }
 
     public void closeSessionFactory() {

@@ -123,6 +123,7 @@ public class WarrantyClaimDAO {
         }
         return claims;
     }
+
     public List<WarrantyClaim> getClaimsByStatus(String status, int page, int pageSize) {
         Session session = null;
         List<WarrantyClaim> claims = null;
@@ -195,6 +196,18 @@ public class WarrantyClaimDAO {
         }
         return claim;
     }
+
+    public int countAllWarrantyClaims() {
+        int total = 0;
+        try (Session session = sessionFactory.openSession()) {
+            Long count = (Long) session.createQuery("SELECT COUNT(wc) FROM WarrantyClaim wc").uniqueResult();
+            total = count.intValue();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+
     public void closeSessionFactory() {
         if (sessionFactory != null) {
             sessionFactory.close();

@@ -65,6 +65,11 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
+    public List<User> getAllTechnicians(int page, int pageSize) {
+        return userDAO.getAllTechnicians(page, pageSize);
+    }    
+
+    @Override
     public void closeResources() {
         userDAO.closeSessionFactory();
     }   

@@ -88,7 +88,7 @@ public class EVMStaffDAO {
         }
         return staff;
     }
-
+    
     public List<EVMStaff> getAllStaff(int page, int pageSize) {
         Session session = null;
         List<EVMStaff> staffList = null;

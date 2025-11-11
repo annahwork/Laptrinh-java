@@ -2,9 +2,12 @@ package uth.edu.repositories;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import uth.edu.dao.ClaimServiceDAO;
 import uth.edu.pojo.ClaimService;
 
+@Repository
 public class ClaimServiceRepository implements IClaimServiceRepository {
 
     private ClaimServiceDAO claimServiceDAO = null;
@@ -36,5 +39,10 @@ public class ClaimServiceRepository implements IClaimServiceRepository {
     @Override
     public List<ClaimService> getAllClaimServices(int page, int pageSize) {
         return claimServiceDAO.getAllClaimServices(page, pageSize);
+    }
+
+    @Override
+    public String getFirstActiveTaskNote(int technicianId){
+        return claimServiceDAO.getFirstActiveTaskNote(technicianId);
     }
 }

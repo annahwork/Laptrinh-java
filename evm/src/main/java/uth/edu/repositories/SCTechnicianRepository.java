@@ -36,8 +36,4 @@ public class SCTechnicianRepository implements ISCTechnicianRepository {
         return SCTechnicianDAO.getTechnicianById(SCTechnicianId);
     }
 
-    @Override
-    public List<SCTechnician> getAllSCTechnicians(int page, int pageSize) {
-        return SCTechnicianDAO.getAllTechnicians(page, pageSize);
-    }
 }

@@ -4,6 +4,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import uth.edu.pojo.ClaimService;
 import uth.edu.pojo.SCTechnician;
 import uth.edu.pojo.WarrantyClaim;
@@ -13,6 +15,7 @@ import uth.edu.repositories.SCTechnicianRepository;
 import uth.edu.repositories.WarrantyClaimRepository;
 import uth.edu.repositories.WarrantyHistoryRepository;
 
+@Service
 public class RepairService {
 
     private final ClaimServiceRepository claimServiceRepository;

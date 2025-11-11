@@ -3,6 +3,8 @@ package uth.edu.pojo;
 import jakarta.persistence.*;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "RecallVehicle")
 public class RecallVehicle {
@@ -46,6 +48,7 @@ public class RecallVehicle {
         this.RecallVehicleID = RecallVehicleID;
     }
 
+    @JsonIgnore 
     public RecallCampaign getRecallCampaign() {
         return RecallCampaign;
     }
@@ -54,6 +57,7 @@ public class RecallVehicle {
         this.RecallCampaign = recallCampaign;
     }
 
+    @JsonIgnore 
     public Vehicle getVehicle() {
         return vehicle;
     }

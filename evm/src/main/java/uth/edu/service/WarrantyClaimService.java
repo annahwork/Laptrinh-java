@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import uth.edu.pojo.Admin;
 import uth.edu.pojo.ClaimService;
 import uth.edu.pojo.EVMStaff;
@@ -21,6 +23,7 @@ import uth.edu.repositories.WarrantyClaimRepository;
 import uth.edu.repositories.WarrantyHistoryRepository;
 import uth.edu.repositories.WarrantyServiceRepository;
 
+@Service
 public class WarrantyClaimService {
 
     private WarrantyClaimRepository warrantyClaimRepository;

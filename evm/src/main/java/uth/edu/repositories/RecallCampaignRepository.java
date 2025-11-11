@@ -2,9 +2,12 @@ package uth.edu.repositories;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import uth.edu.dao.RecallCampaignDAO;
 import uth.edu.pojo.RecallCampaign;
 
+@Repository
 public class RecallCampaignRepository implements IRecallCampaignRepository {
 
     private RecallCampaignDAO RecallCampaignDAO = null;

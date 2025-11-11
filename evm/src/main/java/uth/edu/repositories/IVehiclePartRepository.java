@@ -1,5 +1,8 @@
 package uth.edu.repositories;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public interface IVehiclePartRepository {
     public void addVehiclePart(uth.edu.pojo.VehiclePart VehiclePart);
     public void updateVehiclePart(uth.edu.pojo.VehiclePart VehiclePart);

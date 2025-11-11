@@ -3,11 +3,11 @@ package uth.edu.controllers;
 import uth.edu.pojo.Admin;
 import uth.edu.pojo.EVMStaff;
 import uth.edu.pojo.SCStaff;
-import uth.edu.pojo.User; 
+import uth.edu.pojo.User;
 import uth.edu.service.UserService;
 import uth.edu.service.VehicleService;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,20 +33,34 @@ public class UserController {
     private final UserService userService;
     private final VehicleService vehicleService;
 
-
     @Autowired
     public UserController(UserService userService, VehicleService vehicleService) {
         this.userService = userService;
         this.vehicleService = vehicleService;
     }
 
-
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.GetUsers();
-        return ResponseEntity.ok(users);
+        try {
+            List<User> users = userService.GetUsers();
+            return ResponseEntity.ok(users);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ArrayList<>());
+        }
     }
-    
+
+    @GetMapping("/technicians")
+    public ResponseEntity<List<User>> getAllTechnicians() {
+        try {
+            List<User> technicians = userService.GetTechnicians();
+            return ResponseEntity.ok(technicians);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ArrayList<>());
+        }
+    }
+
     @PostMapping("/add-user")
     public ResponseEntity<?> addUser(@RequestBody Map<String, String> formData) {
         try {
@@ -57,20 +72,20 @@ public class UserController {
             String phone = formData.get("Phone");
 
             User newUser;
-            switch (userRole) { 
-                case "ADMIN": 
-                    newUser = new Admin(userName, password, name, email, phone); 
-                    break; 
-                case "EVM_STAFF": 
-                    newUser = new EVMStaff(userName, password, name, email, phone); 
-                    break; 
-                case "SC_STAFF": 
-                    newUser = new SCStaff(userName, password, name, email, phone); 
-                    break; 
-                case "SC_TECHNICIAN": 
+            switch (userRole) {
+                case "ADMIN":
+                    newUser = new Admin(userName, password, name, email, phone);
+                    break;
+                case "EVM_STAFF":
+                    newUser = new EVMStaff(userName, password, name, email, phone);
+                    break;
+                case "SC_STAFF":
+                    newUser = new SCStaff(userName, password, name, email, phone);
+                    break;
+                case "SC_TECHNICIAN":
                     newUser = new SCTechnician(userName, password, name, email, phone);
-                    break; 
-                default: 
+                    break;
+                default:
                     return ResponseEntity.badRequest().body(Map.of("error", "Invalid role"));
             }
 
@@ -79,13 +94,12 @@ public class UserController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(500)
-                                 .body(Map.of("error", "Failed to create user: " + e.getMessage()));
+            return ResponseEntity.status(500).body(Map.of("error", "Failed to create user: " + e.getMessage()));
         }
     }
 
     @GetMapping("/users/filter")
-    public ResponseEntity<List<User>> getUsersByRole(@RequestParam(required=false) String role) {
+    public ResponseEntity<List<User>> getUsersByRole(@RequestParam(required = false) String role) {
         List<User> users = role == null || role.isEmpty() ? userService.GetUsers() : userService.GetUserByRole(role);
         return ResponseEntity.ok(users);
     }
@@ -93,19 +107,21 @@ public class UserController {
     @GetMapping("/users/profile/{id}")
     public ResponseEntity<User> getUserById(@PathVariable int id) {
         try {
-            User user = userService.GetUserProfile(id); 
-            if (user == null) return ResponseEntity.notFound().build();
+            User user = userService.GetUserProfile(id);
+            if (user == null)
+                return ResponseEntity.notFound().build();
             return ResponseEntity.ok(user);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(500).body(null); 
+            return ResponseEntity.status(500).body(null);
         }
     }
 
     @DeleteMapping("/users/delete/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable int id) {
         boolean deleted = userService.deleteUser(id);
-        if (!deleted) return ResponseEntity.status(500).body(Map.of("error", "Failed to delete user"));
+        if (!deleted)
+            return ResponseEntity.status(500).body(Map.of("error", "Failed to delete user"));
         return ResponseEntity.ok(Map.of("message", "User deleted successfully"));
     }
 
@@ -114,28 +130,30 @@ public class UserController {
         try {
             int totalEmployees = userService.countAllUsers();
             int totalVehicles = vehicleService.countAllVehicles();
+            int totalCustomers = userService.countAllCustomer();
+            int totalWarrantyClaims = userService.countAllWarrantyClaims();
             int totalAdmins = userService.countUsersByRole("ADMIN");
             int totalSCStaff = userService.countUsersByRole("SC_STAFF");
             int totalSCTech = userService.countUsersByRole("SC_TECHNICIAN");
             int totalEVMStaff = userService.countUsersByRole("EVM_STAFF");
 
             Map<String, Object> stats = Map.of(
-                "totalEmployees", totalEmployees,
-                "totalVehicles", totalVehicles,
-                "roles", Map.of(
-                    "ADMIN", totalAdmins,
-                    "SC_STAFF", totalSCStaff,
-                    "SC_TECHNICIAN", totalSCTech,
-                    "EVM_STAFF", totalEVMStaff
-                )
-            );
+                    "totalEmployees", totalEmployees,
+                    "totalVehicles", totalVehicles,
+                    "totalCustomers", totalCustomers,
+                    "totalWarrantyClaims", totalWarrantyClaims,
+                    "roles", Map.of(
+                            "ADMIN", totalAdmins,
+                            "SC_STAFF", totalSCStaff,
+                            "SC_TECHNICIAN", totalSCTech,
+                            "EVM_STAFF", totalEVMStaff));
 
             return ResponseEntity.ok(stats);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body(null);
         }
-}
+    }
 
     @PutMapping("/users/update/{id}")
     public ResponseEntity<?> updateUser(
@@ -148,7 +166,7 @@ public class UserController {
                 return ResponseEntity.status(404)
                         .body(Map.of("error", "User không tồn tại"));
             }
-            
+
             existingUser.setUserName(formData.getOrDefault("UserName", existingUser.getUserName()));
             String password = formData.get("Password");
             if (password != null && !password.isEmpty()) {

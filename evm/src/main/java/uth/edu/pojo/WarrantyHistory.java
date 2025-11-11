@@ -3,6 +3,8 @@ package uth.edu.pojo;
 import jakarta.persistence.*;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "WarrantyHistory")
 public class WarrantyHistory {
@@ -36,6 +38,7 @@ public class WarrantyHistory {
         return this.WarrantyHistoryID;
     }
 
+    @JsonIgnore 
     public WarrantyClaim getWarrantyClaim() {
         return this.WarrantyClaim;
     }
@@ -63,5 +66,4 @@ public class WarrantyHistory {
     public void setNote(String Note) {
         this.Note = Note;
     }
-
 }

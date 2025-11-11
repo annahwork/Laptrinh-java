@@ -2,6 +2,9 @@ package uth.edu.pojo;
 
 import jakarta.persistence.*;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 
 @Entity
@@ -90,8 +93,22 @@ public class Part {
         this.Manufacturer = Manufacturer;
     }
 
-    public void checkWarrantyStatus(String purchaseDate)
-    {
-
+    @JsonIgnore
+    public List<VehiclePart> getVehicleParts() {
+        return VehicleParts;
     }
+
+    public void setVehicleParts(List<VehiclePart> vehicleParts) {
+        VehicleParts = vehicleParts;
+    }
+
+    @JsonIgnore 
+    public List<Inventory> getInventoryRecords() {
+        return InventoryRecords;
+    }
+
+    public void setInventoryRecords(List<Inventory> inventoryRecords) {
+        InventoryRecords = inventoryRecords;
+    }
+    
 }

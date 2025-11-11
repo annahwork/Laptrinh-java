@@ -9,6 +9,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Service;
+
 import uth.edu.pojo.ClaimService;
 import uth.edu.pojo.EVMStaff;
 import uth.edu.pojo.SCStaff;
@@ -20,6 +22,7 @@ import uth.edu.repositories.SCStaffRepository;
 import uth.edu.repositories.SCTechnicianRepository;
 import uth.edu.repositories.WarrantyClaimRepository;
 
+@Service
 public class ReportService {
 
 	private EVMStaffRepository evmStaffRepository;

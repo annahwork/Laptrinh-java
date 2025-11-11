@@ -108,6 +108,17 @@ public class CustomerDAO {
         return customers;
     }
 
+    public int countAllCustomers() {
+        int total = 0;
+        try (Session session = sessionFactory.openSession()) {
+            Long count = (Long) session.createQuery("SELECT COUNT(c) FROM Customer c").uniqueResult();
+            total = count.intValue();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+
     public void closeSessionFactory() {
         if (sessionFactory != null) {
             sessionFactory.close();

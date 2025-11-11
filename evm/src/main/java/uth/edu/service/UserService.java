@@ -6,14 +6,18 @@ import uth.edu.pojo.SCStaff;
 import uth.edu.pojo.SCTechnician;
 import uth.edu.pojo.User;
 import uth.edu.repositories.AdminRepository;
+import uth.edu.repositories.ClaimServiceRepository;
 import uth.edu.repositories.UserRepository;
 import uth.edu.repositories.VehicleRepository;
 import uth.edu.repositories.SCTechnicianRepository;
-
+import uth.edu.repositories.CustomerRepository;
+import uth.edu.repositories.WarrantyClaimRepository;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class UserService {
@@ -21,11 +25,19 @@ public class UserService {
     private UserRepository userRepository;
     private AdminRepository adminRepository;
     private SCTechnicianRepository technicianRepository;
+    private VehicleRepository vehicleRepository;
+    private CustomerRepository customerRepository;
+    private WarrantyClaimRepository warrantyclaimRepository;
+    private ClaimServiceRepository claimServiceRepository;
 
-    public UserService(UserRepository userRepository, AdminRepository adminRepository, SCTechnicianRepository technicianRepository) {
+    public UserService(UserRepository userRepository, AdminRepository adminRepository, SCTechnicianRepository technicianRepository, CustomerRepository customerRepository, WarrantyClaimRepository warrantyclaimRepository, ClaimServiceRepository claimServiceRepository) {
         this.userRepository = userRepository;
         this.adminRepository = adminRepository;
+        this.vehicleRepository = vehicleRepository;
         this.technicianRepository = technicianRepository;
+        this.customerRepository = customerRepository;
+        this.warrantyclaimRepository = warrantyclaimRepository;
+        this.claimServiceRepository = claimServiceRepository;
     }
 
     public User Login(String userName, String password) {
@@ -43,7 +55,7 @@ public class UserService {
     
     public List<User> GetUsers() {
         try {
-            return userRepository.getAllUsers(1, 30);
+            return userRepository.getAllUsers(1, 9999);
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
@@ -52,7 +64,7 @@ public class UserService {
 
     public List<User> GetUsers(int page) {
         try {
-            return userRepository.getAllUsers(page, 20);
+            return userRepository.getAllUsers(page, 9999);
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
@@ -122,26 +134,19 @@ public class UserService {
     }
 }
 
-
+    @Transactional
     public User createUserWithRole(User userData, String role) {
         try {
             User newUser = null;
             switch (role.toUpperCase()) {
-                case "ADMIN":
-                    newUser = new Admin(userData.getUserName(), userData.getPassword(), userData.getName(), userData.getEmail(), userData.getPhone());
-                    break;
-                case "SC_STAFF":
-                    newUser = new SCStaff(userData.getUserName(), userData.getPassword(), userData.getName(), userData.getEmail(), userData.getPhone());
-                    break;
-                case "SC_TECHNICIAN":
-                    newUser = new SCTechnician(userData.getUserName(), userData.getPassword(), userData.getName(), userData.getEmail(), userData.getPhone());
-                    break;
-                case "EVM_STAFF":
-                    newUser = new EVMStaff(userData.getUserName(), userData.getPassword(), userData.getName(), userData.getEmail(), userData.getPhone());
-                    break;
-                default:
+                case "ADMIN" -> newUser = new Admin(userData.getUserName(), userData.getPassword(), userData.getName(), userData.getEmail(), userData.getPhone());
+                case "SC_STAFF" -> newUser = new SCStaff(userData.getUserName(), userData.getPassword(), userData.getName(), userData.getEmail(), userData.getPhone());
+                case "SC_TECHNICIAN" -> newUser = new SCTechnician(userData.getUserName(), userData.getPassword(), userData.getName(), userData.getEmail(), userData.getPhone());
+                case "EVM_STAFF" -> newUser = new EVMStaff(userData.getUserName(), userData.getPassword(), userData.getName(), userData.getEmail(), userData.getPhone());
+                default -> {
                     System.out.println("Role không hợp lệ: " + role);
                     return null;
+                }
             }
             User savedUser = userRepository.addUser(newUser);
             return savedUser;
@@ -184,19 +189,7 @@ public class UserService {
         return updateUserWithRole(userData, userData.getUser_Role());
     }
 
-    public List<SCTechnician> GetTechnicians(Integer scStaffID) {
-        try {
-            User staff = userRepository.getUserById(scStaffID);
-            if (staff == null || !(staff instanceof SCStaff)) {
-                System.out.println("SCStaff không tồn tại hoặc ID không hợp lệ.");
-                return new ArrayList<>();
-            }
-            return technicianRepository.getAllSCTechnicians(1, 20);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
-    }
+
     public List<User> GetUserByRole(String role) {
          try {
               if (role == null || role.isEmpty()) {
@@ -211,12 +204,32 @@ public class UserService {
 
     public int countAllUsers() {
         try {
-            List<User> users = userRepository.getAllUsers(1, Integer.MAX_VALUE); 
-            return users.size();
+            int userCount = userRepository.countAllUsers(); 
+            return (int) userCount;
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
+    }
+
+    public int countAllCustomer() {
+        try {
+            int customerCount = customerRepository.countAllCustomers(); 
+            return (int) customerCount;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int countAllWarrantyClaims() {
+        try {
+                int warrantyclaimCount = warrantyclaimRepository.countAllWarrantyClaims() ; 
+                return warrantyclaimCount;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return 0;
+            }
     }
 
     public int countUsersByRole(String role) {
@@ -230,7 +243,20 @@ public class UserService {
         }
     }
 
-    private VehicleRepository vehicleRepository = new VehicleRepository();
+    public List<User> GetTechnicians() {
+        try {
+            List<User> technicians = userRepository.getAllTechnicians(1, 9999); 
+            
+            for (User tech : technicians) {
+                String taskNote = claimServiceRepository.getFirstActiveTaskNote(tech.getUserID());
+                ((SCTechnician) tech).setCurrentTask(taskNote);
+            }
+            return technicians; 
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
 
     public int countVehicles() {
         try {

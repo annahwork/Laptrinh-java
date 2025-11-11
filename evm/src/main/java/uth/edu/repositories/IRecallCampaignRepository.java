@@ -1,5 +1,8 @@
 package uth.edu.repositories;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public interface IRecallCampaignRepository {
     public void addRecallCampaign(uth.edu.pojo.RecallCampaign RecallCampaign);
     public void updateRecallCampaign(uth.edu.pojo.RecallCampaign RecallCampaign);

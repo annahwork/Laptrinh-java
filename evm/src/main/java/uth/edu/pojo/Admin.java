@@ -11,12 +11,5 @@ public class Admin extends User {
     public Admin(String userName, String password, String name, String email, String phone) {
         super(userName, password, name, email, phone);
     }
-
-    public void manageUserAccounts() {
-
-    }
-
-    public void configureSystemSettings() {
-
-    }
+    
 }

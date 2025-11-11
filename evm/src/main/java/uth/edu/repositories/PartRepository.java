@@ -2,9 +2,12 @@ package uth.edu.repositories;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import uth.edu.dao.PartDAO;
 import uth.edu.pojo.Part;
 
+@Repository
 public class PartRepository implements IPartRepository {
 
     private PartDAO PartDAO = null;

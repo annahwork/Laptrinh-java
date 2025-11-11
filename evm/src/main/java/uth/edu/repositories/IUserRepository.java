@@ -18,6 +18,7 @@ public interface IUserRepository {
     public List<User> getUsersByRoleAndSC(String role, int scId);
     public int countAllUsers();
     public int countUsersByRole(String Role);
+    public List<User> getAllTechnicians(int page, int pageSize);
     public void closeResources();
 }
 

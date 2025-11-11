@@ -20,6 +20,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.Expose;
 
@@ -50,12 +51,12 @@ public abstract class User {
     private String phone;
     
     @Expose
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SCID") 
     private ServiceCenter serviceCenter;
 
     @Expose
-    @OneToMany(mappedBy = "Receiver", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "Receiver", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Notification> notifications = new ArrayList<>();
 
     public User() {
@@ -93,10 +94,12 @@ public abstract class User {
         return this.phone;
     }
 
+    @JsonIgnore 
     public ServiceCenter getServiceCenter() {
         return serviceCenter;
     }
 
+    @JsonIgnore
     public List<Notification> getNotifications() {
         return notifications;
     }

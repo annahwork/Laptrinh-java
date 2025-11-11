@@ -1,5 +1,7 @@
 package uth.edu.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -18,7 +20,7 @@ public class Notification {
     private String Message;
 
     @Column(name = "IsRead")
-    private boolean IsRead = false; // Mặc định là chưa đọc
+    private boolean IsRead = false; 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "UserID", nullable = false)
@@ -34,9 +36,49 @@ public class Notification {
         this.Receiver = Receiver;
     }
 
-    public void createNotification(String Title, String Message, User Receiver) {}
-    public void updateNotification(String Title, String Message) {}
-    public void deleteNotification() {}
-    public void markAsRead() { this.IsRead = true; }
+    public Integer getNotificationID() {
+        return NotificationID;
+    }
 
+    public void setNotificationID(Integer notificationID) {
+        NotificationID = notificationID;
+    }
+
+    public String getTitle() {
+        return Title;
+    }
+
+    public void setTitle(String title) {
+        Title = title;
+    }
+
+    public String getMessage() {
+        return Message;
+    }
+
+    public void setMessage(String message) {
+        Message = message;
+    }
+
+    public boolean isIsRead() {
+        return IsRead;
+    }
+
+    public void setIsRead(boolean isRead) {
+        IsRead = isRead;
+    }
+
+    @JsonIgnore 
+    public User getReceiver() {
+        return Receiver;
+    }
+
+    public void setReceiver(User receiver) {
+        Receiver = receiver;
+    }
+
+    public void markAsRead() { 
+        this.IsRead = true; 
+    }
+    
 }

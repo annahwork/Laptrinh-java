@@ -1,10 +1,12 @@
 package uth.edu.repositories;
 
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
 import uth.edu.dao.CustomerDAO;
 import uth.edu.pojo.Customer;
 
+@Repository
 public class CustomerRepository implements ICustomerRepository {
 
     private CustomerDAO customerDAO = null;
@@ -36,5 +38,10 @@ public class CustomerRepository implements ICustomerRepository {
     @Override
     public List<Customer> getAllCustomers(int page, int pageSize) {
         return customerDAO.getAllCustomers(page, pageSize);
+    }
+
+    @Override
+    public int countAllCustomers(){
+        return customerDAO.countAllCustomers();
     }
 }

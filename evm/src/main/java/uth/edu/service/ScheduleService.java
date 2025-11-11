@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import uth.edu.pojo.Customer;
 import uth.edu.pojo.RecallCampaign;
 import uth.edu.pojo.SCStaff;
@@ -14,6 +16,7 @@ import uth.edu.repositories.RecallCampaignRepository;
 import uth.edu.repositories.SCStaffRepository;
 import uth.edu.repositories.ScheduleRepository;
 
+@Service
 public class ScheduleService {
 
 	private final ScheduleRepository scheduleRepository;

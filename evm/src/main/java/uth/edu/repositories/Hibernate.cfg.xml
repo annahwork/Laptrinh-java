@@ -31,5 +31,6 @@
         <mapping class="uth.edu.pojo.Schedule" />
         <mapping class="uth.edu.pojo.Notification" />
         <mapping class="uth.edu.pojo.ServiceCenter" />
+        <mapping class="uth.edu.pojo.AllocatePartHistory" />
     </session-factory>
 </hibernate-configuration>

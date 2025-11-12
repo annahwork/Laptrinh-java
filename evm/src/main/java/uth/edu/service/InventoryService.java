@@ -210,6 +210,16 @@ public class InventoryService {
             return 0;
         }
     }
+    public List<AllocatePartHistory> getRecentAllocations(int page, int pageSize) {
+        try {
+            if (page <= 0) page = DEFAULT_PAGE;
+            if (pageSize <= 0) pageSize = 5; 
+            return allocateHistoryRepository.getAllAllocatePartHistories(page, pageSize);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
 
     public void closeResources() {
         try {

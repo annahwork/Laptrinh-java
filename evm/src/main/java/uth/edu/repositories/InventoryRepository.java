@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import uth.edu.dao.InventoryDAO;
+import uth.edu.pojo.AllocatePartHistory;
 import uth.edu.pojo.Inventory;
 
 @Repository
@@ -48,6 +49,14 @@ public class InventoryRepository implements IInventoryRepository {
     @Override
     public List<Inventory> getAllInventories(int page, int pageSize) {
         return InventoryDAO.getAllInventories(page, pageSize);
+    }
+    @Override
+    public List<Inventory> getAllInventoriesWithDetails(int page, int pageSize) {
+        return InventoryDAO.getAllInventoriesWithDetails(page, pageSize);
+    }
+    @Override
+    public boolean approveAllocationTransaction(Inventory from, Inventory to, AllocatePartHistory history) {
+        return InventoryDAO.approveAllocationTransaction(from, to, history);
     }
     @Override
     public void closeResources() {

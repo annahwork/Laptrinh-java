@@ -1,19 +1,23 @@
 package uth.edu.service;
 
-import java.util.ArrayList; 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+import uth.edu.pojo.AllocatePartHistory;
 import uth.edu.pojo.EVMStaff;
 import uth.edu.pojo.Inventory;
 import uth.edu.pojo.Part;
 import uth.edu.pojo.SCStaff;
 import uth.edu.pojo.ServiceCenter;
 import uth.edu.pojo.User;
+import uth.edu.repositories.AllocatePartHistoryRepository;
 import uth.edu.repositories.InventoryRepository;
 import uth.edu.repositories.PartRepository;
 import uth.edu.repositories.ServiceCenterRepository;
 import uth.edu.repositories.UserRepository;
-import org.springframework.stereotype.Service;
 
 @Service
 public class InventoryService {
@@ -22,7 +26,7 @@ public class InventoryService {
     private PartRepository partRepository;
     private ServiceCenterRepository serviceCenterRepository;
     private UserRepository userRepository; 
-    
+    private AllocatePartHistoryRepository allocateHistoryRepository;
     private NotificationService notificationService; 
 
     private static final int DEFAULT_PAGE = 1;
@@ -35,6 +39,7 @@ public class InventoryService {
         partRepository = new PartRepository();
         serviceCenterRepository = new ServiceCenterRepository();
         userRepository = new UserRepository();
+        allocateHistoryRepository = new AllocatePartHistoryRepository();
         notificationService = new NotificationService(); 
     }
 
@@ -59,25 +64,42 @@ public class InventoryService {
         }
     }
 
-    public boolean AllocatePartsToSC(Integer EVMStaffID, Integer PartID, Integer Quantity) {
+    public boolean AllocatePartsToSC(Integer EVMStaffID, Integer PartID, Integer Quantity, Integer toScId) {
         try {
             User staff = userRepository.getUserById(EVMStaffID);
             if (staff == null || !(staff instanceof EVMStaff)) {
                 return false; 
             }
+            
             ServiceCenter evmWarehouse = serviceCenterRepository.getServiceCenterByType(EVM_WAREHOUSE_TYPE);
-            if (evmWarehouse == null) {
+            if (evmWarehouse == null) return false; 
+            Inventory fromStock = inventoryRepository.getInventoryByPartAndSC(PartID, evmWarehouse.getSCID());
+            if (fromStock == null || fromStock.getCurrentStock() < Quantity) {
                 return false; 
             }
 
-            Inventory evmStock = inventoryRepository.getInventoryByPartAndSC(PartID, evmWarehouse.getSCID());
-            if (evmStock == null || evmStock.getCurrentStock() < Quantity) {
-                return false; 
+            Inventory toStock = inventoryRepository.getInventoryByPartAndSC(PartID, toScId);
+            Part part = partRepository.getPartById(PartID);
+            
+            if (toStock == null) {
+                ServiceCenter sc = serviceCenterRepository.getServiceCenterById(toScId);
+                if (part == null || sc == null) return false;
+                
+                toStock = new Inventory(null, part, sc, 0); // Bắt đầu với 0
+                inventoryRepository.addInventory(toStock);
+                toStock = inventoryRepository.getInventoryByPartAndSC(PartID, toScId);
             }
 
-            evmStock.setCurrentStock(evmStock.getCurrentStock() - Quantity);
+            AllocatePartHistory history = new AllocatePartHistory();
+            history.setFromInventory(fromStock);
+            history.setToInventory(toStock);
+            history.setPart(part);
+            history.setQuantity(Quantity);
+            history.setCreatedByEVMStaff((EVMStaff) staff);
+            history.setStatus("Pending");
+            history.setAllocationDate(new Date());
 
-            inventoryRepository.updateInventory(evmStock);
+            allocateHistoryRepository.addAllocatePartHistory(history);
             return true;
 
         } catch (Exception e) {
@@ -86,30 +108,41 @@ public class InventoryService {
         }
     }
 
-    public boolean ReceiveParts(Integer SCStaffID, Integer PartID, Integer Quantity) {
+    public boolean ReceiveParts(Integer SCStaffID, Integer AllocationID) {
         try {
             User staff = userRepository.getUserById(SCStaffID);
             if (staff == null || !(staff instanceof SCStaff) || staff.getServiceCenter() == null) {
                 return false; 
             }
             
-            Integer scId = staff.getServiceCenter().getSCID();
-
-            Inventory scStock = inventoryRepository.getInventoryByPartAndSC(PartID, scId);
-
-            if (scStock == null) {
-                Part part = partRepository.getPartById(PartID);
-                ServiceCenter sc = staff.getServiceCenter();
-                if (part == null) return false;
-
-                scStock = new Inventory(null, part, sc, Quantity);
-                inventoryRepository.addInventory(scStock);
-            } else {
-                scStock.setCurrentStock(scStock.getCurrentStock() + Quantity);
-                inventoryRepository.updateInventory(scStock);
+            AllocatePartHistory history = allocateHistoryRepository.getAllocatePartHistoryById(AllocationID);
+            if (history == null || !history.getStatus().equals("Pending")) {
+                return false; 
             }
             
-            return true;
+            Integer staffScId = staff.getServiceCenter().getSCID();
+            if (!history.getToInventory().getServiceCenter().getSCID().equals(staffScId)) {
+                return false; 
+            }
+
+            Inventory fromStock = history.getFromInventory();
+            Inventory toStock = history.getToInventory();
+            Integer quantity = history.getQuantity();
+
+            if (fromStock.getCurrentStock() < quantity) {
+                history.setStatus("Failed (Out of Stock)");
+                allocateHistoryRepository.updateAllocatePartHistory(history);
+                return false; 
+            }
+
+            fromStock.setCurrentStock(fromStock.getCurrentStock() - quantity);
+            toStock.setCurrentStock(toStock.getCurrentStock() + quantity);
+
+            history.setStatus("Completed");
+            history.setApprovedBySCStaff((SCStaff) staff);
+            history.setApprovalDate(new Date());
+
+            return inventoryRepository.approveAllocationTransaction(fromStock, toStock, history);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -119,7 +152,7 @@ public class InventoryService {
 
     public void CheckStockLevels() {
         try {
-            List<Inventory> allStock = inventoryRepository.getAllInventories(DEFAULT_PAGE, MAX_PAGE_SIZE);
+            List<Inventory> allStock = inventoryRepository.getAllInventoriesWithDetails(DEFAULT_PAGE, MAX_PAGE_SIZE); 
             if (allStock == null) return;
 
             List<User> evmStaffList = userRepository.getUsersByRole("EVM_STAFF");

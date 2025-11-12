@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import uth.edu.pojo.AllocatePartHistory;
 import uth.edu.pojo.Inventory;
 
 @Repository
@@ -15,5 +16,7 @@ public interface IInventoryRepository {
     public Inventory getInventoryByPartAndSC(Integer partId, Integer scId);
     public List<Inventory> getInventoriesByPartID(Integer partId, int page, int pageSize);
     public List<Inventory> getAllInventories(int page, int pageSize);
+    public List<Inventory> getAllInventoriesWithDetails(int page, int pageSize);
+    public boolean approveAllocationTransaction(Inventory from, Inventory to, AllocatePartHistory history);
     public void closeResources();
 }

@@ -107,6 +107,22 @@ public class HomeController {
     public String showWork_schedule() {
         return "/frontend/pages/SC-Technician/Section/work_schedule"; 
     }
+    @RequestMapping({"/EVMStaff",})
+    public String EVMStaff(){
+        return "/frontend/pages/EVM-Staff/home_evm_staff";
+    }
+    @GetMapping("/allocate_parts")
+    public String allocate_parts() {
+        return "/frontend/pages/EVM-Staff/Section/allocate_parts"; 
+    }
+    @GetMapping("/attach_serial")
+    public String attach_serial() {
+        return "/frontend/pages/EVM-Staff/Section/attach_serial"; 
+    }
+    @GetMapping("/dashboardEVM")
+    public String showDashboardEVMStaff() {
+        return "/frontend/pages/EVM-Staff/Section/dashboard"; 
+    }
 
 }
 

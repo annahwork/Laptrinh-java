@@ -3,8 +3,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import uth.edu.pojo.EVMStaff;
 import uth.edu.pojo.RecallCampaign;
 import uth.edu.pojo.RecallVehicle;
@@ -16,6 +14,7 @@ import uth.edu.repositories.RecallCampaignRepository;
 import uth.edu.repositories.RecallVehicleRepository;
 import uth.edu.repositories.UserRepository;
 import uth.edu.repositories.VehicleRepository;
+import org.springframework.stereotype.Service;
 
 @Service
 public class CampaignService {
@@ -164,6 +163,26 @@ private RecallCampaignRepository recallCampaignRepository;
             return false;
         }
     }
+
+    public int countCampaignsByStatus(String status) {
+        try {
+            if (status == null || status.isEmpty()) {
+                return 0;
+            }
+            List<RecallCampaign> allCampaigns = recallCampaignRepository.getAllRecallCampaigns(DEFAULT_PAGE, MAX_PAGE_SIZE);
+            if (allCampaigns == null || allCampaigns.isEmpty()) {
+                return 0;
+            }
+            long count = allCampaigns.stream()
+                                     .filter(campaign -> status.equalsIgnoreCase(campaign.getStatus()))
+                                     .count();
+            return (int) count;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
 
     public void closeResources() {
         try {

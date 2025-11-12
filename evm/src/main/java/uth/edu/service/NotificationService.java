@@ -3,12 +3,11 @@ package uth.edu.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import uth.edu.pojo.Notification;
 import uth.edu.pojo.User;
 import uth.edu.repositories.NotificationRepository;
 import uth.edu.repositories.UserRepository;
+import org.springframework.stereotype.Service;
 
 @Service
 public class NotificationService {

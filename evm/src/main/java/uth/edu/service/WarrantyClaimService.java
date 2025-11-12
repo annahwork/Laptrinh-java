@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import uth.edu.pojo.Admin;
 import uth.edu.pojo.ClaimService;
 import uth.edu.pojo.EVMStaff;
@@ -22,6 +20,7 @@ import uth.edu.repositories.VehiclePartRepository;
 import uth.edu.repositories.WarrantyClaimRepository;
 import uth.edu.repositories.WarrantyHistoryRepository;
 import uth.edu.repositories.WarrantyServiceRepository;
+import org.springframework.stereotype.Service;
 
 @Service
 public class WarrantyClaimService {
@@ -286,6 +285,24 @@ public class WarrantyClaimService {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+    public int countClaimsByStatus(List<String> statuses) {
+        try {
+            if (statuses == null || statuses.isEmpty()) {
+                return 0;
+            }
+            List<WarrantyClaim> allClaims = warrantyClaimRepository.getAllWarrantyClaims(DEFAULT_PAGE, MAX_PAGE_SIZE);
+            if (allClaims == null || allClaims.isEmpty()) {
+                return 0;
+            }
+            long count = allClaims.stream()
+                                .filter(claim -> statuses.contains(claim.getStatus()))
+                                .count();
+            return (int) count;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
         }
     }
 

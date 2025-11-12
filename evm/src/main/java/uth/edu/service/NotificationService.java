@@ -7,6 +7,8 @@ import uth.edu.pojo.Notification;
 import uth.edu.pojo.User;
 import uth.edu.repositories.NotificationRepository;
 import uth.edu.repositories.UserRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,9 +20,10 @@ public class NotificationService {
     private static final int DEFAULT_PAGE = 1;
     private static final int DEFAULT_PAGE_SIZE = 10;
 
-    public NotificationService() {
-        notificationRepository = new NotificationRepository();
-        userRepository = new UserRepository();
+    @Autowired
+    public NotificationService( NotificationRepository notificationRepository, UserRepository userRepository ) {
+        this.notificationRepository = notificationRepository;
+        this.userRepository = userRepository;
     }
 
     public boolean CreateNotification(Integer UserID, String Title, String Message) {
@@ -70,6 +73,46 @@ public class NotificationService {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public boolean MarkAllNotificationsAsRead(Integer userID) {
+        try {
+            return notificationRepository.MarkAllNotificationsAsRead(userID); 
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteNotification(Integer notificationID) {
+        Notification notification = getNotificationById(notificationID);
+        if (notification != null) {
+            notificationRepository.deleteNotification(notification); 
+            return true;
+        }
+        return false;
+    }
+
+    public Notification getNotificationById(Integer notificationID) {
+        return notificationRepository.getNotificationById(notificationID);
+    }
+
+    public List<Notification> GetNotifications(Integer userID) {
+        try {
+            return notificationRepository.getAllNotifications(userID, 1, 9999);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+    
+    public Notification getLatestNotification(Integer userID) {
+        try {
+            return notificationRepository.getLatestNotification(userID);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

@@ -109,6 +109,25 @@ public class RecallCampaignDAO {
         return recallCampaigns;
     }
 
+    public List<RecallCampaign> getAllRecallCampaigns(int userID, int page, int pageSize) {
+        Session session = null;
+        List<RecallCampaign> recallCampaigns = null;
+        try {
+            session = sessionFactory.openSession();
+            recallCampaigns = session.createQuery("SELECT rc FROM RecallCampaign rc JOIN FETCH rc.CreatedByStaff cbs", RecallCampaign.class) 
+                    .setFirstResult((page - 1) * pageSize)
+                    .setMaxResults(pageSize)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return recallCampaigns;
+    }
+
     public void closeSessionFactory() {
         if (sessionFactory != null) {
             sessionFactory.close();

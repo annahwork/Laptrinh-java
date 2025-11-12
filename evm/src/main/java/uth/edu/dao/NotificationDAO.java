@@ -110,6 +110,26 @@ public class NotificationDAO {
         }
         return notifications;
     }
+
+    public List<Notification> getAllNotifications(int userID,int page, int pageSize) {
+        Session session = null;
+        List<Notification> notifications = null;
+        try {
+            session = sessionFactory.openSession();
+            notifications = session.createQuery("FROM Notification", Notification.class)
+                    .setFirstResult((page - 1) * pageSize)
+                    .setMaxResults(pageSize)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return notifications;
+    }
+    
     public List<Notification> getUnreadNotificationsByUserID(int userID, int page, int pageSize) {
         Session session = null;
         List<Notification> notifications = null;
@@ -131,6 +151,56 @@ public class NotificationDAO {
             }
         }
         return notifications;
+    }
+
+    public boolean markAllNotificationsAsRead(int userID) {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            
+            int updatedCount = session.createQuery(
+                "UPDATE Notification n SET n.isRead = true WHERE n.Receiver.UserID = :userId AND n.isRead = false")
+                .setParameter("userId", userID)
+                .executeUpdate();
+
+            session.getTransaction().commit();
+            return updatedCount > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (session != null && session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            return false;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    public Notification getLatestNotification(int userID) {
+        Session session = null;
+        Notification latestNotification = null; 
+        
+        try {
+            session = sessionFactory.openSession();
+            String hql = "FROM Notification n WHERE n.Receiver.UserID = :userID ORDER BY n.NotificationID DESC";
+            List<Notification> results = session.createQuery(hql, Notification.class)
+                            .setParameter("userID", userID)
+                            .setMaxResults(1) 
+                            .list();                
+            if (results != null && !results.isEmpty()) {
+                latestNotification = results.get(0);
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); 
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return latestNotification;
     }
 
     public void closeSessionFactory() {

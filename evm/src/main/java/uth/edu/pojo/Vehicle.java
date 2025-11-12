@@ -84,7 +84,7 @@ public class Vehicle {
         return this.VIN;
     }
 
-    public Customer Customer() {
+    public Customer getCustomer() {
         return this.customer;
     }
 

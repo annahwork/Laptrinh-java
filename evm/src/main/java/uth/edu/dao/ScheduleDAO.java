@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import uth.edu.pojo.Schedule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ScheduleDAO {
@@ -107,6 +108,30 @@ public class ScheduleDAO {
             }
         }
         return schedules;
+    }
+
+    public List<Object[]> getScheduleVehicleInfo(int userID, int page, int pageSize) {
+        Session session = null;
+        List<Object[]> results = new ArrayList<>(); 
+        
+        try {
+            session = sessionFactory.openSession();
+            String hql = "SELECT s.Date, v.VIN, c.Name, s.Note, v.Status FROM Schedule s JOIN s.Customer c JOIN Vehicle v ON v.customer = c WHERE s.CreatedByStaff.UserID = :userID ORDER BY s.Date DESC";
+
+            results = session.createQuery(hql, Object[].class)
+                            .setParameter("userID", userID) 
+                            .setFirstResult((page - 1) * pageSize)
+                            .setMaxResults(pageSize)
+                            .getResultList();
+                            
+        } catch (Exception e) {
+            e.printStackTrace(); 
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return results;
     }
 
     public void closeSessionFactory() {

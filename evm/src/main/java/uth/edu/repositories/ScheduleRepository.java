@@ -40,4 +40,9 @@ public class ScheduleRepository implements IScheduleRepository {
     public List<Schedule> getAllSchedules(int page, int pageSize) {
         return ScheduleDAO.getAllSchedules(page, pageSize);
     }
+
+    @Override
+    public List<Object[]> getScheduleVehicleInfo(int userID, int page, int pageSize){
+        return ScheduleDAO.getScheduleVehicleInfo(userID, page, pageSize);
+    }
 }

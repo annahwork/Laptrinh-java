@@ -14,7 +14,11 @@ import uth.edu.repositories.RecallCampaignRepository;
 import uth.edu.repositories.RecallVehicleRepository;
 import uth.edu.repositories.UserRepository;
 import uth.edu.repositories.VehicleRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class CampaignService {
@@ -27,11 +31,12 @@ private RecallCampaignRepository recallCampaignRepository;
     private static final int DEFAULT_PAGE_SIZE = 20;
     private static final int MAX_PAGE_SIZE = 50;
 
-    public CampaignService() {
-        recallCampaignRepository = new RecallCampaignRepository();
-        recallVehicleRepository = new RecallVehicleRepository();
-        vehicleRepository = new VehicleRepository();
-        userRepository = new UserRepository();
+    @Autowired
+    public CampaignService( RecallCampaignRepository recallCampaignRepository, RecallVehicleRepository recallVehicleRepository, VehicleRepository vehicleRepository, UserRepository userRepository) {
+        this.recallCampaignRepository = recallCampaignRepository;
+        this.recallVehicleRepository = recallVehicleRepository;
+        this.vehicleRepository = vehicleRepository;
+        this.userRepository = userRepository;
     }
 
     public boolean CreateRecallCampaign(Integer EVMStaffID, RecallCampaign CampaignData) {
@@ -118,6 +123,45 @@ private RecallCampaignRepository recallCampaignRepository;
                 pageSize = DEFAULT_PAGE_SIZE; 
 
             return recallCampaignRepository.getAllRecallCampaigns(page, pageSize);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public List<RecallCampaign> GetCampaigns(Integer userID) {
+        try {
+            return recallCampaignRepository.getAllRecallCampaigns(userID, 1, 9999);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public List<Object[]> GetCampaignReport(Integer userID) {
+        try {
+            return recallVehicleRepository.getCampaignReportData(userID, 1 , 9999);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    @Transactional
+    public List<RecallVehicle> GetRecallVehicles(Integer userID) {
+        try {
+            List<RecallVehicle> recallVehicles = recallVehicleRepository.getAllRecallVehicles(userID, 1, 9999);
+            return recallVehicles;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public List<RecallVehicle> GetRecall(Integer userID) {
+        try {
+            List<RecallVehicle> recallVehicles = recallVehicleRepository.getRecall(userID, 1, 9999);
+            return recallVehicles;
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();

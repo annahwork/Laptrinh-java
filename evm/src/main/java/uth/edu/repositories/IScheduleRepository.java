@@ -10,4 +10,5 @@ public interface IScheduleRepository {
     public void deleteSchedule(Schedule Schedule);
     public Schedule getScheduleById(int id);
     public List<Schedule> getAllSchedules(int page, int pageSize);
+    public List<Object[]> getScheduleVehicleInfo(int userID, int page, int pageSize);
 }

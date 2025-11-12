@@ -42,7 +42,17 @@ public class ClaimServiceRepository implements IClaimServiceRepository {
     }
 
     @Override
+    public List<ClaimService> getAllClaimServices(int userID, int page, int pageSize) {
+        return claimServiceDAO.getAllClaimServices(userID, page, pageSize);
+    }
+
+    @Override
     public String getFirstActiveTaskNote(int technicianId){
         return claimServiceDAO.getFirstActiveTaskNote(technicianId);
+    }
+
+    @Override
+    public String getFirstActiveTaskNoteForSCT(int userID){
+        return claimServiceDAO.getFirstActiveTaskNoteForSCT(userID);
     }
 }

@@ -41,6 +41,10 @@ public class RecallCampaignRepository implements IRecallCampaignRepository {
         return RecallCampaignDAO.getAllRecallCampaigns(page, pageSize);
     }
     @Override
+    public List<RecallCampaign> getAllRecallCampaigns(Integer userID, int page, int pageSize) {
+        return RecallCampaignDAO.getAllRecallCampaigns(userID, page, pageSize);
+    }
+    @Override
     public void closeResources() {
         if (RecallCampaignDAO != null) {
             RecallCampaignDAO.closeSessionFactory();

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -34,16 +35,20 @@ public class RecallCampaign {
     private EVMStaff CreatedByStaff;
 
     @Column(name = "Name", nullable = false, length = 100)
+    @JsonProperty("Name")
     private String Name;
 
     @Column(name = "Status", length = 50)
+    @JsonProperty("Status")
     private String Status;
 
     @Temporal(TemporalType.DATE)
+    @JsonProperty("Date")
     @Column(name = "Date")
     private Date Date;
 
     @Column(name = "Description", length = 255)
+    @JsonProperty("Description")
     private String Description;
 
     @OneToMany(

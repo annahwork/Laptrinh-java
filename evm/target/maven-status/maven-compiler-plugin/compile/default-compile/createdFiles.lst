@@ -1,12 +1,15 @@
+uth\edu\dao\AllocatePartHistoryDAO.class
 uth\edu\dao\UserDAO.class
 uth\edu\repositories\InventoryRepository.class
 uth\edu\pojo\User.class
 uth\edu\pojo\VehiclePart.class
 uth\edu\controllers\EVMStaffDashboardController.class
+uth\edu\repositories\AllocatePartHistoryRepository.class
 uth\edu\pojo\Customer.class
 uth\edu\repositories\ISCStaffRepository.class
 uth\edu\dao\WarrantyHistoryDAO.class
 uth\edu\repositories\IServiceCenterRepository.class
+uth\edu\repositories\IAllocatePartHistoryRepository.class
 uth\edu\pojo\Part.class
 uth\edu\repositories\WarrantyServiceRepository.class
 uth\edu\repositories\ServiceCenterRepository.class
@@ -24,13 +27,13 @@ uth\edu\repositories\VehicleRepository.class
 uth\edu\dao\WarrantyServiceDAO.class
 uth\edu\dao\ScheduleDAO.class
 uth\edu\pojo\ClaimService.class
-uth\edu\service\ScheduleService.class
 uth\edu\repositories\SCTechnicianRepository.class
 uth\edu\pojo\RecallCampaign.class
 uth\edu\dao\CustomerDAO.class
 uth\edu\dao\VehiclePartDAO.class
 uth\edu\repositories\INotificationRepository.class
 uth\edu\pojo\Admin.class
+uth\edu\pojo\AllocatePartHistory.class
 uth\edu\pojo\SCTechnician.class
 uth\edu\repositories\IWarrantyClaimRepository.class
 uth\edu\dao\SCTechnicianDAO.class
@@ -47,7 +50,6 @@ uth\edu\service\NotificationService.class
 uth\edu\repositories\VehiclePartRepository.class
 uth\edu\repositories\IVehiclePartRepository.class
 uth\edu\repositories\SCStaffRepository.class
-uth\edu\SpringbootmvcApplication.class
 uth\edu\repositories\WarrantyClaimRepository.class
 uth\edu\repositories\IScheduleRepository.class
 uth\edu\dao\AdminDAO.class
@@ -69,7 +71,6 @@ uth\edu\repositories\RecallVehicleRepository.class
 uth\edu\pojo\WarrantyHistory.class
 uth\edu\dao\PartDAO.class
 uth\edu\dao\InventoryDAO.class
-uth\edu\Main.class
 uth\edu\repositories\EVMStaffRepository.class
 uth\edu\pojo\RecallVehicle.class
 uth\edu\pojo\WarrantyService.class

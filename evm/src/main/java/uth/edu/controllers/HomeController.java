@@ -123,7 +123,63 @@ public class HomeController {
     public String showDashboardEVMStaff() {
         return "/frontend/pages/EVM-Staff/Section/dashboard"; 
     }
+    // SC-Staff Pages
+    @GetMapping("/SCStaff")
+    public String showSCStaffHome() {
+        return "/frontend/pages/SC-Staff/home_sc_staff";
+    }
 
+    @GetMapping("/scstaff/account")
+    public String showSCStaffAccount() {
+        return "/frontend/pages/SC-Staff/Section/account";
+    }
+
+    @GetMapping("/scstaff/campaign_management")
+    public String showSCStaffCampaignManagement() {
+        return "/frontend/pages/SC-Staff/Section/campaign_management";
+    }
+
+    @GetMapping("/scstaff/customer_record_management")
+    public String showSCStaffCustomerRecordManagement() {
+        return "/frontend/pages/SC-Staff/Section/customer_record_management";
+    }
+
+    @GetMapping("/scstaff/dashboard")
+    public String showSCStaffDashboard() {
+        return "/frontend/pages/SC-Staff/Section/dashboard";
+    }
+
+    @GetMapping("/scstaff/job_notifications")
+    public String showSCStaffJobNotifications() {
+        System.out.println("Đã vào controller job_notifications");
+        return "/frontend/pages/SC-Staff/Section/job_notifications";
+    }
+
+    @GetMapping("/scstaff/privacy_policy")
+    public String showSCStaffPrivacyPolicy() {
+        return "/frontend/pages/SC-Staff/Section/privacy_policy";
+    }
+
+    @GetMapping("/scstaff/technician_assignment")
+    public String showSCStaffTechnicianAssignment() {
+        return "/frontend/pages/SC-Staff/Section/technician_assignment";
+    }
+
+    @GetMapping("/scstaff/terms_of_service")
+    public String showSCStaffTermsOfService() {
+        return "/frontend/pages/SC-Staff/Section/terms_of_service";
+    }
+
+    @GetMapping("/scstaff/vehicle_record_management")
+    public String showSCStaffVehicleRecordManagement() {
+        return "/frontend/pages/SC-Staff/Section/vehicle_record_management";
+    }
+
+    @GetMapping("/scstaff/warranty_claim_management")
+    public String showSCStaffWarrantyClaimManagement() {
+        return "/frontend/pages/SC-Staff/Section/warranty_claim_management";
+    }
+    
 }
 
 

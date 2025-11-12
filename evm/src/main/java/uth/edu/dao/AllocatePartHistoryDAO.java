@@ -71,7 +71,7 @@ public class AllocatePartHistoryDAO {
         List<AllocatePartHistory> histories = null;
         try {
             session = sessionFactory.openSession();
-            histories = session.createQuery("FROM AllocatePartHistory", AllocatePartHistory.class)
+            histories = session.createQuery("FROM AllocatePartHistory ORDER BY allocationDate DESC", AllocatePartHistory.class)
                     .setFirstResult((page - 1) * pageSize)
                     .setMaxResults(pageSize)
                     .getResultList();

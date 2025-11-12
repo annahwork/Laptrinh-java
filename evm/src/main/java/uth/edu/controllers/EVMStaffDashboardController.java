@@ -1,7 +1,7 @@
 package uth.edu.controllers;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpSession;
+import uth.edu.pojo.AllocatePartHistory;
 import uth.edu.pojo.EVMStaff;
 import uth.edu.pojo.Notification;
 import uth.edu.pojo.User;
@@ -68,27 +69,59 @@ public class EVMStaffDashboardController {
 
     @GetMapping("/recent-allocations")
     public ResponseEntity<List<Map<String, Object>>> getRecentAllocations(HttpSession session) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        List<Map<String, Object>> allocations = List.of(
-            Map.of(
-                "requestCode", "REQ-2301",
-                "partName", "Bộ lọc dầu",
-                "quantity", 5,
-                "date", LocalDate.now().minusDays(1).format(dtf),
-                "status", "Hoàn tất",
-                "statusClass", "status-tag--success"
-            ),
-            Map.of(
-                "requestCode", "REQ-2302",
-                "partName", "Bình ắc quy",
-                "quantity", 2,
-                "date", LocalDate.now().format(dtf),
-                "status", "Đang xử lý",
-                "statusClass", "status-tag--pending"
-            )
-        );
         
-        return ResponseEntity.ok(allocations);
+        try {
+            List<AllocatePartHistory> historyList = inventoryService.getRecentAllocations(1, 5);
+            if (historyList == null) {
+                historyList = new ArrayList<>();
+            }
+
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            List<Map<String, Object>> allocations = historyList.stream().map(history -> {
+                String status = history.getStatus();
+                String statusClass = "";
+
+                switch (status.toLowerCase()) {
+                    case "completed":
+                        statusClass = "status-tag--success";
+                        break;
+                    case "pending":
+                        statusClass = "status-tag--pending";
+                        break;
+                    case "failed (out of stock)":
+                    case "rejected":
+                        statusClass = "status-tag--danger";
+                        break;
+                    default:
+                        statusClass = "status-tag--info";
+                }
+                
+                String formattedDate = "N/A";
+                if (history.getAllocationDate() != null) {
+                    formattedDate = history.getAllocationDate().toInstant()
+                                    .atZone(java.time.ZoneId.systemDefault())
+                                    .toLocalDate()
+                                    .format(dtf);
+                }
+
+                Map<String, Object> map = new java.util.HashMap<>();
+                map.put("requestCode", "REQ-" + history.getAllocationID());
+                map.put("partName", history.getPart() != null ? history.getPart().getName() : "N/A");
+                map.put("quantity", history.getQuantity());
+                map.put("date", formattedDate);
+                map.put("status", status);
+                map.put("statusClass", statusClass);
+                return map;
+                
+            }).collect(Collectors.toList());
+            
+            return ResponseEntity.ok(allocations);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(new ArrayList<>());
+        }
     }
 
    @GetMapping("/notifications")

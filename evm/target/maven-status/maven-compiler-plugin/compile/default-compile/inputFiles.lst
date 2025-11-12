@@ -47,12 +47,14 @@ C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\pojo\Cust
 C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\pojo\Inventory.java
 C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\pojo\ClaimService.java
 C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\pojo\Notification.java
+C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\repositories\AllocatePartHistoryRepository.java
 C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\repositories\ISCStaffRepository.java
 C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\controllers\EVMStaffDashboardController.java
 C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\dao\SCStaffDAO.java
 C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\repositories\IVehiclePartRepository.java
 C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\repositories\RecallVehicleRepository.java
 C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\repositories\IPartRepository.java
+C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\repositories\IAllocatePartHistoryRepository.java
 C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\controllers\UserController.java
 C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\repositories\UserRepository.java
 C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\repositories\ISCTechnicianRepository.java
@@ -62,10 +64,12 @@ C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\dao\EVMSt
 C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\service\ReportService.java
 C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\dao\ServiceCenterDAO.java
 C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\repositories\AdminRepository.java
+C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\dao\AllocatePartHistoryDAO.java
 C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\repositories\InventoryRepository.java
 C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\repositories\IEVMStaffRepository.java
 C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\repositories\WarrantyClaimRepository.java
 C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\dao\CustomerDAO.java
+C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\pojo\AllocatePartHistory.java
 C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\repositories\RecallCampaignRepository.java
 C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\pojo\Vehicle.java
 C:\Users\Latitude\JAVA\Project\Laptrinh-java\evm\src\main\java\uth\edu\dao\NotificationDAO.java

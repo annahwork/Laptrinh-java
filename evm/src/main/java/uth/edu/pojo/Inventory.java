@@ -1,5 +1,8 @@
 package uth.edu.pojo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -10,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -29,10 +33,17 @@ public class Inventory {
     private Integer CurrentStock;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "SCID", nullable = false) 
+    @JoinColumn(name = "SCID", nullable = false)
     private ServiceCenter ServiceCenter;
 
-    public Inventory() {}
+    @OneToMany(mappedBy = "fromInventory", fetch = FetchType.LAZY)
+    private List<AllocatePartHistory> allocationsSent = new ArrayList<>();
+
+    @OneToMany(mappedBy = "toInventory", fetch = FetchType.LAZY)
+    private List<AllocatePartHistory> allocationsReceived = new ArrayList<>();
+
+    public Inventory() {
+    }
 
     public Inventory(Integer InventoryID, Part Part, ServiceCenter ServiceCenter, Integer CurrentStock) {
         this.InventoryID = InventoryID;
@@ -40,6 +51,7 @@ public class Inventory {
         this.ServiceCenter = ServiceCenter;
         this.CurrentStock = CurrentStock;
     }
+
     public Integer getInventoryID() {
         return this.InventoryID;
     }
@@ -48,14 +60,24 @@ public class Inventory {
     public Part getPart() {
         return this.Part;
     }
-    
-    @JsonIgnore 
+
+    @JsonIgnore
     public ServiceCenter getServiceCenter() {
         return this.ServiceCenter;
     }
 
     public Integer getCurrentStock() {
         return this.CurrentStock;
+    }
+
+    @JsonIgnore
+    public List<AllocatePartHistory> getAllocationsSent() {
+        return allocationsSent;
+    }
+
+    @JsonIgnore
+    public List<AllocatePartHistory> getAllocationsReceived() {
+        return allocationsReceived;
     }
 
     public void setInventoryID(Integer InventoryID) {
@@ -69,9 +91,17 @@ public class Inventory {
     public void setCurrentStock(Integer CurrentStock) {
         this.CurrentStock = CurrentStock;
     }
-    
+
     public void setServiceCenter(ServiceCenter serviceCenter) {
         ServiceCenter = serviceCenter;
+    }
+
+    public void setAllocationsSent(List<AllocatePartHistory> allocationsSent) {
+        this.allocationsSent = allocationsSent;
+    }
+
+    public void setAllocationsReceived(List<AllocatePartHistory> allocationsReceived) {
+        this.allocationsReceived = allocationsReceived;
     }
     
 }

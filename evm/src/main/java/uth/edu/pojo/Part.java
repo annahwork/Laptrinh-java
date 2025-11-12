@@ -1,11 +1,19 @@
 package uth.edu.pojo;
 
-import jakarta.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.util.ArrayList;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Part")
@@ -42,6 +50,9 @@ public class Part {
     )
     private List<Inventory> InventoryRecords = new ArrayList<>();
 
+    @OneToMany(mappedBy = "part", fetch = FetchType.LAZY)
+    private List<AllocatePartHistory> partAllocations = new ArrayList<>();
+    
     public Part(){}
 
     public Part(Integer PartID, String Name, String Type, String WarrantyPeriod, String Manufacturer)
@@ -71,6 +82,11 @@ public class Part {
 
     public String getManufacturer(){
         return this.Manufacturer;
+    }
+
+    @JsonIgnore
+    public List<AllocatePartHistory> getPartAllocations() {
+        return partAllocations;
     }
 
     public void setPartID(Integer PartID){
@@ -111,4 +127,7 @@ public class Part {
         InventoryRecords = inventoryRecords;
     }
     
+    public void setPartAllocations(List<AllocatePartHistory> partAllocations) {
+        this.partAllocations = partAllocations;
+    }
 }

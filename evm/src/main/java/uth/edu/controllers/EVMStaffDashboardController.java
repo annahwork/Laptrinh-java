@@ -20,14 +20,11 @@ import uth.edu.service.InventoryService;
 import uth.edu.service.NotificationService;
 import uth.edu.service.WarrantyClaimService;
 
-/**
- * Controller này cung cấp dữ liệu API cho trang Dashboard của EVM Staff.
- */
+
 @RestController
-@RequestMapping("/api/evm_staff/dashboard") // Khớp với API_BASE trong file JS
+@RequestMapping("/api/evm_staff/dashboard")
 public class EVMStaffDashboardController {
 
-    // Khởi tạo các service theo cách thủ công (giống trong file UserController của bạn)
     private final InventoryService inventoryService;
     private final WarrantyClaimService warrantyClaimService;
     private final CampaignService campaignService;
@@ -40,9 +37,6 @@ public class EVMStaffDashboardController {
         this.notificationService = new NotificationService();
     }
 
-    /**
-     * Cung cấp dữ liệu cho 4 thẻ thống kê trên cùng.
-     */
     @GetMapping("/overview")
     public ResponseEntity<Map<String, Object>> getOverviewStats(HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
@@ -51,7 +45,6 @@ public class EVMStaffDashboardController {
         }
 
         try {
-            // Gọi các hàm service mới đã thêm
             int totalParts = inventoryService.getTotalPartsInStock();
             List<String> activeStatus = List.of("Pending", "In Progress", "Đã gửi");
             int activeRequests = warrantyClaimService.countClaimsByStatus(activeStatus);
@@ -73,16 +66,8 @@ public class EVMStaffDashboardController {
         }
     }
 
-    /**
-     * Cung cấp dữ liệu cho bảng "Cấp phát phụ tùng gần đây".
-     */
     @GetMapping("/recent-allocations")
     public ResponseEntity<List<Map<String, Object>>> getRecentAllocations(HttpSession session) {
-        // TODO: Bạn cần một bảng/repository (ví dụ: AllocationHistory) để lưu
-        // lịch sử cấp phát. Hiện tại, service "AllocatePartsToSC" chỉ trừ kho
-        // chứ không ghi lại lịch sử.
-        
-        // --- TẠM THỜI DÙNG DỮ LIỆU GIẢ (MOCK DATA) ĐỂ TEST GIAO DIỆN ---
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         List<Map<String, Object>> allocations = List.of(
             Map.of(
@@ -115,7 +100,6 @@ public class EVMStaffDashboardController {
         }
         
         try {
-            // Lấy 5 thông báo chưa đọc mới nhất
             List<Notification> notifs = notificationService.GetUnreadNotifications(loggedInUser.getUserID(), 1, 5);
             
             List<Map<String, Object>> result = notifs.stream()

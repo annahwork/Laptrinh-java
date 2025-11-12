@@ -20,6 +20,8 @@ import uth.edu.repositories.VehiclePartRepository;
 import uth.edu.repositories.WarrantyClaimRepository;
 import uth.edu.repositories.WarrantyHistoryRepository;
 import uth.edu.repositories.WarrantyServiceRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -36,13 +38,14 @@ public class WarrantyClaimService {
     private static final int DEFAULT_PAGE_SIZE = 20;
     private static final int MAX_PAGE_SIZE = 9999;
 
-    public WarrantyClaimService() {
-        warrantyClaimRepository = new WarrantyClaimRepository();
-        userRepository = new UserRepository();
-        vehiclePartRepository = new VehiclePartRepository();
-        claimServiceRepository = new ClaimServiceRepository();
-        warrantyServiceRepository = new WarrantyServiceRepository();
-        warrantyHistoryRepository = new WarrantyHistoryRepository();
+    @Autowired
+    public WarrantyClaimService(WarrantyClaimRepository warrantyClaimRepository, UserRepository userRepository, VehiclePartRepository vehiclePartRepository, ClaimServiceRepository claimServiceRepository, WarrantyServiceRepository warrantyServiceRepository, WarrantyHistoryRepository warrantyHistoryRepository) {
+        this.warrantyClaimRepository = warrantyClaimRepository;
+        this.userRepository = userRepository;
+        this.vehiclePartRepository = vehiclePartRepository;
+        this.claimServiceRepository = claimServiceRepository;
+        this.warrantyServiceRepository = warrantyServiceRepository;
+        this.warrantyHistoryRepository = warrantyHistoryRepository;
     }
 
     public boolean CreateWarrantyClaim(Integer SCStaffID, WarrantyClaim ClaimData, String AttachmentUrl) {

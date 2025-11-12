@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,11 +32,12 @@ public class EVMStaffDashboardController {
     private final CampaignService campaignService;
     private final NotificationService notificationService;
 
-    public EVMStaffDashboardController() {
-        this.inventoryService = new InventoryService();
-        this.warrantyClaimService = new WarrantyClaimService();
-        this.campaignService = new CampaignService();
-        this.notificationService = new NotificationService();
+    @Autowired 
+    public EVMStaffDashboardController( InventoryService inventoryService, WarrantyClaimService warrantyClaimService, CampaignService campaignService, NotificationService notificationService ) {
+        this.inventoryService = inventoryService;
+        this.warrantyClaimService = warrantyClaimService;
+        this.campaignService = campaignService;
+        this.notificationService = notificationService;
     }
 
     @GetMapping("/overview")

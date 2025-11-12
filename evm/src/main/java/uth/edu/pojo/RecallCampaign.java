@@ -92,6 +92,10 @@ public class RecallCampaign {
         return CreatedByStaff;
     }
 
+    public String getCreatedByStaffName() {
+        return (CreatedByStaff != null) ? (CreatedByStaff.getName()) : "N/A";
+    }
+
     public void setCreatedByStaff(EVMStaff createdByStaff) {
         CreatedByStaff = createdByStaff;
     }

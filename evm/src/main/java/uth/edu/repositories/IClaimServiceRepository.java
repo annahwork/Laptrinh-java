@@ -12,5 +12,7 @@ public interface IClaimServiceRepository {
     public void deleteClaimService(uth.edu.pojo.ClaimService claimService);
     public uth.edu.pojo.ClaimService getClaimServiceById(int id);
     public List<ClaimService> getAllClaimServices(int page, int pageSize);
+    public List<ClaimService> getAllClaimServices(int userID, int page, int pageSize);
     public String getFirstActiveTaskNote(int technicianId);
+    public String getFirstActiveTaskNoteForSCT(int userId);
 }

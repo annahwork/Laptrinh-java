@@ -4,105 +4,28 @@
     <div class="page-header">
         <h2>Danh sách chiến dịch</h2>
         <div class="actions">
-        <input type="text" placeholder="Tìm theo tên chiến dịch hoặc mã...">
-        <select>
-            <option>Tất cả trạng thái</option>
-            <option>Đang diễn ra</option>
-            <option>Đã kết thúc</option>
-        </select>
-        <button id="btnOpenForm" class="btn-primary" type="button">Tạo chiến dịch mới</button>
-        </div>
-    </div>
-
-    <div class="data-grid">
-        <div class="data-card">
-        <div class="card-header">
-            <h3>Mã: <span>CD-2025-001</span></h3>
-            <span class="status-badge active">Đang diễn ra</span>
-        </div>
-        <div class="card-body">
-            <p><strong>Tên:</strong> Chiến dịch kiểm tra pin xe EV</p>
-            <p><strong>Ngày bắt đầu:</strong> 01/11/2025</p>
-            <p><strong>Ngày kết thúc:</strong> 15/11/2025</p>
-        </div>
-        <div class="card-footer">
-            <button class="btn-outline">Chi tiết</button>
-            <button class="btn-light">Cập nhật</button>
-        </div>
-        </div>
-
-        <div class="data-card">
-        <div class="card-header">
-            <h3>Mã: <span>CD-2025-001</span></h3>
-            <span class="status-badge active">Đang diễn ra</span>
-        </div>
-        <div class="card-body">
-            <p><strong>Tên:</strong> Chiến dịch kiểm tra pin xe EV</p>
-            <p><strong>Ngày bắt đầu:</strong> 01/11/2025</p>
-            <p><strong>Ngày kết thúc:</strong> 15/11/2025</p>
-        </div>
-        <div class="card-footer">
-            <button class="btn-outline">Chi tiết</button>
-            <button class="btn-light">Cập nhật</button>
-        </div>
-        </div>
-    </div>
-
-    <div id="modalTaoChienDich" class="campaign__modal" style="display:none;">
-        <div class="campaign__modal-content">
-        <button class="campaign__close-button" aria-label="Close">&times;</button>
-
-        <h3 class="campaign__modal-title">Tạo chiến dịch mới</h3>
-
-        <form class="campaign__form">
-            <div class="campaign__form-group">
-            <label for="campaign_code" class="campaign__label">Mã chiến dịch</label>
-            <input type="text" id="campaign_code" name="campaignCode" class="campaign__input"
-                placeholder="VD: CD-2025-002" required>
-            </div>
-
-            <div class="campaign__form-group">
-            <label for="campaign_name" class="campaign__label">Tên chiến dịch</label>
-            <input type="text" id="campaign_name" name="campaignName" class="campaign__input"
-                placeholder="Nhập tên chiến dịch..." required>
-            </div>
-
-            <div class="campaign__form-row">
-            <div class="campaign__form-group">
-                <label for="campaign_start" class="campaign__label">Ngày bắt đầu</label>
-                <input type="date" id="campaign_start" name="startDate" class="campaign__input">
-            </div>
-            <div class="campaign__form-group">
-                <label for="campaign_end" class="campaign__label">Ngày kết thúc</label>
-                <input type="date" id="campaign_end" name="endDate" class="campaign__input">
-            </div>
-            </div>
-
-            <div class="campaign__form-group">
-            <label for="campaign_status" class="campaign__label">Trạng thái</label>
-            <select id="campaign_status" name="status" class="campaign__select">
-                <option value="planned">Đã lên kế hoạch</option>
+            <input type="text" id="campaignSearchInput" placeholder="Tìm theo tên chiến dịch hoặc mã...">
+            
+            <select id="campaignStatusFilter">
+                <option value="">Tất cả trạng thái</option>
                 <option value="active">Đang diễn ra</option>
                 <option value="completed">Đã hoàn thành</option>
+                <option value="planned">Đã lên kế hoạch</option>
             </select>
-            </div>
-
-            <div class="campaign__form-group">
-            <label for="campaign_desc" class="campaign__label">Mô tả</label>
-            <textarea id="campaign_desc" name="description" class="campaign__textarea" rows="4"
-                placeholder="Nhập mô tả chi tiết..."></textarea>
-            </div>
-
-            <div class="campaign__button-group">
-            <button type="button" id="campaignCancelBtn"
-                class="campaign__button campaign__button--cancel">Huỷ</button>
-            <button type="submit" id="campaignSubmitBtn"
-                class="campaign__button campaign__button--submit">Tạo</button>
-            </div>
-        </form>
         </div>
     </div>
-    </section>
+
+    <div class="data-grid" id="campaignGrid"></div>
+
+<div id="modalChiTiet" class="campaign__modal" style="display:none;">
+    <div class="campaign__modal-content" style="max-width: 500px;">
+        <button id="detailCloseBtn" class="campaign__close-button" aria-label="Close">&times;</button>
+        <h3 id="detailTitle" class="campaign__modal-title">Chi tiết chiến dịch</h3>
+        <div class="campaign__form">
+            <p><strong>Mô tả:</strong></p>
+            <p id="detailDescription" style="white-space: pre-wrap; word-wrap: break-word;"></p>
+        </div>
+    </div>
+</div>
 
 <script src="/evm/assets/js/SC-Technician/campaign_list.js"></script>
-

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import uth.edu.pojo.AllocatePartHistory;
@@ -34,13 +35,16 @@ public class InventoryService {
     private static final String EVM_WAREHOUSE_TYPE = "EVM_Warehouse"; 
     private static final int LOW_STOCK_THRESHOLD = 10; 
 
-    public InventoryService() {
-        inventoryRepository = new InventoryRepository();
-        partRepository = new PartRepository();
-        serviceCenterRepository = new ServiceCenterRepository();
-        userRepository = new UserRepository();
-        allocateHistoryRepository = new AllocatePartHistoryRepository();
-        notificationService = new NotificationService(); 
+    
+   @Autowired
+    public InventoryService( InventoryRepository inventoryRepository, PartRepository partRepository, ServiceCenterRepository serviceCenterRepository, UserRepository userRepository, AllocatePartHistoryRepository allocateHistoryRepository, NotificationService notificationService 
+    ) {
+        this.inventoryRepository = inventoryRepository;
+        this.partRepository = partRepository;
+        this.serviceCenterRepository = serviceCenterRepository;
+        this.userRepository = userRepository;
+        this.allocateHistoryRepository = allocateHistoryRepository;
+        this.notificationService = notificationService;
     }
 
     public List<Part> GetParts(int page, int pageSize) {

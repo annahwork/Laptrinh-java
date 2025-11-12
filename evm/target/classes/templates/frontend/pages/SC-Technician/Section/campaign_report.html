@@ -5,30 +5,19 @@
     <h2>Báo cáo chiến dịch</h2>
     <div class="actions">
       <select id="reportFilter">
+        <option value="all">Toàn bộ</option>
         <option value="this-month">Tháng này</option>
         <option value="last-month">Tháng trước</option>
-        <option value="all">Toàn bộ</option>
       </select>
       <button id="btnExportReport" class="btn-primary">Xuất báo cáo</button>
     </div>
   </div>
 
   <div class="data-grid" id="reportContainer">
-    <div class="data-card">
-      <div class="card-header">
-        <h3>Chiến dịch: <span>CD-2025-001</span></h3>
-      </div>
-      <div class="card-body">
-        <p><strong>Tổng số xe:</strong> 25</p>
-        <p><strong>Đã hoàn tất:</strong> 18</p>
-        <p><strong>Đang xử lý:</strong> 7</p>
-        <p><strong>Tỷ lệ hoàn thành:</strong> 72%</p>
-      </div>
-      <div class="card-footer">
-        <button class="btn-outline">Xem chi tiết</button>
-      </div>
-    </div>
+    
+    <div class="data-card"></div>
+
   </div>
 </section>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="/evm/assets/js/SC-Technician/campaign_report.js"></script>

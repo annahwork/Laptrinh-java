@@ -15,6 +15,7 @@ import uth.edu.repositories.WarrantyClaimRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -30,6 +31,7 @@ public class UserService {
     private WarrantyClaimRepository warrantyclaimRepository;
     private ClaimServiceRepository claimServiceRepository;
 
+    @Autowired
     public UserService(UserRepository userRepository, AdminRepository adminRepository, SCTechnicianRepository technicianRepository, CustomerRepository customerRepository, WarrantyClaimRepository warrantyclaimRepository, ClaimServiceRepository claimServiceRepository) {
         this.userRepository = userRepository;
         this.adminRepository = adminRepository;
@@ -85,7 +87,6 @@ public class UserService {
             return null;
         }
     }
-
 
     public boolean deleteUser(Integer userId) {
         try {
@@ -249,6 +250,21 @@ public class UserService {
             
             for (User tech : technicians) {
                 String taskNote = claimServiceRepository.getFirstActiveTaskNote(tech.getUserID());
+                ((SCTechnician) tech).setCurrentTask(taskNote);
+            }
+            return technicians; 
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public List<User> GetTechniciansForSCT() {
+        try {
+            List<User> technicians = userRepository.getAllTechnicians(1, 9999); 
+            
+            for (User tech : technicians) {
+                String taskNote = claimServiceRepository.getFirstActiveTaskNoteForSCT(tech.getUserID());
                 ((SCTechnician) tech).setCurrentTask(taskNote);
             }
             return technicians; 

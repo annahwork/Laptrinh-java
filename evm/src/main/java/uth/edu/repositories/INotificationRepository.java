@@ -14,5 +14,8 @@ public interface INotificationRepository {
     public Notification getNotificationById(int id);
     public List<Notification> getUnreadNotificationsByUserID(int userID, int page, int pageSize);
     public List<Notification> getAllNotifications(int page, int pageSize);
+    public List<Notification> getAllNotifications(Integer UserID, int page, int pageSize);
+    public boolean MarkAllNotificationsAsRead(Integer UserID);
+    public Notification getLatestNotification(int UserID);
     public void closeResources();
 }

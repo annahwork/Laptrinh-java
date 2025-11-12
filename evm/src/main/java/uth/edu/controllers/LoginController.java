@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import uth.edu.pojo.Admin;
+import uth.edu.pojo.EVMStaff;
+import uth.edu.pojo.SCStaff;
+import uth.edu.pojo.SCTechnician;
 import uth.edu.pojo.User;
 import uth.edu.service.UserService;
 
@@ -56,8 +60,25 @@ public class LoginController {
                 return ResponseEntity.status(401).body(Map.of("message", "Bạn đã chọn sai loại tài khoản. Vui lòng kiểm tra lại."));
             }
 
-            HttpSession session = request.getSession(true); 
-            session.setAttribute("loggedInUser", user);
+            HttpSession session = request.getSession(true);
+
+            switch (userRole) {
+                case "EVM_STAFF":
+                    session.setAttribute("loggedInUser", (EVMStaff) user);
+                    break;
+                case "ADMIN":
+                    session.setAttribute("loggedInUser", (Admin) user);
+                    break;
+                case "SC_STAFF":
+                    session.setAttribute("loggedInUser", (SCStaff) user);
+                    break;
+                case "SC_TECHNICIAN":
+                    session.setAttribute("loggedInUser", (SCTechnician) user);
+                    break;
+                default:
+                    session.setAttribute("loggedInUser", user);
+            }
+
             session.setMaxInactiveInterval(60 * 60 * 8);
 
             return ResponseEntity.ok(user);

@@ -3,25 +3,28 @@
 
     console.log('Login script loaded');
 
-    // API endpoint
     const API_LOGIN = '/evm/api/login/authenticate';
-
+    const CONTEXT_PATH = (() => {
+        const pathParts = window.location.pathname.split('/').filter(Boolean);
+        return pathParts.length > 0 ? `/${pathParts[0]}` : '';
+    })();
+    console.log('Detected context path:', CONTEXT_PATH);
     function redirectUserBasedOnRole(userRole) {
-        console.log('Redirecting for role:', userRole);
-        switch (userRole) {
-            case 'ADMIN':
-            case 'EVM_STAFF':
-                window.location.href = 'evm/dashboard'; //đường dẫn test
-                break;
-            case 'SC_STAFF':
-            case 'SC_TECHNICIAN':
-                window.location.href = 'evm/home'; //đường dẫn test
-                break;
-            default:
-                console.warn('Unknown user role, redirecting to default home.');
-                window.location.href = '/';
-        }
+    console.log('Redirecting for role:', userRole);
+    switch (userRole) {
+        case 'ADMIN':
+        case 'EVM_STAFF':
+            window.location.href = `${CONTEXT_PATH}/EVMStaff`;
+            break;
+        case 'SC_STAFF':
+        case 'SC_TECHNICIAN':
+            window.location.href = `${CONTEXT_PATH}/home`;
+            break;
+        default:
+            console.warn('Unknown user role, redirecting to default home.');
+            window.location.href = CONTEXT_PATH + '/';
     }
+}
 
 
     async function handleLoginSubmit(e) {
@@ -82,8 +85,7 @@
         
         if (!toggleButton || !passwordInput) return;
 
-        // Thiết lập icon ban đầu (giả sử là "hiện")
-        toggleButton.innerHTML = '🙈'; // Hoặc dùng icon/SVG
+        toggleButton.innerHTML = '🙈'; 
 
         toggleButton.addEventListener('click', function () {
             if (passwordInput.type === 'password') {

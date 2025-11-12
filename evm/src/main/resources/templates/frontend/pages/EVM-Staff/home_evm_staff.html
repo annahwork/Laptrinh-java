@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang chủ - EVM Staff</title>
 
-    <link rel="stylesheet" href="../../assets/css/main.css">
-    <link rel="stylesheet" href="../../assets/css/EVM-Staff/dashboard.css">
+    <link rel="stylesheet" href="/evm/assets/css/main.css">
+    <link rel="stylesheet" href="/evm/assets/css/sidebar.css">
+    <link rel="stylesheet" href="/evm/assets/css/EVM-Staff/dashboard.css">
 </head>
 
 <body>
@@ -16,7 +17,7 @@
     <aside class="sidebar" id="sidebar">
         <div class="sidebar__header">
             <h2 class="sidebar__logo">OEM EV</h2>
-            <img src="../../assets/pic/logo_EVM.png" alt="Logo" class="sidebar__avatar">
+            <img src="/evm/assets/pic/logo_EVM.png" alt="Logo" class="sidebar__avatar">
         </div>
 
         <div class="sidebar__user">
@@ -107,10 +108,10 @@
 
 <div id="footer-placeholder"></div>
 
-<script src="../../assets/js/JS.js"></script>
+<script src="/evm/assets/js/EVM-Staff/home_evm_staff.js"></script>
 
 <script>
-    fetch('../../components/footer.html')
+    fetch('/evm/components/footer.html')
     .then(res => res.text())
     .then(html => document.getElementById('footer-placeholder').innerHTML = html)
     .catch(err => console.error("Không tải được footer:", err));

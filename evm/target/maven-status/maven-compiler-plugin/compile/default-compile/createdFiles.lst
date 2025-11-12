@@ -2,6 +2,7 @@ uth\edu\dao\UserDAO.class
 uth\edu\repositories\InventoryRepository.class
 uth\edu\pojo\User.class
 uth\edu\pojo\VehiclePart.class
+uth\edu\controllers\EVMStaffDashboardController.class
 uth\edu\pojo\Customer.class
 uth\edu\repositories\ISCStaffRepository.class
 uth\edu\dao\WarrantyHistoryDAO.class
@@ -37,6 +38,7 @@ uth\edu\pojo\ServiceCenter.class
 uth\edu\repositories\IRecallVehicleRepository.class
 uth\edu\dao\RecallCampaignDAO.class
 uth\edu\repositories\IWarrantyHistoryRepository.class
+uth\edu\controllers\LoginController.class
 uth\edu\dao\ServiceCenterDAO.class
 uth\edu\pojo\Schedule.class
 uth\edu\repositories\RecallCampaignRepository.class

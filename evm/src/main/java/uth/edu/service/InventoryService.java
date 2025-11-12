@@ -3,8 +3,6 @@ package uth.edu.service;
 import java.util.ArrayList; 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import uth.edu.pojo.EVMStaff;
 import uth.edu.pojo.Inventory;
 import uth.edu.pojo.Part;
@@ -15,6 +13,7 @@ import uth.edu.repositories.InventoryRepository;
 import uth.edu.repositories.PartRepository;
 import uth.edu.repositories.ServiceCenterRepository;
 import uth.edu.repositories.UserRepository;
+import org.springframework.stereotype.Service;
 
 @Service
 public class InventoryService {
@@ -148,6 +147,34 @@ public class InventoryService {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    public int getTotalPartsInStock() {
+        try {
+            List<Inventory> allStock = inventoryRepository.getAllInventories(DEFAULT_PAGE, MAX_PAGE_SIZE); 
+            if (allStock == null || allStock.isEmpty()) {
+                return 0;
+            }
+            return allStock.stream().mapToInt(Inventory::getCurrentStock).sum();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int countLowStockItems() {
+        try {
+            List<Inventory> allStock = inventoryRepository.getAllInventories(DEFAULT_PAGE, MAX_PAGE_SIZE);
+            if (allStock == null || allStock.isEmpty()) {
+                return 0;
+            }
+            long count = allStock.stream()
+                                 .filter(item -> item.getCurrentStock() < LOW_STOCK_THRESHOLD)
+                                 .count();
+            return (int) count;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
         }
     }
 

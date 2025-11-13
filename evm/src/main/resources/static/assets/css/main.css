@@ -1,6 +1,7 @@
 @import "theme.css";
 @import "footer.css";
 @import "sidebar.css";
+@import "account.css";
 
 .main {
     margin-left: 0;

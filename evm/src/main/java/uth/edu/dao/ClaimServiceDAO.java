@@ -3,6 +3,8 @@ package uth.edu.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
+
 import uth.edu.pojo.ClaimService;
 import java.util.List;
 
@@ -108,6 +110,26 @@ public class ClaimServiceDAO {
         return claimServices;
     }
 
+    public List<ClaimService> getAllClaimServices(int userID, int page, int pageSize) {
+        Session session = null;
+        List<ClaimService> claimServices = null;
+        try {
+            session = sessionFactory.openSession();
+            claimServices = session.createQuery("SELECT cs FROM ClaimService cs JOIN FETCH cs.CreatedByStaff cbs WHERE cbs.UserID = :userId", ClaimService.class) 
+                    .setParameter("userId", userID)
+                    .setFirstResult((page - 1) * pageSize)
+                    .setMaxResults(pageSize)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return claimServices;
+    }
+
     public String getFirstActiveTaskNote(int technicianId) {
         Session session = null;
         String note = null;
@@ -129,6 +151,29 @@ public class ClaimServiceDAO {
         }
         return (note != null) ? note : "Sẵn sàng";
     }
+
+    public String getFirstActiveTaskNoteForSCT(int userID) {
+        Session session = null;
+        String note = null;
+        try {
+            session = sessionFactory.openSession();
+            Query<String> query = session.createQuery(
+                "SELECT cs.Note FROM ClaimService cs WHERE cs.technician.UserID = :userId AND cs.Status = :activeStatus ORDER BY cs.Id ASC", String.class);
+            
+            note = query.setParameter("userId", userID)
+                        .setParameter("activeStatus", "Active") 
+                        .setMaxResults(1)
+                        .uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return (note != null) ? note : "Sẵn sàng";
+    }
+
 
     public void closeSessionFactory() {
         if (sessionFactory != null) {

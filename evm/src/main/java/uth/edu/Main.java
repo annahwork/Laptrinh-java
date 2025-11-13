@@ -9,7 +9,26 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import uth.edu.pojo.*;
+import uth.edu.pojo.Admin;
+import uth.edu.pojo.AllocatePartHistory;
+import uth.edu.pojo.ClaimService;
+import uth.edu.pojo.Customer;
+import uth.edu.pojo.EVMStaff;
+import uth.edu.pojo.Inventory;
+import uth.edu.pojo.Notification;
+import uth.edu.pojo.Part;
+import uth.edu.pojo.RecallCampaign;
+import uth.edu.pojo.RecallVehicle;
+import uth.edu.pojo.SCStaff;
+import uth.edu.pojo.SCTechnician;
+import uth.edu.pojo.Schedule;
+import uth.edu.pojo.ServiceCenter;
+import uth.edu.pojo.User;
+import uth.edu.pojo.Vehicle;
+import uth.edu.pojo.VehiclePart;
+import uth.edu.pojo.WarrantyClaim;
+import uth.edu.pojo.WarrantyHistory;
+import uth.edu.pojo.WarrantyService;
 import uth.edu.repositories.UserRepository;
 
 public class Main {
@@ -350,97 +369,124 @@ public class Main {
                                         technicians.get(5), "Chờ duyệt",
                                         "Chờ duyệt thay màn hình."));
 
-                        // 3. Commit Transaction
-                        session.getTransaction().commit();
-                        System.out.println("\n--- THÊM DỮ LIỆU MẪU THÀNH CÔNG! ---");
-
                         // --- CẤP 5: Dữ liệu Cấp phát Phụ tùng (AllocatePartHistory) ---
 
                         System.out.println("Tạo 5 bản ghi Lịch sử Cấp phát (AllocatePartHistory)...");
 
-                        Part partPin = parts.get(0); 
-                        Part partDongCo = parts.get(1);
+                        try {
+                                // Lấy các đối tượng đã được tạo ở các bước trước
+                                Part partPin = parts.get(0); 
+                                Part partDongCo = parts.get(1);
 
-                        // Giả sử:
-                        // serviceCenters.get(0) là "Thăng Long"
-                        // serviceCenters.get(1) là "Bến Thành"
-                        // serviceCenters.get(2) là "Đà Nẵng"
-                        // Chúng ta sẽ giả lập Thăng Long (SC 0) là kho tổng,
-                        // cấp phát cho Bến Thành (SC 1) và Đà Nẵng (SC 2)
+                                ServiceCenter scThangLong = serviceCenters.get(0);
+                                ServiceCenter scBenThanh = serviceCenters.get(1);
+                                ServiceCenter scDaNang = serviceCenters.get(2);
 
-                        // Lấy kho của "Pin"
-                        List<Inventory> pinInventories = partPin.getInventoryRecords();
-                        Inventory fromInv_Pin = pinInventories.stream()
-                                        .filter(inv -> inv.getServiceCenter().getSCID()
-                                                        .equals(serviceCenters.get(0).getSCID()))
-                                        .findFirst().orElse(null);
-                        Inventory toInv_Pin_SC1 = pinInventories.stream()
-                                        .filter(inv -> inv.getServiceCenter().getSCID()
-                                                        .equals(serviceCenters.get(1).getSCID()))
-                                        .findFirst().orElse(null);
+                                // --- ĐÃ SỬA: Truy vấn trực tiếp Inventory từ session thay vì dùng
+                                // part.getInventoryRecords() ---
 
-                        // Lấy kho của "Động cơ"
-                        List<Inventory> dongCoInventories = partDongCo.getInventoryRecords();
-                        Inventory fromInv_DongCo = dongCoInventories.stream()
-                                        .filter(inv -> inv.getServiceCenter().getSCID()
-                                                        .equals(serviceCenters.get(0).getSCID()))
-                                        .findFirst().orElse(null);
-                        Inventory toInv_DongCo_SC2 = dongCoInventories.stream()
-                                        .filter(inv -> inv.getServiceCenter().getSCID()
-                                                        .equals(serviceCenters.get(2).getSCID()))
-                                        .findFirst().orElse(null);
+                                System.out.println("Đang truy vấn Inventory để tạo AllocatePartHistory...");
 
-                        // Lấy nhân viên
-                        EVMStaff evmStaff = evmStaffs.get(0);
-                        SCStaff scStaff_SC1 = scStaffs.get(1); // Giả sử staff này thuộc SC 1
+                                // Lấy kho của "Pin"
+                                Inventory fromInv_Pin = session.createQuery(
+                                                "FROM Inventory WHERE Part = :part AND ServiceCenter = :sc",
+                                                Inventory.class)
+                                                .setParameter("part", partPin)
+                                                .setParameter("sc", scThangLong)
+                                                .uniqueResult();
 
-                        if (fromInv_Pin != null && toInv_Pin_SC1 != null && fromInv_DongCo != null
-                                        && toInv_DongCo_SC2 != null) {
+                                Inventory toInv_Pin_SC1 = session.createQuery(
+                                                "FROM Inventory WHERE Part = :part AND ServiceCenter = :sc",
+                                                Inventory.class)
+                                                .setParameter("part", partPin)
+                                                .setParameter("sc", scBenThanh)
+                                                .uniqueResult();
 
-                                // 1. Yêu cầu "Pending" (Đang chờ duyệt)
-                                AllocatePartHistory history1 = new AllocatePartHistory();
-                                history1.setFromInventory(fromInv_Pin);
-                                history1.setToInventory(toInv_Pin_SC1);
-                                history1.setPart(partPin);
-                                history1.setQuantity(10); // Cấp 10 bộ pin
-                                history1.setCreatedByEVMStaff(evmStaff);
-                                history1.setStatus("Pending");
-                                history1.setAllocationDate(new Date());
-                                session.persist(history1);
+                                // Lấy kho của "Động cơ"
+                                Inventory fromInv_DongCo = session.createQuery(
+                                                "FROM Inventory WHERE Part = :part AND ServiceCenter = :sc",
+                                                Inventory.class)
+                                                .setParameter("part", partDongCo)
+                                                .setParameter("sc", scThangLong)
+                                                .uniqueResult();
 
-                                // 2. Yêu cầu "Completed" (Đã hoàn tất)
-                                AllocatePartHistory history2 = new AllocatePartHistory();
-                                history2.setFromInventory(fromInv_DongCo);
-                                history2.setToInventory(toInv_DongCo_SC2);
-                                history2.setPart(partDongCo);
-                                history2.setQuantity(5); // Cấp 5 động cơ
-                                history2.setCreatedByEVMStaff(evmStaff);
-                                history2.setStatus("Completed");
-                                history2.setAllocationDate(
-                                                new Date(System.currentTimeMillis() - 1000L * 60 * 60 * 24 * 2)); // 2
-                                                                                                                  // ngày
-                                                                                                                  // trước
-                                history2.setApprovedBySCStaff(scStaffs.get(2)); // Duyệt bởi staff SC 2
-                                history2.setApprovalDate(new Date());
-                                session.persist(history2);
+                                Inventory toInv_DongCo_SC2 = session.createQuery(
+                                                "FROM Inventory WHERE Part = :part AND ServiceCenter = :sc",
+                                                Inventory.class)
+                                                .setParameter("part", partDongCo)
+                                                .setParameter("sc", scDaNang)
+                                                .uniqueResult();
 
-                                // 3. Yêu cầu "Failed" (Thất bại - Giả sử)
-                                AllocatePartHistory history3 = new AllocatePartHistory();
-                                history3.setFromInventory(fromInv_Pin);
-                                history3.setToInventory(toInv_Pin_SC1);
-                                history3.setPart(partPin);
-                                history3.setQuantity(9999); // Số lượng quá lớn
-                                history3.setCreatedByEVMStaff(evmStaff);
-                                history3.setStatus("Failed (Out of Stock)");
-                                history3.setAllocationDate(new Date());
-                                session.persist(history3);
+                                // Lấy nhân viên
+                                EVMStaff evmStaff = evmStaffs.get(0);
+                                SCStaff scStaff_SC2 = scStaffs.get(2); // Giả sử staff này thuộc SC Đà Nẵng
 
-                        } else {
-                                System.err.println(
-                                                "--- KHÔNG THỂ THÊM AllocatePartHistory: Không tìm thấy các bản ghi Inventory. ---");
-                                System.err.println(
-                                                "--- Điều này có thể xảy ra nếu quan hệ @OneToMany trong Part.java không được cập nhật tự động. ---");
+                                if (fromInv_Pin != null && toInv_Pin_SC1 != null && fromInv_DongCo != null
+                                                && toInv_DongCo_SC2 != null) {
+
+                                        System.out.println("Đã tìm thấy Inventory, đang tạo AllocatePartHistory...");
+
+                                        // 1. Yêu cầu "Pending" (Đang chờ duyệt)
+                                        AllocatePartHistory history1 = new AllocatePartHistory();
+                                        history1.setFromInventory(fromInv_Pin);
+                                        history1.setToInventory(toInv_Pin_SC1);
+                                        history1.setPart(partPin);
+                                        history1.setQuantity(10); // Cấp 10 bộ pin
+                                        history1.setCreatedByEVMStaff(evmStaff);
+                                        history1.setStatus("Pending");
+                                        history1.setAllocationDate(new Date());
+                                        session.persist(history1);
+
+                                        // 2. Yêu cầu "Completed" (Đã hoàn tất)
+                                        AllocatePartHistory history2 = new AllocatePartHistory();
+                                        history2.setFromInventory(fromInv_DongCo);
+                                        history2.setToInventory(toInv_DongCo_SC2);
+                                        history2.setPart(partDongCo);
+                                        history2.setQuantity(5); // Cấp 5 động cơ
+                                        history2.setCreatedByEVMStaff(evmStaff);
+                                        history2.setStatus("Completed");
+                                        history2.setAllocationDate(new Date(
+                                                        System.currentTimeMillis() - 1000L * 60 * 60 * 24 * 2)); // 2
+                                                                                                                 // ngày
+                                                                                                                 // trước
+                                        history2.setApprovedBySCStaff(scStaff_SC2); // Duyệt bởi staff SC 2
+                                        history2.setApprovalDate(new Date());
+                                        session.persist(history2);
+
+                                        // 3. Yêu cầu "Failed" (Thất bại - Giả sử)
+                                        AllocatePartHistory history3 = new AllocatePartHistory();
+                                        history3.setFromInventory(fromInv_Pin);
+                                        history3.setToInventory(toInv_Pin_SC1);
+                                        history3.setPart(partPin);
+                                        history3.setQuantity(9999); // Số lượng quá lớn
+                                        history3.setCreatedByEVMStaff(evmStaff);
+                                        history3.setStatus("Failed (Out of Stock)");
+                                        history3.setAllocationDate(new Date());
+                                        session.persist(history3);
+
+                                } else {
+                                        System.err.println(
+                                                        "--- KHÔNG THỂ THÊM AllocatePartHistory: Không tìm thấy các bản ghi Inventory (qua HQL). ---");
+                                        if (fromInv_Pin == null)
+                                                System.err.println("Debug: fromInv_Pin (Pin @ ThangLong) is null.");
+                                        if (toInv_Pin_SC1 == null)
+                                                System.err.println("Debug: toInv_Pin_SC1 (Pin @ BenThanh) is null.");
+                                        if (fromInv_DongCo == null)
+                                                System.err.println(
+                                                                "Debug: fromInv_DongCo (DongCo @ ThangLong) is null.");
+                                        if (toInv_DongCo_SC2 == null)
+                                                System.err.println(
+                                                                "Debug: toInv_DongCo_SC2 (DongCo @ DaNang) is null.");
+                                }
+
+                        } catch (Exception e) {
+                                System.err.println("Lỗi nghiêm trọng khi thêm dữ liệu AllocatePartHistory:");
+                                e.printStackTrace();
                         }
+                        // 3. Commit Transaction
+                        session.getTransaction().commit();
+                        System.out.println("\n--- THÊM DỮ LIỆU MẪU THÀNH CÔNG! ---");
+
                 } catch (Exception e) {
                         // Rollback nếu có lỗi
                         if (session != null && session.getTransaction().isActive()) {

@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import uth.edu.pojo.RecallCampaign;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecallCampaignDAO {
@@ -79,7 +80,10 @@ public class RecallCampaignDAO {
         RecallCampaign recallCampaign = null;
         try {
             session = sessionFactory.openSession();
-            recallCampaign = session.get(RecallCampaign.class, id);
+            String hql = "FROM RecallCampaign rc JOIN FETCH rc.CreatedByStaff WHERE rc.CampaignID = :id";
+            recallCampaign = session.createQuery(hql, RecallCampaign.class)
+                                    .setParameter("id", id)
+                                    .uniqueResult();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -95,12 +99,15 @@ public class RecallCampaignDAO {
         List<RecallCampaign> recallCampaigns = null;
         try {
             session = sessionFactory.openSession();
-            recallCampaigns = session.createQuery("FROM RecallCampaign", RecallCampaign.class)
+            
+            String hql = "FROM RecallCampaign rc JOIN FETCH rc.CreatedByStaff ORDER BY rc.Date DESC";
+            recallCampaigns = session.createQuery(hql, RecallCampaign.class)
                     .setFirstResult((page - 1) * pageSize)
                     .setMaxResults(pageSize)
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
+            return new ArrayList<>(); 
         } finally {
             if (session != null) {
                 session.close();

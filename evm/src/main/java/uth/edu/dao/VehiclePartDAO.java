@@ -1,11 +1,13 @@
 package uth.edu.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import uth.edu.pojo.VehiclePart;
 
-import java.util.List;
+import uth.edu.pojo.VehiclePart;
 
 public class VehiclePartDAO {
     private Configuration configuration = null;
@@ -95,7 +97,13 @@ public class VehiclePartDAO {
         List<VehiclePart> parts = null;
         try {
             session = sessionFactory.openSession();
-            parts = session.createQuery("FROM VehiclePart", VehiclePart.class)
+            String hql = "FROM VehiclePart vp " +
+                         "JOIN FETCH vp.Part " +
+                         "JOIN FETCH vp.vehicle " +
+                         "JOIN FETCH vp.InstalledBy " +
+                         "ORDER BY vp.InstallDate DESC";
+
+            parts = session.createQuery(hql, VehiclePart.class)
                     .setFirstResult((page - 1) * pageSize)
                     .setMaxResults(pageSize)
                     .getResultList();
@@ -105,6 +113,31 @@ public class VehiclePartDAO {
             if (session != null) {
                 session.close();
             }
+        }
+        return parts;
+    }
+    public List<VehiclePart> searchVehicleParts(String query, int page, int pageSize) {
+        Session session = null;
+        List<VehiclePart> parts = null;
+        try {
+            session = sessionFactory.openSession();
+            String hql = "FROM VehiclePart vp " +
+                         "JOIN FETCH vp.Part p " +
+                         "JOIN FETCH vp.vehicle v " +
+                         "JOIN FETCH vp.InstalledBy u " +
+                         "WHERE p.Name LIKE :query OR v.VIN LIKE :query OR vp.SerialNumber LIKE :query " +
+                         "ORDER BY vp.InstallDate DESC";
+            
+            parts = session.createQuery(hql, VehiclePart.class)
+                    .setParameter("query", "%" + query + "%")
+                    .setFirstResult((page - 1) * pageSize)
+                    .setMaxResults(pageSize)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        } finally {
+            if (session != null) session.close();
         }
         return parts;
     }

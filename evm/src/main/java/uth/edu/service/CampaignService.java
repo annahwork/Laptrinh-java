@@ -3,6 +3,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import jakarta.transaction.Transactional;
 import uth.edu.pojo.EVMStaff;
 import uth.edu.pojo.RecallCampaign;
 import uth.edu.pojo.RecallVehicle;
@@ -14,11 +18,6 @@ import uth.edu.repositories.RecallCampaignRepository;
 import uth.edu.repositories.RecallVehicleRepository;
 import uth.edu.repositories.UserRepository;
 import uth.edu.repositories.VehicleRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import jakarta.transaction.Transactional;
 
 @Service
 public class CampaignService {
@@ -224,6 +223,64 @@ private RecallCampaignRepository recallCampaignRepository;
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
+        }
+    }
+   
+    @Transactional
+    public boolean updateCampaign(Integer EVMStaffID, Integer campaignId, RecallCampaign campaignData) {
+        try {
+            User staff = userRepository.getUserById(EVMStaffID);
+            if (staff == null || !(staff instanceof EVMStaff)) {
+                return false; 
+            }
+            
+            RecallCampaign existingCampaign = recallCampaignRepository.getRecallCampaignById(campaignId);
+            if (existingCampaign == null) {
+                return false;
+            }
+
+            existingCampaign.setName(campaignData.getName());
+            existingCampaign.setDescription(campaignData.getDescription());
+            existingCampaign.setDate(campaignData.getDate());
+            
+            recallCampaignRepository.updateRecallCampaign(existingCampaign);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Transactional
+    public boolean approveCampaign(Integer EVMStaffID, Integer campaignId) {
+        return updateCampaignStatus(EVMStaffID, campaignId, "Active");
+    }
+
+
+    @Transactional
+    public boolean rejectCampaign(Integer EVMStaffID, Integer campaignId) {
+        return updateCampaignStatus(EVMStaffID, campaignId, "Rejected"); 
+    }
+
+
+    private boolean updateCampaignStatus(Integer EVMStaffID, Integer campaignId, String newStatus) {
+         try {
+            User staff = userRepository.getUserById(EVMStaffID);
+            if (staff == null || !(staff instanceof EVMStaff)) {
+                return false;
+            }
+            
+            RecallCampaign campaign = recallCampaignRepository.getRecallCampaignById(campaignId);
+            if (campaign == null) {
+                return false;
+            }
+
+            campaign.setStatus(newStatus);
+            recallCampaignRepository.updateRecallCampaign(campaign);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 

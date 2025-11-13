@@ -71,7 +71,14 @@ public class AllocatePartHistoryDAO {
         List<AllocatePartHistory> histories = null;
         try {
             session = sessionFactory.openSession();
-            histories = session.createQuery("FROM AllocatePartHistory ORDER BY allocationDate DESC", AllocatePartHistory.class)
+            String hql = "FROM AllocatePartHistory h " +
+                         "JOIN FETCH h.part " +
+                         "JOIN FETCH h.toInventory i " +
+                         "JOIN FETCH i.ServiceCenter " +
+                         "JOIN FETCH h.createdByEVMStaff " +
+                         "ORDER BY h.allocationDate DESC";
+            
+            histories = session.createQuery(hql, AllocatePartHistory.class)
                     .setFirstResult((page - 1) * pageSize)
                     .setMaxResults(pageSize)
                     .getResultList();

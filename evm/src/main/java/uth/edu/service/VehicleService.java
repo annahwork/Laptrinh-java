@@ -1,26 +1,26 @@
 package uth.edu.service;
 
-import uth.edu.pojo.VehiclePart;
-import uth.edu.pojo.WarrantyHistory;
-import uth.edu.pojo.Vehicle;
-import uth.edu.pojo.Customer;
-import uth.edu.pojo.Part;
-import uth.edu.pojo.SCStaff;
-import uth.edu.pojo.SCTechnician;
-import uth.edu.pojo.User;
-import uth.edu.repositories.VehiclePartRepository;
-import uth.edu.repositories.VehicleRepository;
-import uth.edu.repositories.CustomerRepository;
-import uth.edu.repositories.PartRepository;
-import uth.edu.repositories.SCStaffRepository;
-import uth.edu.repositories.UserRepository;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import uth.edu.pojo.Customer;
+import uth.edu.pojo.Part;
+import uth.edu.pojo.SCStaff;
+import uth.edu.pojo.SCTechnician;
+import uth.edu.pojo.User;
+import uth.edu.pojo.Vehicle;
+import uth.edu.pojo.VehiclePart;
+import uth.edu.pojo.WarrantyHistory;
+import uth.edu.repositories.CustomerRepository;
+import uth.edu.repositories.PartRepository;
+import uth.edu.repositories.SCStaffRepository;
+import uth.edu.repositories.UserRepository;
+import uth.edu.repositories.VehiclePartRepository;
+import uth.edu.repositories.VehicleRepository;
 
 @Service
 public class VehicleService {
@@ -149,6 +149,40 @@ public class VehicleService {
     public List<Vehicle> GetCustomerVehicles(Integer CustomerId) {
         try {
             return new ArrayList<>();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public List<VehiclePart> getVehicleParts(String query, int page, int pageSize) {
+        try {
+            if (query != null && !query.trim().isEmpty()) {
+                return vehiclePartRepository.searchVehicleParts(query, page, pageSize);
+            } else {
+                return vehiclePartRepository.getAllVehicleParts(page, pageSize);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public List<User> getInstallers() {
+        try {
+            List<User> installers = new ArrayList<>();
+            installers.addAll(userRepository.getUsersByRole("SC_TECHNICIAN"));
+            installers.addAll(userRepository.getUsersByRole("EVM_STAFF"));
+            return installers;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public List<Part> getAllParts() {
+        try {
+            return partRepository.getAllParts(1, 1000); 
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();

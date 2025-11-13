@@ -90,7 +90,7 @@
         currentFilteredCampaigns = allCampaigns.filter(c => {
             const matchesSearch = searchValue
                 ? (c.name?.toLowerCase().includes(searchValue) ||
-                   c.campaignID?.toString().toLowerCase().includes(searchValue)) // Sửa
+                   c.campaignID?.toString().toLowerCase().includes(searchValue)) 
                 : true;
             
             const matchesStatus = statusFilter 

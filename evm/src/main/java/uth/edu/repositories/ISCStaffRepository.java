@@ -1,6 +1,10 @@
 package uth.edu.repositories;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
+
+import uth.edu.pojo.SCStaff;
 
 @Repository
 public interface ISCStaffRepository {
@@ -8,5 +12,5 @@ public interface ISCStaffRepository {
     public void updateSCStaff(uth.edu.pojo.SCStaff SCStaff);
     public void deleteSCStaff(uth.edu.pojo.SCStaff SCStaff);
     public uth.edu.pojo.SCStaff getSCStaffById(int id);
-    public java.util.List<uth.edu.pojo.SCStaff> getAllSCStaffs(int page, int pageSize);
+    public List<SCStaff> getAllSCStaffs(int page, int pageSize);
 }

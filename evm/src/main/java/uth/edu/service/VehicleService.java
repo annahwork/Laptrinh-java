@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,13 +32,14 @@ public class VehicleService {
     private SCStaffRepository scStaffRepository;
     private UserRepository userRepository;
 
-    public VehicleService() {
-        vehicleRepository = new VehicleRepository();
-        customerRepository = new CustomerRepository();
-        vehiclePartRepository = new VehiclePartRepository();
-        partRepository = new PartRepository();
-        scStaffRepository = new SCStaffRepository();
-        userRepository = new UserRepository();
+    @Autowired
+    public VehicleService(VehicleRepository vehicleRepository, CustomerRepository customerRepository, VehiclePartRepository vehiclePartRepository, PartRepository partRepository, SCStaffRepository scStaffRepository, UserRepository userRepository) {
+        this.vehicleRepository = vehicleRepository;
+        this.customerRepository = customerRepository;
+        this.vehiclePartRepository = vehiclePartRepository;
+        this.partRepository = partRepository;
+        this.scStaffRepository = scStaffRepository;
+        this.userRepository = userRepository;
     }
 
     public boolean RegisterVehicle(Integer SCStaffID, Vehicle VehicleData, Customer CustomerData) {

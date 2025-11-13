@@ -40,6 +40,22 @@ public class RecallVehicle {
         Status = status;
     }
 
+    public int getCampaignCode() { 
+        return RecallCampaign != null ? RecallCampaign.getCampaignID() : null;
+    }
+    
+    public String getVin() { 
+        return vehicle != null ? vehicle.getVIN() : null;
+    }
+    
+    public String getCustomerName() {
+        return (vehicle != null && vehicle.getCustomer() != null) ? vehicle.getCustomer().getName() : null;
+    }
+    
+    public String getCampaignCreatedByStaffName() {
+        return (RecallCampaign != null) ? RecallCampaign.getCreatedByStaffName() : "N/A";
+    }
+
     public Integer getRecallVehicleID() {
         return RecallVehicleID;
     }

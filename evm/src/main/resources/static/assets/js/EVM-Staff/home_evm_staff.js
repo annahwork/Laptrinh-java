@@ -62,7 +62,8 @@
                 'warranty_policy.html': '/warranty_policy',
                 'statistics.html': '/statistics',
                 'reports.html': '/reports',
-                'settings.html': '/settings'
+                'settings.html': '/settings',
+                'account_evm.html': '/account_evm'
             };
 
             const endpoint = pageMap[pageName];

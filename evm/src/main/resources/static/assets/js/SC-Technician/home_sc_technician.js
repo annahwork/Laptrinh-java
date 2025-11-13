@@ -45,7 +45,8 @@
                 'spare_part.html': '/spare_part',
                 'technical_documents.html': '/technical_documents',
                 'warranty_result.html': '/warranty_result',
-                'work_schedule.html': '/work_schedule'
+                'work_schedule.html': '/work_schedule',
+                'account_technician.html': '/account_technician',
             };
 
             const endpoint = pageMap[pageName];

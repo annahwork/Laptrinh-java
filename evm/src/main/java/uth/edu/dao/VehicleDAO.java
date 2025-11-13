@@ -77,20 +77,22 @@ public class VehicleDAO {
     }
 
     public Vehicle getVehicleByVin(String vin) {
-        Session session = null;
-        Vehicle vehicle = null;
-        try {
-            session = sessionFactory.openSession();
-            vehicle = session.get(Vehicle.class, vin);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return vehicle;
+    Session session = null;
+    Vehicle vehicle = null;
+    try {
+        session = sessionFactory.openSession();
+        // Dùng JOIN FETCH để tải Customer
+        String hql = "FROM Vehicle v JOIN FETCH v.customer WHERE v.VIN = :vin";
+        vehicle = session.createQuery(hql, Vehicle.class)
+                .setParameter("vin", vin)
+                .uniqueResult();
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        if (session != null) session.close();
     }
+    return vehicle;
+}
 
     public List<Vehicle> getVehiclesByModel(String model, int page, int pageSize) {
         Session session = null;

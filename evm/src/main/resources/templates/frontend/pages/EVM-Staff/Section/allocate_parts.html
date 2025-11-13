@@ -59,7 +59,7 @@
                     </thead>
 
                     <tbody id="partsTableBody">
-                    <!-- chỉ hiển thị tối đa 2 phụ tùng -->
+                    <!-- chỉ hiển thị tối đa 5 phụ tùng -->
                     <tr>
                         <td class="text-center">PT-001</td>
                         <td class="text-center">Bộ lọc dầu</td>
@@ -133,14 +133,18 @@
                     </div>
 
                     <form id="allocateForm">
+
+                        <div class="form-group">
+                            <label for="partSelect">Phụ tùng</label>
+                            <select id="partSelect" required>
+                                <option value="">-- Đang tải danh sách phụ tùng... --</option>
+                                </select>
+                        </div>
                         <div class="form-group">
                             <label for="scCenterSelect">Trung tâm nhận</label>
                             <select id="scCenterSelect" required>
-                                <option value="">-- Chọn trung tâm --</option>
-                                <option value="SC001">SC001 - Trung tâm TP.HCM</option>
-                                <option value="SC002">SC002 - Trung tâm Hà Nội</option>
-                                <option value="SC003">SC003 - Trung tâm Đà Nẵng</option>
-                            </select>
+                                <option value="">-- Đang tải trung tâm... --</option>
+                                </select>
                         </div>
 
                         <div class="form-group">
@@ -150,7 +154,6 @@
 
                         <div class="form-footer">
                             <button type="submit" class="btn btn-confirm">Xác nhận</button>
-                            <!-- nút Hủy footer: class chung để đóng -->
                             <button type="button" class="btn btn-cancel modal-close-btn" id="cancelAllocateModal">Hủy</button>
                         </div>
                     </form>

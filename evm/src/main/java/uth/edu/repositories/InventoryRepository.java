@@ -55,6 +55,10 @@ public class InventoryRepository implements IInventoryRepository {
         return InventoryDAO.getAllInventoriesWithDetails(page, pageSize);
     }
     @Override
+    public List<Inventory> getInventoriesBySCID(int scId, int page, int pageSize, String search, String type) {
+        return InventoryDAO.getInventoriesBySCID(scId, page, pageSize, search, type);
+    }
+    @Override
     public boolean approveAllocationTransaction(Inventory from, Inventory to, AllocatePartHistory history) {
         return InventoryDAO.approveAllocationTransaction(from, to, history);
     }

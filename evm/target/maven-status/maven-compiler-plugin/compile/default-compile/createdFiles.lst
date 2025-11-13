@@ -1,7 +1,9 @@
 uth\edu\dao\AllocatePartHistoryDAO.class
+uth\edu\controllers\SCTechnicianController.class
 uth\edu\repositories\InventoryRepository.class
 uth\edu\pojo\User.class
 uth\edu\pojo\VehiclePart.class
+uth\edu\controllers\EVMStaffDashboardController.class
 uth\edu\repositories\AllocatePartHistoryRepository.class
 uth\edu\pojo\Customer.class
 uth\edu\dao\WarrantyHistoryDAO.class
@@ -15,6 +17,7 @@ uth\edu\pojo\RecallCampaign.class
 uth\edu\pojo\AllocatePartHistory.class
 uth\edu\pojo\SCTechnician.class
 uth\edu\pojo\ServiceCenter.class
+uth\edu\controllers\LoginController.class
 uth\edu\pojo\Schedule.class
 uth\edu\pojo\EVMStaff.class
 uth\edu\repositories\IInventoryRepository.class

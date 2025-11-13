@@ -13,12 +13,16 @@
     console.log('Redirecting for role:', userRole);
     switch (userRole) {
         case 'ADMIN':
+            window.location.href = `${CONTEXT_PATH}/Admin`;
+            break;
         case 'EVM_STAFF':
             window.location.href = `${CONTEXT_PATH}/EVMStaff`;
             break;
         case 'SC_STAFF':
+            window.location.href = `${CONTEXT_PATH}/SCStaff`;
+            break;
         case 'SC_TECHNICIAN':
-            window.location.href = `${CONTEXT_PATH}/home`;
+            window.location.href = `${CONTEXT_PATH}/SCTechnician`;
             break;
         default:
             console.warn('Unknown user role, redirecting to default home.');

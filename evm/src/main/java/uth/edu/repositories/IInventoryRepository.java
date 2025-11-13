@@ -17,6 +17,7 @@ public interface IInventoryRepository {
     public List<Inventory> getInventoriesByPartID(Integer partId, int page, int pageSize);
     public List<Inventory> getAllInventories(int page, int pageSize);
     public List<Inventory> getAllInventoriesWithDetails(int page, int pageSize);
+    public List<Inventory> getInventoriesBySCID(int scId, int page, int pageSize, String search, String type);
     public boolean approveAllocationTransaction(Inventory from, Inventory to, AllocatePartHistory history);
     public void closeResources();
 }

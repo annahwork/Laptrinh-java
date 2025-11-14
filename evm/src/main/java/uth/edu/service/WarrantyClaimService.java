@@ -315,6 +315,57 @@ public class WarrantyClaimService {
         }
     }
 
+    public boolean updateClaimStatus(Integer userID, Integer claimServID, String newStatus) {
+
+            ClaimService claimService = claimServiceRepository.getClaimServiceById(claimServID);
+            
+            if (claimService == null) {
+                System.err.println("Không tìm thấy ClaimService ID: " + claimServID);
+                return false;
+            }
+            claimService.setResult(newStatus); 
+            
+            try {
+                claimServiceRepository.updateClaimService(claimService);
+                return true;
+            } catch (Exception e) {
+                System.err.println("Lỗi lưu trạng thái mới cho ClaimService ID: " + claimServID);
+                e.printStackTrace();
+                return false;
+            }
+    }
+
+    public List<Object[]> getClaimServiceDetails(Integer userID) {
+        try {
+            return claimServiceRepository.getClaimServiceDetails(userID, 1 , 9999);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public Long[] getPerformanceMetrics(int technicianId) {
+        try {
+            return claimServiceRepository.getPerformanceMetrics(technicianId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Long[]{0L, 0L};
+        }
+    }
+
+    public WarrantyClaim getWarrantyClaimById(Integer warrantyClaimID) {
+        return warrantyClaimRepository.getWarrantyClaimById(warrantyClaimID);
+    }
+    
+    public boolean deleteWarrantyClaim(Integer warrantyClaimID) {
+        WarrantyClaim warrantyClaim = getWarrantyClaimById(warrantyClaimID);
+        if (warrantyClaim != null) {
+            warrantyClaimRepository.deleteWarrantyClaim(warrantyClaim); 
+            return true;
+        }
+        return false;
+    }
+
     public void closeResources() {
         try {
             warrantyClaimRepository.closeResources();

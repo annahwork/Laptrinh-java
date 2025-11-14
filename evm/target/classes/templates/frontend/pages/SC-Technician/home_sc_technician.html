@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="/evm/assets/css/main.css">
     <link rel="stylesheet" href="/evm/assets/css/sidebar.css">
     <link rel="stylesheet" href="/evm/assets/css/SC-Technician/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
 </head>
 <body>
 
@@ -76,10 +79,6 @@
                 </li>
 
                 <li class="sidebar__item">
-                    <a href="#" data-page="work_schedule.html" class="sidebar__link">Lịch làm việc</a>
-                </li>
-
-                <li class="sidebar__item">
                     <a href="#" data-page="performance.html" class="sidebar__link">Hiệu suất</a>
                 </li>
 
@@ -101,8 +100,8 @@
     fetch('/evm/components/footer.html')
         .then(res => res.text())
         .then(html => {
-            html = html.replace(/href="Section\//g, 'href="../SC-Staff/Section/');
-            html = html.replace(/data-page="Section\//g, 'data-page="../SC-Staff/Section/');
+            html = html.replace(/href="Section\//g, 'href="../SC-Technician/Section/');
+            html = html.replace(/data-page="Section\//g, 'data-page="../SC-Technician/Section/');
             document.getElementById('footer-placeholder').innerHTML = html;
         })
         .catch(err => console.error("Khong tai duoc footer:", err));

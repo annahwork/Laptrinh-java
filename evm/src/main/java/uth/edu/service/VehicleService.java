@@ -198,5 +198,13 @@ public class VehicleService {
         }
     }
 
+    public List<VehiclePart> getWarrantyPartsForTechnician(int userID){
+        try {
+            return vehiclePartRepository.getWarrantyPartsForTechnician(userID, 1 , 9999);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
     
 }

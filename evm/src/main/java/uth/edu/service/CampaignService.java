@@ -47,7 +47,7 @@ private RecallCampaignRepository recallCampaignRepository;
 
             CampaignData.setCreatedByStaff((EVMStaff) staff);
             CampaignData.setDate(new Date());
-            CampaignData.setStatus("Chưa giải quyết");
+            CampaignData.setStatus("Pending");
 
             recallCampaignRepository.addRecallCampaign(CampaignData);
             return true;

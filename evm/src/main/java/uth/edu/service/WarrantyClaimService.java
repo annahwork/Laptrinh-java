@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import uth.edu.pojo.Admin;
 import uth.edu.pojo.ClaimService;
 import uth.edu.pojo.EVMStaff;
@@ -21,9 +24,6 @@ import uth.edu.repositories.WarrantyClaimRepository;
 import uth.edu.repositories.WarrantyHistoryRepository;
 import uth.edu.repositories.WarrantyServiceRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 @Service
 public class WarrantyClaimService {
 
@@ -39,7 +39,9 @@ public class WarrantyClaimService {
     private static final int MAX_PAGE_SIZE = 9999;
 
     @Autowired
-    public WarrantyClaimService(WarrantyClaimRepository warrantyClaimRepository, UserRepository userRepository, VehiclePartRepository vehiclePartRepository, ClaimServiceRepository claimServiceRepository, WarrantyServiceRepository warrantyServiceRepository, WarrantyHistoryRepository warrantyHistoryRepository) {
+    public WarrantyClaimService(WarrantyClaimRepository warrantyClaimRepository, UserRepository userRepository,
+            VehiclePartRepository vehiclePartRepository, ClaimServiceRepository claimServiceRepository,
+            WarrantyServiceRepository warrantyServiceRepository, WarrantyHistoryRepository warrantyHistoryRepository) {
         this.warrantyClaimRepository = warrantyClaimRepository;
         this.userRepository = userRepository;
         this.vehiclePartRepository = vehiclePartRepository;
@@ -69,7 +71,7 @@ public class WarrantyClaimService {
             ClaimData.setCreatedByStaff((SCStaff) staff);
             ClaimData.setVehiclePart(vehiclePart);
             ClaimData.setDate(new Date());
-            ClaimData.setStatus("Đã gửi");
+            ClaimData.setStatus("Pending");
             ClaimData.setAttachment(AttachmentUrl);
 
             WarrantyHistory history = new WarrantyHistory();
@@ -148,15 +150,18 @@ public class WarrantyClaimService {
                 pageSize = DEFAULT_PAGE_SIZE;
 
             User user = userRepository.getUserById(UserID);
+
             if (user == null || user instanceof SCTechnician) {
                 return new ArrayList<>();
             }
 
             if (user instanceof SCStaff) {
                 return warrantyClaimRepository.getClaimsByUserID(UserID, page, pageSize);
-            } else {
+            } else if (user instanceof EVMStaff || user instanceof Admin) {
                 return warrantyClaimRepository.getAllWarrantyClaims(page, pageSize);
             }
+
+            return new ArrayList<>();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -200,7 +205,7 @@ public class WarrantyClaimService {
                 return new ArrayList<>();
             }
 
-            return warrantyClaimRepository.getClaimsByStatus("Đã gửi", page, pageSize);
+            return warrantyClaimRepository.getClaimsByStatus("Pending", page, pageSize);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -209,11 +214,11 @@ public class WarrantyClaimService {
     }
 
     public boolean ApproveClaim(Integer EVMStaffID, Integer ClaimId, String Note) {
-        return updateClaimStatus(EVMStaffID, ClaimId, "Được chấp nhận", Note);
+        return updateClaimStatus(EVMStaffID, ClaimId, "Approved", Note);
     }
 
     public boolean RejectClaim(Integer EVMStaffID, Integer ClaimId, String Note) {
-        return updateClaimStatus(EVMStaffID, ClaimId, "Bị từ chối", Note);
+        return updateClaimStatus(EVMStaffID, ClaimId, "Rejected", Note);
     }
 
     private boolean updateClaimStatus(Integer UserID, Integer ClaimId, String NewStatus, String Note) {
@@ -229,7 +234,7 @@ public class WarrantyClaimService {
             }
 
             String oldStatus = claim.getStatus();
-            if (!"Đã gửi".equals(oldStatus)) {
+            if (!"Pending".equals(oldStatus)) {
                 return false;
             }
 
@@ -238,8 +243,8 @@ public class WarrantyClaimService {
             WarrantyHistory history = new WarrantyHistory();
             history.setDate(new Date());
             String historyNote = String.format(
-                    "Trạng thái thay đổi: '%s' -> '%s'. Ghi chú: %s (Bởi: %s)",
-                    oldStatus, NewStatus, Note, user.getName());
+                    "Trạng thái cập nhật: %s. Ghi chú: %s (Bởi: %s)",
+                    NewStatus, Note, user.getName());
             history.setNote(historyNote);
 
             return warrantyClaimRepository.updateWarrantyClaim(claim, history);
@@ -290,6 +295,7 @@ public class WarrantyClaimService {
             return false;
         }
     }
+
     public int countClaimsByStatus(List<String> statuses) {
         try {
             if (statuses == null || statuses.isEmpty()) {
@@ -300,8 +306,8 @@ public class WarrantyClaimService {
                 return 0;
             }
             long count = allClaims.stream()
-                                .filter(claim -> statuses.contains(claim.getStatus()))
-                                .count();
+                    .filter(claim -> statuses.contains(claim.getStatus()))
+                    .count();
             return (int) count;
         } catch (Exception e) {
             e.printStackTrace();

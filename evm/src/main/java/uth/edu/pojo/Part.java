@@ -24,16 +24,16 @@ public class Part {
     @Column(name = "PartID")
     private Integer PartID;
 
-    @Column(name = "Name", nullable = false, length = 100)
+    @Column(name = "Name", nullable = false, length = 100, columnDefinition = "NVARCHAR(100)")
     private String Name;
 
-    @Column(name = "Type", length = 50)
+    @Column(name = "Type", length = 50, columnDefinition = "NVARCHAR(50)")
     private String Type;
 
-    @Column(name = "WarrantyPeriod", length = 30)
+    @Column(name = "WarrantyPeriod", length = 30, columnDefinition = "NVARCHAR(30)")
     private String WarrantyPeriod;
 
-    @Column(name = "Manufacturer", length = 100)
+    @Column(name = "Manufacturer", length = 100, columnDefinition = "NVARCHAR(100)")
     private String Manufacturer;
 
     @OneToMany(

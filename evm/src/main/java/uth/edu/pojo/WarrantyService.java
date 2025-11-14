@@ -22,16 +22,16 @@ public class WarrantyService {
     @Column(name = "ServiceID")
     private Integer ServiceID;
 
-    @Column(name = "Name", length = 100, nullable = false)
+    @Column(name = "Name", length = 100, nullable = false, columnDefinition = "NVARCHAR(100)")
     private String Name;
 
-    @Column(name = "Detail", length = 500)
+    @Column(name = "Detail", length = 500, columnDefinition = "NVARCHAR(500)")
     private String Detail;
 
-    @Column(name = "Duration", length = 50)
+    @Column(name = "Duration", length = 50, columnDefinition = "NVARCHAR(50)")
     private String Duration;
 
-    @Column(name = "Condition", length = 255)
+    @Column(name = "Condition", length = 255, columnDefinition = "NVARCHAR(255)")
     private String Condition;
 
     @Column(name ="Cost")

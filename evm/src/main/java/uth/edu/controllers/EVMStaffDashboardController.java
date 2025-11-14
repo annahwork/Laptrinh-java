@@ -49,7 +49,7 @@ public class EVMStaffDashboardController {
 
         try {
             int totalParts = inventoryService.getTotalPartsInStock();
-            List<String> activeStatus = List.of("Pending", "In Progress", "Đã gửi");
+            List<String> activeStatus = List.of("Pending", "In Progress");
             int activeRequests = warrantyClaimService.countClaimsByStatus(activeStatus);
             int activeCampaigns = campaignService.countCampaignsByStatus("Active");
             int lowStock = inventoryService.countLowStockItems();

@@ -48,7 +48,7 @@ public class AllocatePartHistory {
     @JoinColumn(name = "ApprovedByUserID")
     private SCStaff approvedBySCStaff;
 
-    @Column(name = "Status", length = 50)
+    @Column(name = "Status", length = 50, columnDefinition = "NVARCHAR(50)")
     private String status;
 
     @Temporal(TemporalType.TIMESTAMP)

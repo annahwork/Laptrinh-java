@@ -25,7 +25,7 @@ public class VehiclePart {
     @JoinColumn(name = "VIN", nullable = false)
     private Vehicle vehicle;
 
-    @Column(name = "SerialNumber", length = 50)
+    @Column(name = "SerialNumber", length = 50, columnDefinition = "NVARCHAR(50)")
     private String SerialNumber;
 
     @Temporal(TemporalType.DATE)
@@ -40,7 +40,7 @@ public class VehiclePart {
     @JoinColumn(name = "InstalledBy", referencedColumnName = "UserID")
     private User InstalledBy;
 
-    @Column(name = "Status", length = 20)
+    @Column(name = "Status", length = 20, columnDefinition = "NVARCHAR(20)")
     private String Status;
 
     public VehiclePart() {}

@@ -1,0 +1,23 @@
+<section class="campaign-page">
+  <link rel="stylesheet" href="/evm/assets/css/SC-Technician/campaign_report.css">
+
+  <div class="page-header">
+    <h2>Báo cáo chiến dịch</h2>
+    <div class="actions">
+      <select id="reportFilter">
+        <option value="all">Toàn bộ</option>
+        <option value="this-month">Tháng này</option>
+        <option value="last-month">Tháng trước</option>
+      </select>
+      <button id="btnExportReport" class="btn-primary">Xuất báo cáo</button>
+    </div>
+  </div>
+
+  <div class="data-grid" id="reportContainer">
+    
+    <div class="data-card"></div>
+
+  </div>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="/evm/assets/js/SC-Technician/campaign_report.js"></script>

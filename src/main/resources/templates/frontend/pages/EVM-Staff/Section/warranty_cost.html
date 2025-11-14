@@ -1,0 +1,105 @@
+<section class="warranty-cost_page">
+  <div class="app-layout">
+    <link rel="stylesheet" href="../../assets/css/EVM-Staff/warranty_cost.css">
+
+    <div class="main-cost-wrapper" id="innerContent">
+      <div class="main-cost-area">
+
+        
+    <h2 class="page-title">Chi phí bảo hành</h2>
+
+    <!-- BẢNG DANH SÁCH -->
+    <div class="card">
+        <div class="card-body-no-padding">
+            <table class="table-zebra table-full-width" id="warrantyCostTable">
+          <thead>
+            <tr class="table-header-row">
+              <th>Mã yêu cầu</th>
+              <th>Mã xe</th>
+              <th>Người yêu cầu</th>
+              <th>Ngày yêu cầu</th>
+              <th>Tổng chi phí (VND)</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody id="warrantyCostTableBody">
+            <!-- DỮ LIỆU MẪU -->
+             <tr>
+              <td>CR001</td>
+              <td>V001</td>
+              <td>Nguyễn Văn A</td>
+              <td>2025-11-05</td>
+              <td>1.200.000</td>
+              <td>
+                <button class="btn-action" data-id="CR001">
+                  Xem chi tiết
+                </button>
+              </td>
+              </tr>
+
+            <tr>
+              <td>CR002</td>
+              <td>V002</td>
+              <td>Nguyễn Văn B</td>
+              <td>2025-11-05</td>
+              <td>7.200.000</td>
+              <td>
+                <button class="btn-action" data-id="CR001">
+                  Xem chi tiết
+                </button>
+              </td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PHÂN TRANG -->
+    <div class="pagination-container">
+      <span class="pagination-info">Hiển thị <span id="pageInfo">0</span> của <span id="totalItems">0</span></span>
+      <div class="pagination-controls">
+        <button class="pagination-btn" id="prevPage">« Trước</button>
+        <button class="pagination-btn pagination-btn--active" id="currentPage">1</button>
+        <button class="pagination-btn" id="nextPage">Sau »</button>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+    <!-- MODAL CHI TIẾT -->
+    <div class="warranty-cost__modal" id="warrantyCostModal" aria-hidden="true">
+      <div class="warranty-cost__modal-backdrop"></div>
+      <div class="warranty-cost__modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <!-- Header -->
+        <div class="warranty-cost__modal-header">
+          <h3 id="modal-title" class="warranty-cost__modal-title">
+            Chi tiết chi phí <span id="modalClaimId" class="warranty-cost__modal-id"></span>
+          </h3>
+          <button class="warranty-cost__modal-close" aria-label="Đóng">×</button>
+        </div>
+
+        <!-- Body -->
+        <div class="warranty-cost__modal-body">
+          <table class="warranty-cost__modal-table">
+            <thead>
+              <tr>
+                <th class="warranty-cost__modal-th">Phụ tùng</th>
+                <th class="warranty-cost__modal-th">Số lượng</th>
+                <th class="warranty-cost__modal-th">Đơn giá (VND)</th>
+                <th class="warranty-cost__modal-th">Thành tiền (VND)</th>
+              </tr>
+            </thead>
+            <tbody id="modalCostBody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script src="../../assets/js/EVM-Staff/warranty_cost.js"></script>
+</html>

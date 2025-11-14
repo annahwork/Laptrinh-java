@@ -22,13 +22,13 @@ public class ServiceCenter {
     @Column(name = "SCID")
     private Integer SCID;
 
-    @Column(name = "Name", length = 200, nullable = false)
+    @Column(name = "Name", length = 200, nullable = false, columnDefinition = "NVARCHAR(200)")
     private String Name;
 
-    @Column(name = "Address", length = 500)
+    @Column(name = "Address", length = 500, columnDefinition = "NVARCHAR(500)")
     private String Address;
 
-    @Column(name = "Type", length = 50) 
+    @Column(name = "Type", length = 50, columnDefinition = "NVARCHAR(50)") 
     private String Type;
 
     @OneToMany(mappedBy = "serviceCenter", fetch = FetchType.LAZY)

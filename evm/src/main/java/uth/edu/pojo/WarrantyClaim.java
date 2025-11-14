@@ -38,17 +38,17 @@ public class WarrantyClaim {
     @JoinColumn(name = "UserID") 
     private SCStaff CreatedByStaff;
 
-    @Column(name = "Description", length = 500)
+    @Column(name = "Description", length = 500, columnDefinition = "NVARCHAR(500)")
     private String Description;
 
-    @Column(name = "Status", length = 20)
+    @Column(name = "Status", length = 20, columnDefinition = "NVARCHAR(20)")
     private String Status;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "Date")
     private Date Date;
 
-    @Column(name = "Attachment", length = 255)
+    @Column(name = "Attachment", length = 255, columnDefinition = "NVARCHAR(255)")
     private String Attachment;
 
     @OneToMany(

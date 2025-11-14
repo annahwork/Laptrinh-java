@@ -34,11 +34,11 @@ public class RecallCampaign {
     @JoinColumn(name = "UserID") 
     private EVMStaff CreatedByStaff;
 
-    @Column(name = "Name", nullable = false, length = 100)
+    @Column(name = "Name", nullable = false, length = 100, columnDefinition = "NVARCHAR(100)")
     @JsonProperty("Name")
     private String Name;
 
-    @Column(name = "Status", length = 50)
+    @Column(name = "Status", length = 50, columnDefinition = "NVARCHAR(50)")
     @JsonProperty("Status")
     private String Status;
 
@@ -47,7 +47,7 @@ public class RecallCampaign {
     @Column(name = "Date")
     private Date Date;
 
-    @Column(name = "Description", length = 255)
+    @Column(name = "Description", length = 255, columnDefinition = "NVARCHAR(255)")
     @JsonProperty("Description")
     private String Description;
 

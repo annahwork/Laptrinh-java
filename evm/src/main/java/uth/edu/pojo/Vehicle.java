@@ -22,7 +22,7 @@ import jakarta.persistence.JoinColumn;
 public class Vehicle {
 
     @Id
-    @Column(name = "VIN", nullable = false, unique = true, length = 20)
+    @Column(name = "VIN", nullable = false, unique = true, length = 20, columnDefinition = "NVARCHAR(20)")
     private String VIN;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -30,16 +30,16 @@ public class Vehicle {
     @JsonIgnore
     private Customer customer;
 
-    @Column(name = "Model", nullable = false, length = 50)
+    @Column(name = "Model", nullable = false, length = 50, columnDefinition = "NVARCHAR(50)")
     private String Model;
 
     @Column(name = "Year_Of_Manufacture", nullable = false)
     private Integer Year_Of_Manufacture;
 
-    @Column(name = "Warranty_Time", length = 50)
+    @Column(name = "Warranty_Time", length = 50, columnDefinition = "NVARCHAR(50)")
     private String Warranty_Time;
 
-    @Column(name = "Status", length = 20)
+    @Column(name = "Status", length = 20, columnDefinition = "NVARCHAR(20)")
     private String Status;
 
     @OneToMany(

@@ -30,7 +30,7 @@ public class Schedule {
     @Column(name = "Date", nullable = false)
     private Date Date;
 
-    @Column(name = "Note", length = 255)
+    @Column(name = "Note", length = 255, columnDefinition = "NVARCHAR(255)")
     private String Note;
 
     public Schedule(){}

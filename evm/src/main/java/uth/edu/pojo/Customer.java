@@ -1,11 +1,19 @@
 package uth.edu.pojo;
 
-import jakarta.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.util.ArrayList;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Customer")
@@ -16,16 +24,16 @@ public class Customer {
     @Column(name = "CustomerID")
     private Integer CustomerID;
 
-    @Column(name = "Name", nullable = false, length = 100)
+    @Column(name = "Name", nullable = false, length = 100, columnDefinition = "NVARCHAR(100)")
     private String Name;
 
-    @Column(name = "Email", length = 100)
+    @Column(name = "Email", length = 100, columnDefinition = "NVARCHAR(100)")
     private String Email;
 
-    @Column(name = "Phone", length = 20)
+    @Column(name = "Phone", length = 20, columnDefinition = "NVARCHAR(20)")
     private String Phone;
 
-    @Column(name = "Address", length = 200)
+    @Column(name = "Address", length = 200, columnDefinition = "NVARCHAR(200)")
     private String Address;
 
     @OneToMany(

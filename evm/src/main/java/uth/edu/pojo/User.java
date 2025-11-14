@@ -3,6 +3,10 @@ package uth.edu.pojo;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.Expose;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
@@ -20,10 +24,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.gson.annotations.Expose;
-
 @Entity
 @Table(name = "User_Table")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -35,19 +35,19 @@ public abstract class User {
     @Column(name = "UserID")
     private Integer UserID;
 
-    @Column(name = "UserName", nullable = false, unique = true, length = 50)
+    @Column(name = "UserName", nullable = false, unique = true, length = 50, columnDefinition = "NVARCHAR(50)")
     private String userName;
 
-    @Column(name = "Password", nullable = false, length = 100)
+    @Column(name = "Password", nullable = false, length = 100, columnDefinition = "NVARCHAR(100)")
     private String password;
 
-    @Column(name = "Name", nullable = false, length = 100)
+    @Column(name = "Name", nullable = false, length = 100, columnDefinition = "NVARCHAR(100)")
     private String name;
 
-    @Column(name = "Email", length = 100)
+    @Column(name = "Email", length = 100, columnDefinition = "NVARCHAR(100)")
     private String email;
 
-    @Column(name = "Phone", length = 20)
+    @Column(name = "Phone", length = 20, columnDefinition = "NVARCHAR(20)")
     private String phone;
     
     @Expose

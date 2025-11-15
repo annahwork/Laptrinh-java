@@ -1,137 +1,208 @@
 (function () {
-    const STORAGE_KEY = 'evm_notifications_v1';
+    "use strict";
+    // === Các biến DOM & trạng thái ===
+    const userId = window.currentUserId || 2; // Chỉnh lại cho đúng logic app bạn
+    let cachedNotifications = [];
 
-    function loadNotifications() {
+    const notifListDOM = document.getElementById("notificationsList");
+    const createBtn = document.getElementById("btnCreateNotification");
+    const createForm = document.querySelector(".notification-create__form");
+    const editForm = document.querySelector(".notification-edit__form");
+    const searchInput = document.getElementById("searchNotifications");
+
+    /* ===================== APIs ===================== */
+    async function fetchAllNotifications(userId) {
         try {
-            const raw = localStorage.getItem(STORAGE_KEY);
-            return raw ? JSON.parse(raw) : [];
-        } catch (e) { return []; }
+            const res = await fetch(`/evm/api/notifications/user?userID=${userId}`);
+            if (!res.ok) throw new Error(await res.text());
+            return await res.json();
+        } catch (e) {
+            alert("Không lấy được danh sách thông báo: " + e);
+            return [];
+        }
     }
 
-    function saveNotifications(arr) {
-        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); } catch (e) { }
+    async function createNotification(userId, title, message) {
+        try {
+            const params = new URLSearchParams({ userID: userId, title, message });
+            const res = await fetch("/evm/api/notifications/create", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: params
+            });
+            if (!res.ok) throw new Error(await res.text());
+            return await res.text();
+        } catch (e) {
+            alert("Không tạo được thông báo: " + e);
+        }
     }
 
-    function renderNotifications(list) {
-        const arr = loadNotifications();
-        if (!list) return;
-        if (!arr || arr.length === 0) {
-            list.innerHTML = '<li class="notification-item"><div class="notification__title">Chưa có thông báo</div></li>';
+    async function updateNotification(notificationId, title, message) {
+        try {
+            const params = new URLSearchParams({ title, message });
+            const res = await fetch(`/evm/api/notifications/${notificationId}/update`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: params
+            });
+            if (!res.ok) throw new Error(await res.text());
+            return await res.text();
+        } catch (e) {
+            alert("Không cập nhật được thông báo: " + e);
+        }
+    }
+
+    async function deleteNotification(notificationId) {
+        try {
+            const res = await fetch(`/evm/api/notifications/${notificationId}`, {
+                method: "DELETE"
+            });
+            if (!res.ok) throw new Error(await res.text());
+            return await res.text();
+        } catch (e) {
+            alert("Không xóa được thông báo: " + e);
+        }
+    }
+
+    async function markNotificationAsRead(notificationId) {
+        try {
+            const res = await fetch(`/evm/api/notifications/${notificationId}/read`, {
+                method: "PUT"
+            });
+            if (!res.ok) throw new Error(await res.text());
+            return await res.text();
+        } catch (e) {
+            alert("Không đánh dấu đã đọc: " + e);
+        }
+    }
+
+    async function fetchNotificationById(notificationId) {
+        try {
+            const res = await fetch(`/evm/api/notifications/${notificationId}`);
+            if (!res.ok) throw new Error(await res.text());
+            return await res.json();
+        } catch (e) {
+            alert("Không lấy được chi tiết thông báo: " + e);
+        }
+    }
+
+    /* ================= UI render & sự kiện ================= */
+    async function renderNotifications(listElem, notifications) {
+        if (!Array.isArray(notifications) || notifications.length === 0) {
+            listElem.innerHTML = '<li class="notification-item">Chưa có thông báo nào.</li>';
             return;
         }
-        list.innerHTML = arr.map(n => {
-            const unreadClass = n.unread ? ' notification--unread' : '';
-            return `<li class="notification-item${unreadClass}" data-id="${n.id}"><div class="notification__title">${n.title}</div><div class="notification__meta">${n.meta}</div></li>`;
-        }).join('');
+        listElem.innerHTML = notifications.map(n => `
+            <li class="notification-item${!n.isRead ? ' notification--unread' : ''}" data-id="${n.notificationID}">
+                <div class="notification__title">${n.title}</div>
+                <div class="notification__meta">${n.message}</div>
+                <div class="notification__actions">
+                    <button class="btn-edit" data-id="${n.notificationID}">Sửa</button>
+                    <button class="btn-delete" data-id="${n.notificationID}">Xóa</button>
+                    <button class="btn-markread" data-id="${n.notificationID}">Đã đọc</button>
+                </div>
+            </li>
+        `).join('');
     }
 
-    window.addNotification = function (notification) {
-        const arr = loadNotifications();
-        const n = Object.assign({ id: Date.now(), title: '', meta: '', body: '', unread: true }, notification);
-        arr.unshift(n);
-        saveNotifications(arr);
-        const list = document.getElementById('notificationsList');
-        if (list) renderNotifications(list);
-        return n.id;
-    };
-
-    function detectCurrentUserName() {
-        const selectors = ['#userName', '.user-name', '.profile-name', '.sidebar .name', '.account-name'];
-        for (let sel of selectors) {
-            try {
-                const el = document.querySelector(sel);
-                if (el && el.textContent.trim()) return el.textContent.trim();
-            } catch (e) { }
-        }
-        return null;
+    async function refreshNotifications() {
+        let notis = await fetchAllNotifications(userId);
+        cachedNotifications = notis;
+        if (notifListDOM) await renderNotifications(notifListDOM, notis);
     }
 
-    function initNotifications() {
-        const list = document.getElementById('notificationsList');
-        const modal = document.getElementById('modalNotification');
-        const closeBtn = modal ? modal.querySelector('.notification__close-button') : null;
-        const closeBtn2 = document.getElementById('notifCloseBtn');
-        const markReadBtn = document.getElementById('notifMarkRead');
-        const markAllBtn = document.getElementById('btnMarkAllRead');
-        const deleteReadBtn = document.getElementById('btnDeleteRead');
-        const createBtn = document.getElementById('btnCreateNotification');
-        const createModal = document.getElementById('modalCreateNotification');
-        const createForm = createModal ? createModal.querySelector('.notification-create__form') : null;
-        const createCancel = document.getElementById('createNotifCancel');
+    // Sự kiện tạo mới
+    if (createForm && createBtn) {
+        createBtn.addEventListener("click", () => {
+            document.getElementById("modalCreateNotification").style.display = "block";
+        });
+        createForm.addEventListener("submit", async function (ev) {
+            ev.preventDefault();
+            const title = document.getElementById("create_notif_title").value || "";
+            const message = document.getElementById("create_notif_body").value || "";
+            if (!title) { alert("Nhập tiêu đề!"); return; }
+            await createNotification(userId, title, message);
+            await refreshNotifications();
+            document.getElementById("modalCreateNotification").style.display = "none";
+            createForm.reset();
+        });
+        document.getElementById("createNotifCancel")?.addEventListener("click", function () {
+            document.getElementById("modalCreateNotification").style.display = "none";
+        });
+    }
 
-        function openNotification(item) {
-            if (!modal) return;
-            const title = item.querySelector('.notification__title')?.innerText || '';
-            const meta = item.querySelector('.notification__meta')?.innerText || '';
-            const body = 'Đây là nội dung chi tiết của thông báo (demo), id=' + item.dataset.id;
-            document.getElementById('notifTitle').innerText = title;
-            document.getElementById('notifMeta').innerText = meta;
-            document.getElementById('notifBody').innerText = body;
-            modal.style.display = 'block';
+    // Sự kiện sửa
+    if (editForm) {
+        editForm.addEventListener("submit", async function (ev) {
+            ev.preventDefault();
+            const id = document.getElementById("edit_notif_id").value;
+            const title = document.getElementById("edit_notif_title").value;
+            const body = document.getElementById("edit_notif_body").value;
+            if (!title) { alert("Nhập tiêu đề!"); return; }
+            await updateNotification(id, title, body);
+            await refreshNotifications();
+            document.getElementById("modalEditNotification").style.display = "none";
+            editForm.reset();
+        });
+        document.getElementById("editNotifCancel")?.addEventListener("click", function () {
+            document.getElementById("modalEditNotification").style.display = "none";
+        });
+    }
 
-            const arr = loadNotifications();
-            const id = Number(item.dataset.id);
-            arr.forEach(n => { if (n.id === id) n.unread = false; });
-            saveNotifications(arr);
-            if (list) renderNotifications(list);
-        }
+    // Click trên danh sách thông báo (sửa/xóa/đánh dấu đã đọc)
+    if (notifListDOM) {
+        notifListDOM.addEventListener("click", async function (e) {
+            let target = e.target;
+            const id = target.dataset.id;
 
-        if (list) {
-            renderNotifications(list);
-
-            list.addEventListener('click', function (e) {
-                let li = e.target;
-                while (li && li !== list && !li.classList.contains('notification-item')) li = li.parentNode;
-                if (li && li.classList && li.classList.contains('notification-item')) {
-                    openNotification(li);
+            // Xóa
+            if (target.classList.contains("btn-delete")) {
+                if (confirm("Bạn chắc chắn muốn xóa thông báo này?")) {
+                    await deleteNotification(id);
+                    await refreshNotifications();
                 }
-            });
-        }
-
-        if (closeBtn) closeBtn.addEventListener('click', function () { modal.style.display = 'none'; });
-        if (closeBtn2) closeBtn2.addEventListener('click', function () { modal.style.display = 'none'; });
-        if (markReadBtn) markReadBtn.addEventListener('click', function () {
-            const title = document.getElementById('notifTitle').innerText;
-            const arr = loadNotifications(); arr.forEach(n => { if (n.title === title) n.unread = false; }); saveNotifications(arr); if (list) renderNotifications(list);
+                return;
+            }
+            // Sửa
+            if (target.classList.contains("btn-edit")) {
+                let notif = cachedNotifications.find(n => n.notificationID == id) || await fetchNotificationById(id);
+                if (notif) {
+                    document.getElementById("edit_notif_id").value = notif.notificationID;
+                    document.getElementById("edit_notif_title").value = notif.title;
+                    document.getElementById("edit_notif_body").value = notif.message;
+                    document.getElementById("modalEditNotification").style.display = "block";
+                }
+                return;
+            }
+            // Đánh dấu đã đọc
+            if (target.classList.contains("btn-markread")) {
+                await markNotificationAsRead(id);
+                await refreshNotifications();
+                return;
+            }
         });
-        if (markAllBtn) markAllBtn.addEventListener('click', function () { const arr = loadNotifications(); arr.forEach(n => n.unread = false); saveNotifications(arr); if (list) renderNotifications(list); });
-        if (deleteReadBtn) deleteReadBtn.addEventListener('click', function () { let arr = loadNotifications(); arr = arr.filter(n => n.unread); saveNotifications(arr); if (list) renderNotifications(list); });
-        if (createBtn) createBtn.addEventListener('click', function () {
-            if (createModal) createModal.style.display = 'block';
-            if (createForm) createForm.reset();
-            const first = document.getElementById('create_notif_title'); if (first) first.focus();
-        });
-
-        const createModalCloseBtn = createModal ? createModal.querySelector('.notification__close-button') : null;
-        if (createModalCloseBtn) {
-            createModalCloseBtn.addEventListener('click', function() {
-                if (createModal) createModal.style.display = 'none';
-            });
-        }
-
-        if (createForm) {
-            createForm.addEventListener('submit', function (ev) {
-                ev.preventDefault();
-                try {
-                    const titleEl = document.getElementById('create_notif_title');
-                    const bodyEl = document.getElementById('create_notif_body');
-                    const title = titleEl ? titleEl.value.trim() : '';
-                    const body = bodyEl ? bodyEl.value.trim() : '';
-                    if (!title) return;
-                    const creator = detectCurrentUserName() || 'Bạn';
-                    const meta = `${creator} • ${new Date().toLocaleString()}`;
-                    if (window.addNotification) {
-                        window.addNotification({ title: title, meta: meta, body: body, unread: true, creator: creator });
-                    }
-                    if (list) renderNotifications(list);
-                    if (createModal) createModal.style.display = 'none';
-                } catch (e) { console.warn('Error creating notification', e); }
-            });
-        }
-
-        if (createCancel) createCancel.addEventListener('click', function () { if (createModal) createModal.style.display = 'none'; });
-        window.addEventListener('click', function (e) { if (modal && modal.style.display === 'block' && e.target == modal) modal.style.display = 'none'; });
     }
 
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initNotifications); else initNotifications();
+    // Tìm kiếm
+    if (searchInput) {
+        searchInput.addEventListener("input", function () {
+            const value = this.value.trim().toLowerCase();
+            const filtered = cachedNotifications.filter(n =>
+                (n.title && n.title.toLowerCase().includes(value)) ||
+                (n.message && n.message.toLowerCase().includes(value))
+            );
+            renderNotifications(notifListDOM, filtered);
+        });
+    }
+
+    // Đóng modal với nút X (class notification__close-button)
+    document.querySelectorAll(".notification__close-button").forEach(btn => {
+        btn.addEventListener("click", function () {
+            btn.closest(".notification-modal")?.style?.setProperty("display", "none");
+        });
+    });
+
+    // Tải thông báo lần đầu
+    refreshNotifications();
+
 })();

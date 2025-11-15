@@ -1,0 +1,62 @@
+<section id="claim_requests_page" class="claim_requests__section">
+  <div class="app-layout">
+    <!-- Sửa đường dẫn CSS -->
+    <link rel="stylesheet" href="assets/css/EVM-Staff/claim_requests.css">
+
+    <div class="content-wrapper" id="innerContent">
+      <div class="main-content-area">
+
+        <h2 class="page-title">Yêu cầu bảo hành (Chờ duyệt)</h2>
+
+        <!-- Bảng yêu cầu bảo hành -->
+        <div class="card">
+          <div class="card-body-no-padding">
+            <table class="table-zebra table-full-width" id="claimTable">
+              <thead>
+                <tr class="table-header-row">
+                  <th>Mã yêu cầu</th>
+                  <th>Mã xe (VIN)</th>
+                  <th>Người yêu cầu (SC)</th>
+                  <th>Ngày yêu cầu</th>
+                  <th>Trạng thái</th>
+                  <th>Hành động</th>
+                </tr>
+              </thead>
+              <tbody id="claimTableBody">
+                <tr>
+                  <td colspan="6" class="no-data">Đang tải dữ liệu...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="approvalModal" style="display:none;">
+    <div class="modal-content">
+        <span class="modal-close" id="closeApprovalModal">&times;</span>
+        <h3>Xác nhận xử lý yêu cầu <span id="modalClaimId"></span></h3>
+        
+        <p>Chi tiết: <span id="modalClaimDetails" style="font-weight: 600;"></span></p>
+
+        <form id="approvalForm">
+            <div class="form-group">
+                <label for="approvalNote">Ghi chú (Bắt buộc khi từ chối):</label>
+                <textarea id="approvalNote" rows="3" placeholder="Nhập lý do..."></textarea>
+            </div>
+            
+            <input type="hidden" id="modalClaimIdInput" />
+
+            <div class="modal-actions">
+                <button type="submit" class="btn btn-danger" id="btnReject">Từ chối</button>
+                <button type="submit" class="btn btn-success" id="btnApprove">Duyệt</button>
+            </div>
+        </form>
+    </div>
+  </div>
+
+  <script src="assets/js/EVM-Staff/claim_requests.js"></script>
+</section>

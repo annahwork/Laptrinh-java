@@ -1,0 +1,141 @@
+.dashboard {
+  padding: 1.5rem;
+  animation: fadeIn 0.4s ease-in;
+  font-family: "Inter", sans-serif;
+  background: #f9fafb;
+  color: #222;
+}
+
+.dashboard__title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.dashboard__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.dashboard__stat-card {
+  display: flex;
+  align-items: center;
+  background: #3b82f6;
+  color: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+}
+.dashboard__stat-card:hover {
+  transform: translateY(-4px);
+}
+
+.dashboard__stat-icon {
+  font-size: 2rem;
+  margin-right: 1rem;
+}
+
+.dashboard__stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard__stat-number {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.dashboard__stat-label {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.dashboard__stat-card--green { background: #10b981; }
+.dashboard__stat-card--orange { background: #f59e0b; }
+.dashboard__stat-card--red { background: #ef4444; }
+
+.dashboard__section {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.dashboard__subtitle {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  border-left: 4px solid #3b82f6;
+  padding-left: 0.5rem;
+}
+
+.dashboard__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dashboard__table-header,
+.dashboard__table-cell {
+  padding: 0.8rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.dashboard__table-header {
+  background: #f3f4f6;
+  font-weight: 600;
+}
+
+.dashboard__table-cell--center {
+  text-align: center;
+}
+
+.status-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: #fff;
+}
+
+.status-tag--success { background: #22c55e; }
+.status-tag--pending { background: #f59e0b; }
+
+.dashboard__btn-more {
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.dashboard__btn-more:hover {
+  background: #2563eb;
+}
+
+.dashboard__reminder-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard__reminder-item {
+  background: #f9fafb;
+  padding: 0.7rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  border-left: 4px solid #3b82f6;
+  font-size: 0.95rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

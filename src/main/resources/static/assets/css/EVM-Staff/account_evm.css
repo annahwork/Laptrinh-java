@@ -1,0 +1,152 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f0f2f5;
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    margin: 0;
+    color: #333;
+}
+
+.settings-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    max-width: 550px;
+    width: 100%;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+.settings-header {
+    text-align: center;
+    border-bottom: 1px solid #ebebeb;
+    padding-bottom: 24px;
+    margin-bottom: 16px;
+}
+
+.avatar-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 16px auto;
+}
+
+.avatar-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #e0e6eb;
+    border: 2px solid #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-placeholder-icon {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #90a4ae;
+}
+
+.avatar-edit-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #f0f2f5;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.avatar-edit-btn:hover {
+    background-color: #e0e6eb;
+}
+
+.avatar-edit-btn svg {
+    width: 16px;
+    height: 16px;
+    color: #333;
+}
+
+.user-name {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.user-role {
+    font-size: 1.1rem;
+    color: #666;
+    margin: 4px 0 0 0;
+}
+
+.settings-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.settings-menu li a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 8px;
+    text-decoration: none;
+    color: #333;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.settings-menu li a:hover {
+    background-color: #f9f9f9;
+}
+
+.menu-item-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.menu-item-content svg {
+    width: 20px;
+    height: 20px;
+    color: #007bff;
+}
+
+.menu-chevron svg {
+    width: 16px;
+    height: 16px;
+    color: #999;
+}
+
+.logout-button {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin-top: 24px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+
+.logout-button:hover {
+    background-color: #0056b3;
+}

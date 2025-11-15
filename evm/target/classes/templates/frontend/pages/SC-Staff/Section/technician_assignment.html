@@ -1,9 +1,11 @@
-<link rel="stylesheet" href="../../assets/css/SC-Staff/technician_assignment.css">
+<link rel="stylesheet" href="/evm/assets/css/SC-Staff/technician_assignment.css">
+
 <section class="technician-assignment">
     <div class="app-layout">
         <div class="content-wrapper" id="innerContent">
             <div class="main-content-area">
 
+                <!-- Thanh tìm kiếm & filter -->
                 <div class="search-filter-bar">
                     <div class="search-box-wrapper">
                         <i class="fas fa-search search-icon"></i>
@@ -22,6 +24,7 @@
                             </select>
                             <input type="date" id="dateFilter" class="filter-input" />
                             <div class="filter-right">
+                                <!-- NÚT TẠO YÊU CẦU MỚI -->
                                 <button id="btntechnician_assignment" class="btn-primary">
                                     Tạo yêu cầu mới
                                 </button>
@@ -30,6 +33,7 @@
                     </div>
                 </div>
 
+                <!-- Bảng yêu cầu -->
                 <div class="card">
                     <div class="card-body-no-padding">
                         <table class="table-zebra table-full-width">
@@ -64,7 +68,8 @@
                     </div>
                 </div>
 
-                <div id="assignModal" class="modal modal-hidden">
+                <!-- Modal PHÂN CÔNG kỹ thuật viên cho 1 yêu cầu -->
+                <div id="assignModal" class="modal modal-hidden" style="display:none;">
                     <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="assignModalTitle"
                         tabindex="-1">
                         <div class="modal-header">
@@ -74,6 +79,9 @@
                         </div>
 
                         <form id="assignForm">
+                            <!-- hidden lưu id yêu cầu -->
+                            <input type="hidden" id="assignClaimId" name="claimId">
+
                             <div class="modal-body">
                                 <p class="modal-body-text">Yêu cầu: <strong id="assignClaimCode">CLM-0001</strong></p>
 
@@ -99,11 +107,13 @@
                     </div>
                 </div>
 
-                <!-- Modal tạo yêu cầu điều phối -->
+                <!-- Modal TẠO YÊU CẦU ĐIỀU PHỐI MỚI -->
                 <div id="modalYeuCauDieuPhoi" class="technician-assign__modal" style="display:none;">
                     <div class="technician-assign__modal-content">
-                        <button class="technician-assign__close-button" aria-label="Close">&times;</button>
-                        <form class="technician-assign__form">
+                        <button class="technician-assign__close-button" id="newReqCloseBtn"
+                            aria-label="Close">&times;</button>
+
+                        <form class="technician-assign__form" id="newRequestForm">
                             <h2 class="technician-assign__title">Tạo yêu cầu điều phối mới</h2>
 
                             <div class="technician-assign__form-group">
@@ -128,7 +138,6 @@
                                     trách</label>
                                 <select id="technician_name" class="technician-assign__select">
                                     <option value="">-- Chọn kỹ thuật viên --</option>
-                                    <!-- Options sẽ được load từ database -->
                                 </select>
                             </div>
 
@@ -144,15 +153,6 @@
                                     placeholder="VD: Kiểm tra và thay bình xe điện..."></textarea>
                             </div>
 
-                            <div class="technician-assign__form-group">
-                                <label for="assign_status" class="technician-assign__label">Trạng thái</label>
-                                <select id="assign_status" class="technician-assign__select">
-                                    <option value="pending">Chờ xác nhận</option>
-                                    <option value="in_progress">Đang thực hiện</option>
-                                    <option value="completed">Hoàn thành</option>
-                                </select>
-                            </div>
-
                             <div class="technician-assign__button-group">
                                 <button type="button" id="assignCancelBtnModal"
                                     class="technician-assign__button technician-assign__button--cancel">Huỷ</button>
@@ -166,5 +166,6 @@
             </div>
         </div>
     </div>
-    <script src="../../assets/js/SC-Staff/technician_assignment.js"></script>
+
+    <script src="/evm/assets/js/SC-Staff/technician_assignment.js"></script>
 </section>

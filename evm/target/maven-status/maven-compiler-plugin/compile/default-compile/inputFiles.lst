@@ -2,9 +2,11 @@ D:\Laptrinh-java\evm\src\main\java\uth\edu\controllers\LoginController.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\IPartRepository.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\service\WarrantyClaimService.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\service\InventoryService.java
+D:\Laptrinh-java\evm\src\main\java\uth\edu\service\TechnicianSCStaffService.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\ClaimServiceRepository.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\IRecallCampaignRepository.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\PartRepository.java
+D:\Laptrinh-java\evm\src\main\java\uth\edu\controllers\ScStaffCampaignController.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\pojo\ClaimService.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\IServiceCenterRepository.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\controllers\WarrantyClaimController.java
@@ -15,6 +17,7 @@ D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\CustomerRepository.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\NotificationRepository.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\dao\ServiceCenterDAO.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\service\CampaignService.java
+D:\Laptrinh-java\evm\src\main\java\uth\edu\controllers\ScStaffDashboardController.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\controllers\NotificationController.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\dao\RecallCampaignDAO.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\dao\AllocatePartHistoryDAO.java
@@ -37,6 +40,7 @@ D:\Laptrinh-java\evm\src\main\java\uth\edu\controllers\HomeController.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\AdminRepository.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\service\CustomerService.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\IClaimServiceRepository.java
+D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\TechnicianSCStaffRepository.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\IAdminRepository.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\ICustomerRepository.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\IScheduleRepository.java
@@ -49,8 +53,8 @@ D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\AllocatePartHistoryRepos
 D:\Laptrinh-java\evm\src\main\java\uth\edu\dao\VehicleDAO.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\VehicleRepository.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\service\RepairService.java
+D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\TechnicianAssignmentRepository.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\pojo\VehiclePart.java
-D:\Laptrinh-java\evm\src\main\java\uth\edu\controllers\RecallCampaignController.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\dao\EVMStaffDAO.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\service\ReportService.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\VehiclePartRepository.java
@@ -80,9 +84,11 @@ D:\Laptrinh-java\evm\src\main\java\uth\edu\pojo\SCTechnician.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\IUserRepository.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\WarrantyServiceRepository.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\dao\WarrantyClaimDAO.java
+D:\Laptrinh-java\evm\src\main\java\uth\edu\dao\TechnicianAssignmentDAO.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\EVMStaffRepository.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\controllers\SCTechnicianController.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\UserRepository.java
+D:\Laptrinh-java\evm\src\main\java\uth\edu\service\ScStaffCampaignService.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\SCTechnicianRepository.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\dao\NotificationDAO.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\controllers\WarrantyClaimControllerSCStaff.java
@@ -95,12 +101,15 @@ D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\IAllocatePartHistoryRepo
 D:\Laptrinh-java\evm\src\main\java\uth\edu\controllers\CustomerController.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\IWarrantyHistoryRepository.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\dao\UserDAO.java
+D:\Laptrinh-java\evm\src\main\java\uth\edu\dao\TechnicianSCStaffDAO.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\ScheduleRepository.java
+D:\Laptrinh-java\evm\src\main\java\uth\edu\pojo\TechnicianAssignment.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\IVehiclePartRepository.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\IWarrantyServiceRepository.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\pojo\Schedule.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\pojo\WarrantyClaim.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\IEVMStaffRepository.java
+D:\Laptrinh-java\evm\src\main\java\uth\edu\service\TechnicianAssignmentService.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\RecallCampaignRepository.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\dao\ScheduleDAO.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\dao\PartDAO.java

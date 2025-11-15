@@ -526,3 +526,60 @@ textarea:focus {
         margin: 0 1rem;
     }
 }
+
+/* === OVERRIDE MODAL TẠO YÊU CẦU ĐIỀU PHỐI === */
+
+/* Overlay full màn hình */
+.technician-assign__modal {
+    position: fixed;
+    inset: 0;
+    /* top:0; right:0; bottom:0; left:0; */
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.45);
+    display: none;
+    /* JS sẽ bật bằng style.display = 'block' */
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    /* trên hết mấy card, table, v.v. */
+}
+
+/* Tuyệt đối KHÔNG được có display: none !important ở đâu nữa
+   Nếu file cũ có dòng như:
+   .technician-assign__modal { display: none !important; }
+   => XÓA hoặc comment đi
+*/
+
+.technician-assign__modal .technician-assign__modal-content {
+    background: #ffffff;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 100%;
+    margin: 5vh auto;
+    padding: 20px 22px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* Nút X đóng modal */
+.technician-assign__close-button {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    border: none;
+    background: transparent;
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: #888;
+}
+
+.technician-assign__close-button:hover {
+    color: #000;
+}
+
+/* Để body không trượt khi mở modal (optional) */
+body.modal-open {
+    overflow: hidden;
+}

@@ -49,11 +49,15 @@
     /** ----------- Hàm tải DỮ LIỆU ----------- */
     async function loadAllClaims() {
         const tableBody = document.getElementById('claimsTbody');
-        if (tableBody)
-            tableBody.innerHTML = `<tr><td colspan="5" class="table-placeholder-cell">Đang tải dữ liệu...</td></tr>`;
+        if (!tableBody) {
+            console.warn('claimsTbody not found, retrying in 500ms');
+            setTimeout(loadAllClaims, 500);
+            return;
+        }
+        tableBody.innerHTML = `<tr><td colspan="5" class="table-placeholder-cell">Đang tải dữ liệu...</td></tr>`;
         try {
             const url = `/evm/api/warranty-claims?userId=2&page=1&size=9999`;
-            const response = await fetch(url);
+            const response = await fetch(url, { credentials: 'include' });
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const data = await response.json();
             console.log('API trả về:', data);
@@ -135,6 +139,11 @@
     }
     async function submitWarrantyForm(e) {
         e.preventDefault();
+
+        // Prevent multiple submissions
+        if (submitWarrantyForm.submitting) return;
+        submitWarrantyForm.submitting = true;
+
         const payload = {
             scStaffId: CURRENT_USER_ID,
             vehiclePartId: 1,
@@ -155,6 +164,7 @@
             const response = await fetch(url, {
                 method,
                 headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify(payload)
             });
             if (!response.ok) throw new Error(await response.text());
@@ -164,6 +174,8 @@
         } catch (err) {
             console.error('Lỗi khi lưu yêu cầu:', err);
             alert(`Lỗi: ${err.message}`);
+        } finally {
+            submitWarrantyForm.submitting = false;
         }
     }
     async function handleDelete(claimId) {

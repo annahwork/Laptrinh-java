@@ -136,7 +136,7 @@ public class HomeController {
     // Đã có, đúng
     @GetMapping("/allocate_parts")
     public String allocate_parts() {
-        return "/frontend/pages/EVM-Staff/Section/allocate_parts"; 
+        return "/frontend/pages/EVM-Staff/Section/allocate_parts";
     }
 
     // SỬA LẠI: Bỏ chữ "m"
@@ -148,60 +148,60 @@ public class HomeController {
     // Đã có, đúng
     @GetMapping("/attach_serial")
     public String attach_serial() {
-        return "/frontend/pages/EVM-Staff/Section/attach_serial"; 
+        return "/frontend/pages/EVM-Staff/Section/attach_serial";
     }
 
     // SỬA LẠI: Thêm chữ "EVM"
     @GetMapping("/inventory")
     public String showInventory() {
-        return "/frontend/pages/EVM-Staff/Section/inventory"; 
+        return "/frontend/pages/EVM-Staff/Section/inventory";
     }
 
     // SỬA LẠI: Bỏ chữ "d"
     @GetMapping("/claim_requests")
     public String showClaimedRequests() {
-        return "/frontend/pages/EVM-Staff/Section/claim_requests"; 
+        return "/frontend/pages/EVM-Staff/Section/claim_requests";
     }
 
     // Đã có, đúng
     @GetMapping("/claim_tracking")
     public String showClaimTracking() {
-        return "/frontend/pages/EVM-Staff/Section/claim_tracking"; 
+        return "/frontend/pages/EVM-Staff/Section/claim_tracking";
     }
     
     // Đã có, đúng
     @GetMapping("/warranty_cost")
     public String showWarrantyCost() {
-        return "/frontend/pages/EVM-Staff/Section/warranty_cost"; 
+        return "/frontend/pages/EVM-Staff/Section/warranty_cost";
     }
 
     // Đã có, đúng
     @GetMapping("/campaigns")
     public String showCampaigns() {
-        return "/frontend/pages/EVM-Staff/Section/campaigns"; 
+        return "/frontend/pages/EVM-Staff/Section/campaigns";
     }
 
     // Đã có, đúng
     @GetMapping("/warranty_policy")
     public String showWarrantyPolicy() {
-        return "/frontend/pages/EVM-Staff/Section/warranty_policy"; 
+        return "/frontend/pages/EVM-Staff/Section/warranty_policy";
     }
 
     // Đã có, đúng
     @GetMapping("/statistics")
     public String showStatistics() {
-        return "/frontend/pages/EVM-Staff/Section/statistics"; 
+        return "/frontend/pages/EVM-Staff/Section/statistics";
     }
 
     // Đã có, đúng
     @GetMapping("/reports")
     public String showReports() {
-        return "/frontend/pages/EVM-Staff/Section/reports"; 
+        return "/frontend/pages/EVM-Staff/Section/reports";
     }
 
     @GetMapping("/account_evm")
     public String showAccountEVM() {
-        return "/frontend/pages/EVM-Staff/Section/account_evm"; 
+        return "/frontend/pages/EVM-Staff/Section/account_evm";
     }
 
 

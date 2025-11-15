@@ -63,13 +63,13 @@
                     const message = `
             <p>Phụ tùng mới đã được thêm bởi <strong>${creator}</strong> vào lúc <em>${timestamp}</em>.</p>
             <ul>
-              <li><strong>Mã phụ tùng:</strong> ${data.partCode || '—'}</li>
-              <li><strong>Tên phụ tùng:</strong> ${data.partName || '—'}</li>
-              <li><strong>Loại:</strong> ${data.partType || '—'}</li>
-              <li><strong>Số lượng:</strong> ${data.partQuantity || '—'}</li>
-              <li><strong>Vị trí kho:</strong> ${data.partLocation || '—'}</li>
+                <li><strong>Mã phụ tùng:</strong> ${data.partCode || '—'}</li>
+                <li><strong>Tên phụ tùng:</strong> ${data.partName || '—'}</li>
+                <li><strong>Loại:</strong> ${data.partType || '—'}</li>
+                <li><strong>Số lượng:</strong> ${data.partQuantity || '—'}</li>
+                <li><strong>Vị trí kho:</strong> ${data.partLocation || '—'}</li>
             </ul>
-          `;
+            `;
 
                     alert(`${title}\n\n${message.replace(/<[^>]+>/g, '')}`);
                     closeModal();

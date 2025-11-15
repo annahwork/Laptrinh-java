@@ -11,5 +11,4 @@ public interface IScheduleRepository {
     public Schedule getScheduleById(int id);
     public List<Schedule> getAllSchedules(int page, int pageSize);
     public List<Object[]> getScheduleVehicleInfo(int userID, int page, int pageSize);
-    public List<Object[]> getScheduleVehicleTodayInfo(int userID, int page, int pageSize);
 }

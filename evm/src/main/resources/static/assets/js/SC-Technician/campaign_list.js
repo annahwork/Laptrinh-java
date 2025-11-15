@@ -13,10 +13,10 @@
     function formatStatus(status) {
         const lowerStatus = status?.toLowerCase() || '';
         switch (lowerStatus) {
-            case 'active': return { text: 'Đang diễn ra', class: 'inprogress' };
-            case 'completed': return { text: 'Đã hoàn thành', class: 'done' };
+            case 'active': return { text: 'Đang diễn ra', class: 'active' };
+            case 'completed': return { text: 'Đã hoàn thành', class: 'completed' };
             case 'planned': return { text: 'Đã lên kế hoạch', class: 'planned' };
-            case 'pending': return { text: 'Đang chờ', class: 'waitting' };
+            case 'pending': return { text: 'Đang chờ', class: 'default' };
             default: return { text: status || 'Không xác định', class: 'default' };
         }
     }
@@ -50,7 +50,7 @@
             
             card.innerHTML = `
                 <div class="card-header">
-                    <h3>Mã: ${c.campaignID || 'N/A'}</h3>
+                    <h3>Mã: <span>${c.campaignID || 'N/A'}</span></h3> 
                     <span class="status-badge ${statusInfo.class}">${statusInfo.text}</span>
                 </div>
                 <div class="card-body">
@@ -59,6 +59,7 @@
                 </div>
                 <div class="card-footer">
                     <button class="btn-outline" onclick="openCampaignDetail('${c.campaignID}')">Chi tiết</button>
+                    <button class="btn-light" onclick="openEditCampaign('${c.campaignID}')">Cập nhật</button>
                 </div>`;
             grid.appendChild(card);
         });

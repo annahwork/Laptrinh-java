@@ -157,6 +157,16 @@ private RecallCampaignRepository recallCampaignRepository;
         }
     }
 
+    public List<RecallVehicle> GetRecall(Integer userID) {
+        try {
+            List<RecallVehicle> recallVehicles = recallVehicleRepository.getRecall(userID, 1, 9999);
+            return recallVehicles;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
     public RecallCampaign GetCampaignDetails(Integer CampaignID) {
         try {
             RecallCampaign campaign = recallCampaignRepository.getRecallCampaignById(CampaignID);

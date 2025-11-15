@@ -14,6 +14,5 @@ public interface IVehiclePartRepository {
     public uth.edu.pojo.VehiclePart getVehiclePartById(int id);
     public List<VehiclePart> getAllVehicleParts(int page, int pageSize);
     public List<VehiclePart> searchVehicleParts(String query, int page, int pageSize);
-    public List<VehiclePart> getWarrantyPartsForTechnician(int userID, int page, int pageSize);
     public void closeResources();  
 }

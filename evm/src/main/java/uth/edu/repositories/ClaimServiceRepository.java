@@ -55,14 +55,4 @@ public class ClaimServiceRepository implements IClaimServiceRepository {
     public String getFirstActiveTaskNoteForSCT(int userID){
         return claimServiceDAO.getFirstActiveTaskNoteForSCT(userID);
     }
-
-    @Override
-    public List<Object[]> getClaimServiceDetails(int userID, int page, int pageSize){
-        return claimServiceDAO.getClaimServiceDetails(userID, page, pageSize);
-    }
-
-    @Override
-    public Long[] getPerformanceMetrics(int technicianId) {
-        return claimServiceDAO.getPerformanceMetrics(technicianId);
-    }
 }

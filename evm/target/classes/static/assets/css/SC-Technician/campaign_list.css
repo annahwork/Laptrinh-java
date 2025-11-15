@@ -120,11 +120,8 @@
   border-top-left-radius: var(--radius-lg);
   border-top-right-radius: var(--radius-lg);
   background-color: var(--gray-50);
-  color: #0a66c2;
 }
-.card-header h3 {
-  font-weight: 600;
-}
+
 .card-body {
   padding: 12px 16px;
   line-height: 1.6;
@@ -176,7 +173,7 @@
   color: var(--warning-text);
   border-color: var(--warning);
 }
-.status-badge.waitting {
+.status-badge.inactive {
   background: var(--gray-100);
   color: var(--text-muted);
   border-color: var(--border);

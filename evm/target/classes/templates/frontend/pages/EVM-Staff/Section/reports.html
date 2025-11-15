@@ -1,33 +1,33 @@
 <section class="report-page">
-    <link rel="stylesheet" href="../../assets/css/EVM-Staff/reports.css">
-
+    <link rel="stylesheet" href="/evm/assets/css/EVM-Staff/reports.css" />
+    <script src="/evm/assets/js/EVM-Staff/reports.js" defer></script>
     <div class="page-header">
         <h2>Báo cáo tổng hợp</h2>
         <div class="report__filters">
             <input type="month" class="report__month-picker" />
-            <select class="report__select">
+            <select class="report__select" id="reportTypeFilter">
                 <option value="">Tất cả loại</option>
                 <option value="warranty">Bảo hành</option>
                 <option value="campaign">Chiến dịch</option>
                 <option value="inventory">Tồn kho</option>
             </select>
-            <button class="report__btn report__btn--generate">Tạo báo cáo</button>
-            <button class="report__btn report__btn--export">Xuất báo cáo</button>
+            <button class="report__btn report__btn--generate" id="generateReportBtn">Tạo báo cáo</button>
+            <button class="report__btn report__btn--export" id="exportReportBtn">Xuất báo cáo</button>
         </div>
     </div>
 
     <div class="report__cards">
         <div class="report__card">
             <h3 class="report__card-title">Tổng chi phí bảo hành</h3>
-            <p class="report__card-value">15.000.000 VND</p>
+            <p class="report__card-value" id="totalWarrantyCost">Đang tải...</p>
         </div>
         <div class="report__card">
             <h3 class="report__card-title">Chiến dịch thực hiện</h3>
-            <p class="report__card-value">12 chiến dịch</p>
+            <p class="report__card-value" id="totalCampaigns">Đang tải...</p>
         </div>
         <div class="report__card">
             <h3 class="report__card-title">Tồn kho linh kiện</h3>
-            <p class="report__card-value">328 bộ</p>
+            <p class="report__card-value" id="totalInventory">Đang tải...</p>
         </div>
     </div>
 
@@ -42,20 +42,9 @@
                 </tr>
             </thead>
             <tbody id="reportTableBody">
-                <tr class="report__tr">
-                    <td class="report__td">Bảo hành chuẩn</td>
-                    <td class="report__td">8 chiến dịch</td>
-                    <td class="report__td">4.500.000</td>
-                    <td class="report__td">–</td>
-                </tr>
-                <tr class="report__tr">
-                    <td class="report__td">Bảo hành mở rộng</td>
-                    <td class="report__td">4 chiến dịch</td>
-                    <td class="report__td">10.500.000</td>
-                    <td class="report__td">Có linh kiện điện tử</td>
-                </tr>
+                <tr><td colspan="4" id="loadingMessage" class="report__td" style="font-weight:600;">Đang tải dữ liệu...</td></tr>
             </tbody>
         </table>
-    </div>
+        
+        </div>
 </section>
-

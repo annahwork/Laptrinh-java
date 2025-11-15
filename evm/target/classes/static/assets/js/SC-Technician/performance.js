@@ -1,172 +1,66 @@
-
 (function () {
-    'use strict';
+  function initPerformancePage() {
+    const filterSelect = document.getElementById("filterRange");
 
-    console.log('Performance script loaded');
+    const workChartCtx = document.getElementById("workChart");
+    const statusChartCtx = document.getElementById("statusChart");
 
+    const workChart = new Chart(workChartCtx, {
+      type: "line",
+      data: {
+        labels: ["T2", "T3", "T4", "T5", "T6", "T7", "CN"],
+        datasets: [
+          {
+            label: "Số công việc hoàn tất",
+            data: [3, 4, 5, 6, 7, 5, 6],
+            borderColor: "#2563eb",
+            backgroundColor: "rgba(37,99,235,0.2)",
+            tension: 0.4,
+            fill: true,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+        },
+        scales: {
+          y: { beginAtZero: true },
+        },
+      },
+    });
 
-    const API_PERFORMANCE = '/evm/api/performance';
+    const statusChart = new Chart(statusChartCtx, {
+      type: "doughnut",
+      data: {
+        labels: ["Hoàn tất", "Đang xử lý", "Trễ hạn"],
+        datasets: [
+          {
+            data: [36, 5, 1],
+            backgroundColor: ["#16a34a", "#3b82f6", "#dc2626"],
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: "bottom",
+          },
+        },
+      },
+    });
 
-    let statusChartInstance = null;
+    filterSelect.addEventListener("change", () => {
+      const range = filterSelect.value;
+      alert(`📊 Đang xem thống kê hiệu suất cho: ${range === "week" ? "Tuần này" : range === "month" ? "Tháng này" : "Quý này"}`);
+      // Sau này có thể thêm fetch API để tải dữ liệu thật tại đây
+    });
+  }
 
-    const totalClaimsValueEl = document.getElementById('totalClaimsValue');
-    const totalClaimsLabelEl = document.getElementById('totalClaimsLabel');
-    const completedClaimsValueEl = document.getElementById('completedClaimsValue');
-    const completedClaimsLabelEl = document.getElementById('completedClaimsLabel');
-    const pendingClaimsValueEl = document.getElementById('pendingClaimsValue');
-    const pendingClaimsLabelEl = document.getElementById('pendingClaimsLabel');
-    const filterRangeEl = document.getElementById('filterRange');
-    const chartCanvas = document.getElementById('statusChart');
-
-    function getRangeText(range) {
-        switch (range) {
-            case 'week': return 'trong tuần';
-            case 'month': return 'trong tháng';
-            case 'quarter': return 'trong quý';
-            default: return 'trong kỳ';
-        }
-    }
-
-    function renderPerformanceData(data) {
-        const total = data.totalClaims || 0;
-        const completed = data.completedClaims || 0;
-        const pending = total - completed; 
-        const percentage = (total > 0) ? (completed / total) * 100 : 0;
-
-        const range = filterRangeEl ? filterRangeEl.value : 'week';
-        const rangeText = getRangeText(range);
-
-        if (totalClaimsValueEl) totalClaimsValueEl.textContent = total;
-        if (totalClaimsLabelEl) totalClaimsLabelEl.textContent = `Tất cả công việc ${rangeText}`;
-
-        if (completedClaimsValueEl) completedClaimsValueEl.textContent = completed;
-        if (completedClaimsLabelEl) completedClaimsLabelEl.textContent = `Chiếm ${percentage.toFixed(1)}%`;
-
-        if (pendingClaimsValueEl) pendingClaimsValueEl.textContent = pending < 0 ? 0 : pending;
-        if (pendingClaimsLabelEl) pendingClaimsLabelEl.textContent = `Còn lại ${rangeText}`;
-    }
-
-    function renderStatusChart(data) {
-        if (!chartCanvas) return;
-        
-        if (typeof Chart === 'undefined') {
-            console.error('Chart.js is not loaded. Cannot render chart.');
-            chartCanvas.getContext('2d').fillText('Không thể tải biểu đồ. (Thiếu Chart.js)', 10, 50);
-            return;
-        }
-
-        const total = data.totalClaims || 0;
-        const completed = data.completedClaims || 0;
-        const pending = total - completed < 0 ? 0 : total - completed;
-
-        const chartData = {
-            labels: ['Đã hoàn tất', 'Đang xử lý'],
-            datasets: [{
-                data: [completed, pending],
-                backgroundColor: [
-                    'rgba(40, 167, 69, 0.8)',
-                    'rgba(23, 162, 184, 0.8)'  
-                ],
-                borderColor: [
-                    '#28a745',
-                    '#17a2b8'
-                ],
-                borderWidth: 1
-            }]
-        };
-
-        if (statusChartInstance) {
-            statusChartInstance.destroy();
-        }
-
-        statusChartInstance = new Chart(chartCanvas.getContext('2d'), {
-            type: 'doughnut',
-            data: chartData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                let label = context.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
-                                if (context.parsed !== null) {
-                                    label += context.parsed;
-                                }
-                                return label;
-                            }
-                        }
-                    }
-                },
-                cutout: '70%' 
-            }
-        });
-    }
-
-    function showLoading(isLoading) {
-        if (isLoading) {
-            if (totalClaimsValueEl) totalClaimsValueEl.textContent = '...';
-            if (completedClaimsValueEl) completedClaimsValueEl.textContent = '...';
-            if (pendingClaimsValueEl) pendingClaimsValueEl.textContent = '...';
-            if (completedClaimsLabelEl) completedClaimsLabelEl.textContent = 'Đang tải...';
-        } 
-    }
-
-    async function fetchPerformanceData() {
-        const range = filterRangeEl ? filterRangeEl.value : 'week';
-        showLoading(true);
-
-        try {
-
-            const res = await fetch(`${API_PERFORMANCE}?range=${range}`);
-            
-            if (!res.ok) {
-                throw new Error(`HTTP error! Status: ${res.status}`);
-            }
-
-            const responseData = await res.json();
-            let data;
-
-            if (Array.isArray(responseData)) {
-                data = {
-                    totalClaims: responseData[0] || 0,
-                    completedClaims: responseData[1] || 0
-                };
-            } else {
-                data = responseData;
-            }
-
-            renderPerformanceData(data);
-            renderStatusChart(data);
-
-        } catch (err) {
-            console.error('Fetch error:', err);
-            if (totalClaimsValueEl) totalClaimsValueEl.textContent = 'Lỗi';
-            if (completedClaimsValueEl) completedClaimsValueEl.textContent = 'Lỗi';
-            if (pendingClaimsValueEl) pendingClaimsValueEl.textContent = 'Lỗi';
-            if (completedClaimsLabelEl) completedClaimsLabelEl.textContent = 'Không thể tải dữ liệu';
-        }
-    }
-    function init() {
-        if (!document.querySelector('.performance-page')) {
-            return;
-        }
-        
-        console.log('Initializing Performance Page...');
-
-        if (filterRangeEl) {
-            filterRangeEl.addEventListener('change', fetchPerformanceData);
-        }
-
-        fetchPerformanceData();
-    }
-
-    setTimeout(init, 300);
-
+  if (document.readyState === "loading")
+    document.addEventListener("DOMContentLoaded", initPerformancePage);
+  else initPerformancePage();
 })();

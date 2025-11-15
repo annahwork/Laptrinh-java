@@ -1,94 +1,156 @@
-/* ================= KHỐI CHUNG ================= */
-.attach_serial__section {
-    background: #fff; /* màu nền trắng */
-    border-radius: 10px; /* bo góc */
-    padding: 20px; /* khoảng cách bên trong */
-    box-shadow: 0 3px 10px rgba(0,0,0,0.08); 
-    margin-top: 1rem; /* khoảng cách phía trên */
-    color: #111827; /* màu chữ chính */
-    font-family: Arial, sans-serif; /* font chữ */
+* {
+    box-sizing: border-box;
 }
 
-/* ================= TÌM KIẾM ================= */
-/* Wrapper cho ô tìm kiếm */
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* ================= LAYOUT TRANG (ĐÃ ĐỒNG BỘ) ================= */
+#attach_serial_page {
+    padding: 32px 24px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    min-height: 100vh;
+    color: var(--gray-900);
+}
+
+.content-wrapper {
+    width: 100%;
+}
+
+/* ================= LAYOUT HÀNG TÌM KIẾM (ĐÃ SỬA) ================= */
+.main-content-area {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* ================= CARD BẢNG (ĐÃ ĐỒNG BỘ) ================= */
+.card {
+    width: 100%;
+    background: white;
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+}
+
+.card-body-no-padding {
+    padding: 0;
+}
+
+/* ================= TÌM KIẾM (ĐÃ SỬA & ĐỒNG BỘ) ================= */
 .attach_serial-search {
-    margin-bottom: 1rem; /* khoảng cách dưới */
+    width: 450px;
+    max-width: 100%;
 }
 
-/* Ô input tìm kiếm */
+.search-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
 .attach_serial-search__input {
-    width: 100%; /* chiếm full chiều rộng */
-    padding: 8px 12px; /* padding bên trong */
-    border: 1px solid #ccc; /* viền xám nhạt */
-    border-radius: 6px; /* bo góc */
-    font-size: 0.95rem; /* cỡ chữ */
-    outline: none; /* tắt viền focus mặc định */
+    width: 100%;
+    padding: 11px 14px 11px 38px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: 8px;
+    background: #fcfdfe;
+    font-size: 14px;
+    color: var(--gray-900);
+    outline: none;
+    transition: var(--transition);
 }
 
-/* Hiệu ứng focus cho ô tìm kiếm */
+.attach_serial-search__input::placeholder {
+    color: #94a3b8;
+}
+
 .attach_serial-search__input:focus {
-    border-color: #2563eb; /* đổi màu viền khi focus */
-    box-shadow: 0 0 0 2px rgba(37,99,235,0.12); /* bóng xanh mờ */
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
-/* ================= NÚT ================= */
-/* Nút Gắn Serial */
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    color: var(--gray-500);
+    pointer-events: none;
+}
+
+.attach_serial-search__input:focus+.search-icon {
+    color: var(--primary);
+}
+
+/* ================= NÚT "GẮN SERIAL" (ĐÃ ĐỒNG BỘ) ================= */
 .attach_serial__button--create {
-    background: #007bff; /* màu xanh chính */
-    color: #fff; /* chữ trắng */
-    padding: 8px 14px; /* padding bên trong */
-    border: none; /* không viền */
-    border-radius: 6px; /* bo góc */
-    cursor: pointer; /* con trỏ khi hover */
-    font-weight: 600; /* chữ đậm vừa phải */
-    transition: background-color 0.2s ease, transform 0.15s ease; /* hiệu ứng hover */
-    margin-bottom: 16px; /* khoảng cách dưới */
+    background: var(--success);
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
 }
 
-/* Hiệu ứng hover cho nút */
 .attach_serial__button--create:hover {
-    background-color: #0056b3; /* đổi màu khi hover */
-    transform: translateY(-1px); /* nhấc nút lên */
+    background: #059669;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.2);
 }
 
-/* ================= BẢNG ================= */
-/* Bảng dữ liệu kiểu zebra */
+/* ================= BẢNG (ĐÃ ĐỒNG BỘ) ================= */
 .table-zebra {
     width: 100%;
-    border-collapse: collapse; /* gộp viền */
+    border-collapse: collapse;
+    margin-bottom: 16px;
+    font-size: 14px;
 }
 
-/* Th và td chung */
-.table-zebra th,
-.table-zebra td {
-    padding: 10px; /* padding trong ô */
-    border: 1px solid #e5e7eb; /* viền bảng xám nhạt */
-    text-align: center; /* chữ căn giữa */
-    background-color: #fff; /* reset màu nền */
-    color: #111827; /* màu chữ */
+.table-zebra thead th {
+    text-align: center;
+    padding: 12px 14px;
+    background: #f8fafc;
+    color: var(--gray-700);
+    font-weight: 600;
+    font-size: 13px;
+    border-bottom: 2px solid var(--gray-200);
 }
 
-/* Zebra: màu nền cho các dòng chẵn */
-.table-zebra tr:nth-child(even) td {
-    background-color: #f9fafb;
+.table-zebra tbody td {
+    padding: 12px 14px;
+    color: var(--gray-900);
+    border-bottom: 1px solid var(--gray-100);
+    text-align: center;
+    vertical-align: middle;
 }
 
-/* Thẻ header */
-.table-zebra th {
-    background-color: #f3f4f6; /* màu header nhạt */
-    font-weight: 600; /* chữ đậm */
+.table-zebra tbody tr:hover {
+    background: #f8fbfd;
 }
 
-/* Khi không có dữ liệu */
 .no-data {
     text-align: center;
-    color: #666;
+    padding: 32px;
+    color: #94a3b8;
     font-style: italic;
-    padding: 16px;
+    font-size: 14px;
 }
 
-/* ================= PHÂN TRANG ================= */
-/* Wrapper phân trang */
+/* ================= PHÂN TRANG (CHƯA CÓ TRONG HTML) ================= */
 .pagination-wrapper {
     display: flex;
     justify-content: space-between;
@@ -107,7 +169,6 @@
     align-items: center;
 }
 
-/* Nút bình thường */
 .pagination-btn {
     padding: 6px 12px;
     border: 1px solid #d1d5db;
@@ -118,12 +179,10 @@
     transition: all 0.2s ease;
 }
 
-/* Hover nút */
 .pagination-btn:hover {
     background-color: #f3f4f6;
 }
 
-/* Nút active */
 .pagination-btn--active {
     background-color: #2563eb;
     color: #fff;
@@ -131,20 +190,17 @@
     font-weight: 500;
 }
 
-/* Hover nút active */
 .pagination-btn--active:hover {
     background-color: #1d4ed8;
 }
 
-/* ================= FORM / MODAL ================= */
-/* Wrapper hàng form */
+/* ================= FORM/MODAL (ĐÃ ĐỒNG BỘ) ================= */
 .form-row {
     display: flex;
     flex-direction: column;
     margin-bottom: 14px;
 }
 
-/* Label */
 .form-label {
     margin-bottom: 6px;
     font-size: 14px;
@@ -152,7 +208,6 @@
     font-weight: 500;
 }
 
-/* Input và select */
 .form-input,
 select {
     padding: 8px 12px;
@@ -160,16 +215,15 @@ select {
     border: 1px solid #d1d5db;
     font-size: 14px;
     outline: none;
+    box-sizing: border-box;
 }
 
-/* Focus input */
 .form-input:focus,
 select:focus {
     border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
-/* Modal toàn màn hình */
 .modal-panel {
     position: fixed;
     inset: 0;
@@ -178,25 +232,22 @@ select:focus {
     align-items: center;
     justify-content: center;
     padding: 28px;
-    background: rgba(15,23,42,0.45);
+    background: rgba(15, 23, 42, 0.45);
     backdrop-filter: blur(3px);
 }
 
-/* Hiển thị modal */
 .modal-panel[aria-hidden="false"],
 .modal-panel.show {
     display: flex;
 }
 
-/* Layer nền modal */
 .modal-panel__backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(15,23,42,0.45);
+    background: rgba(15, 23, 42, 0.45);
     backdrop-filter: blur(3px);
 }
 
-/* Dialog modal */
 .modal-panel__dialog {
     position: relative;
     z-index: 2;
@@ -204,12 +255,12 @@ select:focus {
     max-width: 720px;
     background: #fff;
     border-radius: 12px;
-    box-shadow: 0 18px 50px rgba(2,6,23,0.25);
+    box-shadow: 0 18px 50px rgba(2, 6, 23, 0.25);
     padding: 22px 28px 20px;
+    box-sizing: border-box;
     overflow: auto;
 }
 
-/* Thanh màu trên modal */
 .modal-panel__dialog::before {
     content: "";
     position: absolute;
@@ -217,12 +268,11 @@ select:focus {
     top: 0;
     width: 100%;
     height: 6px;
-    background: linear-gradient(90deg,#2563eb,#1d4ed8);
-    border-top-left-radius:12px;
-    border-top-right-radius:12px;
+    background: linear-gradient(90deg, #2563eb, #1d4ed8);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
 }
 
-/* Nút đóng modal */
 .modal-panel__close {
     position: absolute;
     right: 16px;
@@ -241,67 +291,42 @@ select:focus {
     color: #111827;
 }
 
-/* Nút Lưu */
 .modalSubmit {
-    background: #2563eb;
-    color: #fff;
-    padding: 8px 16px;
+    background: var(--primary);
+    color: white;
+    padding: 10px 18px;
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.2s ease;
+    font-weight: 600;
+    font-size: 13.5px;
 }
 
 .modalSubmit:hover {
-    background-color: #1d4ed8;
+    background: #1d4ed8;
 }
 
-/* Nút Hủy */
 .modalCancel {
-    background-color: #f1f5f9;
-    color: #333;
-    padding: 8px 16px;
-    border: 1px solid #ccc;
+    background: #4b5563;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    font-weight: 600;
+    font-size: 13.5px;
     border-radius: 6px;
     cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 .modalCancel:hover {
-    background-color: #e2e8f0;
+    background: #374151;
 }
 
-/* Actions button modal */
 .modal-panel__actions {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
     margin-top: 12px;
-}
-
-/* ================= ICON TÌM KIẾM ================= */
-/* Wrapper icon search */
-.search-input-wrapper {
-    position: relative;
-    width: 100%;
-}
-
-/* Icon search */
-.search-icon {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-    stroke: #374151;
-    pointer-events: none;
-}
-
-/* Hiệu ứng focus / hover icon search */
-.attach_serial-search__input:focus + .search-icon,
-.search-input-wrapper:hover .search-icon {
-    stroke: #2563eb;
 }
 
 /* ================= RESPONSIVE ================= */
@@ -317,6 +342,7 @@ select:focus {
         max-width: 96%;
         padding: 16px;
     }
+
     .modal-panel__actions {
         justify-content: space-between;
     }

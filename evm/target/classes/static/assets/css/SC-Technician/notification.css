@@ -107,6 +107,9 @@
   margin-left: 12px;
 }
 
+/* =======================
+   Nút hành động
+======================= */
 
 .btn-light {
   background-color: var(--card-bg);
@@ -147,6 +150,7 @@
   transform: translateY(1px);
 }
 
+/* Căn chỉnh đều các nút */
 .notify-actions button {
   min-width: 100px;
 }

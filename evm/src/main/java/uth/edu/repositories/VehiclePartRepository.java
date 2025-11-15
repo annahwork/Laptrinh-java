@@ -44,12 +44,6 @@ public class VehiclePartRepository implements IVehiclePartRepository {
     public List<VehiclePart> searchVehicleParts(String query, int page, int pageSize) {
         return VehiclePartDAO.searchVehicleParts(query, page, pageSize);
     }
-
-    @Override
-    public List<VehiclePart> getWarrantyPartsForTechnician(int userID, int page, int pageSize){
-        return VehiclePartDAO.getWarrantyPartsForTechnician(userID, page, pageSize);
-    }
-    
     @Override
     public void closeResources() {
         VehiclePartDAO.closeSessionFactory();

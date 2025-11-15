@@ -145,18 +145,6 @@ public class ScheduleService {
 		}
 		return result;
 	}
-
-	public List<Object[]> getScheduleVehicleTodayInfo(int userID){
-        try {
-            return scheduleRepository.getScheduleVehicleTodayInfo(userID, 1 , 9999);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
-    }
-	
 }
-
-
 
 

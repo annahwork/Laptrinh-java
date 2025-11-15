@@ -3,14 +3,9 @@ package uth.edu.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
-
 import uth.edu.pojo.Schedule;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ScheduleDAO {
@@ -136,31 +131,6 @@ public class ScheduleDAO {
                 session.close();
             }
         }
-        return results;
-    }   
-
-    public List<Object[]> getScheduleVehicleTodayInfo(int userID, int page, int pageSize) {
-        
-        List<Object[]> results = new ArrayList<>();
-        LocalDate localToday = LocalDate.now();
-        Date today = Date.from(localToday.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        
-        try (Session session = sessionFactory.openSession()) {
-
-            String hql = "SELECT wc.Date, wc.vehicle.VIN, wc.vehicle.customer.Name, ws.Name, wc.Status, cs.ClaimServID FROM ClaimService cs JOIN cs.WarrantyClaim wc JOIN cs.WarrantyService ws WHERE cs.technician.UserID = :userID AND wc.Date = :today ORDER BY wc.Date DESC";
-
-            Query<Object[]> query = session.createQuery(hql, Object[].class);
-            query.setParameter("userID", userID); 
-            query.setParameter("today", today);
-            query.setFirstResult((page - 1) * pageSize);
-            query.setMaxResults(pageSize);
-            results = query.getResultList();
-                                
-        } catch (Exception e) {
-            System.err.println("Lỗi khi truy vấn thông tin dịch vụ bảo hành hôm nay:");
-            e.printStackTrace(); 
-        } 
-        
         return results;
     }
 

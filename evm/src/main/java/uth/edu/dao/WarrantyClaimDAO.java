@@ -122,6 +122,8 @@ public class WarrantyClaimDAO {
             String hql = "FROM WarrantyClaim wc " +
                          "JOIN FETCH wc.vehicle v " +
                          "LEFT JOIN FETCH wc.CreatedByStaff " +
+                         "LEFT JOIN FETCH wc.VehiclePart vp " + 
+                         "LEFT JOIN FETCH vp.Part p " +      
                          "ORDER BY wc.Date DESC";
             claims = session.createQuery(hql, WarrantyClaim.class)
                     .setFirstResult((page - 1) * pageSize)

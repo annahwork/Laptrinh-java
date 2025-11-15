@@ -142,30 +142,6 @@ public class VehiclePartDAO {
         return parts;
     }
 
-    public List<VehiclePart> getWarrantyPartsForTechnician(int userID, int page, int pageSize) {
-        Session session = null;
-        List<VehiclePart> vehicleParts = new ArrayList<>();
-
-        try {
-            session = sessionFactory.openSession();
-            String hql = "SELECT vp FROM VehiclePart vp JOIN FETCH vp.Part p JOIN FETCH vp.vehicle v JOIN FETCH vp.InstalledBy u WHERE u.UserID = :userID AND vp.Status NOT IN ('Installed', 'Completed', 'Cancelled')";
-
-            vehicleParts = session.createQuery(hql, VehiclePart.class)
-                                .setParameter("userID", userID)
-                                .setFirstResult((page - 1) * pageSize)
-                                .setMaxResults(pageSize)
-                                .getResultList();
-                                
-        } catch (Exception e) {
-            e.printStackTrace(); 
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return vehicleParts;
-    }
-
     public void closeSessionFactory() {
         if (sessionFactory != null) {
             sessionFactory.close();

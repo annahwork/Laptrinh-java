@@ -95,7 +95,6 @@
   border-top-left-radius: var(--radius-lg);
   border-top-right-radius: var(--radius-lg);
   background-color: var(--gray-50);
-  color: #0a66c2;
 }
 
 .card-body {
@@ -103,11 +102,6 @@
   line-height: 1.6;
   color: var(--text);
 }
-
-.card-header h3 {
-  font-weight: 600;
-}
-
 
 .card-footer {
   display: flex;

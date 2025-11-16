@@ -2,6 +2,7 @@ package uth.edu.controllers;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -13,13 +14,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpSession;
+import uth.edu.pojo.ClaimService;
 import uth.edu.pojo.EVMStaff;
 import uth.edu.pojo.User;
 import uth.edu.pojo.WarrantyClaim;
 import uth.edu.pojo.WarrantyHistory;
+import uth.edu.pojo.WarrantyService;
 import uth.edu.service.WarrantyClaimService;
 
 @RestController
@@ -45,6 +49,7 @@ public class WarrantyClaimController {
         List<WarrantyClaim> claims = warrantyClaimService.GetClaimsForApproval(loggedInUser.getUserID(), 1, 100);
         return ResponseEntity.ok(formatClaimsList(claims));
     }
+
 
 
     @GetMapping("/all")
@@ -130,7 +135,100 @@ public class WarrantyClaimController {
             return ResponseEntity.status(400).body(Map.of("message", "Từ chối thất bại (có thể đã được xử lý)"));
         }
     }
+    @GetMapping("/cost/list")
+    public ResponseEntity<Map<String, Object>> getWarrantyCosts(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int pageSize,
+            HttpSession session) {
+        
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null || !(loggedInUser instanceof EVMStaff)) {
+            return ResponseEntity.status(401).build();
+        }
 
+        try {
+            List<WarrantyClaim> claims = warrantyClaimService.getClaimsWithCost(page, pageSize);
+            
+            int totalItems = warrantyClaimService.countAllClaims();
+            
+            double grandTotal = 0.0;
+            List<Map<String, Object>> resultData = new ArrayList<>();
+
+            for (WarrantyClaim claim : claims) {
+                double totalCost = 0.0;
+                if (claim.getClaimServices() != null) {
+                    totalCost = claim.getClaimServices().stream()
+                        .map(ClaimService::getWarrantyService)
+                        .filter(ws -> ws != null && ws.getCost() != null)
+                        .mapToDouble(WarrantyService::getCost)
+                        .sum();
+                }
+                
+                grandTotal += totalCost; 
+
+                Map<String, Object> map = new HashMap<>();
+                map.put("claimId", "CR-" + claim.getClaimID());
+                map.put("claimIdRaw", claim.getClaimID());
+                map.put("vin", claim.getVehicle() != null ? claim.getVehicle().getVIN() : "N/A");
+                map.put("requester", claim.getCreatedByStaff() != null ? claim.getCreatedByStaff().getName() : "N/A");
+                map.put("date", claim.getDate() != null ? dtf.format(claim.getDate()) : "N/A");
+                map.put("totalCost", totalCost);
+                
+                resultData.add(map);
+            }
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("data", resultData);
+            response.put("page", page);
+            response.put("totalItems", totalItems);
+            response.put("totalPages", (int) Math.ceil((double) totalItems / pageSize));
+            response.put("grandTotal", grandTotal);
+
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(400)
+                                 .body(Map.of("message", "Lỗi server: " + e.getMessage()));
+        }
+    }
+
+    
+    @GetMapping("/cost/details/{id}")
+    public ResponseEntity<?> getCostDetails(@PathVariable Integer id, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null || !(loggedInUser instanceof EVMStaff)) {
+            return ResponseEntity.status(401).build();
+        }
+
+        try {
+            WarrantyClaim claim = warrantyClaimService.GetClaimDetails(id);
+            if (claim == null || claim.getClaimServices() == null) {
+                return ResponseEntity.ok(new ArrayList<>());
+            }
+
+            List<Map<String, Object>> details = claim.getClaimServices().stream()
+                .map(cs -> {
+                    WarrantyService ws = cs.getWarrantyService();
+                    double cost = (ws != null && ws.getCost() != null) ? ws.getCost() : 0.0;
+                    
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("serviceName", ws != null ? ws.getName() : "Dịch vụ không xác định");
+                    map.put("quantity", 1); 
+                    map.put("unitPrice", cost);
+                    map.put("totalPrice", cost);
+                    return map;
+                })
+                .collect(Collectors.toList());
+
+            return ResponseEntity.ok(details);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(400)
+                                 .body(Map.of("message", "Lỗi server: " + e.getMessage()));
+        }
+    }
 
     private List<Map<String, Object>> formatClaimsList(List<WarrantyClaim> claims) {
         if (claims == null) {

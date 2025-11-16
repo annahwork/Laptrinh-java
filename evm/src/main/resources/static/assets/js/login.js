@@ -104,9 +104,7 @@
         });
     }
 
-    /**
-     * Hàm khởi tạo chính
-     */
+
     function init() {
         const loginForm = document.getElementById('loginForm');
         
@@ -119,7 +117,6 @@
         setupPasswordToggle();
     }
 
-    // Chạy hàm init khi tài liệu đã tải xong
     document.addEventListener('DOMContentLoaded', init);
 
 })();

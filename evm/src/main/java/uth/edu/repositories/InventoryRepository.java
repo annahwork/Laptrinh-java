@@ -31,6 +31,10 @@ public class InventoryRepository implements IInventoryRepository {
     public void deleteInventory(Inventory Inventory) {
         InventoryDAO.deleteInventory(Inventory);
     }
+    @Override
+    public int countInventoriesBySCID(int scId, String search, String type) {
+        return InventoryDAO.countInventoriesBySCID(scId, search, type);
+    }
 
     @Override
     public Inventory getInventoryById(int id) {
@@ -61,6 +65,15 @@ public class InventoryRepository implements IInventoryRepository {
     @Override
     public boolean approveAllocationTransaction(Inventory from, Inventory to, AllocatePartHistory history) {
         return InventoryDAO.approveAllocationTransaction(from, to, history);
+    }
+    @Override
+    public int countAllInventoriesWithFilters(String search, String type) {
+        return InventoryDAO.countAllInventoriesWithFilters(search, type);
+    }
+
+    @Override
+    public List<Inventory> getAllInventoriesWithFilters(int page, int pageSize, String search, String type) {
+        return InventoryDAO.getAllInventoriesWithFilters(page, pageSize, search, type);
     }
     @Override
     public void closeResources() {

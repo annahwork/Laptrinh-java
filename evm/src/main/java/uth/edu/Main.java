@@ -1,5 +1,4 @@
 package uth.edu;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -129,19 +128,19 @@ public class Main {
                         System.out.println("Tạo 5 Dịch vụ Bảo hành (WarrantyService)...");
                         List<WarrantyService> warrantyServices = new ArrayList<>();
                         warrantyServices.add(new WarrantyService(null, "Thay thế Pin", "Thay thế mô-đun pin bị lỗi",
-                                        "8 năm / 160,000 km", "Dung lượng pin dưới 70%", 0.0));
+                                        "8 năm / 160,000 km", "Dung lượng pin dưới 70%", 1500000.0));
                         warrantyServices.add(new WarrantyService(null, "Sửa chữa Động cơ",
                                         "Sửa chữa hoặc thay thế động cơ điện",
-                                        "5 năm", "Lỗi từ nhà sản xuất", 0.0));
+                                        "5 năm", "Lỗi từ nhà sản xuất", 700000.0));
                         warrantyServices.add(new WarrantyService(null, "Kiểm tra hệ thống",
                                         "Kiểm tra tổng quát hệ thống điện",
-                                        "1 lần", "Miễn phí lần đầu", 0.0));
+                                        "1 lần", "Miễn phí lần đầu", 300000.0));
                         warrantyServices.add(new WarrantyService(null, "Cập nhật phần mềm BMS",
                                         "Flash firmware mới cho hệ thống quản lý pin", "Trọn đời", "Khi có bản vá",
-                                        0.0));
+                                        1000000.0));
                         warrantyServices.add(new WarrantyService(null, "Thay thế má phanh",
                                         "Thay thế má phanh bị mòn sớm", "1 năm",
-                                        "Mòn không đều", 0.0));
+                                        "Mòn không đều", 600000.0));
                         for (WarrantyService ws : warrantyServices) {
                                 session.persist(ws);
                         }

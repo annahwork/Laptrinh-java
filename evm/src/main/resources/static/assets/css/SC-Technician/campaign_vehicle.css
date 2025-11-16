@@ -67,11 +67,15 @@
   border-bottom: 1px solid var(--border);
   padding: 12px 16px;
   background-color: var(--gray-50);
+  color: #0a66c2;
 }
 .card-body {
   padding: 12px 16px;
   line-height: 1.6;
   color: var(--text);
+}
+.card-header h3 {
+  font-weight: 600;
 }
 .card-footer {
   display: flex;

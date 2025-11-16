@@ -17,6 +17,5 @@ public interface IRecallVehicleRepository {
     public List<RecallVehicle> getAllRecallVehicles(int page, int pageSize);
     public List<RecallVehicle> getAllRecallVehicles(int userID, int page, int pageSize);
     public List<Object[]> getCampaignReportData(Integer userID, int page, int pageSize);
-    public List<RecallVehicle> getRecall(Integer userID, int page, int pageSize);
     public void closeResources();
 }

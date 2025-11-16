@@ -1,210 +1,207 @@
 <section class="campaign-management-page">
-  <div class="app-layout">
-    <link rel="stylesheet" href="/evm/assets/css/SC-Technician/warranty_result.css"/>
 
-    <div class="content-wrapper" id="innerContent">
-      <div class="main-content-area">
-        <div class="search-filter-bar">
-          <div class="search-box-wrapper">
-            <i class="fas fa-search search-icon"></i>
-            <input
-              type="text"
-              id="searchCampaignBox"
-              class="search-input"
-              placeholder="Tìm theo VIN, mã yêu cầu..."
-            />
-          </div>
-        </div>
+    <div class="app-layout">
 
-        <div class="card filter-card">
-          <div class="filter-controls">
-            <select id="campaignStatusFilter" class="filter-select">
-              <option value="">Tất cả trạng thái</option>
-              <option value="processing">Đang xử lý</option>
-              <option value="completed">Đã hoàn tất</option>
-              <option value="rejected">Từ chối</option>
-            </select>
+        <link rel="stylesheet" href="/evm/assets/css/SC-Technician/warranty_result.css" />
 
-            <input type="date" id="campaignDateFilter" class="filter-input" />
+        <div class="content-wrapper" id="innerContent">
 
-            <button type="button" id="btnMoFormCampaign">Tạo kết quả mới</button>
-          </div>
+            <div class="main-content-area">
 
-          <div class="card result-list">
-            <table class="table-zebra table-full-width">
-              <thead>
-                <tr class="table-header-row">
-                  <th>Mã yêu cầu</th>
-                  <th>VIN</th>
-                  <th>Khách hàng</th>
-                  <th>Ngày tạo</th>
-                  <th>Chi phí (VNĐ)</th>
-                  <th>Trạng thái</th>
-                  <th>Thao tác</th>
-                </tr>
-              </thead>
-              <tbody id="campaignsTbody">
-                <tr>
-                  <td colspan="7" class="table-placeholder-cell">
-                    Dữ liệu sẽ được load từ database.
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                <div class="search-filter-bar">
 
-            <div class="card-footer">
-              <span class="pagination-info">Hiển thị 0 của 0</span>
-              <div class="pagination-wrapper">
-                <button class="pagination-btn">« Trước</button>
-                <button class="pagination-btn">Sau »</button>
-                <button class="pagination-btn-active">1</button>
-              </div>
+                    <div class="search-box-wrapper">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="searchCampaignBox" class="search-input"
+                            placeholder="Tìm theo VIN, mã yêu cầu..." />
+
+                    </div>
+
+                    <div class="filter-controls">
+                        <select id="campaignStatusFilter" class="filter-select">
+                            
+                            <option value="">Tất cả trạng thái</option>
+                            <option value="Đang chờ phụ tùng">Đang chờ phụ tùng</option> 
+                            <option value="Hoàn thành">Hoàn thành</option> 
+                            <option value="Đang thực hiện">Đang thực hiện</option> 
+                            <option value="Chờ duyệt">Chờ duyệt</option>
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="card result-list">
+
+                    <table class="table-zebra table-full-width">
+
+                        <thead>
+
+                            <tr class="table-header-row">
+
+                                <th>Mã Dịch vụ</th>
+                                <th>VIN</th>
+                                <th>Khách hàng</th>
+                                <th>Ghi chú</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="campaignsTbody">
+
+                            <tr>
+
+                                <td colspan="7" class="table-placeholder-cell">
+                                    Dữ liệu sẽ được load từ database.
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+
+                    <div class="card-footer">
+
+                        <span class="pagination-info">Hiển thị 0 của 0</span>
+
+                        <div class="pagination-wrapper">
+
+                            <button class="pagination-btn">« Trước</button>
+                            <button class="pagination-btn">Sau »</button>
+                            <button class="pagination-btn-active">1</button>
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
-          </div>
+
+
+            <div id="modalQuanLyChienDich" class="campaign__modal" style="display: none">
+
+                <div class="campaign__modal-content">
+
+                    <button class="campaign__close-button" aria-label="Close">
+                        &times;
+                    </button>
+
+                    <h2 id="modalTitle">Tạo kết quả mới cho Yêu cầu Bảo hành</h2>
+
+                    <form class="campaign__form" id="createResultForm">
+
+                        <div class="campaign__form-group" id="claimIdGroup" style="display: none">
+
+                            <label for="result_claim_id_display" class="campaign__label">Mã yêu cầu</label>
+
+                            <input type="text" id="result_claim_id_display" class="campaign__input" readonly />
+
+                            <input type="hidden" id="result_claim_id_hidden" name="claimID" />
+
+                        </div>
+
+                        <div class="campaign__form-group">
+
+                            <label for="result_vin" class="campaign__label">Số VIN</label>
+
+                            <input type="text" id="result_vin" name="vin" class="campaign__input"
+                                placeholder="Nhập số VIN xe..." required />
+
+                        </div>
+
+                        <div class="campaign__form-group">
+                            <label for="result_customer" class="campaign__label">Tên khách hàng</label>
+                            <input type="text" id="result_customer" name="customer" class="campaign__input"
+                                placeholder="Nguyễn Văn A" required />
+                        </div>
+
+                        <div class="campaign__form-row">
+                            <div class="campaign__form-group" style="flex: 1;">
+                                <label for="result_date" class="campaign__label">Ngày tiếp nhận</label>
+                                <input type="date" id="result_date" name="dateReceived" class="campaign__input" />
+                            </div>
+                            <div class="campaign__form-group" style="flex: 1;">
+                                <label for="result_status" class="campaign__label">Trạng thái</label>
+                                <select id="result_status" name="status" class="campaign__select">
+                                    <option value="processing">Đang xử lý</option>
+                                    <option value="completed">Đã hoàn tất</option>
+                                    <option value="rejected">Từ chối</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="campaign__form-group">
+                            <label for="result_diagnosis" class="campaign__label">Chẩn đoán</label>
+                            <textarea id="result_diagnosis" name="diagnosis" class="campaign__textarea" rows="3"
+                                placeholder="Nhập mô tả chẩn đoán kỹ thuật..."></textarea>
+                        </div>
+
+                        <div class="campaign__form-group">
+                            <label for="result_repair" class="campaign__label">Kết quả / Hạng mục sửa chữa</label>
+                            <textarea id="result_repair" name="repair" class="campaign__textarea" rows="3"
+                                placeholder="Nhập chi tiết phần bảo hành hoặc thay thế..."></textarea>
+                        </div>
+
+                        <div class="campaign__form-row">
+                            <div class="campaign__form-group" style="flex: 1;">
+                                <label for="result_parts" class="campaign__label">Phụ tùng thay thế</label>
+                                <input type="text" id="result_parts" name="parts" class="campaign__input"
+                                    placeholder="Ví dụ: Pin module, BMS, Inverter..." />
+                            </div>
+                            <div class="campaign__form-group" style="flex: 1;">
+                                <label for="result_cost" class="campaign__label">Chi phí bảo hành</label>
+                                <input type="number" id="result_cost" name="cost" class="campaign__input"
+                                    placeholder="Nhập chi phí dự kiến hoặc thực tế" />
+                            </div>
+                        </div>
+
+                        <div class="campaign__form-group">
+                            <label for="result_images" class="campaign__label">Hình ảnh đính kèm</label>
+                            <input type="file" id="result_images" name="images" class="campaign__input" multiple
+                                accept="image/*" />
+                            <small style="color: #666;">Có thể chọn nhiều ảnh</small>
+                        </div>
+
+                        <div class="campaign__form-group">
+
+                            <label for="result_notes" class="campaign__label">Ghi chú bổ sung</label>
+
+                            <textarea id="result_notes" name="notes" class="campaign__textarea" rows="2"
+                                placeholder="Ghi chú nội bộ hoặc thông tin bổ sung..."></textarea>
+
+                        </div>
+
+
+                        <div class="campaign__button-group">
+
+                            <button type="button" id="campaignCancelBtn"
+                                class="campaign__button campaign__button--cancel">
+                                Huỷ
+                            </button>
+
+                            <button type="submit" id="campaignSubmitBtn"
+                                class="campaign__button campaign__button--submit">
+                                Lưu kết quả
+                            </button>
+
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
         </div>
 
-        <div id="modalQuanLyChienDich" class="campaign__modal" style="display: none;">
-          <div class="campaign__modal-content">
-            <button class="campaign__close-button" aria-label="Close">&times;</button>
-
-            <form class="campaign__form" id="createResultForm">
-              <div class="campaign__form-group">
-                <label for="result_vin" class="campaign__label">Số VIN</label>
-                <input
-                  type="text"
-                  id="result_vin"
-                  name="vin"
-                  class="campaign__input"
-                  placeholder="Nhập số VIN xe..."
-                  required
-                />
-              </div>
-
-              <div class="campaign__form-group">
-                <label for="result_customer" class="campaign__label">Tên khách hàng</label>
-                <input
-                  type="text"
-                  id="result_customer"
-                  name="customer"
-                  class="campaign__input"
-                  placeholder="Nguyễn Văn A"
-                  required
-                />
-              </div>
-
-              <div class="campaign__form-row">
-                <div class="campaign__form-group">
-                  <label for="result_date" class="campaign__label">Ngày tiếp nhận</label>
-                  <input
-                    type="date"
-                    id="result_date"
-                    name="dateReceived"
-                    class="campaign__input"
-                  />
-                </div>
-
-                <div class="campaign__form-group">
-                  <label for="result_status" class="campaign__label">Trạng thái</label>
-                  <select id="result_status" name="status" class="campaign__select">
-                    <option value="processing">Đang xử lý</option>
-                    <option value="completed">Đã hoàn tất</option>
-                    <option value="rejected">Từ chối</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="campaign__form-group">
-                <label for="result_diagnosis" class="campaign__label">Chẩn đoán</label>
-                <textarea
-                  id="result_diagnosis"
-                  name="diagnosis"
-                  class="campaign__textarea"
-                  rows="3"
-                  placeholder="Nhập mô tả chẩn đoán kỹ thuật..."
-                ></textarea>
-              </div>
-
-              <div class="campaign__form-group">
-                <label for="result_repair" class="campaign__label">Kết quả / Hạng mục sửa chữa</label>
-                <textarea
-                  id="result_repair"
-                  name="repair"
-                  class="campaign__textarea"
-                  rows="3"
-                  placeholder="Nhập chi tiết phần bảo hành hoặc thay thế..."
-                ></textarea>
-              </div>
-
-              <div class="campaign__form-row">
-                <div class="campaign__form-group">
-                  <label for="result_parts" class="campaign__label">Phụ tùng thay thế</label>
-                  <input
-                    type="text"
-                    id="result_parts"
-                    name="parts"
-                    class="campaign__input"
-                    placeholder="Ví dụ: Pin module, BMS, Inverter..."
-                  />
-                </div>
-
-                <div class="campaign__form-group">
-                  <label for="result_cost" class="campaign__label">Chi phí bảo hành</label>
-                  <input
-                    type="number"
-                    id="result_cost"
-                    name="cost"
-                    class="campaign__input"
-                    placeholder="Nhập chi phí dự kiến hoặc thực tế"
-                  />
-                </div>
-              </div>
-
-              <div class="campaign__form-group">
-                <label for="result_images" class="campaign__label">Hình ảnh đính kèm</label>
-                <input
-                  type="file"
-                  id="result_images"
-                  name="images"
-                  class="campaign__input"
-                  multiple
-                  accept="image/*"
-                />
-                <small style="color: #666;">Có thể chọn nhiều ảnh</small>
-              </div>
-
-              <div class="campaign__form-group">
-                <label for="result_notes" class="campaign__label">Ghi chú bổ sung</label>
-                <textarea
-                  id="result_notes"
-                  name="notes"
-                  class="campaign__textarea"
-                  rows="2"
-                  placeholder="Ghi chú nội bộ hoặc thông tin bổ sung..."
-                ></textarea>
-              </div>
-
-              <div class="campaign__button-group">
-                <button
-                  type="button"
-                  id="campaignCancelBtn"
-                  class="campaign__button campaign__button--cancel"
-                >
-                  Huỷ
-                </button>
-                <button
-                  type="submit"
-                  id="campaignSubmitBtn"
-                  class="campaign__button campaign__button--submit"
-                >
-                  Lưu kết quả
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <script src="/evm/assets/js/SC-Staff/campaign_management.js"></script>
+    </div>
+
+    <script src="/evm/assets/js/SC-Staff/warranty_result.js"></script>
 </section>

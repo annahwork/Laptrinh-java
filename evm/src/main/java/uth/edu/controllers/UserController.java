@@ -1,11 +1,9 @@
 package uth.edu.controllers;
 
-import uth.edu.pojo.Admin;
-import uth.edu.pojo.EVMStaff;
-import uth.edu.pojo.SCStaff;
-import uth.edu.pojo.User;
-import uth.edu.service.UserService;
-import uth.edu.service.VehicleService;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
+import jakarta.servlet.http.HttpSession;
+import uth.edu.pojo.Admin;
+import uth.edu.pojo.EVMStaff;
+import uth.edu.pojo.SCStaff;
 import uth.edu.pojo.SCTechnician;
-import uth.edu.pojo.Vehicle;
+import uth.edu.pojo.User;
+import uth.edu.service.UserService;
+import uth.edu.service.VehicleService;
 
 @RestController
 @RequestMapping("/api")
@@ -40,7 +40,12 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<?> getAllUsers(HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        
+        if (loggedInUser == null || !(loggedInUser instanceof Admin)) {
+            return ResponseEntity.status(401).body(Map.of("message", "Không có quyền truy cập"));
+        }
         try {
             List<User> users = userService.GetUsers();
             return ResponseEntity.ok(users);
@@ -51,7 +56,12 @@ public class UserController {
     }
 
     @GetMapping("/technicians")
-    public ResponseEntity<List<User>> getAllTechnicians() {
+    public ResponseEntity<?> getAllTechnicians(HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        
+        if (loggedInUser == null || !(loggedInUser instanceof Admin)) {
+             return ResponseEntity.status(401).body(Map.of("message", "Không có quyền truy cập"));
+        }
         try {
             List<User> technicians = userService.GetTechnicians();
             return ResponseEntity.ok(technicians);
@@ -62,7 +72,12 @@ public class UserController {
     }
 
     @PostMapping("/add-user")
-    public ResponseEntity<?> addUser(@RequestBody Map<String, String> formData) {
+    public ResponseEntity<?> addUser(HttpSession session,@RequestBody Map<String, String> formData) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        
+        if (loggedInUser == null || !(loggedInUser instanceof Admin)) {
+             return ResponseEntity.status(401).body(Map.of("message", "Không có quyền truy cập"));
+        }
         try {
             String userName = formData.get("UserName");
             String password = formData.get("Password");
@@ -99,13 +114,23 @@ public class UserController {
     }
 
     @GetMapping("/users/filter")
-    public ResponseEntity<List<User>> getUsersByRole(@RequestParam(required = false) String role) {
+    public ResponseEntity<?> getUsersByRole(HttpSession session, @RequestParam(required = false) String role) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        
+        if (loggedInUser == null || !(loggedInUser instanceof Admin)) {
+             return ResponseEntity.status(401).body(Map.of("message", "Không có quyền truy cập"));
+        }
         List<User> users = role == null || role.isEmpty() ? userService.GetUsers() : userService.GetUserByRole(role);
         return ResponseEntity.ok(users);
     }
 
     @GetMapping("/users/profile/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable int id) {
+    public ResponseEntity<?> getUserById(HttpSession session, @PathVariable int id) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        
+        if (loggedInUser == null || !(loggedInUser instanceof Admin)) {
+             return ResponseEntity.status(401).body(Map.of("message", "Không có quyền truy cập"));
+        }
         try {
             User user = userService.GetUserProfile(id);
             if (user == null)
@@ -118,7 +143,12 @@ public class UserController {
     }
 
     @DeleteMapping("/users/delete/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable int id) {
+    public ResponseEntity<?> deleteUser(HttpSession session, @PathVariable int id) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        
+        if (loggedInUser == null || !(loggedInUser instanceof Admin)) {
+             return ResponseEntity.status(401).body(Map.of("message", "Không có quyền truy cập"));
+        }
         boolean deleted = userService.deleteUser(id);
         if (!deleted)
             return ResponseEntity.status(500).body(Map.of("error", "Failed to delete user"));
@@ -126,7 +156,12 @@ public class UserController {
     }
 
     @GetMapping("/user/stats")
-    public ResponseEntity<Map<String, Object>> getDashboardStats() {
+    public ResponseEntity<Map<String, Object>> getDashboardStats(HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        
+        if (loggedInUser == null || !(loggedInUser instanceof Admin)) {
+             return ResponseEntity.status(401).body(Map.of("message", "Không có quyền truy cập"));
+        }
         try {
             int totalEmployees = userService.countAllUsers();
             int totalVehicles = vehicleService.countAllVehicles();
@@ -156,10 +191,12 @@ public class UserController {
     }
 
     @PutMapping("/users/update/{id}")
-    public ResponseEntity<?> updateUser(
-            @PathVariable int id,
-            @RequestBody Map<String, String> formData) {
-
+    public ResponseEntity<?> updateUser(HttpSession session, @PathVariable int id, @RequestBody Map<String, String> formData) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        
+        if (loggedInUser == null || !(loggedInUser instanceof Admin)) {
+             return ResponseEntity.status(401).body(Map.of("message", "Không có quyền truy cập"));
+        }
         try {
             User existingUser = userService.GetUserProfile(id);
             if (existingUser == null) {

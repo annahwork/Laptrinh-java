@@ -9,6 +9,7 @@ import org.hibernate.cfg.Configuration;
 
 import uth.edu.pojo.WarrantyClaim;
 import uth.edu.pojo.WarrantyHistory;
+
 public class WarrantyClaimDAO {
     private Configuration configuration = null;
     private SessionFactory sessionFactory = null;
@@ -31,6 +32,7 @@ public class WarrantyClaimDAO {
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {
+            System.err.println("Error in addWarrantyClaim: " + e.getMessage());
             e.printStackTrace();
             if (session != null && session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
@@ -80,7 +82,7 @@ public class WarrantyClaimDAO {
             e.printStackTrace();
             if (session != null && session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
-                return false;  
+                return false;
             }
         } finally {
             if (session != null) {
@@ -90,20 +92,46 @@ public class WarrantyClaimDAO {
         return true;
     }
 
+    public List<WarrantyClaim> getAllWarrantyClaimsWithDetails(int page, int pageSize) {
+        Session session = null;
+        List<WarrantyClaim> claims = null;
+        try {
+            session = sessionFactory.openSession();
+            String hql = "SELECT DISTINCT wc FROM WarrantyClaim wc " +
+                    "LEFT JOIN FETCH wc.vehicle v " +
+                    "LEFT JOIN FETCH wc.CreatedByStaff s " +
+                    "LEFT JOIN FETCH wc.ClaimServices cs " +
+                    "LEFT JOIN FETCH cs.WarrantyService ws " +
+                    "ORDER BY wc.Date DESC";
+            claims = session.createQuery(hql, WarrantyClaim.class)
+                    .setFirstResult((page - 1) * pageSize)
+                    .setMaxResults(pageSize)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return claims;
+    }
+
     public WarrantyClaim getWarrantyClaimById(int claimID) {
         Session session = null;
         WarrantyClaim claim = null;
         try {
             session = sessionFactory.openSession();
             String hql = "FROM WarrantyClaim wc " +
-                         "JOIN FETCH wc.vehicle v " +
-                         "JOIN FETCH wc.VehiclePart vp " +
-                         "JOIN FETCH vp.Part " +
-                         "JOIN FETCH wc.CreatedByStaff " +
-                         "WHERE wc.ClaimID = :claimId";
+                    "JOIN FETCH wc.vehicle v " +
+                    "JOIN FETCH wc.VehiclePart vp " +
+                    "JOIN FETCH vp.Part " +
+                    "JOIN FETCH wc.CreatedByStaff " +
+                    "WHERE wc.ClaimID = :claimId";
             claim = session.createQuery(hql, WarrantyClaim.class)
-                           .setParameter("claimId", claimID)
-                           .uniqueResult();
+                    .setParameter("claimId", claimID)
+                    .uniqueResult();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -114,17 +142,39 @@ public class WarrantyClaimDAO {
         return claim;
     }
 
+    public List<Object[]> getAllClaimSummaryDetails(int pageNumber, int pageSize) {
+        Session session = null;
+        List<Object[]> results = null;
+        try {
+            session = sessionFactory.openSession();
+            int firstResult = (pageNumber - 1) * pageSize;
+
+            String hql = "SELECT cs.WarrantyClaim.ClaimID, cs.WarrantyClaim.vehicle.VIN, cs.WarrantyClaim.Date, cs.technician.name FROM ClaimService cs JOIN cs.WarrantyClaim wc JOIN wc.vehicle v LEFT JOIN cs.technician t";
+            
+            results = session.createQuery(hql, Object[].class)
+                    .setFirstResult(firstResult) 
+                    .setMaxResults(pageSize)    
+                    .list();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return results;
+    }
+
     public List<WarrantyClaim> getAllWarrantyClaims(int page, int pageSize) {
         Session session = null;
         List<WarrantyClaim> claims = null;
         try {
             session = sessionFactory.openSession();
             String hql = "FROM WarrantyClaim wc " +
-                         "JOIN FETCH wc.vehicle v " +
-                         "LEFT JOIN FETCH wc.CreatedByStaff " +
-                         "LEFT JOIN FETCH wc.VehiclePart vp " + 
-                         "LEFT JOIN FETCH vp.Part p " +      
-                         "ORDER BY wc.Date DESC";
+                    "JOIN FETCH wc.vehicle v " +
+                    "LEFT JOIN FETCH wc.CreatedByStaff " +
+                    "ORDER BY wc.Date DESC";
             claims = session.createQuery(hql, WarrantyClaim.class)
                     .setFirstResult((page - 1) * pageSize)
                     .setMaxResults(pageSize)
@@ -147,10 +197,10 @@ public class WarrantyClaimDAO {
             session = sessionFactory.openSession();
             // SỬA: Thêm JOIN FETCH
             String hql = "FROM WarrantyClaim wc " +
-                         "JOIN FETCH wc.vehicle v " +
-                         "JOIN FETCH wc.CreatedByStaff " +
-                         "WHERE wc.Status = :status " +
-                         "ORDER BY wc.Date ASC";
+                    "JOIN FETCH wc.vehicle v " +
+                    "JOIN FETCH wc.CreatedByStaff " +
+                    "WHERE wc.Status = :status " +
+                    "ORDER BY wc.Date ASC";
             claims = session.createQuery(hql, WarrantyClaim.class)
                     .setParameter("status", status)
                     .setFirstResult((page - 1) * pageSize)
@@ -160,7 +210,8 @@ public class WarrantyClaimDAO {
             e.printStackTrace();
             return new ArrayList<>(); // Trả về list rỗng
         } finally {
-            if (session != null) session.close();
+            if (session != null)
+                session.close();
         }
         return claims;
     }
@@ -172,10 +223,10 @@ public class WarrantyClaimDAO {
             session = sessionFactory.openSession();
             // SỬA: Thêm JOIN FETCH
             String hql = "FROM WarrantyClaim wc " +
-                         "JOIN FETCH wc.vehicle v " +
-                         "JOIN FETCH wc.CreatedByStaff s " +
-                         "WHERE s.UserID = :userId " +
-                         "ORDER BY wc.Date DESC";
+                    "JOIN FETCH wc.vehicle v " +
+                    "JOIN FETCH wc.CreatedByStaff s " +
+                    "WHERE s.UserID = :userId " +
+                    "ORDER BY wc.Date DESC";
             claims = session.createQuery(hql, WarrantyClaim.class)
                     .setParameter("userId", userID)
                     .setFirstResult((page - 1) * pageSize)
@@ -185,7 +236,8 @@ public class WarrantyClaimDAO {
             e.printStackTrace();
             return new ArrayList<>(); // Trả về list rỗng
         } finally {
-            if (session != null) session.close();
+            if (session != null)
+                session.close();
         }
         return claims;
     }
@@ -196,9 +248,9 @@ public class WarrantyClaimDAO {
         try {
             session = sessionFactory.openSession();
             String hql = "FROM WarrantyHistory wh " +
-                         "JOIN FETCH wh.WarrantyClaim " +
-                         "WHERE wh.WarrantyClaim.ClaimID = :claimId " +
-                         "ORDER BY wh.Date ASC";
+                    "JOIN FETCH wh.WarrantyClaim " +
+                    "WHERE wh.WarrantyClaim.ClaimID = :claimId " +
+                    "ORDER BY wh.Date ASC";
             historyList = session.createQuery(hql, WarrantyHistory.class)
                     .setParameter("claimId", claimId)
                     .setFirstResult((page - 1) * pageSize)
@@ -208,7 +260,8 @@ public class WarrantyClaimDAO {
             e.printStackTrace();
             return new ArrayList<>(); // Trả về list rỗng
         } finally {
-            if (session != null) session.close();
+            if (session != null)
+                session.close();
         }
         return historyList;
     }
@@ -219,19 +272,20 @@ public class WarrantyClaimDAO {
         try {
             session = sessionFactory.openSession();
             String hql = "SELECT DISTINCT wc FROM WarrantyClaim wc " +
-                         "JOIN FETCH wc.vehicle " +
-                         "JOIN FETCH wc.CreatedByStaff " +
-                         "LEFT JOIN FETCH wc.ClaimServices cs " +
-                         "LEFT JOIN FETCH cs.warrantyService " +
-                         "LEFT JOIN FETCH cs.technician " +
-                         "WHERE wc.ClaimID = :claimId";
+                    "JOIN FETCH wc.vehicle " +
+                    "JOIN FETCH wc.CreatedByStaff " +
+                    "LEFT JOIN FETCH wc.ClaimServices cs " +
+                    "LEFT JOIN FETCH cs.WarrantyService " +
+                    "LEFT JOIN FETCH cs.technician " +
+                    "WHERE wc.ClaimID = :claimId";
             claim = session.createQuery(hql, WarrantyClaim.class)
                     .setParameter("claimId", claimId)
                     .uniqueResult();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (session != null) session.close();
+            if (session != null)
+                session.close();
         }
         return claim;
     }
@@ -245,6 +299,20 @@ public class WarrantyClaimDAO {
             e.printStackTrace();
         }
         return total;
+    }
+
+    public int getNextClaimId() {
+        int nextId = 1;
+        try (Session session = sessionFactory.openSession()) {
+            Integer maxId = (Integer) session.createQuery("SELECT MAX(wc.ClaimID) FROM WarrantyClaim wc")
+                    .uniqueResult();
+            if (maxId != null) {
+                nextId = maxId + 1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return nextId;
     }
 
     public void closeSessionFactory() {

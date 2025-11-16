@@ -16,6 +16,8 @@ public interface IWarrantyClaimRepository {
     public List<WarrantyClaim> getClaimsByStatus(String status, int page, int pageSize);
     public List<WarrantyClaim> getClaimsByUserID(Integer userID, int page, int pageSize);
     public List<WarrantyHistory> getHistoryByClaimId(Integer claimId, int page, int pageSize);
+    public List<WarrantyClaim> getAllWarrantyClaimsWithDetails(int page, int pageSize);
     public int countAllWarrantyClaims();
+    public List<Object[]> getAllClaimSummaryDetails(int page, int pageSize);
     public void closeResources();
 }

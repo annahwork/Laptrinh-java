@@ -27,8 +27,7 @@ public class HomeController {
     }
 
     @RequestMapping({
-        "/",
-        "/home",
+        "/Admin"
     })
     public String home(){
         return "/frontend/pages/SC-Admin/home_sc_admin";
@@ -47,8 +46,6 @@ public class HomeController {
     public String showAccountAdmin() {
         return "/frontend/pages/SC-Admin/Section/account_admin"; 
     }
-
-
 
 
     @RequestMapping("/login")
@@ -115,9 +112,9 @@ public class HomeController {
     public String showWork_schedule() {
         return "/frontend/pages/SC-Technician/Section/work_schedule"; 
     }
-    @GetMapping("/account_technician")
-    public String showAccountTechnician() {
-        return "/frontend/pages/SC-Technician/Section/account_technician"; 
+        @GetMapping("/account_sctechnician")
+    public String showAccountSCTechninican() {
+        return "/frontend/pages/SC-Technician/Section/account_sctechnician"; 
     }
 
 
@@ -127,85 +124,72 @@ public class HomeController {
         return "/frontend/pages/EVM-Staff/home_evm_staff";
     }
 
-    // Đã có, đúng
     @GetMapping("/dashboardEVM")
     public String showDashboardEVMStaff() {
         return "/frontend/pages/EVM-Staff/Section/dashboard"; 
     }
 
-    // Đã có, đúng
     @GetMapping("/allocate_parts")
     public String allocate_parts() {
-        return "/frontend/pages/EVM-Staff/Section/allocate_parts";
+        return "/frontend/pages/EVM-Staff/Section/allocate_parts"; 
     }
 
-    // SỬA LẠI: Bỏ chữ "m"
     @GetMapping("/manage_ev_parts")
     public String manage_ev_parts() {
         return "/frontend/pages/EVM-Staff/Section/manage_ev_parts";
     }
 
-    // Đã có, đúng
     @GetMapping("/attach_serial")
     public String attach_serial() {
-        return "/frontend/pages/EVM-Staff/Section/attach_serial";
+        return "/frontend/pages/EVM-Staff/Section/attach_serial"; 
     }
 
-    // SỬA LẠI: Thêm chữ "EVM"
     @GetMapping("/inventory")
     public String showInventory() {
-        return "/frontend/pages/EVM-Staff/Section/inventory";
+        return "/frontend/pages/EVM-Staff/Section/inventory"; 
     }
 
-    // SỬA LẠI: Bỏ chữ "d"
     @GetMapping("/claim_requests")
     public String showClaimedRequests() {
-        return "/frontend/pages/EVM-Staff/Section/claim_requests";
+        return "/frontend/pages/EVM-Staff/Section/claim_requests"; 
     }
 
-    // Đã có, đúng
     @GetMapping("/claim_tracking")
     public String showClaimTracking() {
-        return "/frontend/pages/EVM-Staff/Section/claim_tracking";
+        return "/frontend/pages/EVM-Staff/Section/claim_tracking"; 
     }
     
-    // Đã có, đúng
     @GetMapping("/warranty_cost")
     public String showWarrantyCost() {
-        return "/frontend/pages/EVM-Staff/Section/warranty_cost";
+        return "/frontend/pages/EVM-Staff/Section/warranty_cost"; 
     }
 
-    // Đã có, đúng
     @GetMapping("/campaigns")
     public String showCampaigns() {
-        return "/frontend/pages/EVM-Staff/Section/campaigns";
+        return "/frontend/pages/EVM-Staff/Section/campaigns"; 
     }
 
-    // Đã có, đúng
     @GetMapping("/warranty_policy")
     public String showWarrantyPolicy() {
-        return "/frontend/pages/EVM-Staff/Section/warranty_policy";
+        return "/frontend/pages/EVM-Staff/Section/warranty_policy"; 
     }
 
-    // Đã có, đúng
     @GetMapping("/statistics")
     public String showStatistics() {
-        return "/frontend/pages/EVM-Staff/Section/statistics";
+        return "/frontend/pages/EVM-Staff/Section/statistics"; 
     }
 
-    // Đã có, đúng
     @GetMapping("/reports")
     public String showReports() {
-        return "/frontend/pages/EVM-Staff/Section/reports";
+        return "/frontend/pages/EVM-Staff/Section/reports"; 
     }
 
     @GetMapping("/account_evm")
     public String showAccountEVM() {
-        return "/frontend/pages/EVM-Staff/Section/account_evm";
+        return "/frontend/pages/EVM-Staff/Section/account_evm"; 
     }
 
 
-    // SC-Staff Pages
     @GetMapping("/SCStaff")
     public String showSCStaffHome() {
         return "/frontend/pages/SC-Staff/home_sc_staff";
@@ -260,6 +244,11 @@ public class HomeController {
     @GetMapping("/scstaff/warranty_claim_management")
     public String showSCStaffWarrantyClaimManagement() {
         return "/frontend/pages/SC-Staff/Section/warranty_claim_management";
+    }
+
+    @GetMapping("/account_scstaff")
+    public String showAccountSCStaff() {
+        return "/frontend/pages/SC-Staff/Section/account_scstaff"; 
     }
     
 }

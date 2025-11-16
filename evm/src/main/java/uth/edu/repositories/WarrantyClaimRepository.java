@@ -2,10 +2,11 @@ package uth.edu.repositories;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import uth.edu.dao.WarrantyClaimDAO;
 import uth.edu.pojo.WarrantyClaim;
 import uth.edu.pojo.WarrantyHistory;
-import org.springframework.stereotype.Repository;
 
 @Repository
 public class WarrantyClaimRepository implements IWarrantyClaimRepository {
@@ -59,6 +60,19 @@ public class WarrantyClaimRepository implements IWarrantyClaimRepository {
     @Override
     public int countAllWarrantyClaims() {
         return WarrantyClaimDAO.countAllWarrantyClaims();
+    }
+    @Override
+    public List<WarrantyClaim> getAllWarrantyClaimsWithDetails(int page, int pageSize) {
+        return WarrantyClaimDAO.getAllWarrantyClaimsWithDetails(page, pageSize);
+    }
+
+    public int getNextClaimId() {
+        return WarrantyClaimDAO.getNextClaimId();
+    }
+
+    @Override
+    public List<Object[]> getAllClaimSummaryDetails(int page, int pageSize) {
+        return WarrantyClaimDAO.getAllClaimSummaryDetails(page, pageSize);
     }
 
     @Override

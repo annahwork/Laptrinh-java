@@ -1,7 +1,6 @@
 <section class="customer-record-management-page">
     <div class="app-layout">
-        <!-- page-specific CSS -->
-        <link rel="stylesheet" href="../../assets/css/SC-Staff/customer_record_management.css">
+        <link rel="stylesheet" href="/evm/assets/css/SC-Staff/customer_record_management.css">
         <div class="content-wrapper" id="innerContent">
             <div class="main-content-area">
                 <div class="search-filter-bar">
@@ -15,12 +14,6 @@
                 <div class="card filter-card">
                     <div class="filter-card-body">
                         <div class="filter-controls">
-                            <select id="customerStatusFilter" class="filter-select">
-                                <option value="">Tất cả trạng thái</option>
-                                <option value="active">Đang hoạt động</option>
-                                <option value="inactive">Không hoạt động</option>
-                            </select>
-                            <input type="date" id="customerDateFilter" class="filter-input">
                             <button type="button" id="btnMoFormCustomer">Thêm Khách Hàng</button>
                         </div>
                     </div>
@@ -33,7 +26,7 @@
                                     <th>Tên khách hàng</th>
                                     <th>Số điện thoại</th>
                                     <th>Email</th>
-                                    <th>Trạng thái</th>
+                                    <th>Địa chỉ</th>
                                     <th>Thao tác</th>
                                 </tr>
                             </thead>
@@ -57,7 +50,6 @@
                     </div>
                 </div>
 
-                <!-- Modal thêm/sửa khách hàng -->
                 <div id="modalQuanLyCustomer" class="customer__modal" style="display:none;">
                     <div class="customer__modal-content">
                         <button class="customer__close-button" aria-label="Close">&times;</button>
@@ -82,16 +74,8 @@
                                 <input type="email" id="customer_email" name="email" class="customer__input">
                             </div>
                             <div class="customer__form-group">
-                                <label for="customer_status" class="customer__label">Trạng thái</label>
-                                <select id="customer_status" name="status" class="customer__select">
-                                    <option value="active">Đang hoạt động</option>
-                                    <option value="inactive">Không hoạt động</option>
-                                </select>
-                            </div>
-                            <div class="customer__form-group">
-                                <label for="customer_notes" class="customer__label">Ghi chú</label>
-                                <textarea id="customer_notes" name="notes" class="customer__textarea"
-                                    rows="3"></textarea>
+                                <label for="customer_address" class="customer__label">Địa chỉ</label>
+                                <input id="customer_address" name="notes" class="customer__input"></input>
                             </div>
 
                             <div class="customer__button-group">
@@ -106,5 +90,5 @@
 
             </div>
         </div>
-        <script src="../../assets/js/SC-Staff/customer_record_management.js"></script>
+        <script src="/evm/assets/js/SC-Staff/customer_record_management.js"></script>
 </section>

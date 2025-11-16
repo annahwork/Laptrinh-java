@@ -1,0 +1,63 @@
+<section class="statistics-page">
+    <link rel="stylesheet" href="/evm/assets/css/EVM-Staff/statistics.css">
+
+    <div class="page-header">
+        <h2>Thống kê bảo hành</h2>
+        <div class="statistics__filters">
+            <input type="month" class="statistics__month-picker" />
+            <select class="statistics__select">
+                <option value="">Tất cả loại</option>
+                <option value="standard">Bảo hành chuẩn</option>
+                <option value="extended">Bảo hành mở rộng</option>
+                <option value="recall">Thu hồi</option>
+            </select>
+            <button class="statistics__btn statistics__btn--filter">Lọc</button>
+        </div>
+    </div>
+
+    <div class="statistics__grid">
+        <!-- CARD THỐNG KÊ -->
+        <div class="statistics__card">
+            <h3 class="statistics__card-title">Tổng chi phí bảo hành</h3>
+            <p class="statistics__card-value">12.500.000 VND</p>
+        </div>
+        <div class="statistics__card">
+            <h3 class="statistics__card-title">Số chiến dịch</h3>
+            <p class="statistics__card-value">8 chiến dịch</p>
+        </div>
+        <div class="statistics__card">
+            <h3 class="statistics__card-title">Xe tham gia</h3>
+            <p class="statistics__card-value">45 xe</p>
+        </div>
+    </div>
+
+    <!-- BẢNG CHI TIẾT -->
+    <div class="statistics__table-wrapper">
+        <table class="statistics__table">
+            <thead>
+                <tr>
+                    <th class="statistics__th">Mã chiến dịch</th>
+                    <th class="statistics__th">Loại</th>
+                    <th class="statistics__th">Số xe</th>
+                    <th class="statistics__th">Tổng chi phí (VND)</th>
+                </tr>
+            </thead>
+            <tbody id="statisticsTableBody">
+                <tr class="statistics__tr">
+                    <td class="statistics__td">CD-2025-001</td>
+                    <td class="statistics__td">Bảo hành chuẩn</td>
+                    <td class="statistics__td">12</td>
+                    <td class="statistics__td">4.500.000</td>
+                </tr>
+                <tr class="statistics__tr">
+                    <td class="statistics__td">CD-2025-002</td>
+                    <td class="statistics__td">Bảo hành mở rộng</td>
+                    <td class="statistics__td">20</td>
+                    <td class="statistics__td">7.500.000</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<script src="/evm/assets/js/EVM-Staff/statistics.js"></script>

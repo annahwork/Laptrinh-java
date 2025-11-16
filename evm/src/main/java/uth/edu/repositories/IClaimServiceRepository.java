@@ -15,4 +15,6 @@ public interface IClaimServiceRepository {
     public List<ClaimService> getAllClaimServices(int userID, int page, int pageSize);
     public String getFirstActiveTaskNote(int technicianId);
     public String getFirstActiveTaskNoteForSCT(int userId);
+    public List<Object[]> getClaimServiceDetails(int userID, int page, int pageSize);
+    public Long[] getPerformanceMetrics(int technicianId);
 }

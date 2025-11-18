@@ -1,6 +1,5 @@
 <section class="campaign-management-page">
     <div class="app-layout">
-        <!-- page-specific CSS -->
         <link rel="stylesheet" href="/evm/assets/css/SC-Staff/campaign_management.css">
         <div class="content-wrapper" id="innerContent">
             <div class="main-content-area">
@@ -24,7 +23,8 @@
                                 <option value="completed">Đã hoàn thành</option>
                             </select>
                             <input type="date" id="campaignDateFilter" class="filter-input" name="Date">
-                            <button type="button" id="btnMoFormCampaign" class="campaign__button campaign__button--submit">
+                            <button type="button" id="btnMoFormCampaign"
+                                class="campaign__button campaign__button--submit">
                                 <i class="fas fa-plus"></i> Tạo Chiến Dịch
                             </button>
                         </div>
@@ -35,10 +35,10 @@
                             <table class="table-zebra table-full-width">
                                 <thead>
                                     <tr class="table-header-row">
-                                        <th>Tên chiến dịch</th>
-                                        <th>Ngày bắt đầu</th>
-                                        <th>Trạng thái</th>
-                                        <th>Mô tả</th>
+                                        <th>Mã chiến dịch</th>
+                                        <th>VIN</th>
+                                        <th>Ngày</th>
+                                        <th>Kỹ thuật viên</th>
                                         <th>Thao tác</th>
                                     </tr>
                                 </thead>
@@ -46,7 +46,8 @@
                             </table>
                         </div>
                         <div class="card-footer" style="padding: 15px; border-top: 1px solid #eee;">
-                            <div class="pagination-wrapper" style="display: flex; justify-content: space-between; align-items: center;">
+                            <div class="pagination-wrapper"
+                                style="display: flex; justify-content: space-between; align-items: center;">
                                 <span class="pagination-info" id="paginationInfo">Hiển thị 0 của 0</span>
                                 <div>
                                     <button class="pagination-btn" id="prevPageBtn">« Trước</button>
@@ -58,15 +59,13 @@
                     </div>
                 </div>
 
-                <!-- Modal tạo/sửa chiến dịch -->
                 <div id="modalQuanLyChienDich" class="campaign__modal" style="display:none;">
                     <div class="campaign__modal-content">
                         <button class="campaign__close-button" id="campaignCloseBtn" aria-label="Close">&times;</button>
                         <h3 id="modalTitle">Tạo Chiến Dịch Mới</h3>
                         <form class="campaign__form" id="campaignForm">
-                            <!-- INPUT ẨN CHO ID (Dùng cho Sửa/Xóa) -->
-                            <input type="hidden" id="campaign_id" name="CampaignID"> 
-                            
+                            <input type="hidden" id="campaign_id" name="CampaignID">
+
                             <div class="campaign__form-group">
                                 <label for="campaign_name" class="campaign__label">Tên chiến dịch</label>
                                 <input type="text" id="campaign_name" name="Name" class="campaign__input" required>
@@ -85,7 +84,8 @@
                             </div>
                             <div class="campaign__form-group">
                                 <label for="campaign_desc" class="campaign__label">Mô tả</label>
-                                <textarea id="campaign_desc" name="Description" class="campaign__textarea" rows="4"></textarea>
+                                <textarea id="campaign_desc" name="Description" class="campaign__textarea"
+                                    rows="4"></textarea>
                             </div>
 
                             <div class="campaign__button-group">
@@ -100,7 +100,6 @@
 
             </div>
         </div>
-        <!-- Chú ý: File JS đã được cập nhật logic CRUD, Lọc, và Phân trang -->
         <script src="/evm/assets/js/SC-Staff/campaign_management.js"></script>
     </div>
 </section>

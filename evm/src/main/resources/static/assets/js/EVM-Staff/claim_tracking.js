@@ -2,23 +2,17 @@
     'use strict';
     console.log('claim_tracking.js loaded');
 
-    // API Endpoints
     const API_BASE_URL = (window.contextPath || '/evm/') + 'api/evm_staff/claims';
     const API_ALL_CLAIMS = `${API_BASE_URL}/all`;
     const API_HISTORY = `${API_BASE_URL}/history`;
 
-    // DOM Elements
     const tableBody = document.getElementById('trackingTableBody');
     
-    // Modal Elements
     const modal = document.getElementById('trackingModal');
     const closeModalBtn = document.getElementById('closeModal');
     const modalClaimIdSpan = document.getElementById('modalClaimId');
     const modalProgressBody = document.getElementById('modalProgressBody');
 
-    /**
-     * Tải danh sách TẤT CẢ claim
-     */
     async function loadAllClaims() {
         if (!tableBody) return;
         tableBody.innerHTML = `<tr><td colspan="6" class="no-data">Đang tải dữ liệu...</td></tr>`;
@@ -38,11 +32,9 @@
         }
     }
 
-    /**
-     * Hiển thị dữ liệu lên bảng
-     */
+
     function renderTable(claims) {
-        tableBody.innerHTML = ''; // Xóa sạch
+        tableBody.innerHTML = ''; 
         if (!claims || claims.length === 0) {
             tableBody.innerHTML = `<tr><td colspan="6" class="no-data">Không có yêu cầu nào.</td></tr>`;
             return;
@@ -51,7 +43,6 @@
         claims.forEach(claim => {
             const row = document.createElement('tr');
             
-            // Thêm class dựa trên trạng thái
             let statusClass = '';
             const status = claim.status.toLowerCase();
             if (status.includes('pending') || status.includes('đã gửi')) {
@@ -77,7 +68,6 @@
             tableBody.appendChild(row);
         });
 
-        // Gắn sự kiện cho các nút mới
         tableBody.querySelectorAll('.btn-view').forEach(button => {
             button.addEventListener('click', (e) => {
                 const id = e.target.dataset.id;
@@ -86,9 +76,6 @@
         });
     }
 
-    /**
-     * Mở modal xem tiến trình
-     */
     async function openTrackingModal(claimId) {
         modalClaimIdSpan.textContent = `(CR-${claimId})`;
         modalProgressBody.innerHTML = `<tr><td colspan="4" class="no-data">Đang tải lịch sử...</td></tr>`;
@@ -108,9 +95,6 @@
         }
     }
 
-    /**
-     * Render bảng lịch sử trong modal
-     */
     function renderHistoryTable(history) {
         modalProgressBody.innerHTML = '';
         if (!history || history.length === 0) {
@@ -126,7 +110,6 @@
                 <td>${item.date}</td>
                 <td>${item.status}</td>
             `;
-            // Thêm 1 hàng nữa cho Ghi chú
              const noteRow = document.createElement('tr');
              noteRow.innerHTML = `<td colspan="4" class="history-note"><strong>Ghi chú:</strong> ${item.note}</td>`;
 
@@ -135,24 +118,18 @@
         });
     }
 
-    /**
-     * Đóng modal
-     */
     function closeModal() {
         modal.style.display = 'none';
     }
 
-    // --- Gắn các sự kiện ---
     closeModalBtn.addEventListener('click', closeModal);
 
-    // Đóng modal khi click ra ngoài
     window.addEventListener('click', (event) => {
         if (event.target == modal) {
             closeModal();
         }
     });
 
-    // Tải dữ liệu lần đầu
     loadAllClaims();
 
 })();

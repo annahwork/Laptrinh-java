@@ -1,179 +1,346 @@
 (function () {
-    // Biến toàn cục đơn giản (không cần phân trang phức tạp nữa)
+    "use strict";
+
+    console.log("SC-Staff Campaign Management JS loaded");
+
+    const API_BASE = "/evm/api/sc-staff/dashboard/campaigns";
+    const tbody = document.getElementById("campaignsTbody");
+    const btnOpenForm = document.getElementById("btnMoFormCampaign");
+    const modal = document.getElementById("modalQuanLyChienDich");
+    const btnClose = document.getElementById("campaignCloseBtn");
+    const btnCancel = document.getElementById("campaignCancelBtn");
+    const form = document.getElementById("campaignForm");
+    const modalTitle = document.getElementById("modalTitle");
+    const submitBtn = document.getElementById("campaignSubmitBtn");
+
+    const searchBox = document.getElementById("searchCampaignBox");
+    const statusFilter = document.getElementById("campaignStatusFilter");
+    const dateFilter = document.getElementById("campaignDateFilter");
+
+    const paginationInfo = document.getElementById("paginationInfo");
+    const prevPageBtn = document.getElementById("prevPageBtn");
+    const nextPageBtn = document.getElementById("nextPageBtn");
+    const currentPageSpan = document.getElementById("currentPageSpan");
+    let campaigns = [];
+    let filteredCampaigns = [];
     let currentPage = 1;
-    const pageSize = 10; // Giữ cố định
+    const pageSize = 6;
+    let currentEditId = null;
 
-    // ÁNH XẠ TRẠNG THÁI sang tiếng Việt
-   const statusMap = {
-        "planned": "Đã lên kế hoạch",
-        "active": "Đang diễn ra",
-        "completed": "Đã hoàn thành",
-        "Chua gi?i quy?t": "Chưa giải quyết"
-    };
-    /**
-     * HÀM HIỂN THỊ THÔNG BÁO (Thay thế alert())
-     */
-    function showMessage(message, isError = false) {
-        // Có thể thay thế bằng modal xịn hơn
-        console.log(isError ? "LỖI:" : "THÔNG BÁO:", message);
-        alert(message); // Dùng alert tạm thời
+    function escapeHtml(str) {
+        return String(str ?? "").replace(/[&<>"'`=\/]/g, s => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;",
+            "/": "&#x2F;",
+            "`": "&#x60;",
+            "=": "&#x3D;"
+        })[s]);
     }
 
-    /**
-     * HÀM LẤY VÀ VẼ LẠI BẢNG (Đơn giản)
-     */
-    function fetchCampaigns() {
-        // URL đã sửa (thêm /evm)
-        const url = `/evm/api/campaigns?page=${currentPage}&pageSize=${pageSize}`;
-
-        fetch(url)
-            .then(res => {
-                if (!res.ok) throw new Error('Lỗi mạng hoặc server');
-                return res.json();
-            })
-            .then(data => {
-                // DATA là 1 LIST [ ... ]
-                renderTable(data);
-            })
-            .catch(err => {
-                console.error('Lỗi khi tải chiến dịch:', err);
-                const tbody = document.getElementById('campaignsTbody');
-                if (tbody) tbody.innerHTML = `<tr><td colspan="5" class="table-placeholder-cell">Lỗi tải dữ liệu. (Không tìm thấy /evm/api/...)</td></tr>`;
-            });
+    function showMessage(msg) {
+        alert(msg);
     }
 
-    /**
-     * HÀM VẼ BẢNG
-     */
-    function renderTable(campaigns) {
-        const tbody = document.getElementById('campaignsTbody');
+    function normalizeDateForInput(dateStr) {
+        if (!dateStr) return "";
+        return String(dateStr).substring(0, 10);
+    }
+
+    function formatDateDisplay(dateStr) {
+        if (!dateStr) return "";
+        const parts = String(dateStr).split("-");
+        if (parts.length !== 3) return dateStr;
+        const [y, m, d] = parts;
+        return `${d}/${m}/${y}`;
+    }
+
+    async function apiGetList() {
+        const res = await fetch(`${API_BASE}`, { credentials: "include" });
+        if (!res.ok) throw new Error("Không tải được danh sách chiến dịch");
+        return await res.json();
+    }
+
+    async function apiGetDetail(id) {
+        const res = await fetch(`${API_BASE}/details/${id}`, { credentials: "include" });
+        if (!res.ok) throw new Error("Không tải được chi tiết chiến dịch");
+        return await res.json();
+    }
+
+    async function apiCreate(payload) {
+        const res = await fetch(`${API_BASE}/create`, {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+        if (!res.ok) {
+            let err = null;
+            try { err = await res.json(); } catch { }
+            throw new Error(err?.message || "Tạo chiến dịch thất bại");
+        }
+        return await res.json();
+    }
+
+    async function apiUpdate(id, payload) {
+        const res = await fetch(`${API_BASE}/update/${id}`, {
+            method: "PUT",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+        if (!res.ok) {
+            let err = null;
+            try { err = await res.json(); } catch { }
+            throw new Error(err?.message || "Cập nhật chiến dịch thất bại");
+        }
+        return await res.json();
+    }
+
+    async function apiDelete(id) {
+        const res = await fetch(`${API_BASE}/delete/${id}`, {
+            method: "DELETE",
+            credentials: "include"
+        });
+        if (!res.ok) {
+            let err = null;
+            try { err = await res.json(); } catch { }
+            throw new Error(err?.message || "Xóa chiến dịch thất bại");
+        }
+        return await res.json();
+    }
+
+    function renderTablePage() {
         if (!tbody) return;
 
-        if (!Array.isArray(campaigns) || campaigns.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="5" class="table-placeholder-cell">Không có dữ liệu chiến dịch.</td></tr>`;
+        tbody.innerHTML = "";
+
+        if (!filteredCampaigns.length) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="5" class="table-placeholder-cell">
+                        Không có chiến dịch nào.
+                    </td>
+                </tr>
+            `;
+            paginationInfo && (paginationInfo.textContent = "Hiển thị 0 của 0");
+            currentPageSpan && (currentPageSpan.textContent = "1");
+            prevPageBtn && (prevPageBtn.disabled = true);
+            nextPageBtn && (nextPageBtn.disabled = true);
             return;
         }
 
-        tbody.innerHTML = campaigns.map(campaign => {
-            // Vì date là null, show N/A nếu null hoặc chuyển định dạng nếu có giá trị
-        const startDate = campaign.date ? new Date(campaign.date).toLocaleDateString() : 'Chưa nhập';
-            return `
-                <tr>
-                    <td>${campaign.name || 'N/A'}</td>
-                    <td>${startDate}</td>
-                    <td>${statusMap[campaign.status] || campaign.status || 'N/A'}</td>
-                    <td>${campaign.description || 'N/A'}</td>
-                    <td><!-- Thao tác tuỳ chỉnh --></td>
-                </tr>
-            `;
-        }).join('');
+        const total = filteredCampaigns.length;
+        const totalPages = Math.max(1, Math.ceil(total / pageSize));
+        if (currentPage > totalPages) currentPage = totalPages;
+        if (currentPage < 1) currentPage = 1;
+
+        const start = (currentPage - 1) * pageSize;
+        const pageItems = filteredCampaigns.slice(start, start + pageSize);
+
+        tbody.innerHTML = pageItems.map(c => `
+            <tr>
+                <td>${escapeHtml(c.name)}</td>
+                <td>${escapeHtml(formatDateDisplay(c.date))}</td>
+                <td>${escapeHtml(c.status)}</td>
+                <td>${escapeHtml(c.description)}</td>
+                <td>
+                    <button class="btn-edit" data-id="${c.campaignID}">
+                        Sửa
+                    </button>
+                    <button class="btn-delete" data-id="${c.campaignID}" style="margin-left:6px;color:#b00000;">
+                        Xóa
+                    </button>
+                </td>
+            </tr>
+        `).join("");
+
+        if (paginationInfo) {
+            const startRow = start + 1;
+            const endRow = Math.min(start + pageSize, total);
+            paginationInfo.textContent = `Hiển thị ${startRow}-${endRow} của ${total}`;
+        }
+
+        if (currentPageSpan) currentPageSpan.textContent = String(currentPage);
+
+        prevPageBtn && (prevPageBtn.disabled = currentPage <= 1);
+        nextPageBtn && (nextPageBtn.disabled = currentPage >= totalPages);
     }
 
-    /**
-     * HÀM XỬ LÝ FORM (Chỉ Tạo Mới)
-     */
-    function handleFormSubmit(e) {
-        e.preventDefault();
-        const form = document.getElementById('campaignForm');
-        const formData = new FormData(form);
+    function applyFiltersAndRender() {
+        let data = [...campaigns];
 
-        // Chuyển FormData sang Object JSON (Khớp POJO)
-        const campaignData = {
-            Name: formData.get('Name'),            
-            Status: formData.get('Status'),
-            Date: formData.get('Date'), // chỉ gửi đúng trường BE có
-            Description: formData.get('Description')
-        };
+        const kw = (searchBox?.value || "").toLowerCase().trim();
+        const st = statusFilter?.value || "";
+        const dt = dateFilter?.value || "";
 
-        // Lấy Staff ID (tạm gán cứng, đổi lại bằng dữ liệu thật nếu có)
-        const staffId = 3;
+        if (kw) {
+            data = data.filter(c =>
+                (c.name || "").toLowerCase().includes(kw) ||
+                String(c.campaignID || "").toLowerCase().includes(kw)
+            );
+        }
 
-        const url = `/evm/api/campaigns/create?staffId=${staffId}`;
-        const method = 'POST';
+        if (st) {
+            data = data.filter(c => (c.status || "") === st);
+        }
 
-        fetch(url, {
-            method: method,
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(campaignData)
-        })
-            .then(res => {
-                if (!res.ok) {
-                    return res.json().then(errData => {
-                        if (errData && errData.error) {
-                            throw new Error(errData.error);
-                        }
-                        throw new Error(`Server trả về ${res.status}`);
-                    }).catch(parseErr => {
-                        console.error("Lỗi parse JSON:", parseErr);
-                        throw new Error(`Server trả về ${res.status} (không phải JSON)`);
-                    });
-                }
-                return res.json();
-            })
-            .then(savedCampaign => {
-                showMessage('Tạo chiến dịch thành công!');
-                closeModal();
-                fetchCampaigns();
-            })
-            .catch(err => {
-                console.error('Lỗi khi tạo chiến dịch:', err);
-                showMessage(`Tạo chiến dịch thất bại: ${err.message}`, true);
-            });
+        if (dt) {
+            data = data.filter(c => normalizeDateForInput(c.date) === dt);
+        }
+
+        filteredCampaigns = data;
+        currentPage = 1;
+        renderTablePage();
     }
 
-    // Các hàm quản lý Modal 
-    const modal = document.getElementById('modalQuanLyChienDich');
-    const form = document.getElementById('campaignForm');
-
-    function openModal() {
-        if (!modal || !form) return;
-        form.reset();
-        // Reset field ẩn ID nếu cần
-        const campaignIdInput = document.getElementById('campaign_id');
-        const modalTitle = document.getElementById('modalTitle');
-        const submitBtn = document.getElementById('campaignSubmitBtn');
-
-        if (campaignIdInput) campaignIdInput.value = '';
-        if (modalTitle) modalTitle.innerText = 'Tạo Chiến Dịch Mới';
-        if (submitBtn) submitBtn.innerText = 'Tạo';
-
-        modal.style.display = 'block';
-    }
-
-    function closeModal() {
-        if (!modal) return;
-        modal.style.display = 'none';
-    }
-
-    /**
-     * Khởi chạy khi tải trang
-     */
-    function init() {
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', run);
-        } else {
-            run();
+    async function refreshTable() {
+        try {
+            const list = await apiGetList();
+            campaigns = Array.isArray(list) ? list : [];
+            applyFiltersAndRender();
+        } catch (e) {
+            console.error(e);
+            showMessage(e.message);
         }
     }
 
-    function run() {
-        // Nút mở Modal
-        const btnOpen = document.getElementById('btnMoFormCampaign');
-        if (btnOpen) btnOpen.addEventListener('click', openModal);
+    function openCreateModal() {
+        currentEditId = null;
+        if (!form || !modal) return;
 
-        // Nút đóng/cancel Modal
-        const btnClose = document.getElementById('campaignCloseBtn');
-        const btnCancel = document.getElementById('campaignCancelBtn');
-        if (btnClose) btnClose.addEventListener('click', closeModal);
-        if (btnCancel) btnCancel.addEventListener('click', closeModal);
+        form.reset();
+        form["CampaignID"] && (form["CampaignID"].value = "");
 
-        // Form Submit
-        const campaignForm = document.getElementById('campaignForm');
-        if (campaignForm) campaignForm.addEventListener('submit', handleFormSubmit);
+        if (modalTitle) modalTitle.textContent = "Tạo Chiến Dịch Mới";
+        if (submitBtn) submitBtn.textContent = "Tạo";
 
-        // Tải dữ liệu lần đầu
-        fetchCampaigns();
+        modal.style.display = "block";
+        document.body.classList.add("modal-open");
     }
 
-    init(); // Chạy
+    async function openEditModal(id) {
+        currentEditId = id;
+        if (!form || !modal) return;
+
+        try {
+            const c = await apiGetDetail(id);
+
+            form["CampaignID"] && (form["CampaignID"].value = c.campaignID);
+            form["Name"].value = c.name || "";
+            form["Date"].value = normalizeDateForInput(c.date);
+            form["Status"].value = c.status || "planned";
+            form["Description"].value = c.description || "";
+
+            if (modalTitle) modalTitle.textContent = "Cập Nhật Chiến Dịch";
+            if (submitBtn) submitBtn.textContent = "Lưu";
+
+            modal.style.display = "block";
+            document.body.classList.add("modal-open");
+        } catch (e) {
+            console.error(e);
+            showMessage(e.message);
+        }
+    }
+
+    function closeModal() {
+        if (!modal || !form) return;
+        modal.style.display = "none";
+        document.body.classList.remove("modal-open");
+        form.reset();
+        currentEditId = null;
+    }
+
+    btnOpenForm && btnOpenForm.addEventListener("click", openCreateModal);
+
+    btnClose && btnClose.addEventListener("click", closeModal);
+    btnCancel && btnCancel.addEventListener("click", closeModal);
+
+    modal && modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+    form && form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        if (!form) return;
+
+        const payload = {
+            name: form["Name"].value?.trim(),
+            date: form["Date"].value || "",
+            status: form["Status"].value || "planned",
+            description: form["Description"].value?.trim()
+        };
+
+        if (!payload.name) {
+            showMessage("Tên chiến dịch không được để trống!");
+            return;
+        }
+
+        try {
+            if (currentEditId) {
+                await apiUpdate(currentEditId, payload);
+                showMessage("Cập nhật chiến dịch thành công!");
+            } else {
+                await apiCreate(payload);
+                showMessage("Tạo chiến dịch thành công!");
+            }
+            closeModal();
+            refreshTable();
+        } catch (err) {
+            console.error(err);
+            showMessage(err.message);
+        }
+    });
+
+    tbody && tbody.addEventListener("click", async (e) => {
+        const editBtn = e.target.closest(".btn-edit");
+        const deleteBtn = e.target.closest(".btn-delete");
+
+        if (editBtn) {
+            const id = editBtn.dataset.id;
+            if (id) openEditModal(id);
+            return;
+        }
+
+        if (deleteBtn) {
+            const id = deleteBtn.dataset.id;
+            if (!id) return;
+
+            if (!confirm("Bạn có chắc muốn xóa chiến dịch này không?")) return;
+
+            try {
+                await apiDelete(id);
+                showMessage("Xóa chiến dịch thành công!");
+                refreshTable();
+            } catch (err) {
+                console.error(err);
+                showMessage(err.message);
+            }
+        }
+    });
+
+    searchBox && searchBox.addEventListener("input", applyFiltersAndRender);
+    statusFilter && statusFilter.addEventListener("change", applyFiltersAndRender);
+    dateFilter && dateFilter.addEventListener("change", applyFiltersAndRender);
+
+    prevPageBtn && prevPageBtn.addEventListener("click", () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderTablePage();
+        }
+    });
+
+    nextPageBtn && nextPageBtn.addEventListener("click", () => {
+        const total = filteredCampaigns.length;
+        const totalPages = Math.max(1, Math.ceil(total / pageSize));
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderTablePage();
+        }
+    });
+
+    refreshTable();
+
 })();

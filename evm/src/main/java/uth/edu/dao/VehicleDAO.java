@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.mapping.Map;
 
 import uth.edu.pojo.Vehicle;
 
@@ -81,7 +82,7 @@ public class VehicleDAO {
     Vehicle vehicle = null;
     try {
         session = sessionFactory.openSession();
-        // Dùng JOIN FETCH để tải Customer
+        
         String hql = "FROM Vehicle v JOIN FETCH v.customer WHERE v.VIN = :vin";
         vehicle = session.createQuery(hql, Vehicle.class)
                 .setParameter("vin", vin)
@@ -115,15 +116,18 @@ public class VehicleDAO {
         return vehicles;
     }
 
-    public List<Vehicle> getAllVehicles(int page, int pageSize) {
+    public List<Map> getAllVehicles(int page, int pageSize) {
         Session session = null;
-        List<Vehicle> vehicles = null;
+        List<Map> results = null;
         try {
             session = sessionFactory.openSession();
-            vehicles = session.createQuery("FROM Vehicle", Vehicle.class)
+            
+            String hql = "SELECT new map(v as vehicle, c.Name as customerName, c.Phone as customerPhone) FROM Vehicle v JOIN v.customer c ORDER BY v.VIN";           
+            results = session.createQuery(hql, Map.class) 
                     .setFirstResult((page - 1) * pageSize)
                     .setMaxResults(pageSize)
                     .getResultList();
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -131,7 +135,7 @@ public class VehicleDAO {
                 session.close();
             }
         }
-        return vehicles;
+        return results;
     }
 
     public int countAllVehicles() {

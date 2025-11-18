@@ -34,23 +34,18 @@ public class AllocatePartsController {
         this.inventoryService = inventoryService;
     }
 
-    /**
-     * API: Lấy danh sách phụ tùng tại kho tổng EVM
-     */
     @GetMapping("/parts")
-    public ResponseEntity<List<Map<String, Object>>> getPartsInEVMStock(
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "20") int pageSize,
-            @RequestParam(required = false) String search, // <-- THÊM DÒNG NÀY
-            @RequestParam(required = false) String type    // <-- THÊM DÒNG NÀY
-            ) {
+    public ResponseEntity<List<Map<String, Object>>> getPartsInEVMStock(HttpSession session, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "20") int pageSize, @RequestParam(required = false) String search, @RequestParam(required = false) String type ) {
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null || !(loggedInUser instanceof EVMStaff)) {
+            return ResponseEntity.status(401).build();
+        }
         
         try {
-            // SỬA HÀM GỌI: Truyền tham số search và type xuống Service
             List<Inventory> stockList = inventoryService.getEVMWarehouseStock(page, pageSize, search, type);
 
             List<Map<String, Object>> result = stockList.stream().map(inventory -> {
-                // ... (phần code còn lại của hàm này giữ nguyên)
                 Map<String, Object> map = new java.util.HashMap<>();
                 map.put("partId", inventory.getPart().getPartID());
                 map.put("partCode", "PT-" + String.format("%03d", inventory.getPart().getPartID()));
@@ -68,14 +63,12 @@ public class AllocatePartsController {
         }
     }
 
-    /**
-     * API: Lấy lịch sử phân bổ gần đây (cho bảng dưới)
-     */
     @GetMapping("/history")
-    public ResponseEntity<List<Map<String, Object>>> getRecentHistory(
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "5") int pageSize) {
-        
+    public ResponseEntity<List<Map<String, Object>>> getRecentHistory(HttpSession session, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int pageSize) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null || !(loggedInUser instanceof EVMStaff)) {
+            return ResponseEntity.status(401).build();
+        }
         try {
             List<AllocatePartHistory> historyList = inventoryService.getRecentAllocations(page, pageSize);
 
@@ -97,13 +90,13 @@ public class AllocatePartsController {
         }
     }
 
-    /**
-     * API: Lấy danh sách các Trung tâm Dịch vụ (để điền vào modal)
-     */
     @GetMapping("/service-centers")
-    public ResponseEntity<List<Map<String, Object>>> getTargetServiceCenters() {
+    public ResponseEntity<List<Map<String, Object>>> getTargetServiceCenters(HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null || !(loggedInUser instanceof EVMStaff)) {
+            return ResponseEntity.status(401).build();
+        }
         try {
-            // Giả sử có hàm getTargetServiceCenters (lọc bỏ kho EVM)
             List<ServiceCenter> centers = inventoryService.getTargetServiceCenters();
             
             List<Map<String, Object>> result = centers.stream().map(sc -> {
@@ -120,9 +113,6 @@ public class AllocatePartsController {
         }
     }
 
-    /**
-     * API: Tạo một yêu cầu phân bổ mới
-     */
     @PostMapping("/create")
     public ResponseEntity<?> createAllocation(
             @RequestBody Map<String, Object> payload,

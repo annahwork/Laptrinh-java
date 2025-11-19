@@ -1,8 +1,11 @@
 package uth.edu.pojo;
 
 import java.util.Date;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 
 @Entity
@@ -20,9 +23,9 @@ public class VehiclePart {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "VIN", nullable = false)
-    private Vehicle Vehicle;
+    private Vehicle vehicle;
 
-    @Column(name = "SerialNumber", length = 50)
+    @Column(name = "SerialNumber", length = 50, columnDefinition = "NVARCHAR(50)")
     private String SerialNumber;
 
     @Temporal(TemporalType.DATE)
@@ -37,15 +40,15 @@ public class VehiclePart {
     @JoinColumn(name = "InstalledBy", referencedColumnName = "UserID")
     private User InstalledBy;
 
-    @Column(name = "Status", length = 20)
+    @Column(name = "Status", length = 20, columnDefinition = "NVARCHAR(20)")
     private String Status;
 
     public VehiclePart() {}
 
-    public VehiclePart(Integer VehiclePartID, Part Part, Vehicle Vehicle, String SerialNumber, Date InstallDate, Date RemoveDate, User InstalledBy, String Status) {
+    public VehiclePart(Integer VehiclePartID, Part Part, Vehicle vehicle, String SerialNumber, Date InstallDate, Date RemoveDate, User InstalledBy, String Status) {
         this.VehiclePartID = VehiclePartID;
         this.Part = Part;
-        this.Vehicle = Vehicle;
+        this.vehicle = vehicle;
         this.SerialNumber = SerialNumber;
         this.InstallDate = InstallDate;
         this.RemoveDate = RemoveDate;
@@ -57,12 +60,14 @@ public class VehiclePart {
         return this.VehiclePartID;
     }
 
+    @JsonIgnore
     public Part getPart() {
         return this.Part;
     }
 
+    @JsonIgnore 
     public Vehicle getVehicle() {
-        return this.Vehicle;
+        return this.vehicle;
     }
 
     public String getSerialNumber() {
@@ -77,6 +82,7 @@ public class VehiclePart {
         return this.RemoveDate;
     }
 
+    @JsonIgnore
     public User getInstalledBy() {
         return this.InstalledBy;
     }
@@ -93,8 +99,8 @@ public class VehiclePart {
         this.Part = Part;
     }
 
-    public void setVehicle(Vehicle Vehicle) {
-        this.Vehicle = Vehicle;
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 
     public void setSerialNumber(String SerialNumber) {

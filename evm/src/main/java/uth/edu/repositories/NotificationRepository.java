@@ -2,9 +2,12 @@ package uth.edu.repositories;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import uth.edu.dao.NotificationDAO;
 import uth.edu.pojo.Notification;
 
+@Repository
 public class NotificationRepository implements INotificationRepository {
 
     private NotificationDAO NotificationDAO = null;
@@ -40,6 +43,18 @@ public class NotificationRepository implements INotificationRepository {
     @Override
     public List<Notification> getUnreadNotificationsByUserID(int userID, int page, int pageSize) {
         return NotificationDAO.getUnreadNotificationsByUserID(userID, page, pageSize);
+    }
+    @Override
+    public List<Notification> getAllNotifications(Integer userID, int page, int pageSize) {
+        return NotificationDAO.getAllNotifications(userID, page, pageSize);
+    }
+    @Override
+    public boolean MarkAllNotificationsAsRead(Integer userID) {
+        return NotificationDAO.markAllNotificationsAsRead(userID);
+    }
+    @Override
+    public Notification getLatestNotification(int userID){
+        return NotificationDAO.getLatestNotification(userID);
     }
     @Override
     public void closeResources() {

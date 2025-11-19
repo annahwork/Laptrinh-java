@@ -3,6 +3,9 @@ import java.util.List;
 
 import uth.edu.pojo.WarrantyClaim;
 import uth.edu.pojo.WarrantyHistory;
+import org.springframework.stereotype.Repository;
+
+@Repository
 public interface IWarrantyClaimRepository {
     public boolean addWarrantyClaim(WarrantyClaim WarrantyClaim, WarrantyHistory WarrantyHistory);
     public boolean updateWarrantyClaim(WarrantyClaim WarrantyClaim, WarrantyHistory WarrantyHistory);
@@ -13,5 +16,6 @@ public interface IWarrantyClaimRepository {
     public List<WarrantyClaim> getClaimsByStatus(String status, int page, int pageSize);
     public List<WarrantyClaim> getClaimsByUserID(Integer userID, int page, int pageSize);
     public List<WarrantyHistory> getHistoryByClaimId(Integer claimId, int page, int pageSize);
+    public int countAllWarrantyClaims();
     public void closeResources();
 }

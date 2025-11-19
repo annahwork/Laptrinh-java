@@ -1,8 +1,19 @@
 package uth.edu.pojo;
 
-import javax.persistence.*;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Part")
@@ -13,16 +24,16 @@ public class Part {
     @Column(name = "PartID")
     private Integer PartID;
 
-    @Column(name = "Name", nullable = false, length = 100)
+    @Column(name = "Name", nullable = false, length = 100, columnDefinition = "NVARCHAR(100)")
     private String Name;
 
-    @Column(name = "Type", length = 50)
+    @Column(name = "Type", length = 50, columnDefinition = "NVARCHAR(50)")
     private String Type;
 
-    @Column(name = "WarrantyPeriod", length = 30)
+    @Column(name = "WarrantyPeriod", length = 30, columnDefinition = "NVARCHAR(30)")
     private String WarrantyPeriod;
 
-    @Column(name = "Manufacturer", length = 100)
+    @Column(name = "Manufacturer", length = 100, columnDefinition = "NVARCHAR(100)")
     private String Manufacturer;
 
     @OneToMany(
@@ -39,6 +50,9 @@ public class Part {
     )
     private List<Inventory> InventoryRecords = new ArrayList<>();
 
+    @OneToMany(mappedBy = "part", fetch = FetchType.LAZY)
+    private List<AllocatePartHistory> partAllocations = new ArrayList<>();
+    
     public Part(){}
 
     public Part(Integer PartID, String Name, String Type, String WarrantyPeriod, String Manufacturer)
@@ -70,6 +84,11 @@ public class Part {
         return this.Manufacturer;
     }
 
+    @JsonIgnore
+    public List<AllocatePartHistory> getPartAllocations() {
+        return partAllocations;
+    }
+
     public void setPartID(Integer PartID){
         this.PartID = PartID;
     }
@@ -90,8 +109,25 @@ public class Part {
         this.Manufacturer = Manufacturer;
     }
 
-    public void checkWarrantyStatus(String purchaseDate)
-    {
+    @JsonIgnore
+    public List<VehiclePart> getVehicleParts() {
+        return VehicleParts;
+    }
 
+    public void setVehicleParts(List<VehiclePart> vehicleParts) {
+        VehicleParts = vehicleParts;
+    }
+
+    @JsonIgnore 
+    public List<Inventory> getInventoryRecords() {
+        return InventoryRecords;
+    }
+
+    public void setInventoryRecords(List<Inventory> inventoryRecords) {
+        InventoryRecords = inventoryRecords;
+    }
+    
+    public void setPartAllocations(List<AllocatePartHistory> partAllocations) {
+        this.partAllocations = partAllocations;
     }
 }

@@ -14,6 +14,10 @@ import uth.edu.repositories.RecallCampaignRepository;
 import uth.edu.repositories.SCStaffRepository;
 import uth.edu.repositories.ScheduleRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
 public class ScheduleService {
 
 	private final ScheduleRepository scheduleRepository;
@@ -21,12 +25,13 @@ public class ScheduleService {
 	private final CustomerRepository customerRepository;
 	private final RecallCampaignRepository recallCampaignRepository;
 
-	public ScheduleService() {
-		scheduleRepository = new ScheduleRepository();
-		scStaffRepository = new SCStaffRepository();
-		customerRepository = new CustomerRepository();
-		recallCampaignRepository = new RecallCampaignRepository();
-	}
+	@Autowired
+    public ScheduleService(ScheduleRepository scheduleRepository, SCStaffRepository scStaffRepository, CustomerRepository customerRepository, RecallCampaignRepository recallCampaignRepository) {
+        this.scheduleRepository = scheduleRepository;
+        this.scStaffRepository = scStaffRepository;
+        this.customerRepository = customerRepository;
+        this.recallCampaignRepository = recallCampaignRepository;
+    }
 
 	public boolean CreateAppointment(Integer scStaffID, Integer customerID, Integer campaignID, Date date, String note) {
 		try {
@@ -114,6 +119,15 @@ public class ScheduleService {
 		}
 	}
 
+	public List<Object[]> getScheduleVehicleInfo(int userID){
+        try {
+            return scheduleRepository.getScheduleVehicleInfo(userID, 1 , 9999);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
 	private List<Schedule> getAllSchedules() {
 		List<Schedule> result = new ArrayList<>();  
 		int page = 1;
@@ -131,6 +145,18 @@ public class ScheduleService {
 		}
 		return result;
 	}
+
+	public List<Object[]> getScheduleVehicleTodayInfo(int userID){
+        try {
+            return scheduleRepository.getScheduleVehicleTodayInfo(userID, 1 , 9999);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+	
 }
+
+
 
 

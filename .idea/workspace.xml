@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c1113d8-0d76-4694-aa47-5f337a0cea98" name="Changes" comment="feat: add EVM-Staff frontend files" />
+    <list default="true" id="1c1113d8-0d76-4694-aa47-5f337a0cea98" name="Changes" comment="chore: cập nhật lại thư mục trong code">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,6 +22,11 @@
   </component>
   <component name="Git.Settings">
     <branch-grouping />
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="GiHana &lt;156551189+hanafs@users.noreply.github.com&gt;" />
+      </list>
+    </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="gia-han" />
@@ -27,21 +35,21 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
+    &quot;lastFilter&quot;: {
     &quot;state&quot;: &quot;OPEN&quot;,
     &quot;assignee&quot;: &quot;HanaFS&quot;
-  }
-}</component>
+    }
+    }</component>
   <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/annahwork/Laptrinh-java.git&quot;,
     &quot;accountId&quot;: &quot;4ba5e288-9a09-43e3-b23b-316ae7b74844&quot;
-  }
-}</component>
+    }
+    }</component>
   <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 6
-}</component>
+    &quot;customColor&quot;: &quot;&quot;,
+    &quot;associatedIndex&quot;: 6
+    }</component>
   <component name="ProjectId" id="34YvWxNHVokjgLKiBphWUElnTFv" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
@@ -50,30 +58,30 @@
     <option name="openDirectoriesWithSingleClick" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "gia-han",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Latitude/JAVA/Project/Laptrinh-java",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "to.speed.mode.migration.done": "true",
-    "vue.rearranger.settings.migration": "true"
-  },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "JAVA"
+  <component name="PropertiesComponent">{
+    &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;gia-han&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/hongocgiahan/MÔN JAVA/Laptrinh-java&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+    },
+    &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+    &quot;JAVA&quot;
     ]
-  }
-}]]></component>
+    }
+    }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/frontend/js/SC Staff" />
@@ -81,27 +89,6 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="GroovyScriptRunConfiguration" factoryName="Groovy">
-      <setting name="path" value="" />
-      <setting name="vmparams" value="" />
-      <setting name="params" value="" />
-      <setting name="workDir" value="file://$PROJECT_DIR$" />
-      <setting name="debug" value="false" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="Laptrinh-java" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="Laptrinh-java" />
-      <option name="filePath" />
-      <method v="2" />
-    </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="Laptrinh-java" />
       <option name="ENV_FILES" value="" />
@@ -139,14 +126,6 @@
       <method v="2" />
     </configuration>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
-        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -160,6 +139,8 @@
       <workItem from="1762175921383" duration="1211000" />
       <workItem from="1762320714457" duration="2000" />
       <workItem from="1762322223927" duration="595000" />
+      <workItem from="1762781117123" duration="1000" />
+      <workItem from="1762789863193" duration="4000" />
     </task>
     <task id="LOCAL-00001" summary="Cập Nhật Lại 1 Số Chức Năng Của SC Staff và SC Technican">
       <option name="closed" value="true" />
@@ -233,7 +214,15 @@
       <option name="project" value="LOCAL" />
       <updated>1761925900755</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="chore: cập nhật lại thư mục trong code">
+      <option name="closed" value="true" />
+      <created>1762446275357</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1762446275357</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -286,6 +275,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Cập Nhật Lại 1 Số Chức Năng Của SC Staff và SC Technican" />
+    <MESSAGE value="chore: cập nhật lại từ main" />
+    <MESSAGE value="Merge branch 'main' into gia-han&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;evm/frontend/assets/css/EVM-Staff/allocate_parts.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/attach_serial.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/campaigns.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/claim_requests.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/claim_tracking.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/dashboard.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/inventory.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/manage_ev_parts.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/reports.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/statistics.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/warranty_cost.css&#10;#&#9;evm/frontend/assets/css/EVM-Staff/warranty_policy.css&#10;#&#9;evm/frontend/assets/js/EVM-Staff/allocate_parts.js&#10;#&#9;evm/frontend/assets/js/EVM-Staff/attach_serial.js&#10;#&#9;evm/frontend/assets/js/EVM-Staff/claim_request.js&#10;#&#9;evm/frontend/assets/js/EVM-Staff/dashboard.js&#10;#&#9;evm/frontend/assets/js/EVM-Staff/inventory.js&#10;#&#9;evm/frontend/assets/js/EVM-Staff/manage_ev_parts.js&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/allocate_parts.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/attach_serial.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/campaigns.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/claim_requests.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/claim_tracking.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/dashboard.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/inventory.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/manage_ev_parts.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/reports.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/statistics.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/warranty_cost.html&#10;#&#9;evm/frontend/pages/EVM-Staff/Section/warranty_policy.html&#10;#&#9;evm/frontend/pages/EVM-Staff/home_evm_staff.html" />
     <MESSAGE value="chore: cập nhật lại thư mục trong code" />
     <option name="LAST_COMMIT_MESSAGE" value="chore: cập nhật lại thư mục trong code" />
   </component>

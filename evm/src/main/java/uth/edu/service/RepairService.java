@@ -12,7 +12,9 @@ import uth.edu.repositories.ClaimServiceRepository;
 import uth.edu.repositories.SCTechnicianRepository;
 import uth.edu.repositories.WarrantyClaimRepository;
 import uth.edu.repositories.WarrantyHistoryRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RepairService {
 
     private final ClaimServiceRepository claimServiceRepository;

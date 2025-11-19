@@ -2,15 +2,17 @@ package uth.edu.pojo;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 @Entity
 @Table(name = "ServiceCenter")
 public class ServiceCenter {
@@ -20,16 +22,16 @@ public class ServiceCenter {
     @Column(name = "SCID")
     private Integer SCID;
 
-    @Column(name = "Name", length = 200, nullable = false)
+    @Column(name = "Name", length = 200, nullable = false, columnDefinition = "NVARCHAR(200)")
     private String Name;
 
-    @Column(name = "Address", length = 500)
+    @Column(name = "Address", length = 500, columnDefinition = "NVARCHAR(500)")
     private String Address;
 
-    @Column(name = "Type", length = 50) 
+    @Column(name = "Type", length = 50, columnDefinition = "NVARCHAR(50)") 
     private String Type;
 
-    @OneToMany(mappedBy = "ServiceCenter", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "serviceCenter", fetch = FetchType.LAZY)
     private List<User> Staffs = new ArrayList<>();
 
     @OneToMany(mappedBy = "ServiceCenter", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -38,10 +40,10 @@ public class ServiceCenter {
     public ServiceCenter() {}
 
     public ServiceCenter(Integer sCID, String name, String address, String type) {
-        SCID = sCID;
-        Name = name;
-        Address = address;
-        Type = type;
+        this.SCID = sCID;
+        this.Name = name;
+        this.Address = address;
+        this.Type = type;
     }
 
     public Integer getSCID() {
@@ -76,6 +78,7 @@ public class ServiceCenter {
         this.Type = type;
     }
 
+    @JsonIgnore 
     public List<User> getStaffs() {
         return this.Staffs;
     }
@@ -84,6 +87,7 @@ public class ServiceCenter {
         this.Staffs = staffs;
     }
 
+    @JsonIgnore 
     public List<Inventory> getInventoryStock() {
         return this.InventoryStock;
     }
@@ -91,7 +95,4 @@ public class ServiceCenter {
     public void setInventoryStock(List<Inventory> inventoryStock) {
         this.InventoryStock = inventoryStock;
     }
-
-    
-    
 }

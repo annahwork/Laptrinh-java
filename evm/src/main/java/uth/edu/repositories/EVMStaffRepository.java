@@ -2,9 +2,12 @@ package uth.edu.repositories;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import uth.edu.dao.EVMStaffDAO;
 import uth.edu.pojo.EVMStaff;
 
+@Repository
 public class EVMStaffRepository implements IEVMStaffRepository {
 
     private EVMStaffDAO EVMStaffDAO = null;

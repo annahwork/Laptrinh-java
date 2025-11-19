@@ -2,9 +2,12 @@ package uth.edu.repositories;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import uth.edu.dao.WarrantyHistoryDAO;
 import uth.edu.pojo.WarrantyHistory;
 
+@Repository
 public class WarrantyHistoryRepository implements IWarrantyHistoryRepository {
 
     private WarrantyHistoryDAO WarrantyHistoryDAO = null;

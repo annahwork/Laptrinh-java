@@ -2,9 +2,12 @@ package uth.edu.repositories;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import uth.edu.dao.RecallCampaignDAO;
 import uth.edu.pojo.RecallCampaign;
 
+@Repository
 public class RecallCampaignRepository implements IRecallCampaignRepository {
 
     private RecallCampaignDAO RecallCampaignDAO = null;
@@ -36,6 +39,10 @@ public class RecallCampaignRepository implements IRecallCampaignRepository {
     @Override
     public List<RecallCampaign> getAllRecallCampaigns(int page, int pageSize) {
         return RecallCampaignDAO.getAllRecallCampaigns(page, pageSize);
+    }
+    @Override
+    public List<RecallCampaign> getAllRecallCampaigns(Integer userID, int page, int pageSize) {
+        return RecallCampaignDAO.getAllRecallCampaigns(userID, page, pageSize);
     }
     @Override
     public void closeResources() {

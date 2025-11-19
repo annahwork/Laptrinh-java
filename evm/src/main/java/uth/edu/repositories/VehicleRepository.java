@@ -2,9 +2,12 @@ package uth.edu.repositories;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import uth.edu.dao.VehicleDAO;
 import uth.edu.pojo.Vehicle;
 
+@Repository
 public class VehicleRepository implements IVehicleRepository {
 
     private VehicleDAO VehicleDAO = null;
@@ -39,6 +42,15 @@ public class VehicleRepository implements IVehicleRepository {
     @Override
     public List<Vehicle> getAllVehicles(int page, int pageSize) {
         return VehicleDAO.getAllVehicles(page, pageSize);
+    }
+    @Override
+    public int countAllVehicles() {
+        return VehicleDAO.countAllVehicles();
+    }
+
+    @Override
+    public int countVehiclesByStatus(String status) {
+        return VehicleDAO.countVehiclesByStatus(status);
     }
     @Override
     public void closeResources() {

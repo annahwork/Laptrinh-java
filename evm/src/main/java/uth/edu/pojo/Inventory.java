@@ -1,14 +1,20 @@
 package uth.edu.pojo;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Inventory")
@@ -27,10 +33,17 @@ public class Inventory {
     private Integer CurrentStock;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "SCID", nullable = false) 
+    @JoinColumn(name = "SCID", nullable = false)
     private ServiceCenter ServiceCenter;
 
-    public Inventory() {}
+    @OneToMany(mappedBy = "fromInventory", fetch = FetchType.LAZY)
+    private List<AllocatePartHistory> allocationsSent = new ArrayList<>();
+
+    @OneToMany(mappedBy = "toInventory", fetch = FetchType.LAZY)
+    private List<AllocatePartHistory> allocationsReceived = new ArrayList<>();
+
+    public Inventory() {
+    }
 
     public Inventory(Integer InventoryID, Part Part, ServiceCenter ServiceCenter, Integer CurrentStock) {
         this.InventoryID = InventoryID;
@@ -43,15 +56,28 @@ public class Inventory {
         return this.InventoryID;
     }
 
+    @JsonIgnore
     public Part getPart() {
         return this.Part;
     }
+
+    @JsonIgnore
     public ServiceCenter getServiceCenter() {
         return this.ServiceCenter;
     }
 
     public Integer getCurrentStock() {
         return this.CurrentStock;
+    }
+
+    @JsonIgnore
+    public List<AllocatePartHistory> getAllocationsSent() {
+        return allocationsSent;
+    }
+
+    @JsonIgnore
+    public List<AllocatePartHistory> getAllocationsReceived() {
+        return allocationsReceived;
     }
 
     public void setInventoryID(Integer InventoryID) {
@@ -66,17 +92,16 @@ public class Inventory {
         this.CurrentStock = CurrentStock;
     }
 
-    
     public void setServiceCenter(ServiceCenter serviceCenter) {
         ServiceCenter = serviceCenter;
     }
+
+    public void setAllocationsSent(List<AllocatePartHistory> allocationsSent) {
+        this.allocationsSent = allocationsSent;
+    }
+
+    public void setAllocationsReceived(List<AllocatePartHistory> allocationsReceived) {
+        this.allocationsReceived = allocationsReceived;
+    }
     
-    public void updateStock(Integer quantity) {
-
-    }
-
-    public void checkStockLevel() {
-        
-    }
-
 }

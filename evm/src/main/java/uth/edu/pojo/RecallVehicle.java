@@ -1,7 +1,20 @@
 package uth.edu.pojo;
 
-import javax.persistence.*;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "RecallVehicle")
@@ -24,7 +37,7 @@ public class RecallVehicle {
     @Column(name = "AppointmentDate")
     private Date AppointmentDate;
 
-    @Column(name = "Status", length = 50)
+    @Column(name = "Status", length = 50, columnDefinition = "NVARCHAR(50)")
     private String Status;
 
     public RecallVehicle(){
@@ -38,6 +51,22 @@ public class RecallVehicle {
         Status = status;
     }
 
+    public int getCampaignCode() { 
+        return RecallCampaign != null ? RecallCampaign.getCampaignID() : null;
+    }
+    
+    public String getVin() { 
+        return vehicle != null ? vehicle.getVIN() : null;
+    }
+    
+    public String getCustomerName() {
+        return (vehicle != null && vehicle.getCustomer() != null) ? vehicle.getCustomer().getName() : null;
+    }
+    
+    public String getCampaignCreatedByStaffName() {
+        return (RecallCampaign != null) ? RecallCampaign.getCreatedByStaffName() : "N/A";
+    }
+
     public Integer getRecallVehicleID() {
         return RecallVehicleID;
     }
@@ -46,6 +75,7 @@ public class RecallVehicle {
         this.RecallVehicleID = RecallVehicleID;
     }
 
+    @JsonIgnore 
     public RecallCampaign getRecallCampaign() {
         return RecallCampaign;
     }
@@ -54,6 +84,7 @@ public class RecallVehicle {
         this.RecallCampaign = recallCampaign;
     }
 
+    @JsonIgnore 
     public Vehicle getVehicle() {
         return vehicle;
     }

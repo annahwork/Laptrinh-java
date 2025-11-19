@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import uth.edu.pojo.Admin;
 import uth.edu.pojo.ClaimService;
 import uth.edu.pojo.EVMStaff;
@@ -21,6 +24,7 @@ import uth.edu.repositories.WarrantyClaimRepository;
 import uth.edu.repositories.WarrantyHistoryRepository;
 import uth.edu.repositories.WarrantyServiceRepository;
 
+@Service
 public class WarrantyClaimService {
 
     private WarrantyClaimRepository warrantyClaimRepository;
@@ -34,13 +38,16 @@ public class WarrantyClaimService {
     private static final int DEFAULT_PAGE_SIZE = 20;
     private static final int MAX_PAGE_SIZE = 9999;
 
-    public WarrantyClaimService() {
-        warrantyClaimRepository = new WarrantyClaimRepository();
-        userRepository = new UserRepository();
-        vehiclePartRepository = new VehiclePartRepository();
-        claimServiceRepository = new ClaimServiceRepository();
-        warrantyServiceRepository = new WarrantyServiceRepository();
-        warrantyHistoryRepository = new WarrantyHistoryRepository();
+    @Autowired
+    public WarrantyClaimService(WarrantyClaimRepository warrantyClaimRepository, UserRepository userRepository,
+            VehiclePartRepository vehiclePartRepository, ClaimServiceRepository claimServiceRepository,
+            WarrantyServiceRepository warrantyServiceRepository, WarrantyHistoryRepository warrantyHistoryRepository) {
+        this.warrantyClaimRepository = warrantyClaimRepository;
+        this.userRepository = userRepository;
+        this.vehiclePartRepository = vehiclePartRepository;
+        this.claimServiceRepository = claimServiceRepository;
+        this.warrantyServiceRepository = warrantyServiceRepository;
+        this.warrantyHistoryRepository = warrantyHistoryRepository;
     }
 
     public boolean CreateWarrantyClaim(Integer SCStaffID, WarrantyClaim ClaimData, String AttachmentUrl) {
@@ -64,7 +71,7 @@ public class WarrantyClaimService {
             ClaimData.setCreatedByStaff((SCStaff) staff);
             ClaimData.setVehiclePart(vehiclePart);
             ClaimData.setDate(new Date());
-            ClaimData.setStatus("Đã gửi");
+            ClaimData.setStatus("Pending");
             ClaimData.setAttachment(AttachmentUrl);
 
             WarrantyHistory history = new WarrantyHistory();
@@ -143,15 +150,18 @@ public class WarrantyClaimService {
                 pageSize = DEFAULT_PAGE_SIZE;
 
             User user = userRepository.getUserById(UserID);
+
             if (user == null || user instanceof SCTechnician) {
                 return new ArrayList<>();
             }
 
             if (user instanceof SCStaff) {
                 return warrantyClaimRepository.getClaimsByUserID(UserID, page, pageSize);
-            } else {
+            } else if (user instanceof EVMStaff || user instanceof Admin) {
                 return warrantyClaimRepository.getAllWarrantyClaims(page, pageSize);
             }
+
+            return new ArrayList<>();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -195,7 +205,7 @@ public class WarrantyClaimService {
                 return new ArrayList<>();
             }
 
-            return warrantyClaimRepository.getClaimsByStatus("Đã gửi", page, pageSize);
+            return warrantyClaimRepository.getClaimsByStatus("Pending", page, pageSize);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -204,11 +214,11 @@ public class WarrantyClaimService {
     }
 
     public boolean ApproveClaim(Integer EVMStaffID, Integer ClaimId, String Note) {
-        return updateClaimStatus(EVMStaffID, ClaimId, "Được chấp nhận", Note);
+        return updateClaimStatus(EVMStaffID, ClaimId, "Approved", Note);
     }
 
     public boolean RejectClaim(Integer EVMStaffID, Integer ClaimId, String Note) {
-        return updateClaimStatus(EVMStaffID, ClaimId, "Bị từ chối", Note);
+        return updateClaimStatus(EVMStaffID, ClaimId, "Rejected", Note);
     }
 
     private boolean updateClaimStatus(Integer UserID, Integer ClaimId, String NewStatus, String Note) {
@@ -224,7 +234,7 @@ public class WarrantyClaimService {
             }
 
             String oldStatus = claim.getStatus();
-            if (!"Đã gửi".equals(oldStatus)) {
+            if (!"Pending".equals(oldStatus)) {
                 return false;
             }
 
@@ -233,8 +243,8 @@ public class WarrantyClaimService {
             WarrantyHistory history = new WarrantyHistory();
             history.setDate(new Date());
             String historyNote = String.format(
-                    "Trạng thái thay đổi: '%s' -> '%s'. Ghi chú: %s (Bởi: %s)",
-                    oldStatus, NewStatus, Note, user.getName());
+                    "Trạng thái cập nhật: %s. Ghi chú: %s (Bởi: %s)",
+                    NewStatus, Note, user.getName());
             history.setNote(historyNote);
 
             return warrantyClaimRepository.updateWarrantyClaim(claim, history);
@@ -274,8 +284,7 @@ public class WarrantyClaimService {
                     technician.getName(),
                     claimService.getWarrantyService().getName(),
                     staff.getName()));
-            // Set
-            history.setWarrantyClaim(claimService.getWarrantyClaim()); // Lấy Claim cha từ ClaimService
+            history.setWarrantyClaim(claimService.getWarrantyClaim());
 
             warrantyHistoryRepository.addWarrantyHistory(history);
 
@@ -283,9 +292,78 @@ public class WarrantyClaimService {
 
         } catch (Exception e) {
             e.printStackTrace();
-            // Nếu có lỗi, transaction của update() và add() đã tự rollback
             return false;
         }
+    }
+
+    public int countClaimsByStatus(List<String> statuses) {
+        try {
+            if (statuses == null || statuses.isEmpty()) {
+                return 0;
+            }
+            List<WarrantyClaim> allClaims = warrantyClaimRepository.getAllWarrantyClaims(DEFAULT_PAGE, MAX_PAGE_SIZE);
+            if (allClaims == null || allClaims.isEmpty()) {
+                return 0;
+            }
+            long count = allClaims.stream()
+                    .filter(claim -> statuses.contains(claim.getStatus()))
+                    .count();
+            return (int) count;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public boolean updateClaimStatus(Integer userID, Integer claimServID, String newStatus) {
+
+            ClaimService claimService = claimServiceRepository.getClaimServiceById(claimServID);
+            
+            if (claimService == null) {
+                System.err.println("Không tìm thấy ClaimService ID: " + claimServID);
+                return false;
+            }
+            claimService.setResult(newStatus); 
+            
+            try {
+                claimServiceRepository.updateClaimService(claimService);
+                return true;
+            } catch (Exception e) {
+                System.err.println("Lỗi lưu trạng thái mới cho ClaimService ID: " + claimServID);
+                e.printStackTrace();
+                return false;
+            }
+    }
+
+    public List<Object[]> getClaimServiceDetails(Integer userID) {
+        try {
+            return claimServiceRepository.getClaimServiceDetails(userID, 1 , 9999);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public Long[] getPerformanceMetrics(int technicianId) {
+        try {
+            return claimServiceRepository.getPerformanceMetrics(technicianId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Long[]{0L, 0L};
+        }
+    }
+
+    public WarrantyClaim getWarrantyClaimById(Integer warrantyClaimID) {
+        return warrantyClaimRepository.getWarrantyClaimById(warrantyClaimID);
+    }
+    
+    public boolean deleteWarrantyClaim(Integer warrantyClaimID) {
+        WarrantyClaim warrantyClaim = getWarrantyClaimById(warrantyClaimID);
+        if (warrantyClaim != null) {
+            warrantyClaimRepository.deleteWarrantyClaim(warrantyClaim); 
+            return true;
+        }
+        return false;
     }
 
     public void closeResources() {

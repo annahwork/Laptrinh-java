@@ -2,9 +2,13 @@ package uth.edu.repositories;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import uth.edu.dao.InventoryDAO;
+import uth.edu.pojo.AllocatePartHistory;
 import uth.edu.pojo.Inventory;
 
+@Repository
 public class InventoryRepository implements IInventoryRepository {
 
     private InventoryDAO InventoryDAO = null;
@@ -45,6 +49,18 @@ public class InventoryRepository implements IInventoryRepository {
     @Override
     public List<Inventory> getAllInventories(int page, int pageSize) {
         return InventoryDAO.getAllInventories(page, pageSize);
+    }
+    @Override
+    public List<Inventory> getAllInventoriesWithDetails(int page, int pageSize) {
+        return InventoryDAO.getAllInventoriesWithDetails(page, pageSize);
+    }
+    @Override
+    public List<Inventory> getInventoriesBySCID(int scId, int page, int pageSize, String search, String type) {
+        return InventoryDAO.getInventoriesBySCID(scId, page, pageSize, search, type);
+    }
+    @Override
+    public boolean approveAllocationTransaction(Inventory from, Inventory to, AllocatePartHistory history) {
+        return InventoryDAO.approveAllocationTransaction(from, to, history);
     }
     @Override
     public void closeResources() {

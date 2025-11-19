@@ -1,0 +1,38 @@
+<section class="performance-page">
+  <link rel="stylesheet" href="/evm/assets/css/SC-Technician/performance.css">
+
+  <div class="page-header">
+    <h2>Hiệu suất làm việc</h2>
+    <div class="actions">
+      <select id="filterRange">
+        <option value="week">Tuần này</option>
+        <option value="month">Tháng này</option>
+        <option value="quarter">Quý này</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <h3>Tổng yêu cầu</h3>
+      <p class="stat-value" id="totalClaimsValue">42</p>
+      <span class="stat-label" id="totalClaimsLabel">Tất cả công việc trong kỳ</span>
+    </div>
+    <div class="stat-card">
+      <h3>Đã hoàn tất</h3>
+      <p class="stat-value success" id="completedClaimsValue">36</p>
+      <span class="stat-label" id="completedClaimsLabel">Chiếm 85.7%</span>
+    </div>
+    <div class="stat-card">
+      <h3>Đang xử lý</h3>
+      <p class="stat-value info" id="pendingClaimsValue">5</p>
+      <span class="stat-label" id="pendingClaimsLabel">Còn lại trong tuần</span>
+    </div>
+  </div>
+
+  <div class="chart-section">
+    <h3>Tỷ lệ hoàn thành theo trạng thái</h3>
+    <canvas id="statusChart"></canvas>
+  </div>
+</section>
+<script src="/evm/assets/js/SC-Technician/performance.js"></script>

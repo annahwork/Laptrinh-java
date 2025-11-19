@@ -1,6 +1,6 @@
 package uth.edu.pojo;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @DiscriminatorValue("ADMIN")
@@ -8,15 +8,8 @@ public class Admin extends User {
 
     public Admin() {}
 
-    public Admin(String UserName, String Password, String Name) {
-        super(UserName, Password, Name);
+    public Admin(String userName, String password, String name, String email, String phone) {
+        super(userName, password, name, email, phone);
     }
-
-    public void manageUserAccounts() {
-
-    }
-
-    public void configureSystemSettings() {
-
-    }
+    
 }

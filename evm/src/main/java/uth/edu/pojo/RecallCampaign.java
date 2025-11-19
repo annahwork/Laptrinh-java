@@ -4,19 +4,22 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "RecallCampaign")
@@ -28,20 +31,24 @@ public class RecallCampaign {
     private Integer CampaignID;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "UserID") // Tên cột khóa ngoại trong bảng Recall_Campaign
+    @JoinColumn(name = "UserID") 
     private EVMStaff CreatedByStaff;
 
-    @Column(name = "Name", nullable = false, length = 100)
+    @Column(name = "Name", nullable = false, length = 100, columnDefinition = "NVARCHAR(100)")
+    @JsonProperty("Name")
     private String Name;
 
-    @Column(name = "Status", length = 50)
+    @Column(name = "Status", length = 50, columnDefinition = "NVARCHAR(50)")
+    @JsonProperty("Status")
     private String Status;
 
     @Temporal(TemporalType.DATE)
+    @JsonProperty("Date")
     @Column(name = "Date")
     private Date Date;
 
-    @Column(name = "Description", length = 255)
+    @Column(name = "Description", length = 255, columnDefinition = "NVARCHAR(255)")
+    @JsonProperty("Description")
     private String Description;
 
     @OneToMany(
@@ -50,7 +57,6 @@ public class RecallCampaign {
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
-
     private List<RecallVehicle> VehiclesInCampaign = new ArrayList<>();
 
     @OneToMany(
@@ -81,8 +87,13 @@ public class RecallCampaign {
         CampaignID = campaignID;
     }
 
+    @JsonIgnore
     public EVMStaff getCreatedByStaff() {
         return CreatedByStaff;
+    }
+
+    public String getCreatedByStaffName() {
+        return (CreatedByStaff != null) ? (CreatedByStaff.getName()) : "N/A";
     }
 
     public void setCreatedByStaff(EVMStaff createdByStaff) {
@@ -121,6 +132,7 @@ public class RecallCampaign {
         Description = description;
     }
 
+    @JsonIgnore 
     public List<RecallVehicle> getVehiclesInCampaign() {
         return VehiclesInCampaign;
     }
@@ -129,6 +141,7 @@ public class RecallCampaign {
         VehiclesInCampaign = vehiclesInCampaign;
     }
 
+    @JsonIgnore 
     public List<Schedule> getSchedules() {
         return Schedules;
     }
@@ -137,18 +150,4 @@ public class RecallCampaign {
         Schedules = schedules;
     }
 
-    public void addVehicle(String VIN)
-    {
-
-    }
-
-    public void startCampaign()
-    {
-
-    }
-
-    public void endCampaign()
-    {
-
-    }
 }

@@ -1,0 +1,31 @@
+<section class="campaign-page">
+    <link rel="stylesheet" href="/evm/assets/css/SC-Technician/campaign_list.css">
+
+    <div class="page-header">
+        <h2>Danh sách chiến dịch</h2>
+        <div class="actions">
+            <input type="text" id="campaignSearchInput" placeholder="Tìm theo tên chiến dịch hoặc mã...">
+            
+            <select id="campaignStatusFilter">
+                <option value="">Tất cả trạng thái</option>
+                <option value="active">Đang diễn ra</option>
+                <option value="completed">Đã hoàn thành</option>
+                <option value="planned">Đã lên kế hoạch</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="data-grid" id="campaignGrid"></div>
+
+<div id="modalChiTiet" class="campaign__modal" style="display:none;">
+    <div class="campaign__modal-content" style="max-width: 500px;">
+        <button id="detailCloseBtn" class="campaign__close-button" aria-label="Close">&times;</button>
+        <h3 id="detailTitle" class="campaign__modal-title">Chi tiết chiến dịch</h3>
+        <div class="campaign__form">
+            <p><strong>Mô tả:</strong></p>
+            <p id="detailDescription" style="white-space: pre-wrap; word-wrap: break-word;"></p>
+        </div>
+    </div>
+</div>
+
+<script src="/evm/assets/js/SC-Technician/campaign_list.js"></script>

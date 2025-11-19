@@ -1,5 +1,15 @@
 package uth.edu.pojo;
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "ClaimService")
@@ -22,10 +32,10 @@ public class ClaimService {
     @JoinColumn(name = "TechnicianID")
     private SCTechnician technician;
 
-    @Column(name = "Result", length = 200)
+    @Column(name = "Result", length = 200, columnDefinition = "NVARCHAR(200)")
     private String Result;
 
-    @Column(name = "Note", length = 500)
+    @Column(name = "Note", length = 500, columnDefinition = "NVARCHAR(500)")
     private String Note;
 
     public ClaimService() {}
@@ -47,6 +57,7 @@ public class ClaimService {
         this.ClaimServID = ClaimServID;
     }
 
+    @JsonIgnore 
     public WarrantyClaim getWarrantyClaim() {
         return WarrantyClaim;
     }
@@ -55,6 +66,7 @@ public class ClaimService {
         this.WarrantyClaim = WarrantyClaim;
     }
 
+    @JsonIgnore
     public WarrantyService getWarrantyService() {
         return this.WarrantyService;
     }
@@ -63,6 +75,7 @@ public class ClaimService {
         this.WarrantyService = WarrantyService;
     }
 
+    @JsonIgnore
     public SCTechnician getTechnician() {
         return technician;
     }

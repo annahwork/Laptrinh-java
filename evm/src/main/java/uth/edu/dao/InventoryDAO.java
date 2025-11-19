@@ -5,8 +5,10 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import uth.edu.pojo.AllocatePartHistory;
 import uth.edu.pojo.Inventory;
 
 public class InventoryDAO {
@@ -121,7 +123,7 @@ public class InventoryDAO {
                 Inventory.class)
                 .setParameter("partId", partId)
                 .setParameter("scId", scId)
-                .uniqueResult(); 
+                .uniqueResult();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -148,6 +150,98 @@ public class InventoryDAO {
             }
         }
         return inventories;
+    }
+    public List<Inventory> getAllInventoriesWithDetails(int page, int pageSize) {
+        Session session = null;
+        List<Inventory> inventories = null;
+        try {
+            session = sessionFactory.openSession();
+            inventories = session.createQuery(
+                "FROM Inventory i JOIN FETCH i.Part JOIN FETCH i.ServiceCenter", 
+                Inventory.class)
+                    .setFirstResult((page - 1) * pageSize)
+                    .setMaxResults(pageSize)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>(); // Sửa: Trả về list rỗng
+        } finally {
+            if (session != null) session.close();
+        }
+        return inventories;
+    }
+
+    public List<Inventory> getInventoriesBySCID(int scId, int page, int pageSize, String search, String type) {
+        Session session = null;
+        List<Inventory> inventories = null;
+        try {
+            session = sessionFactory.openSession();
+
+            StringBuilder hqlBuilder = new StringBuilder(
+                "FROM Inventory i " +
+                "JOIN FETCH i.Part p " +
+                "JOIN FETCH i.ServiceCenter s " +
+                "WHERE s.SCID = :scId"
+            );
+
+            if (search != null && !search.trim().isEmpty()) {
+                hqlBuilder.append(" AND p.Name LIKE :search");
+            }
+
+            if (type != null && !type.trim().isEmpty()) {
+                hqlBuilder.append(" AND p.Type = :type");
+            }
+
+            hqlBuilder.append(" ORDER BY p.Name ASC");
+
+            org.hibernate.query.Query<Inventory> query = 
+                session.createQuery(hqlBuilder.toString(), Inventory.class);
+
+            query.setParameter("scId", scId);
+
+            if (search != null && !search.trim().isEmpty()) {
+                query.setParameter("search", "%" + search + "%");
+            }
+            
+            if (type != null && !type.trim().isEmpty()) {
+                query.setParameter("type", type);
+            }
+
+            inventories = query.setFirstResult((page - 1) * pageSize)
+                                 .setMaxResults(pageSize)
+                                 .getResultList();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>(); 
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return inventories;
+    }
+  
+    public boolean approveAllocationTransaction(Inventory fromStock, Inventory toStock, AllocatePartHistory history) {
+        Session session = null;
+        Transaction tx = null;
+        try {
+            session = sessionFactory.openSession();
+            tx = session.beginTransaction();
+
+            session.merge(fromStock);
+            session.merge(toStock);  
+            session.merge(history);  
+
+            tx.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (tx != null) tx.rollback();
+            return false;
+        } finally {
+            if (session != null) session.close();
+        }
     }
 
     public void closeSessionFactory() {

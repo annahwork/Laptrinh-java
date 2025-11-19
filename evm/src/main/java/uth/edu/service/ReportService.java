@@ -19,7 +19,9 @@ import uth.edu.repositories.EVMStaffRepository;
 import uth.edu.repositories.SCStaffRepository;
 import uth.edu.repositories.SCTechnicianRepository;
 import uth.edu.repositories.WarrantyClaimRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ReportService {
 
 	private EVMStaffRepository evmStaffRepository;

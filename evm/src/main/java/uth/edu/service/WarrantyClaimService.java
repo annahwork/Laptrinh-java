@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.mapping.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -83,10 +84,14 @@ public class WarrantyClaimService {
             ClaimData.setStatus("Pending");
             ClaimData.setAttachment(AttachmentUrl);
 
+            // // Set the ClaimID manually
+            // int nextId = warrantyClaimRepository.getNextClaimId();
+            // ClaimData.setClaimID(nextId);
+
             WarrantyHistory history = new WarrantyHistory();
             history.setDate(new Date());
             history.setNote("Yêu cầu bảo hành được tạo bởi " + staff.getName() + ". Trạng thái: Đã gửi.");
-
+            history.setWarrantyClaim(ClaimData);
             boolean result = warrantyClaimRepository.addWarrantyClaim(ClaimData, history);
             System.out.println("addWarrantyClaim result: " + result);
             return result;
@@ -136,6 +141,29 @@ public class WarrantyClaimService {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public List<WarrantyClaim> getClaimsWithCost(int page, int pageSize) {
+        try {
+            if (page <= 0)
+                page = DEFAULT_PAGE;
+            if (pageSize <= 0)
+                pageSize = DEFAULT_PAGE_SIZE;
+
+            return warrantyClaimRepository.getAllWarrantyClaimsWithDetails(page, pageSize);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public int countAllClaims() {
+        try {
+            return warrantyClaimRepository.countAllWarrantyClaims();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
         }
     }
 
@@ -375,6 +403,27 @@ public class WarrantyClaimService {
             return true;
         }
         return false;
+    }
+
+    public boolean UpdateWarrantyClaim(WarrantyClaim claim) {
+        try {
+            WarrantyHistory history = new WarrantyHistory();
+            history.setDate(new Date());
+            history.setNote("Yêu cầu bảo hành được cập nhật.");
+            return warrantyClaimRepository.updateWarrantyClaim(claim, history);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<Object[]> getAllClaimSummaryDetails() {
+        try {
+            return warrantyClaimRepository.getAllClaimSummaryDetails(1, 9999);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 
     public void closeResources() {

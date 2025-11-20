@@ -51,7 +51,6 @@ public class AttachSerialController {
         try {
             List<VehiclePart> parts = vehicleService.getVehicleParts(query, page, pageSize);
             
-            // Chuyển đổi sang JSON an toàn (tránh lỗi Lazy)
             List<Map<String, Object>> result = parts.stream().map(vp -> {
                 Map<String, Object> map = new java.util.HashMap<>();
                 map.put("vin", vp.getVehicle().getVIN());
@@ -72,7 +71,7 @@ public class AttachSerialController {
     @GetMapping("/get-parts")
     public ResponseEntity<List<Map<String, Object>>> getAllParts(HttpSession session) {
         try {
-            List<Part> parts = vehicleService.getAllParts(); // Dùng hàm mới trong VehicleService
+            List<Part> parts = vehicleService.getAllParts();
             List<Map<String, Object>> result = parts.stream().map(p -> {
                 Map<String, Object> map = new java.util.HashMap<>();
                 map.put("id", p.getPartID());
@@ -89,7 +88,7 @@ public class AttachSerialController {
     @GetMapping("/get-installers")
     public ResponseEntity<List<Map<String, Object>>> getInstallers(HttpSession session) {
         try {
-            List<User> installers = vehicleService.getInstallers(); // Dùng hàm mới
+            List<User> installers = vehicleService.getInstallers(); 
             List<Map<String, Object>> result = installers.stream().map(u -> {
                 Map<String, Object> map = new java.util.HashMap<>();
                 map.put("id", u.getUserID());
@@ -115,8 +114,8 @@ public class AttachSerialController {
             Integer partId = Integer.parseInt(payload.get("partId"));
             String serialNumber = payload.get("serialNumber");
             Date installDate = new SimpleDateFormat("yyyy-MM-dd").parse(payload.get("installDate"));
-            Integer installerId = Integer.parseInt(payload.get("installerId")); // Đây là ID của KTV
-            Integer evmStaffId = loggedInUser.getUserID(); // Người tạo (gatekeeper)
+            Integer installerId = Integer.parseInt(payload.get("installerId")); 
+            Integer evmStaffId = loggedInUser.getUserID(); 
 
             boolean success = vehicleService.AssignPartToVehicle(
                 evmStaffId, vin, partId, serialNumber, installDate, installerId

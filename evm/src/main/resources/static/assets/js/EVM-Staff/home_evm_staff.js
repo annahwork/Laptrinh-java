@@ -10,20 +10,12 @@
             return;
         }
 
-        /**
-         * Dọn dẹp các dấu gạch chéo (slash) thừa trong đường dẫn.
-         */
         function cleanPath(path) {
             return path.replace(/([^:])\/\/+/g, '$1/');
         }
-
-        /**
-         * Tải động file script JS cho trang vừa được load.
-         */
         function loadPageScript(scriptName) {
             const finalScriptName = scriptName.endsWith('.js') ? scriptName : `${scriptName}.js`;
             
-            // Xóa script cũ (nếu có) để tránh xung đột
             const oldScript = document.querySelector(`script[data-page-script="${finalScriptName}"]`);
             if (oldScript) {
                 oldScript.remove();
@@ -31,7 +23,6 @@
             }
 
             const contextPath = window.contextPath || '/evm/';
-            // THAY ĐỔI: Đường dẫn script cho EVM-Staff
             const scriptPath = cleanPath(`${contextPath}assets/js/EVM-Staff/${finalScriptName}`);
 
             const script = document.createElement('script');
@@ -44,23 +35,17 @@
             document.body.appendChild(script);
         }
 
-        /**
-         * Tải nội dung HTML của một trang vào #main-content.
-         */
         function loadPage(pageName) {
-            // THAY ĐỔI: pageMap cho EVM-Staff
             const pageMap = {
                 'dashboard.html': '/dashboardEVM',
                 'allocate_parts.html': '/allocate_parts',
                 'manage_ev_parts.html': '/manage_ev_parts',
                 'attach_serial.html': '/attach_serial',
-                'inventory.html': '/inventoryEVM', // Đổi tên để tránh trùng lặp
                 'claim_requests.html': '/claim_requests',
                 'claim_tracking.html': '/claim_tracking',
                 'warranty_cost.html': '/warranty_cost',
                 'campaigns.html': '/campaigns',
                 'warranty_policy.html': '/warranty_policy',
-                'statistics.html': '/statistics',
                 'reports.html': '/reports',
                 'settings.html': '/settings',
                 'account_evm.html': '/account_evm'
@@ -100,7 +85,6 @@
                 });
         }
 
-        // Gắn sự kiện cho các link tải trang
         sidebarLinks.forEach(link => {
             link.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -113,7 +97,6 @@
             });
         });
 
-        // Gắn sự kiện cho các menu xổ xuống
         function bindMenuToggle() {
             const toggles = document.querySelectorAll('.menu-group-toggle');
             toggles.forEach(toggle => { 
@@ -128,7 +111,6 @@
 
         bindMenuToggle(); 
 
-        // Tải trang mặc định khi vừa vào
         const firstLink = sidebarLinks[0];
         if (firstLink) {
             firstLink.classList.add('active');

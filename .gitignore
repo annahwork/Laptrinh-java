@@ -401,6 +401,11 @@ __pypackages__/
 !/media/xmlconnect/system/ok.gif
 /var/*
 !/var/.htaccess
+
+# Allow evm source files to be tracked again
+!evm/
+!evm/src/
+!evm/src/**
 !/var/package
 /var/package/*
 !/var/package/*.xml

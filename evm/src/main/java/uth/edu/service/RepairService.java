@@ -4,13 +4,17 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import uth.edu.pojo.User;
 import uth.edu.pojo.ClaimService;
 import uth.edu.pojo.SCTechnician;
 import uth.edu.pojo.WarrantyClaim;
 import uth.edu.pojo.WarrantyHistory;
+import uth.edu.pojo.WarrantyService;
+import uth.edu.repositories.UserRepository;
 import uth.edu.repositories.ClaimServiceRepository;
 import uth.edu.repositories.SCTechnicianRepository;
 import uth.edu.repositories.WarrantyClaimRepository;
+import uth.edu.repositories.WarrantyServiceRepository;
 import uth.edu.repositories.WarrantyHistoryRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +25,16 @@ public class RepairService {
     private final WarrantyClaimRepository warrantyClaimRepository;
     private final WarrantyHistoryRepository warrantyHistoryRepository;
     private final SCTechnicianRepository technicianRepository;
+    private final WarrantyServiceRepository warrantyServiceRepository;
+    private final UserRepository userRepository;
 
     public RepairService() {
         claimServiceRepository = new ClaimServiceRepository();
         warrantyClaimRepository = new WarrantyClaimRepository();
         warrantyHistoryRepository = new WarrantyHistoryRepository();
         technicianRepository = new SCTechnicianRepository();
+        warrantyServiceRepository = new WarrantyServiceRepository();
+        userRepository = new UserRepository();
     }
 
     public List<ClaimService> GetAssignedTasks(Integer SCTechnicianID) {
@@ -213,6 +221,60 @@ public class RepairService {
                 return d2.compareTo(d1);
             }));
             return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public boolean assignTechnicianToClaimService(Integer warrantyClaimId, Integer warrantyServiceId, Integer technicianId, String jobDescription) {
+        try {
+            WarrantyClaim claim = warrantyClaimRepository.getWarrantyClaimById(warrantyClaimId);
+            WarrantyService service = warrantyServiceRepository.getWarrantyServiceById(warrantyServiceId);
+            SCTechnician technician = technicianRepository.getSCTechnicianById(technicianId);
+
+            if (claim == null || service == null || technician == null) {
+                System.err.println("Lỗi AssignTechnician: Không tìm thấy Claim, Service, hoặc Technician.");
+                return false;
+            }
+
+            ClaimService newClaimService = new ClaimService();
+            newClaimService.setWarrantyClaim(claim);
+            newClaimService.setWarrantyService(service);
+            newClaimService.setTechnician(technician);
+            newClaimService.setResult(jobDescription); 
+            newClaimService.setNote("");
+
+            claimServiceRepository.addClaimService(newClaimService);
+
+            String historyNote = String.format("Giao việc: Dịch vụ '%s' cho kỹ thuật viên '%s'. Mô tả: %s",
+                                                service.getName(),
+                                                technician.getName(),
+                                                jobDescription);
+
+            WarrantyHistory history = new WarrantyHistory(null, claim, new Date(), historyNote);
+            warrantyHistoryRepository.addWarrantyHistory(history);
+
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<WarrantyService> getWarrantyServices() {
+        try {
+            return warrantyServiceRepository.getAllWarrantyServices(1,9999);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public List<User> getTechnicians() {
+        try {
+            return userRepository.getAllTechnicians(1,9999);
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();

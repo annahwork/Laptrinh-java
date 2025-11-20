@@ -1,232 +1,455 @@
 (function () {
     'use strict';
-    console.log('Warranty Claim Management script loaded');
 
-    const API_CLAIMS_BASE = '/evm/api/warranty-claims';
-    const PAGE_SIZE = 5;
-    const CURRENT_USER_ID = 2;
+    // ========== CONFIG ==========
+    const API_BASE_URL = "/evm/api/warranty-claims";
 
-    let allClaims = [];
-    let currentFilteredClaims = [];
+    // TODO: chỉnh lại cho đúng user / part thật
+    const CURRENT_SC_STAFF_ID = 2;      // id SC-Staff hiện tại (tạm)
+    const DEFAULT_PART_ID = 1;          // id phụ tùng mặc định (tạm)
+    const DEFAULT_ATTACHMENT_URL = "";  // tạm không upload file
+
+    // ========== STATE ==========
+    let claimsCache = [];
     let currentPage = 1;
-    let claimsCache = [];        // cache danh sách claim
-    let currentEditingClaimId = null; // null = thêm mới, khác null = đang sửa
+    const PAGE_SIZE = 5;
+    let currentSearchTerm = '';
+    let currentStatusFilter = '';
+    let currentDateFilter = '';
 
-    /** ----------- Hàm render bảng ----------- */
-    function renderClaims(claimsToRender) {
-        const tableBody = document.getElementById('claimsTbody');
-        if (!tableBody) {
-            console.error('Không tìm thấy #claimsTbody');
-            return;
-        }
-        tableBody.innerHTML = '';
+    let currentEditingId = null; // sau này muốn sửa claim thì xài
 
-        if (!claimsToRender || claimsToRender.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="5" class="table-placeholder-cell">Không tìm thấy yêu cầu nào khớp.</td></tr>`;
-            return;
-        }
+    // ========== UTIL ==========
+    function debounce(fn, wait = 300) {
+        let t;
+        return function (...args) {
+            clearTimeout(t);
+            t = setTimeout(() => fn.apply(this, args), wait);
+        };
+    }
 
-        claimsToRender.forEach(claim => {
-            const vin = claim.vin || 'N/A';
-            const claimId = claim.claimID || 'N/A';
-            const date = claim.date ? new Date(claim.date).toLocaleDateString('vi-VN') : 'N/A';
-            const status = claim.status || 'N/A';
-
-            const row = document.createElement('tr');
-            row.innerHTML = `
-            <td>${claimId}</td>
-            <td>${vin}</td>
-            <td>${date}</td>
-            <td>${status}</td>
-            <td>
-                <button class="btn-sua" data-id="${claimId}">Sửa</button>
-                <button class="btn-xoa" data-id="${claimId}">Xóa</button>
-            </td>`;
-            tableBody.appendChild(row);
+    function escapeHtml(s) {
+        return String(s || '').replace(/[&<>"'`=\/]/g, function (c) {
+            return ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;',
+                '/': '&#x2F;',
+                '`': '&#x60;',
+                '=': '&#x3D;'
+            })[c];
         });
     }
 
-    /** ----------- Hàm tải DỮ LIỆU ----------- */
-    async function loadAllClaims() {
-        const tableBody = document.getElementById('claimsTbody');
-        if (!tableBody) {
-            console.warn('claimsTbody not found, retrying in 500ms');
-            setTimeout(loadAllClaims, 500);
+    function mapStatus(status) {
+        if (!status) return 'N/A';
+        const s = status.toLowerCase();
+        switch (s) {
+            case 'pending': return 'Chờ xử lý';
+            case 'approved': return 'Đã duyệt';
+            case 'assigned': return 'Đã xác nhận';
+            case 'completed': return 'Đã hoàn thành';
+            default: return status;
+        }
+    }
+
+    // "dd/MM/yyyy" -> Date
+    function parseDateFromDdmmyyyy(str) {
+        if (!str) return null;
+        const parts = str.split('/');
+        if (parts.length !== 3) return null;
+        const [d, m, y] = parts.map(Number);
+        if (!d || !m || !y) return null;
+        return new Date(y, m - 1, d);
+    }
+
+    // "yyyy-MM-dd" -> Date
+    function parseDateFromInput(str) {
+        if (!str) return null;
+        const parts = str.split('-');
+        if (parts.length !== 3) return null;
+        const [y, m, d] = parts.map(Number);
+        if (!d || !m || !y) return null;
+        return new Date(y, m - 1, d);
+    }
+
+    function isSameDate(d1, d2) {
+        if (!d1 || !d2) return false;
+        return d1.getFullYear() === d2.getFullYear()
+            && d1.getMonth() === d2.getMonth()
+            && d1.getDate() === d2.getDate();
+    }
+
+    // ========== API: LOAD LIST ==========
+    async function loadClaims() {
+        const tbody = document.getElementById('claimsTbody');
+        if (tbody) {
+            tbody.innerHTML = `
+        <tr>
+          <td colspan="6" class="table-placeholder-cell">
+            Đang tải dữ liệu...
+          </td>
+        </tr>`;
+        }
+
+        try {
+            const res = await fetch(`${API_BASE_URL}/all`);
+            if (!res.ok) throw new Error(`Server trả về ${res.status}`);
+
+            const claims = await res.json();
+            claimsCache = Array.isArray(claims) ? claims : [];
+            currentPage = 1;
+            renderClaims();
+        } catch (err) {
+            console.error('Lỗi khi load warranty claims:', err);
+            if (tbody) {
+                tbody.innerHTML = `
+          <tr>
+            <td colspan="6" class="table-placeholder-cell">
+              Lỗi tải dữ liệu: ${escapeHtml(err.message)}
+            </td>
+          </tr>`;
+            }
+            const infoEl = document.querySelector('.pagination-info');
+            if (infoEl) infoEl.textContent = 'Lỗi tải dữ liệu';
+        }
+    }
+
+    // ========== RENDER + PHÂN TRANG ==========
+    function renderClaims() {
+        console.log('renderClaims pagination', { currentPage, PAGE_SIZE, cacheLen: claimsCache.length });
+
+        const tbody = document.getElementById('claimsTbody');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+
+        let list = Array.isArray(claimsCache) ? claimsCache.slice() : [];
+
+        // search: mã yêu cầu, VIN, mô tả
+        const term = String(currentSearchTerm || '').trim().toLowerCase();
+        if (term) {
+            list = list.filter(c => {
+                const idStr = String(c.claimId ?? '').toLowerCase();
+                const vin = String(c.vin ?? '').toLowerCase();
+                const desc = String(c.description ?? '').toLowerCase();
+                return idStr.includes(term) || vin.includes(term) || desc.includes(term);
+            });
+        }
+
+        // filter status
+        if (currentStatusFilter) {
+            const st = currentStatusFilter.toLowerCase();
+            list = list.filter(c => String(c.status ?? '').toLowerCase() === st);
+        }
+
+        // filter ngày
+        if (currentDateFilter) {
+            const filterDate = parseDateFromInput(currentDateFilter);
+            if (filterDate) {
+                list = list.filter(c => {
+                    const claimDate = parseDateFromDdmmyyyy(c.date);
+                    return isSameDate(claimDate, filterDate);
+                });
+            }
+        }
+
+        const total = list.length;
+        const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+
+        if (currentPage > totalPages) currentPage = totalPages;
+        if (currentPage < 1) currentPage = 1;
+
+        const startIndex = (currentPage - 1) * PAGE_SIZE;
+        const endIndex = startIndex + PAGE_SIZE;
+        const pageItems = list.slice(startIndex, endIndex);
+
+        // info
+        const infoEl = document.querySelector('.pagination-info');
+        if (infoEl) {
+            infoEl.textContent = `Hiển thị ${pageItems.length} của ${total} yêu cầu`;
+        }
+
+        // pagination buttons: « Trước | 1 | Sau »
+        const paginationWrapper = document.querySelector('.pagination-wrapper');
+        let prevBtn = null, pageBtn = null, nextBtn = null;
+        if (paginationWrapper) {
+            const btns = paginationWrapper.querySelectorAll('button');
+            if (btns.length >= 3) {
+                prevBtn = btns[0];
+                pageBtn = btns[1];
+                nextBtn = btns[2];
+            }
+        }
+
+        if (pageBtn) {
+            pageBtn.textContent = String(currentPage);
+        }
+        if (prevBtn) prevBtn.disabled = currentPage <= 1;
+        if (nextBtn) nextBtn.disabled = currentPage >= totalPages;
+
+        if (!pageItems.length) {
+            tbody.innerHTML = `
+        <tr>
+          <td colspan="6" class="table-placeholder-cell">
+            Không có yêu cầu bảo hành nào.
+          </td>
+        </tr>`;
             return;
         }
-        tableBody.innerHTML = `<tr><td colspan="5" class="table-placeholder-cell">Đang tải dữ liệu...</td></tr>`;
-        try {
-            const url = `/evm/api/warranty-claims?userId=2&page=1&size=9999`;
-            const response = await fetch(url, { credentials: 'include' });
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            const data = await response.json();
-            console.log('API trả về:', data);
-            renderClaims(data);
-        } catch (error) {
-            if (tableBody)
-                tableBody.innerHTML = `<tr><td colspan="5" class="table-placeholder-cell">Lỗi tải dữ liệu: ${error.message}</td></tr>`;
-        }
+
+        const rows = pageItems.map(c => {
+            const id = c.claimId ?? '';
+            const vin = c.vin ?? 'N/A';
+            const desc = c.description ?? '';
+            const date = c.date ?? 'N/A';
+            const status = c.status ?? 'N/A';
+
+            return `
+        <tr data-id="${id}">
+          <td>${escapeHtml(String(id))}</td>
+          <td>${escapeHtml(vin)}</td>
+          <td>${escapeHtml(desc)}</td>
+          <td>${escapeHtml(date)}</td>
+          <td>${escapeHtml(mapStatus(status))}</td>
+          <td>
+            <button class="btn-claim-view" data-id="${id}">Xem</button>
+            <button class="btn-claim-edit" data-id="${id}">Sửa</button>
+            <button class="btn-claim-delete" data-id="${id}">Xóa</button>
+          </td>
+        </tr>
+      `;
+        }).join('');
+
+        tbody.innerHTML = rows;
     }
-    document.addEventListener('DOMContentLoaded', loadAllClaims);
 
-    function filterAndRenderClaims() {
-        const searchValue = document.getElementById('searchBox')?.value.trim().toLowerCase() || '';
-        const statusFilter = document.getElementById('statusFilter')?.value || '';
+    // ========== PAGINATION BUTTONS ==========
+    function initClaimPagination() {
+        const paginationWrapper = document.querySelector('.pagination-wrapper');
+        if (!paginationWrapper) return;
 
-        // Nếu KHÔNG có searchValue và KHÔNG có statusFilter, trả lại full bảng
-        if (!searchValue && !statusFilter) {
-            currentFilteredClaims = allClaims;
-        } else {
-            currentFilteredClaims = allClaims.filter(claim => {
-                const matchesStatus = statusFilter ? claim.status === statusFilter : true;
-                const matchesSearch = searchValue ?
-                    (
-                        (claim.vin && claim.vin.toLowerCase().includes(searchValue))
-                        || (claim.claimID && claim.claimID.toString().includes(searchValue))
-                        || (claim.status && claim.status.toLowerCase().includes(searchValue))
-                        || (claim.description && claim.description.toLowerCase().includes(searchValue))
-                    )
-                    : true;
-                return matchesStatus && matchesSearch;
+        const btns = paginationWrapper.querySelectorAll('button');
+        if (btns.length < 3) return;
+
+        const prevBtn = btns[0];
+        const pageBtn = btns[1];
+        const nextBtn = btns[2];
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', function () {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderClaims();
+                }
             });
         }
-        currentPage = 1;
-        renderPaginatedClaims();
-    }
-    function renderPaginatedClaims() {
-        const totalRecords = currentFilteredClaims.length;
-        const startIndex = (currentPage - 1) * PAGE_SIZE;
-        const paginated = currentFilteredClaims.slice(startIndex, startIndex + PAGE_SIZE);
-        renderClaims(paginated);
-        updatePagination(totalRecords, startIndex);
-    }
 
-    function updatePagination(totalRecords, startIndex) {
-        const btnPrev = document.querySelector('.pagination-btn:first-child');
-        const btnNext = document.querySelector('.pagination-btn:last-child');
-        const btnCurrent = document.querySelector('.pagination-btn-active');
-        const paginationInfo = document.querySelector('.pagination-info');
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function () {
+                currentPage++;
+                renderClaims();
+            });
+        }
 
-        const totalPages = Math.ceil(totalRecords / PAGE_SIZE);
-        if (btnPrev) btnPrev.disabled = currentPage <= 1;
-        if (btnNext) btnNext.disabled = currentPage >= totalPages;
-        if (btnCurrent) btnCurrent.textContent = currentPage.toString();
-
-        if (paginationInfo && totalRecords > 0)
-            paginationInfo.textContent = `Hiển thị ${startIndex + 1} - ${Math.min(currentPage * PAGE_SIZE, totalRecords)} của ${totalRecords}`;
-        else if (paginationInfo)
-            paginationInfo.textContent = 'Hiển thị 0 của 0';
+        // hiện tại click số trang cho về trang 1
+        if (pageBtn) {
+            pageBtn.addEventListener('click', function () {
+                currentPage = 1;
+                renderClaims();
+            });
+        }
     }
 
-    /** ----------- Mở/đóng Modal ----------- */
-    async function openWarrantyModal(claimId = null) {
+    // ========== SEARCH + FILTER ==========
+    function initClaimSearchAndFilter() {
+        const searchInput = document.getElementById('searchBox');
+        const statusFilter = document.getElementById('statusFilter');
+        const dateFilter = document.getElementById('dateFilter');
+
+        if (searchInput) {
+            const handler = debounce(function (ev) {
+                currentSearchTerm = ev.target.value;
+                currentPage = 1;
+                renderClaims();
+            }, 250);
+            searchInput.addEventListener('input', handler);
+        }
+
+        if (statusFilter) {
+            statusFilter.addEventListener('change', function (ev) {
+                currentStatusFilter = ev.target.value || '';
+                currentPage = 1;
+                renderClaims();
+            });
+        }
+
+        if (dateFilter) {
+            dateFilter.addEventListener('change', function (ev) {
+                currentDateFilter = ev.target.value || '';
+                currentPage = 1;
+                renderClaims();
+            });
+        }
+    }
+
+    // ========== MODAL TẠO YÊU CẦU ==========
+    function initClaimModal() {
+        const btnOpen = document.getElementById('btnMoFormYeuCau');
         const modal = document.getElementById('modalYeuCauBaoHanh');
-        const form = modal.querySelector('.warranty-claim__form');
-        const codeInput = document.getElementById('warranty_code');
-        form.reset();
+        const closeBtn = modal ? modal.querySelector('.warranty-claim__close-button') : null;
+        const cancelBtn = document.getElementById('warrantyCancelBtn');
+        const form = modal ? modal.querySelector('.warranty-claim__form') : null;
 
-        if (claimId === null) {
-            if (codeInput) codeInput.disabled = false;
+        function resetForm() {
+            if (!form) return;
+            form.reset();
+            currentEditingId = null;
+            const codeInput = document.getElementById('warranty_code');
+            if (codeInput) codeInput.readOnly = false;
+        }
+
+        function openModalForCreate() {
+            if (!modal) return;
+            resetForm();
+            const titleEl = modal.querySelector('.warranty-claim__modal-title');
+            if (titleEl) titleEl.textContent = 'Tạo yêu cầu bảo hành mới';
             modal.style.display = 'block';
-        } else {
-            // Sửa (chưa code)
-        }
-    }
-
-    function closeWarrantyModal() {
-        const modal = document.getElementById('modalYeuCauBaoHanh');
-        if (modal) modal.style.display = 'none';
-    }
-    async function submitWarrantyForm(e) {
-        e.preventDefault();
-
-        // Prevent multiple submissions
-        if (submitWarrantyForm.submitting) return;
-        submitWarrantyForm.submitting = true;
-
-        const payload = {
-            scStaffId: CURRENT_USER_ID,
-            vehiclePartId: 1,
-            vin: document.getElementById('warranty_vin')?.value || '',
-            description: document.getElementById('warranty_desc')?.value || '',
-            status: document.getElementById('warranty_status')?.value || 'pending',
-            attachmentUrl: ''
-        };
-
-        let url = API_CLAIMS_BASE;
-        let method = 'POST';
-        if (currentEditingClaimId) {
-            url = `${API_CLAIMS_BASE}/${currentEditingClaimId}`;
-            method = 'PUT';
         }
 
-        try {
-            const response = await fetch(url, {
-                method,
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
-                body: JSON.stringify(payload)
+        function closeModal() {
+            if (!modal) return;
+            modal.style.display = 'none';
+            resetForm();
+        }
+
+        if (btnOpen) {
+            btnOpen.addEventListener('click', openModalForCreate);
+        }
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', closeModal);
+        }
+
+        if (cancelBtn) {
+            cancelBtn.addEventListener('click', closeModal);
+        }
+
+        window.addEventListener('click', function (e) {
+            if (modal && e.target === modal) {
+                closeModal();
+            }
+        });
+
+        if (form) {
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const vinInput = document.getElementById('warranty_vin');
+                const descInput = document.getElementById('warranty_desc');
+                const statusInput = document.getElementById('warranty_status');
+
+                const vin = vinInput?.value?.trim() || '';
+                const description = descInput?.value?.trim() || '';
+                const status = statusInput?.value || 'pending';
+
+                if (!vin) {
+                    alert('Vui lòng nhập Biển số / VIN');
+                    return;
+                }
+                if (!description) {
+                    alert('Vui lòng nhập mô tả vấn đề');
+                    return;
+                }
+
+                const payload = {
+                    scStaffId: CURRENT_SC_STAFF_ID,
+                    vehiclePartId: DEFAULT_PART_ID,
+                    vin: vin,
+                    description: description,
+                    status: status,
+                    attachmentUrl: DEFAULT_ATTACHMENT_URL
+                };
+
+                try {
+                    const res = await fetch(`${API_BASE_URL}/create`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!res.ok) {
+                        const text = await res.text().catch(() => '');
+                        throw new Error(text || `Server trả về ${res.status}`);
+                    }
+
+                    alert('Tạo yêu cầu bảo hành thành công!');
+                    closeModal();
+                    await loadClaims();
+                } catch (err) {
+                    console.error('Lỗi tạo yêu cầu bảo hành:', err);
+                    alert('Lỗi khi tạo yêu cầu bảo hành: ' + err.message);
+                }
             });
-            if (!response.ok) throw new Error(await response.text());
-            alert(currentEditingClaimId ? 'Sửa yêu cầu thành công!' : 'Tạo yêu cầu thành công!');
-            closeWarrantyModal();
-            loadAllClaims();
-        } catch (err) {
-            console.error('Lỗi khi lưu yêu cầu:', err);
-            alert(`Lỗi: ${err.message}`);
-        } finally {
-            submitWarrantyForm.submitting = false;
         }
     }
-    async function handleDelete(claimId) {
-        // Hỏi m có chắc không
-        if (!confirm(`M chắc chắn muốn XÓA yêu cầu: ${claimId} không?`)) {
-            return; // Nếu bấm "Hủy"
-        }
 
-        try {
-            // 💥 M PHẢI CODE API "DELETE /{id}" BÊN BE (CONTROLLER)
-            const response = await fetch(`${API_CLAIMS_BASE}/${claimId}`, { method: 'DELETE' });
+    // ========== ACTION BUTTONS TRONG BẢNG ==========
+    function initClaimTableActions() {
+        const tbody = document.getElementById('claimsTbody');
+        if (!tbody) return;
 
-            if (!response.ok) {
-                // Nếu BE chửi, m văng lỗi
-                throw new Error(await response.text());
+        tbody.addEventListener('click', async function (e) {
+            const viewBtn = e.target.closest('.btn-claim-view');
+            const editBtn = e.target.closest('.btn-claim-edit');
+            const delBtn = e.target.closest('.btn-claim-delete');
+
+            if (viewBtn) {
+                const id = viewBtn.dataset.id;
+                if (!id) return;
+                console.log('Xem chi tiết claim', id);
+                // TODO: sau này m gọi GET /api/warranty-claims/getbyID/{id} rồi hiện modal
+                return;
             }
 
-            alert('Xóa yêu cầu thành công!');
-            loadAllClaims(); // Tải lại bảng (quan trọng)
-        } catch (err) {
-            console.error('Lỗi khi xóa yêu cầu:', err);
-            alert(`Lỗi: ${err.message} (M code API DELETE bên BE chưa?)`);
-        }
+            if (editBtn) {
+                const id = editBtn.dataset.id;
+                if (!id) return;
+                console.log('Sửa claim', id);
+                // TODO: sau này m fetch chi tiết, fill form, rồi gọi PUT /update/{id}
+                return;
+            }
+
+            if (delBtn) {
+                const id = delBtn.dataset.id;
+                if (!id) return;
+                if (!confirm('Bạn có chắc muốn xóa yêu cầu bảo hành này?')) return;
+
+                try {
+                    const res = await fetch(`${API_BASE_URL}/delete/${id}`, {
+                        method: 'DELETE'
+                    });
+                    if (!res.ok) {
+                        const text = await res.text().catch(() => '');
+                        throw new Error(text || `Server trả về ${res.status}`);
+                    }
+                    alert('Xóa yêu cầu thành công!');
+                    await loadClaims();
+                } catch (err) {
+                    alert('Lỗi khi xóa yêu cầu: ' + err.message);
+                }
+            }
+        });
     }
 
-    /** ----------- INIT ----------- */
+    // ========== BOOTSTRAP ==========
     function init() {
-        document.getElementById('searchBox')?.addEventListener('input', filterAndRenderClaims);
-        document.getElementById('statusFilter')?.addEventListener('change', filterAndRenderClaims);
-
-        document.querySelector('.pagination-btn:first-child')?.addEventListener('click', () => {
-            if (currentPage > 1) { currentPage--; renderPaginatedClaims(); }
-        });
-        document.querySelector('.pagination-btn:last-child')?.addEventListener('click', () => {
-            if (currentPage * PAGE_SIZE < currentFilteredClaims.length) { currentPage++; renderPaginatedClaims(); }
-        });
-
-        document.getElementById('btnMoFormYeuCau')?.addEventListener('click', () => openWarrantyModal(null));
-        document.querySelector('.warranty-claim__close-button')?.addEventListener('click', closeWarrantyModal);
-        document.getElementById('warrantyCancelBtn')?.addEventListener('click', closeWarrantyModal);
-        // document.querySelector('.warranty-claim__form')?.addEventListener('submit', submitWarrantyForm);
-        document.querySelector('.warranty-claim__form')?.addEventListener('submit', submitWarrantyForm);
-        document.getElementById('claimsTbody').addEventListener('click', function (e) {
-            const target = e.target;
-            const id = target.getAttribute('data-id');
-
-        });
-
-        // Load lần đầu
-
-        loadAllClaims();
+        initClaimPagination();
+        initClaimSearchAndFilter();
+        initClaimModal();
+        initClaimTableActions();
+        loadClaims();
     }
 
     if (document.readyState === 'loading') {

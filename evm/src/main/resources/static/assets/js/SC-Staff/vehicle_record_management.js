@@ -1,403 +1,431 @@
-// =======================
-//  BIẾN TOÀN CỤC
-// =======================
-let vehiclesCache = [];        // cache danh sách xe để filter/search phía FE
-let currentEditingVin = null;  // null = đang thêm mới, khác null = đang sửa
-
-// =======================
-//  HÀM MAP DỮ LIỆU
-// =======================
-function mapVehicleStatus(status) {
-  switch (status) {
-    case 'active': return 'Hoạt động';
-    case 'maintenance': return 'Bảo trì';
-    case 'inactive': return 'Không hoạt động';
-    default: return status || 'N/A';
-  }
-}
-
-function mapVehicleModel(model) {
-  switch (model) {
-    case 'Toyota': return 'Toyota';
-    case 'Honda': return 'Honda';
-    case 'Mercedes-Benz': return 'Mercedes-Benz';
-    case 'BMW': return 'BMW';
-    default: return model || 'N/A';
-  }
-}
-
-function getCustomerNameFromVehicle(vehicle) {
-  return (vehicle.customer && vehicle.customer.name) ||
-    vehicle.customerName ||
-    '';
-}
-
-function getCustomerPhoneFromVehicle(vehicle) {
-  return (vehicle.customer && vehicle.customer.phone) ||
-    vehicle.customerPhone ||
-    '';
-}
-
-// =======================
-//  HÀM VẼ BẢNG TỪ CACHE
-// =======================
-function renderVehiclesTable() {
-  const tableBody = document.getElementById('vehiclesTbody');
-  if (!tableBody) return;
-
-  const searchInputEl = document.getElementById('searchVehicleBox');
-  const statusFilterEl = document.getElementById('vehicleStatusFilter');
-
-  const searchValue = (searchInputEl?.value || '').trim().toLowerCase();
-  const statusFilter = statusFilterEl?.value || '';
-
-  let filtered = vehiclesCache.slice(); // copy
-
-  // Lọc theo từ khóa (VIN hoặc tên KH)
-  if (searchValue) {
-    filtered = filtered.filter(v => {
-      const vin = (v.vin || '').toString().toLowerCase();
-      const customerName = getCustomerNameFromVehicle(v).toLowerCase();
-      return vin.includes(searchValue) || customerName.includes(searchValue);
-    });
-  }
-
-  // Lọc theo trạng thái
-  if (statusFilter) {
-    filtered = filtered.filter(v => v.status === statusFilter);
-  }
-
-  // Cập nhật info phân trang đơn giản
-  const paginationInfo = document.querySelector('.pagination-info');
-  if (paginationInfo) {
-    const total = vehiclesCache.length;
-    const showing = filtered.length;
-    paginationInfo.textContent = `Hiển thị ${showing} của ${total}`;
-  }
-
-  // Vẽ bảng
-  if (!filtered.length) {
-    tableBody.innerHTML = '<tr><td colspan="6">Không tìm thấy xe phù hợp.</td></tr>';
-    return;
-  }
-
-  tableBody.innerHTML = '';
-  filtered.forEach(vehicle => {
-    const customerName = getCustomerNameFromVehicle(vehicle) || 'N/A';
-    const customerPhone = getCustomerPhoneFromVehicle(vehicle) || 'N/A';
-
-    const rowHTML = `
-      <tr>
-        <td>${vehicle.vin}</td>
-        <td>${customerName}</td>
-        <td>${customerPhone}</td>
-        <td>${mapVehicleModel(vehicle.model)}</td>
-        <td>${mapVehicleStatus(vehicle.status)}</td>
-        <td>
-          <button class="btn-sua" data-vin="${vehicle.vin}">Sửa</button>
-          <button class="btn-xoa" data-vin="${vehicle.vin}">Xóa</button>
-        </td>
-      </tr>
-    `;
-    tableBody.insertAdjacentHTML('beforeend', rowHTML);
-  });
-}
-
-// =======================
-//  HÀM LOAD TỪ BE VÀ LƯU CACHE
-// =======================
-function loadVehiclesTable() {
-  const tableBody = document.getElementById('vehiclesTbody');
-  if (!tableBody) return;
-
-  const url = '/evm/api/vehicles';
-
-  console.log('Đang tải danh sách xe...');
-  tableBody.innerHTML = '<tr><td colspan="6">Đang tải dữ liệu...</td></tr>';
-
-  fetch(url)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Lỗi khi tải danh sách xe. M check BE (JPA) xem?');
-      }
-      return response.json();
-    })
-    .then(vehicles => {
-      if (!Array.isArray(vehicles)) {
-        console.warn('Response /vehicles không phải array:', vehicles);
-        vehiclesCache = [];
-      } else {
-        vehiclesCache = vehicles;
-      }
-      renderVehiclesTable();
-    })
-    .catch(error => {
-      console.error('Lỗi khi load xe:', error);
-      tableBody.innerHTML = `<tr><td colspan="6">Lỗi tải dữ liệu: ${error.message}</td></tr>`;
-    });
-}
-
-// =======================
-//  HÀM ĐIỀN FORM TỪ 1 VEHICLE
-// =======================
-function fillVehicleForm(vehicle) {
-  const plateEl = document.getElementById('vehicle_plate');
-  const customerEl = document.getElementById('vehicle_customer');
-  const phoneEl = document.getElementById('vehicle_phone');
-  const typeEl = document.getElementById('vehicle_type');
-  const yearEl = document.getElementById('vehicle_year');
-  const warrantyEl = document.getElementById('vehicle_warranty');
-  const statusEl = document.getElementById('vehicle_status');
-  const notesEl = document.getElementById('vehicle_notes');
-
-  const customerName = getCustomerNameFromVehicle(vehicle);
-  const customerPhone = getCustomerPhoneFromVehicle(vehicle);
-
-  if (plateEl) {
-    plateEl.value = vehicle.vin || '';
-    // Khi sửa: không cho sửa VIN (id)
-    plateEl.readOnly = !!currentEditingVin;
-  }
-
-  if (customerEl) customerEl.value = customerName || '';
-  if (phoneEl) phoneEl.value = customerPhone || '';
-  if (typeEl) typeEl.value = vehicle.model || '';
-  if (yearEl) yearEl.value = vehicle.year_Of_Manufacture || '';
-  if (warrantyEl) warrantyEl.value = vehicle.warranty_Time || '';
-  if (statusEl) statusEl.value = vehicle.status || 'active';
-  if (notesEl) notesEl.value = vehicle.notes || '';
-}
-
-// =======================
-//  HÀM RESET FORM (THÊM MỚI)
-// =======================
-function resetVehicleForm() {
-  const form = document.querySelector('.vehicle__form');
-  const plateEl = document.getElementById('vehicle_plate');
-  if (form) form.reset();
-  if (plateEl) {
-    plateEl.readOnly = false; // thêm mới cho sửa VIN
-  }
-}
-
-// =======================
-//  DEBOUNCE CHO SEARCH
-// =======================
-function debounce(fn, delay) {
-  let timeout;
-  return function (...args) {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => fn.apply(this, args), delay);
-  };
-}
-
-// =======================
-//  INIT MODAL + FORM SUBMIT
-// =======================
 (function () {
-  function initVehicleModal() {
-    const btnOpen = document.getElementById('btnMoFormVehicle');
-    const modal = document.getElementById('modalQuanLyVehicle');
-    const btnClose = modal ? modal.querySelector('.vehicle__close-button') : null;
-    const btnCancel = document.getElementById('vehicleCancelBtn');
-    const form = modal ? modal.querySelector('.vehicle__form') : null;
+  'use strict';
 
-    function openModal() {
-      if (modal) modal.style.display = 'block';
+  let vehiclesCache = [];
+  let currentEditingVin = null;
+
+  let currentPage = 1;
+  const PAGE_SIZE = 5; // muốn 10 dòng/trang thì đổi 10
+  const API_BASE_URL = "/evm/api/sc-staff/vehicles";
+
+  function mapVehicleStatus(status) {
+    switch (String(status).toLowerCase()) {
+      case 'active': return 'Hoạt động';
+      case 'maintenance': return 'Bảo trì';
+      case 'inactive': return 'Không hoạt động';
+      default: return status || 'N/A';
     }
-
-    function closeModal() {
-      if (modal) {
-        modal.style.display = 'none';
-        resetVehicleForm();
-        currentEditingVin = null;
-      }
-    }
-
-    // Thêm mới
-    if (btnOpen) {
-      btnOpen.addEventListener('click', function () {
-        currentEditingVin = null;
-        resetVehicleForm();
-        openModal();
-      });
-    }
-
-    if (btnClose) btnClose.addEventListener('click', closeModal);
-    if (btnCancel) btnCancel.addEventListener('click', closeModal);
-
-    // Submit form: thêm hoặc sửa
-    if (form) {
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        const currentStaffId = 2; // TODO: m chỉnh lấy từ session nếu cần
-
-        const vinValue = document.getElementById('vehicle_plate')?.value || '';
-
-        const requestBody = {
-          vehicle: {
-            vin: vinValue,
-            model: document.getElementById('vehicle_type')?.value || '',
-            status: document.getElementById('vehicle_status')?.value || '',
-            year_Of_Manufacture: parseInt(document.getElementById('vehicle_year')?.value, 10),
-            warranty_Time: document.getElementById('vehicle_warranty')?.value || '',
-          },
-          customer: {
-            name: document.getElementById('vehicle_customer')?.value || '',
-            phone: document.getElementById('vehicle_phone')?.value || '',
-            email: '',
-            address: '',
-          },
-        };
-
-        let url = '';
-        let method = '';
-
-        if (currentEditingVin) {
-          // ĐANG SỬA
-          method = 'PUT';
-          url = `/evm/api/vehicles/${encodeURIComponent(currentEditingVin)}?staffId=${currentStaffId}`;
-        } else {
-          // ĐANG THÊM MỚI
-          method = 'POST';
-          url = `/evm/api/vehicles?staffId=${currentStaffId}`;
-        }
-
-        fetch(url, {
-          method: method,
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(requestBody),
-        })
-          .then((response) => {
-            if (response.ok) return response.text();
-            return response.text().then((text) => { throw new Error(text); });
-          })
-          .then((message) => {
-            console.log(message);
-            alert(currentEditingVin ? 'Cập nhật xe thành công!' : 'Đăng ký xe thành công!');
-            closeModal();
-            loadVehiclesTable(); // reload bảng sau khi thêm/sửa
-          })
-          .catch((error) => {
-            console.error('Lỗi khi tạo/cập nhật xe:', error);
-            alert(`Lỗi: ${error.message}`);
-          });
-      });
-    }
-
-    // Click bên ngoài modal thì đóng
-    window.addEventListener('click', function (e) {
-      if (modal && modal.style.display === 'block' && e.target === modal) {
-        closeModal();
-      }
-    });
   }
 
-  // =======================
-  //  INIT EVENT TRÊN BẢNG (SỬA / XÓA)
-  // =======================
-  function initVehicleTableActions() {
-    const tableBody = document.getElementById('vehiclesTbody');
-    const modal = document.getElementById('modalQuanLyVehicle');
-
-    function openModal() {
-      if (modal) modal.style.display = 'block';
+  function mapVehicleModel(model) {
+    switch (model) {
+      // case 'Model S': return 'Model S';
+      // case 'Model 3': return 'Model 3';
+      // case 'Model X': return 'Model X';
+      // case 'Model Y': return 'Model Y';
+      case 'Toyota': return 'Toyota';
+      case 'Honda': return 'Honda';
+      case 'Mercedes-Benz': return 'Mercedes-Benz';
+      case 'BMW': return 'BMW';
+      default: return model || 'N/A';
     }
+  }
 
+  function getCustomerNameFromVehicle(vehicle) {
+    return (vehicle.customer && vehicle.customer.name) ||
+      vehicle.customerName || '';
+  }
+
+  function getCustomerPhoneFromVehicle(vehicle) {
+    return (vehicle.customer && vehicle.customer.phone) ||
+      vehicle.customerPhone || '';
+  }
+
+  function renderVehiclesTable() {
+    const tableBody = document.getElementById('vehiclesTbody');
     if (!tableBody) return;
 
-    tableBody.addEventListener('click', function (e) {
-      const target = e.target;
-      if (!(target instanceof HTMLElement)) return;
-
-      // XÓA
-      if (target.classList.contains('btn-xoa')) {
-        const vin = target.dataset.vin;
-        if (!vin) return;
-
-        if (!confirm(`M có chắc muốn xóa xe với VIN/Biển số: ${vin}?`)) return;
-
-        fetch(`/evm/api/vehicles/${encodeURIComponent(vin)}`, {
-          method: 'DELETE',
-        })
-          .then((response) => {
-            if (!response.ok) {
-              return response.text().then((text) => { throw new Error(text || 'Xóa thất bại'); });
-            }
-            return response.text();
-          })
-          .then((msg) => {
-            console.log(msg);
-            alert('Xóa xe thành công!');
-            loadVehiclesTable();
-          })
-          .catch((error) => {
-            console.error('Lỗi khi xóa xe:', error);
-            alert(`Lỗi xóa: ${error.message}`);
-          });
-      }
-
-      // SỬA
-      if (target.classList.contains('btn-sua')) {
-        const vin = target.dataset.vin;
-        if (!vin) return;
-
-        currentEditingVin = vin;
-
-        const url = `/evm/api/vehicles/${encodeURIComponent(vin)}`;
-
-        fetch(url)
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Không tải được chi tiết xe.');
-            }
-            return response.json();
-          })
-          .then(vehicle => {
-            fillVehicleForm(vehicle);
-            openModal();
-          })
-          .catch(error => {
-            console.error('Lỗi khi tải chi tiết xe:', error);
-            alert(`Lỗi tải chi tiết xe: ${error.message}`);
-          });
-      }
-    });
-  }
-
-  // =======================
-  //  INIT SEARCH + FILTER
-  // =======================
-  function initSearchAndFilter() {
     const searchInputEl = document.getElementById('searchVehicleBox');
     const statusFilterEl = document.getElementById('vehicleStatusFilter');
 
-    if (searchInputEl) {
-      searchInputEl.addEventListener('input', debounce(() => {
-        renderVehiclesTable();
-      }, 300));
+    const searchValue = (searchInputEl?.value || '').trim().toLowerCase();
+    const statusFilter = statusFilterEl?.value || '';
+
+    let filtered = vehiclesCache.slice();
+
+    if (searchValue) {
+      filtered = filtered.filter(v => {
+        const vin = (v.vehicle && v.vehicle.vin) ? v.vehicle.vin.toString().toLowerCase() : '';
+        const customerName = getCustomerNameFromVehicle(v).toLowerCase();
+        return vin.includes(searchValue) || customerName.includes(searchValue);
+      });
     }
 
-    if (statusFilterEl) {
-      statusFilterEl.addEventListener('change', function () {
+    if (statusFilter) {
+      filtered = filtered.filter(v => {
+        const status = (v.vehicle && v.vehicle.status) ? v.vehicle.status.toLowerCase() : '';
+        return status === statusFilter;
+      });
+    }
+
+    const total = filtered.length;
+    const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+
+    // nếu đang ở trang lớn hơn tổng trang (do filter) thì kéo về trang cuối
+    if (currentPage > totalPages) currentPage = totalPages;
+    if (currentPage < 1) currentPage = 1;
+
+    const startIndex = (currentPage - 1) * PAGE_SIZE;
+    const endIndex = startIndex + PAGE_SIZE;
+    const pageItems = filtered.slice(startIndex, endIndex);
+
+    const paginationInfo = document.querySelector('.pagination-info');
+    if (paginationInfo) {
+      const showing = pageItems.length;
+      paginationInfo.textContent = `Hiển thị ${showing} của ${total}`;
+    }
+
+    // cập nhật hiển thị số trang (nếu có)
+    const pageLabel = document.getElementById('vehiclePageNumber');
+    if (pageLabel) {
+      pageLabel.textContent = currentPage.toString();
+    }
+
+    // disable / enable nút Trước / Sau
+    const prevBtn = document.getElementById('vehiclePrevBtn');
+    const nextBtn = document.getElementById('vehicleNextBtn');
+    if (prevBtn) prevBtn.disabled = currentPage <= 1;
+    if (nextBtn) nextBtn.disabled = currentPage >= totalPages;
+
+    if (!pageItems.length) {
+      tableBody.innerHTML = '<tr><td colspan="6">Không tìm thấy xe phù hợp.</td></tr>';
+      return;
+    }
+
+    tableBody.innerHTML = '';
+    pageItems.forEach(item => {
+      const customerName = getCustomerNameFromVehicle(item) || 'N/A';
+      const customerPhone = getCustomerPhoneFromVehicle(item) || 'N/A';
+      const vehicleData = item.vehicle || {};
+
+      const rowHTML = `
+      <tr>
+        <td>${vehicleData.vin || 'N/A'}</td>
+        <td>${customerName}</td>
+        <td>${customerPhone}</td>
+        <td>${mapVehicleModel(vehicleData.model)}</td>
+        <td>${mapVehicleStatus(vehicleData.status)}</td>
+        <td>
+          <button class="btn-sua" data-vin="${vehicleData.vin || ''}">Sửa</button>
+          <button class="btn-xoa" data-vin="${vehicleData.vin || ''}">Xóa</button>
+        </td>
+      </tr>
+    `;
+      tableBody.insertAdjacentHTML('beforeend', rowHTML);
+    });
+  }
+
+
+
+  function loadVehiclesTable() {
+    const tableBody = document.getElementById('vehiclesTbody');
+    if (!tableBody) return;
+
+    const url = `${API_BASE_URL}/all`;
+
+    console.log('Đang tải danh sách xe...');
+    tableBody.innerHTML = '<tr><td colspan="6">Đang tải dữ liệu...</td></tr>';
+
+    fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Lỗi khi tải danh sách xe. Check BE (Controller/Service).');
+        }
+        return response.json();
+      })
+      .then(vehicles => {
+        if (!Array.isArray(vehicles)) {
+          console.warn('Response /all không phải array:', vehicles);
+          vehiclesCache = [];
+        } else {
+          vehiclesCache = vehicles.filter(v => v && v.vehicle);
+        }
+        renderVehiclesTable();
+      })
+      .catch(error => {
+        console.error('Lỗi khi load xe:', error);
+        tableBody.innerHTML = `<tr><td colspan="6">Lỗi tải dữ liệu: ${error.message}</td></tr>`;
+      });
+  }
+
+  function fillVehicleForm(data) {
+    const plateEl = document.getElementById('vehicle_plate');
+    const customerEl = document.getElementById('vehicle_customer');
+    const phoneEl = document.getElementById('vehicle_phone');
+    const typeEl = document.getElementById('vehicle_type');
+    const yearEl = document.getElementById('vehicle_year');
+    const warrantyEl = document.getElementById('vehicle_warranty');
+    const statusEl = document.getElementById('vehicle_status');
+    const notesEl = document.getElementById('vehicle_notes');
+
+    const customerName = getCustomerNameFromVehicle(data);
+    const customerPhone = getCustomerPhoneFromVehicle(data);
+    const vehicleData = data.vehicle || {};
+
+    if (plateEl) {
+      plateEl.value = vehicleData.vin || '';
+      plateEl.readOnly = !!currentEditingVin;
+    }
+
+    if (customerEl) customerEl.value = customerName || '';
+    if (phoneEl) phoneEl.value = customerPhone || '';
+
+    if (typeEl) typeEl.value = vehicleData.model || '';
+
+    if (statusEl) {
+      statusEl.value = (vehicleData.status || 'active').toLowerCase();
+    }
+
+    if (notesEl) notesEl.value = vehicleData.notes || '';
+
+    if (yearEl) yearEl.value = vehicleData.year_Of_Manufacture || '';
+    if (warrantyEl) warrantyEl.value = vehicleData.warranty_Time || '';
+  }
+
+  function resetVehicleForm() {
+    const form = document.querySelector('.vehicle__form');
+    const plateEl = document.getElementById('vehicle_plate');
+    if (form) form.reset();
+    if (plateEl) {
+      plateEl.readOnly = false;
+    }
+    const statusEl = document.getElementById('vehicle_status');
+    if (statusEl) statusEl.value = 'active';
+  }
+
+  function debounce(fn, delay) {
+    let timeout;
+    return function (...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => fn.apply(this, args), delay);
+    };
+  }
+
+  (function () {
+    function initVehicleModal() {
+      const btnOpen = document.getElementById('btnMoFormVehicle');
+      const modal = document.getElementById('modalQuanLyVehicle');
+      const btnClose = modal ? modal.querySelector('.vehicle__close-button') : null;
+      const btnCancel = document.getElementById('vehicleCancelBtn');
+      const form = modal ? modal.querySelector('.vehicle__form') : null;
+
+      function openModal() {
+        if (modal) modal.style.display = 'block';
+      }
+
+      function closeModal() {
+        if (modal) {
+          modal.style.display = 'none';
+          resetVehicleForm();
+          currentEditingVin = null;
+        }
+      }
+
+      if (btnOpen) {
+        btnOpen.addEventListener('click', function () {
+          currentEditingVin = null;
+          resetVehicleForm();
+          openModal();
+        });
+      }
+
+      if (btnClose) btnClose.addEventListener('click', closeModal);
+      if (btnCancel) btnCancel.addEventListener('click', closeModal);
+
+      if (form) {
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          const currentStaffId = 2; 7
+
+          const vinValue = document.getElementById('vehicle_plate')?.value || '';
+          const modelValue = document.getElementById('vehicle_type')?.value || '';
+          const statusValue = document.getElementById('vehicle_status')?.value || '';
+          const customerNameValue = document.getElementById('vehicle_customer')?.value || '';
+          const customerPhoneValue = document.getElementById('vehicle_phone')?.value || '';
+          const yearValue = document.getElementById('vehicle_year')?.value;
+          const warrantyValue = document.getElementById('vehicle_warranty')?.value;
+
+          const requestBody = {
+            vehicle: {
+              vin: vinValue,
+              model: modelValue,
+              status: statusValue,
+              year_Of_Manufacture: yearValue ? parseInt(yearValue, 10) : new Date().getFullYear(),
+              warranty_Time: warrantyValue || '',
+            },
+            customer: {
+              name: customerNameValue,
+              phone: customerPhoneValue,
+              email: '',
+              address: '',
+            },
+          };
+
+          let url = '';
+          let method = '';
+
+          if (currentEditingVin) {
+            method = 'PUT';
+            url = `${API_BASE_URL}/update/${encodeURIComponent(currentEditingVin)}?staffId=${currentStaffId}`;
+
+            const oldData = vehiclesCache.find(v => v.vehicle.vin === currentEditingVin);
+            if (oldData) {
+              requestBody.vehicle.year_Of_Manufacture = oldData.vehicle.year_Of_Manufacture;
+              requestBody.vehicle.warranty_Time = oldData.vehicle.warranty_Time;
+            }
+
+          } else {
+            method = 'POST';
+            url = `${API_BASE_URL}/register?staffId=${currentStaffId}`;
+          }
+
+          fetch(url, {
+            method: method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(requestBody),
+          })
+            .then((response) => {
+              if (response.ok) return response.text();
+              return response.text().then((text) => { throw new Error(text); });
+            })
+            .then((message) => {
+              console.log(message);
+              alert(currentEditingVin ? 'Cập nhật xe thành công!' : 'Đăng ký xe thành công!');
+              closeModal();
+              loadVehiclesTable();
+            })
+            .catch((error) => {
+              console.error('Lỗi khi tạo/cập nhật xe:', error);
+              alert(`Lỗi: ${error.message}`);
+            });
+        });
+      }
+
+      window.addEventListener('click', function (e) {
+        if (modal && modal.style.display === 'block' && e.target === modal) {
+          closeModal();
+        }
+      });
+    }
+
+    function initVehicleTableActions() {
+      const tableBody = document.getElementById('vehiclesTbody');
+      const modal = document.getElementById('modalQuanLyVehicle');
+
+      function openModal() {
+        if (modal) modal.style.display = 'block';
+      }
+
+      if (!tableBody) return;
+
+      tableBody.addEventListener('click', function (e) {
+        const target = e.target;
+        if (!(target instanceof HTMLElement)) return;
+
+        const targetVin = target.dataset.vin;
+
+        if (target.classList.contains('btn-xoa')) {
+          if (!targetVin) return;
+
+          if (!confirm(`M có chắc muốn xóa xe với VIN/Biển số: ${targetVin}?`)) return;
+
+          fetch(`${API_BASE_URL}/delete/${encodeURIComponent(targetVin)}`, {
+            method: 'DELETE',
+          })
+            .then((response) => {
+              if (!response.ok) {
+                return response.text().then((text) => { throw new Error(text || 'Xóa thất bại'); });
+              }
+              return response.text();
+            })
+            .then((msg) => {
+              console.log(msg);
+              alert('Xóa xe thành công!');
+              loadVehiclesTable();
+            })
+            .catch((error) => {
+              console.error('Lỗi khi xóa xe:', error);
+              alert(`Lỗi xóa: ${error.message}`);
+            });
+        }
+
+        if (target.classList.contains('btn-sua')) {
+          if (!targetVin) return;
+
+          currentEditingVin = targetVin;
+
+          const vehicleData = vehiclesCache.find(v => v.vehicle && v.vehicle.vin === targetVin);
+
+          if (vehicleData) {
+            fillVehicleForm(vehicleData);
+            openModal();
+          } else {
+            console.error('Không tìm thấy xe trong cache với VIN:', targetVin);
+            alert('Lỗi: Không tìm thấy dữ liệu xe để sửa.');
+            currentEditingVin = null;
+          }
+        }
+      });
+    }
+
+    function initSearchAndFilter() {
+      const searchInputEl = document.getElementById('searchVehicleBox');
+      const statusFilterEl = document.getElementById('vehicleStatusFilter');
+
+      if (searchInputEl) {
+        searchInputEl.addEventListener('input', debounce(() => {
+          renderVehiclesTable();
+        }, 300));
+      }
+
+      if (statusFilterEl) {
+        statusFilterEl.addEventListener('change', function () {
+          renderVehiclesTable();
+        });
+      }
+    }
+
+    function init() {
+      initVehicleModal();
+      initVehicleTableActions();
+      initSearchAndFilter();
+      initPagination();
+      loadVehiclesTable();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+  function initPagination() {
+    const prevBtn = document.getElementById('vehiclePrevBtn');
+    const nextBtn = document.getElementById('vehicleNextBtn');
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function () {
+        currentPage--;
+        renderVehiclesTable();
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function () {
+        currentPage++;
         renderVehiclesTable();
       });
     }
   }
 
-  // =======================
-  //  KHỞI TẠO KHI LOAD TRANG
-  // =======================
-  function init() {
-    initVehicleModal();
-    initVehicleTableActions();
-    initSearchAndFilter();
-    loadVehiclesTable();
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
 })();

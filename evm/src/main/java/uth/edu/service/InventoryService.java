@@ -48,6 +48,37 @@ public class InventoryService {
         this.notificationService = notificationService;
     }
 
+    public Part createNewPartAndAddToStock(String partName, String partType, Integer initialStock) throws Exception { // <-- SỬA: Bỏ scId
+        
+        try {
+            Part newPart = new Part();
+            newPart.setPartName(partName); 
+            newPart.setType(partType); 
+            partRepository.addPart(newPart); 
+            
+            if (newPart.getPartID() == null) {
+                throw new Exception("Lỗi DAO: Không lấy được PartID sau khi tạo Part.");
+            }
+
+            // SỬA: Lấy kho EVM (Authorized) làm mặc định
+            ServiceCenter evmWarehouse = serviceCenterRepository.getServiceCenterByType(EVM_WAREHOUSE_TYPE); 
+            if (evmWarehouse == null) {
+                throw new Exception("Lỗi cấu hình: Không tìm thấy kho EVM ('Authorized').");
+            }
+
+            Inventory newInventory = new Inventory();
+            newInventory.setPart(newPart); 
+            newInventory.setServiceCenter(evmWarehouse); // <-- SỬA
+            newInventory.setCurrentStock(initialStock != null ? initialStock : 0); 
+            inventoryRepository.addInventory(newInventory); 
+
+            return newPart;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Lỗi khi tạo phụ tùng hoặc thêm vào kho: " + e.getMessage(), e);
+        }
+    }
     public List<Part> GetParts(int page, int pageSize) {
         try {
             if (page <= 0) page = DEFAULT_PAGE;
@@ -57,6 +88,22 @@ public class InventoryService {
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
+        }
+    }
+    public int countInventoriesBySCID(int scId, String search, String type) {
+        try {
+            return inventoryRepository.countInventoriesBySCID(scId, search, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    public int countAllInventoriesWithFilters(String search, String type) {
+        try {
+            return inventoryRepository.countAllInventoriesWithFilters(search, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
         }
     }
 
@@ -230,10 +277,23 @@ public class InventoryService {
         try {
             ServiceCenter evmWarehouse = serviceCenterRepository.getServiceCenterByType(EVM_WAREHOUSE_TYPE);
             if (evmWarehouse == null) return new ArrayList<>();
-            
-            // SỬA HÀM GỌI: Truyền tham số xuống Repository
-            // (Bạn sẽ cần sửa hàm getInventoriesBySCID ở Repository/DAO ở bước tiếp theo)
             return inventoryRepository.getInventoriesBySCID(evmWarehouse.getSCID(), page, pageSize, search, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+    public List<Inventory> getInventoriesBySCID(int scId, int page, int pageSize, String search, String type) {
+        try {
+            return inventoryRepository.getInventoriesBySCID(scId, page, pageSize, search, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+    public List<Inventory> getAllInventoriesWithFilters(int page, int pageSize, String search, String type) {
+        try {
+            return inventoryRepository.getAllInventoriesWithFilters(page, pageSize, search, type);
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();

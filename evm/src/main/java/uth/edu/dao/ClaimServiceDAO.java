@@ -6,6 +6,8 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
 import uth.edu.pojo.ClaimService;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClaimServiceDAO {
@@ -174,6 +176,61 @@ public class ClaimServiceDAO {
         return (note != null) ? note : "Sẵn sàng";
     }
 
+    public List<Object[]> getClaimServiceDetails(int userID, int page, int pageSize) {
+        Session session = null;
+        List<Object[]> results = null;
+        String hql = "SELECT cs.ClaimServID, v.VIN, c.Name, cs.Result, cs.Note FROM ClaimService cs JOIN cs.WarrantyClaim wc JOIN wc.vehicle v JOIN v.customer c JOIN cs.technician t WHERE t.UserID = :userID ORDER BY cs.ClaimServID DESC";
+
+        try {
+            session = sessionFactory.openSession();
+            
+            results = session.createQuery(hql, Object[].class)
+                    .setParameter("userID", userID)
+                    .setFirstResult((page - 1) * pageSize) 
+                    .setMaxResults(pageSize) 
+                    .getResultList();
+                    
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>(); 
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return results;
+    }
+
+    public Long[] getPerformanceMetrics(int technicianId) {
+        Session session = null;
+        Long totalClaims = 0L;
+        Long completedClaims = 0L;
+        try {
+            session = sessionFactory.openSession();
+            String hqlTotal = "SELECT COUNT(cs.ClaimServID) FROM ClaimService cs WHERE cs.technician.UserID = :techId";
+            
+            totalClaims = session.createQuery(hqlTotal, Long.class)
+                                .setParameter("techId", technicianId)
+                                .uniqueResult();
+            String hqlCompleted = "SELECT COUNT(cs.ClaimServID) FROM ClaimService cs WHERE cs.technician.UserID = :techId AND ((cs.Result IS NOT NULL AND cs.Result != '') OR LOWER(cs.Result) = 'hoàn thành')"; 
+
+            completedClaims = session.createQuery(hqlCompleted, Long.class)
+                                    .setParameter("techId", technicianId)
+                                    .uniqueResult();                 
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        if (totalClaims == null) 
+            totalClaims = 0L;
+        if (completedClaims == null) 
+            completedClaims = 0L;
+
+        return new Long[]{totalClaims, completedClaims};
+    }
 
     public void closeSessionFactory() {
         if (sessionFactory != null) {

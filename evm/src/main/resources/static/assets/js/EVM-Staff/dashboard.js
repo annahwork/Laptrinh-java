@@ -1,12 +1,8 @@
 (function() {
     console.log("dashboard.js đã thực thi, bắt đầu tải dữ liệu...");
 
-    // URL API (dùng contextPath nếu có)
     const API_BASE = (window.contextPath || '/evm/') + 'api/evm_staff/dashboard';
 
-    /**
-     * Tải dữ liệu cho 4 thẻ thống kê
-     */
     async function loadOverviewStats() {
         try {
             const res = await fetch(`${API_BASE}/overview`, { credentials: 'same-origin' });
@@ -26,9 +22,7 @@
         }
     }
 
-    /**
-     * Tải dữ liệu cho bảng "Cấp phát phụ tùng gần đây"
-     */
+
     async function loadRecentAllocations() {
         try {
             const res = await fetch(`${API_BASE}/recent-allocations`, { credentials: 'same-origin' });
@@ -37,7 +31,7 @@
             const data = await res.json();
             const tbody = document.querySelector(".dashboard__table .dashboard__table-body");
             if (!tbody) return;
-            tbody.innerHTML = ""; // Xóa các hàng static
+            tbody.innerHTML = "";
 
             if (data.length === 0) {
                 tbody.innerHTML = `
@@ -64,7 +58,6 @@
                 tbody.appendChild(tr);
             });
 
-            // Thêm nút "Xem thêm"
             tbody.innerHTML += `
                 <tr class="dashboard__table-row dashboard__table-row--more">
                     <td colspan="5" class="dashboard__table-cell dashboard__table-cell--center">
@@ -87,9 +80,6 @@
         }
     }
 
-    /**
-     * Tải dữ liệu cho danh sách "Thông báo & nhắc việc"
-     */
     async function loadNotifications() {
         try {
             const res = await fetch(`${API_BASE}/notifications`, { credentials: 'same-origin' });
@@ -98,7 +88,7 @@
             const data = await res.json();
             const list = document.querySelector(".dashboard__reminder-list");
             if (!list) return;
-            list.innerHTML = ""; // Xóa các thông báo static
+            list.innerHTML = ""; 
 
             if (data.length === 0) {
                 list.innerHTML = `<li class="dashboard__reminder-item">Không có thông báo mới.</li>`;
@@ -108,7 +98,7 @@
             data.forEach(n => {
                 const li = document.createElement("li");
                 li.className = "dashboard__reminder-item";
-                li.textContent = n.message; // API trả về message đã có icon
+                li.textContent = n.message;
                 list.appendChild(li);
             });
         } catch (error) {
@@ -120,7 +110,6 @@
         }
     }
 
-    // Gọi trực tiếp khi file được load động
     loadOverviewStats();
     loadRecentAllocations();
     loadNotifications();

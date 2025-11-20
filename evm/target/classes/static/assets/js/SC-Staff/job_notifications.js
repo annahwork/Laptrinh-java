@@ -1,137 +1,258 @@
 (function () {
-    const STORAGE_KEY = 'evm_notifications_v1';
+    'use strict';
 
-    function loadNotifications() {
-        try {
-            const raw = localStorage.getItem(STORAGE_KEY);
-            return raw ? JSON.parse(raw) : [];
-        } catch (e) { return []; }
+    console.log('[SC-Staff] job_notifications.js loaded');
+
+    // ====== CONFIG ======
+    const API_BASE = '/evm/api/sc-staff/notifications';
+    const CURRENT_SC_STAFF_ID = 2; // TODO: nếu cần thì lấy userID từ server render xuống
+
+    const PAGE_SIZE = 5;
+
+    // ====== DOM ======
+    const searchInput = document.getElementById('searchNotifications');
+    const listEl = document.getElementById('notificationsList');
+
+    const infoEl = document.getElementById('notificationsPaginationInfo');
+    const prevBtn = document.getElementById('notificationsPrevBtn');
+    const nextBtn = document.getElementById('notificationsNextBtn');
+    const pageNumberEl = document.getElementById('notificationsPageNumber');
+
+    // ====== STATE ======
+    let notificationsCache = [];
+    let filteredList = [];
+    let currentPage = 1;
+
+    // ====== UTIL ======
+    function escapeHtml(str) {
+        return String(str || '').replace(/[&<>"'`=\/]/g, function (c) {
+            return ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;',
+                '/': '&#x2F;',
+                '`': '&#x60;',
+                '=': '&#x3D;'
+            })[c];
+        });
     }
 
-    function saveNotifications(arr) {
-        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); } catch (e) { }
+    function formatDateVi(dateStr) {
+        if (!dateStr) return '';
+        const d = new Date(dateStr);
+        if (Number.isNaN(d.getTime())) return String(dateStr);
+        return d.toLocaleString('vi-VN');
     }
 
-    function renderNotifications(list) {
-        const arr = loadNotifications();
-        if (!list) return;
-        if (!arr || arr.length === 0) {
-            list.innerHTML = '<li class="notification-item"><div class="notification__title">Chưa có thông báo</div></li>';
+    // ====== API ======
+    async function fetchNotifications() {
+        // dùng endpoint: GET /api/sc-staff/notifications/user?userID=...
+        const url = `${API_BASE}/user?userID=${encodeURIComponent(CURRENT_SC_STAFF_ID)}`;
+        const res = await fetch(url, { credentials: 'include' });
+        if (!res.ok) {
+            throw new Error('Lỗi tải dữ liệu: HTTP ' + res.status);
+        }
+        return await res.json();
+    }
+
+    async function markNotificationRead(id) {
+        const url = `${API_BASE}/${id}/read`;
+        const res = await fetch(url, {
+            method: 'PUT',
+            credentials: 'include'
+        });
+        const text = await res.text().catch(() => '');
+        if (!res.ok) {
+            throw new Error(text || 'Đánh dấu đã đọc thất bại');
+        }
+        return text || 'Đã đánh dấu đã đọc';
+    }
+
+    // ====== RENDER ======
+    function renderPage() {
+        if (!listEl) return;
+
+        listEl.innerHTML = '';
+
+        if (!filteredList.length) {
+            listEl.innerHTML = `
+                <li class="notification-item notification-empty">
+                    Không có thông báo nào.
+                </li>
+            `;
+            if (infoEl) infoEl.textContent = 'Hiển thị 0 của 0';
+            if (pageNumberEl) pageNumberEl.textContent = '1';
+            if (prevBtn) prevBtn.disabled = true;
+            if (nextBtn) nextBtn.disabled = true;
             return;
         }
-        list.innerHTML = arr.map(n => {
-            const unreadClass = n.unread ? ' notification--unread' : '';
-            return `<li class="notification-item${unreadClass}" data-id="${n.id}"><div class="notification__title">${n.title}</div><div class="notification__meta">${n.meta}</div></li>`;
+
+        const total = filteredList.length;
+        const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+
+        if (currentPage > totalPages) currentPage = totalPages;
+        if (currentPage < 1) currentPage = 1;
+
+        const startIndex = (currentPage - 1) * PAGE_SIZE;
+        const endIndex = Math.min(startIndex + PAGE_SIZE, total);
+        const pageItems = filteredList.slice(startIndex, endIndex);
+
+        const html = pageItems.map(n => {
+            const id = n.notificationID || n.id;
+            const title = n.title || 'Thông báo';
+            const message = n.message || n.content || '';
+            const date = n.date || n.createdAt || n.createdDate;
+            const isRead = !!(n.read || n.isRead || n.readFlag);
+
+            return `
+                <li class="notification-item ${isRead ? 'notification-item--read' : 'notification-item--unread'}" data-id="${id}">
+                    <div class="notification-main">
+                        <div class="notification-title">${escapeHtml(title)}</div>
+                        <div class="notification-message">${escapeHtml(message)}</div>
+                        <div class="notification-meta">
+                            <span class="notification-date">${escapeHtml(formatDateVi(date))}</span>
+                            ${isRead ? '<span class="notification-status-badge">Đã đọc</span>' : ''}
+                        </div>
+                    </div>
+                    <div class="notification-actions">
+                        ${!isRead ? `<button class="btn-mark-read" data-id="${id}">Đã đọc</button>` : ''}
+                    </div>
+                </li>
+            `;
         }).join('');
+
+        listEl.innerHTML = html;
+
+        if (infoEl) {
+            infoEl.textContent = `Hiển thị ${startIndex + 1}-${endIndex} của ${total}`;
+        }
+        if (pageNumberEl) pageNumberEl.textContent = String(currentPage);
+
+        if (prevBtn) prevBtn.disabled = currentPage <= 1;
+        if (nextBtn) nextBtn.disabled = currentPage >= totalPages;
     }
 
-    window.addNotification = function (notification) {
-        const arr = loadNotifications();
-        const n = Object.assign({ id: Date.now(), title: '', meta: '', body: '', unread: true }, notification);
-        arr.unshift(n);
-        saveNotifications(arr);
-        const list = document.getElementById('notificationsList');
-        if (list) renderNotifications(list);
-        return n.id;
-    };
+    function applyFilterAndRender() {
+        const kw = (searchInput?.value || '').trim().toLowerCase();
 
-    function detectCurrentUserName() {
-        const selectors = ['#userName', '.user-name', '.profile-name', '.sidebar .name', '.account-name'];
-        for (let sel of selectors) {
-            try {
-                const el = document.querySelector(sel);
-                if (el && el.textContent.trim()) return el.textContent.trim();
-            } catch (e) { }
+        let data = [...notificationsCache];
+
+        if (kw) {
+            data = data.filter(n => {
+                const title = (n.title || '').toLowerCase();
+                const msg = (n.message || n.content || '').toLowerCase();
+                const idStr = String(n.notificationID || n.id || '').toLowerCase();
+                return title.includes(kw) || msg.includes(kw) || idStr.includes(kw);
+            });
         }
-        return null;
+
+        filteredList = data;
+        currentPage = 1;
+        renderPage();
     }
 
-    function initNotifications() {
-        const list = document.getElementById('notificationsList');
-        const modal = document.getElementById('modalNotification');
-        const closeBtn = modal ? modal.querySelector('.notification__close-button') : null;
-        const closeBtn2 = document.getElementById('notifCloseBtn');
-        const markReadBtn = document.getElementById('notifMarkRead');
-        const markAllBtn = document.getElementById('btnMarkAllRead');
-        const deleteReadBtn = document.getElementById('btnDeleteRead');
-        const createBtn = document.getElementById('btnCreateNotification');
-        const createModal = document.getElementById('modalCreateNotification');
-        const createForm = createModal ? createModal.querySelector('.notification-create__form') : null;
-        const createCancel = document.getElementById('createNotifCancel');
-
-        function openNotification(item) {
-            if (!modal) return;
-            const title = item.querySelector('.notification__title')?.innerText || '';
-            const meta = item.querySelector('.notification__meta')?.innerText || '';
-            const body = 'Đây là nội dung chi tiết của thông báo (demo), id=' + item.dataset.id;
-            document.getElementById('notifTitle').innerText = title;
-            document.getElementById('notifMeta').innerText = meta;
-            document.getElementById('notifBody').innerText = body;
-            modal.style.display = 'block';
-
-            const arr = loadNotifications();
-            const id = Number(item.dataset.id);
-            arr.forEach(n => { if (n.id === id) n.unread = false; });
-            saveNotifications(arr);
-            if (list) renderNotifications(list);
+    // ====== EVENT ======
+    function initEvents() {
+        if (searchInput) {
+            searchInput.addEventListener('input', function () {
+                applyFilterAndRender();
+            });
         }
 
-        if (list) {
-            renderNotifications(list);
-
-            list.addEventListener('click', function (e) {
-                let li = e.target;
-                while (li && li !== list && !li.classList.contains('notification-item')) li = li.parentNode;
-                if (li && li.classList && li.classList.contains('notification-item')) {
-                    openNotification(li);
+        if (prevBtn) {
+            prevBtn.addEventListener('click', function () {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderPage();
                 }
             });
         }
 
-        if (closeBtn) closeBtn.addEventListener('click', function () { modal.style.display = 'none'; });
-        if (closeBtn2) closeBtn2.addEventListener('click', function () { modal.style.display = 'none'; });
-        if (markReadBtn) markReadBtn.addEventListener('click', function () {
-            const title = document.getElementById('notifTitle').innerText;
-            const arr = loadNotifications(); arr.forEach(n => { if (n.title === title) n.unread = false; }); saveNotifications(arr); if (list) renderNotifications(list);
-        });
-        if (markAllBtn) markAllBtn.addEventListener('click', function () { const arr = loadNotifications(); arr.forEach(n => n.unread = false); saveNotifications(arr); if (list) renderNotifications(list); });
-        if (deleteReadBtn) deleteReadBtn.addEventListener('click', function () { let arr = loadNotifications(); arr = arr.filter(n => n.unread); saveNotifications(arr); if (list) renderNotifications(list); });
-        if (createBtn) createBtn.addEventListener('click', function () {
-            if (createModal) createModal.style.display = 'block';
-            if (createForm) createForm.reset();
-            const first = document.getElementById('create_notif_title'); if (first) first.focus();
-        });
-
-        const createModalCloseBtn = createModal ? createModal.querySelector('.notification__close-button') : null;
-        if (createModalCloseBtn) {
-            createModalCloseBtn.addEventListener('click', function() {
-                if (createModal) createModal.style.display = 'none';
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function () {
+                const total = filteredList.length;
+                const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderPage();
+                }
             });
         }
 
-        if (createForm) {
-            createForm.addEventListener('submit', function (ev) {
-                ev.preventDefault();
+        if (listEl) {
+            listEl.addEventListener('click', async function (e) {
+                const btn = e.target.closest('.btn-mark-read');
+                if (!btn) return;
+
+                const id = btn.dataset.id;
+                if (!id) return;
+
                 try {
-                    const titleEl = document.getElementById('create_notif_title');
-                    const bodyEl = document.getElementById('create_notif_body');
-                    const title = titleEl ? titleEl.value.trim() : '';
-                    const body = bodyEl ? bodyEl.value.trim() : '';
-                    if (!title) return;
-                    const creator = detectCurrentUserName() || 'Bạn';
-                    const meta = `${creator} • ${new Date().toLocaleString()}`;
-                    if (window.addNotification) {
-                        window.addNotification({ title: title, meta: meta, body: body, unread: true, creator: creator });
-                    }
-                    if (list) renderNotifications(list);
-                    if (createModal) createModal.style.display = 'none';
-                } catch (e) { console.warn('Error creating notification', e); }
+                    const msg = await markNotificationRead(id);
+                    console.log('[Notification] mark as read OK:', msg);
+
+                    // update cache
+                    notificationsCache = notificationsCache.map(n => {
+                        const nid = n.notificationID || n.id;
+                        if (String(nid) === String(id)) {
+                            return {
+                                ...n,
+                                read: true,
+                                isRead: true,
+                                readFlag: true
+                            };
+                        }
+                        return n;
+                    });
+
+                    applyFilterAndRender();
+                } catch (err) {
+                    console.error('[Notification] mark as read error:', err);
+                    alert(err.message || 'Không thể đánh dấu đã đọc.');
+                }
             });
         }
-
-        if (createCancel) createCancel.addEventListener('click', function () { if (createModal) createModal.style.display = 'none'; });
-        window.addEventListener('click', function (e) { if (modal && modal.style.display === 'block' && e.target == modal) modal.style.display = 'none'; });
     }
 
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initNotifications); else initNotifications();
+    // ====== INIT ======
+    async function init() {
+        if (!listEl) {
+            console.warn('[SC-Staff] notificationsList not found');
+            return;
+        }
+
+        try {
+            listEl.innerHTML = `
+                <li class="notification-item notification-loading">
+                    Đang tải thông báo...
+                </li>
+            `;
+            const data = await fetchNotifications();
+            notificationsCache = Array.isArray(data) ? data : [];
+            applyFilterAndRender();
+        } catch (err) {
+            console.error('[Notification] load error:', err);
+            if (listEl) {
+                listEl.innerHTML = `
+                    <li class="notification-item notification-error">
+                        Lỗi tải dữ liệu: ${escapeHtml(err.message || 'Không xác định')}
+                    </li>
+                `;
+            }
+            if (infoEl) infoEl.textContent = 'Hiển thị 0 của 0';
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function () {
+            initEvents();
+            init();
+        });
+    } else {
+        initEvents();
+        init();
+    }
+
 })();

@@ -1,6 +1,5 @@
-
 <section class="warranty-claim-management-page">
-    <link rel="stylesheet" href="../../assets/css/SC-Staff/warranty_claim_management.css">
+    <link rel="stylesheet" href="/evm/assets/css/SC-Staff/warranty_claim_management.css">
 
     <div class="app-layout">
         <main class="content-wrapper" id="innerContent">
@@ -18,8 +17,8 @@
                     <div class="filter-card-body">
                         <div class="filter-controls">
                             <select id="statusFilter" class="filter-select">
-                                <option value="">Tất cả trạng thái</option>
-                                <option value="approved" selected>Chờ xử lý</option>
+                                <option value="" selected>Tất cả trạng thái</option>
+                                <option value="approved">Chờ xử lý</option>
                                 <option value="assigned">Đã xác nhận</option>
                                 <option value="completed">Đã hoàn thành</option>
                             </select>
@@ -36,6 +35,7 @@
                                 <tr class="table-header-row">
                                     <th>Mã Y/C</th>
                                     <th>Biển số / VIN</th>
+                                    <th>Mô tả</th>
                                     <th>Ngày tạo</th>
                                     <th>Trạng thái</th>
                                     <th>Thao tác</th>
@@ -44,7 +44,8 @@
                             <tbody id="claimsTbody">
                                 <tr id="placeholderRow">
                                     <td colspan="5" class="table-placeholder-cell">
-                                        <em>Dữ liệu sẽ được load từ database — chưa có dữ liệu ở môi trường hiện tại.</em>
+                                        <em>Dữ liệu sẽ được load từ database — chưa có dữ liệu ở môi trường hiện
+                                            tại.</em>
                                     </td>
                                 </tr>
                             </tbody>
@@ -103,5 +104,5 @@
         </main>
     </div>
 
-    <script src="../../assets/js/SC-Staff/warranty_claim_management.js"></script>
+    <script src="/evm/assets/js/SC-Staff/warranty_claim_management.js"></script>
 </section>

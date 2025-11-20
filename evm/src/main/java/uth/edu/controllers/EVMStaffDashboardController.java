@@ -71,7 +71,10 @@ public class EVMStaffDashboardController {
 
     @GetMapping("/recent-allocations")
     public ResponseEntity<List<Map<String, Object>>> getRecentAllocations(HttpSession session) {
-        
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null || !(loggedInUser instanceof EVMStaff)) {
+            return ResponseEntity.status(401).build();
+        }
         try {
             List<AllocatePartHistory> historyList = inventoryService.getRecentAllocations(1, 5);
             if (historyList == null) {
@@ -90,10 +93,6 @@ public class EVMStaffDashboardController {
                         break;
                     case "pending":
                         statusClass = "status-tag--pending";
-                        break;
-                    case "failed (out of stock)":
-                    case "rejected":
-                        statusClass = "status-tag--danger";
                         break;
                     default:
                         statusClass = "status-tag--info";

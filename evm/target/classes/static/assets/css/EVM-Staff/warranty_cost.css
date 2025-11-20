@@ -53,7 +53,23 @@
 .btn-action:hover {
     background-color: #1d4ed8;
 }
+/* ================= TỔNG CHI PHÍ TOÀN BỘ  ================= */
+.grand-total-container {
+    padding: 10px 16px;
+    background-color: #f3f4f6;
+    border: 1px solid #e5e7eb; 
+    border-radius: 6px; 
+    text-align: right;
+    font-size: 1.1rem;
+    font-weight: 600; 
+    margin-top: 1rem;
+    color: #111827;
+}
 
+.grand-total-cost {
+    color: #f44336;
+    margin-left: 10px;
+}
 /* ================= PHÂN TRANG ================= */
 .pagination-container {
     display: flex;
@@ -98,78 +114,120 @@
     background-color: #1d4ed8;
 }
 
-/* ================= MODAL ================= */
+/* ================= MODAL (ĐÃ SỬA CHỮA) ================= */
 .warranty-cost__modal {
     display: none;
-    position: fixed;
-    z-index: 100;
+    position: relative;
+    z-index: 1000;
     left: 0; top: 0;
     width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.4);
+    /* XÓA background-color ở đây để tránh xung đột */
     align-items: center;
     justify-content: center;
 }
 
-.warranty-cost__modal-content {
+/* THÊM/SỬA: Định nghĩa Backdrop để phủ kín màn hình và cung cấp nền mờ */
+.warranty-cost__modal-backdrop {
+    position: absolute;
+    inset: 0; /* Phủ kín Top, Right, Bottom, Left */
+    background-color: rgba(0,0,0,0.4);
+    z-index: 1001; 
+}
+
+
+.warranty-cost__modal-dialog {
     background-color: #fff;
-    padding: 20px;
+    padding: 0; 
     border-radius: 10px;
     width: 90%;
     max-width: 600px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
     position: relative;
+    z-index: 1002; 
+    overflow: hidden; 
+}
+
+/* SỬA: Header */
+.warranty-cost__modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e5e7eb;
+    background-color: #f9fafb; /* Nền xám nhạt */
+}
+.warranty-cost__modal-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+.warranty-cost__modal-id {
+    color: #2563eb;
+    margin-left: 5px;
 }
 
 .warranty-cost__modal-close {
-    position: absolute;
-    top: 10px; right: 15px;
+    position: relative; 
     font-size: 24px;
     cursor: pointer;
     color: #374151;
+    background: none;
+    border: none;
+    line-height: 1;
+    padding: 0;
 }
 
 .warranty-cost__modal-close:hover {
     color: #111827;
 }
 
-.btn-approve, .btn-reject {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 500;
-    margin-right: 10px;
+/* Body */
+.warranty-cost__modal-body {
+    padding: 20px;
 }
 
-.btn-approve {
-    background-color: #4CAF50;
-    color: white;
+/* Table trong Modal */
+.warranty-cost__modal-table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.btn-approve:hover {
-    background-color: #3e8e41;
+.warranty-cost__modal-table th {
+    background-color: #f3f4f6;
+    padding: 10px;
+    border: 1px solid #e5e7eb;
+    text-align: center;
+    font-weight: 600;
 }
 
-.btn-reject {
-    background-color: #f44336;
-    color: white;
+.warranty-cost__modal-table td {
+    padding: 10px;
+    border: 1px solid #e5e7eb;
+    text-align: left;
+}
+.warranty-cost__modal-table th:nth-child(3),
+.warranty-cost__modal-table td:nth-child(3),
+.warranty-cost__modal-table th:nth-child(4),
+.warranty-cost__modal-table td:nth-child(4) {
+    text-align: right;
+}
+.warranty-cost__modal-table th:nth-child(2),
+.warranty-cost__modal-table td:nth-child(2) {
+    text-align: center;
 }
 
-.btn-reject:hover {
-    background-color: #da190b;
-}
 
 /* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
-    .modal-content {
+    .warranty-cost__modal-dialog {
         width: 90%;
-        padding: 20px;
     }
 }
 
 @media (max-width: 520px) {
-    .modal-content {
+    .warranty-cost__modal-dialog {
         width: 96%;
-        padding: 16px;
     }
+}
+.warranty-cost__modal.active {
+    display: flex;
 }

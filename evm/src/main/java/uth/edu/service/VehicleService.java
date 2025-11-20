@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.mapping.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -119,7 +120,7 @@ public class VehicleService {
         }
     }
 
-    public List<Vehicle> GetVehicles() {
+    public List<Map> GetVehicles() {
         try {
             return vehicleRepository.getAllVehicles(1, 20);
         } catch (Exception e) {
@@ -198,5 +199,13 @@ public class VehicleService {
         }
     }
 
+    public List<VehiclePart> getWarrantyPartsForTechnician(int userID){
+        try {
+            return vehiclePartRepository.getWarrantyPartsForTechnician(userID, 1 , 9999);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
     
 }

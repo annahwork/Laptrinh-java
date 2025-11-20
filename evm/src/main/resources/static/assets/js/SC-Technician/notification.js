@@ -44,13 +44,10 @@
             </div>
             <div class="notify-actions">
                 ${isRead ? '' : '<button class="btnMarkRead" title="Đánh dấu đã đọc">✓</button>'}
-                <button class="btnDelete" title="Xóa thông báo">x</button>
             </div>
         `;
         
         card.querySelector('.btnMarkRead')?.addEventListener('click', handleMarkRead);
-        card.querySelector('.btnDelete').addEventListener('click', handleDelete);
-
         return card;
     }
 

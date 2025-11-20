@@ -1,0 +1,111 @@
+<section id="manage_ev_parts_page">
+    <div class="app-layout">
+        <link rel="stylesheet" href="/evm/assets/css/EVM-Staff/manage_ev_parts.css">
+        <script src="/evm/assets/js/EVM-Staff/manage_ev_parts.js"></script>
+        
+        <div class="content-wrapper" id="innerContent">
+            <div class="main-content-area">
+
+                <header class="search-filter-bar card">
+                    <div class="search-box-wrapper">
+                        <div class="search-input-group">
+                            <svg class="search-icon" viewBox="0 0 20 20" fill="none">
+                                <path d="M8.5 3.5a5 5 0 100 10 5 5 0 000-10zm-7 5a7 7 0 1112.67 4.15l3.68 3.68a1 1 0 01-1.42 1.42l-3.68-3.68A7 7 0 011.5 8.5z" stroke="currentColor" stroke-width="1.5" />
+                            </svg>
+                            <input type="text" id="searchInput" class="search-input" placeholder="Tìm theo VIN, Tên phụ tùng, Serial..." />
+                        </div>
+                    </div>
+
+                    <div class="action-wrapper">
+                        <button type="button" id="btnMoFormAttachSerial" class="btn btn-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
+                                <path d="M12 5v14" />
+                                <path d="M5 12h14" />
+                            </svg>
+                            Thêm Phụ tùng
+                        </button>
+                    </div>
+                </header>
+
+                <div class="card">
+                    <div class="card-body-no-padding">
+                        <table class="table-zebra table-full-width">
+                            <thead>
+                                <tr class="table-header-row">
+                                    <th style="text-align: center;">Mã phụ tùng</th>
+                                    <th style="text-align: center;">Tên phụ tùng</th>
+                                    <th style="text-align: center;">Loại</th>
+                                    <th style="text-align: center;">Số lượng tồn</th>
+                                    <th style="text-align: center;">Vị trí kho</th>
+                                </tr>
+                            </thead>
+                            <tbody id="partsTableBody">
+                                <tr>
+                                    <td colspan="5" class="no-data">Chưa có dữ liệu</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="pagination-wrapper">
+                            <span class="pagination-info">Hiển thị <span id="pageInfo">0</span> của <span id="totalItems">0</span></span>
+                            <div class="pagination-controls">
+                                <button class="pagination-btn" id="prevPage">« Trước</button>
+                                <button class="pagination-btn pagination-btn--active" id="currentPage">1</button>
+                                <button class="pagination-btn" id="nextPage">Sau »</button>
+                            </div>
+                        </div>
+                    </div>
+                </div> <div id="modalCreate" class="modal-panel" aria-hidden="true">
+                    <div class="modal-panel__backdrop"></div>
+                    <div class="modal-panel__dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+                        <button class="modal-panel__close" aria-label="Đóng">&times;</button>
+
+                        <form id="modalForm" class="modal-panel__form" autocomplete="off">
+                            <h3 style="margin-bottom: 1.5rem; font-size: 1.25rem; font-weight: 600;">Thêm mới phụ tùng</h3>
+                            
+                            <div class="form-row">
+                                <label for="code" class="form-label">Mã phụ tùng <span class="required">*</span></label>
+                                <input id="code" name="code" class="form-input" type="text" placeholder="VD: PT-001" required />
+                            </div>
+
+                            <div class="form-row">
+                                <label for="name" class="form-label">Tên phụ tùng <span class="required">*</span></label>
+                                <input id="name" name="name" class="form-input" type="text" placeholder="VD: Má phanh trước" required />
+                            </div>
+
+                            <div class="form-row">
+                                <label for="partType" class="form-label">Loại <span class="required">*</span></label>
+                                <select id="partType" name="partType" class="form-input" required>
+                                    <option value="">-- Chọn loại --</option>
+                                    <option value="Động cơ">Động cơ</option>
+                                    <option value="Phanh">Phanh</option>
+                                    <option value="Hệ thống treo">Hệ thống treo</option>
+                                    <option value="Điện tử">Điện tử</option>
+                                    <option value="Khác">Khác</option>
+                                </select>
+                            </div>
+
+                            <div class="form-row">
+                                <label for="quantity" class="form-label">Số lượng tồn</label>
+                                <input id="quantity" name="quantity" class="form-input" type="number" min="0" value="0" />
+                            </div>
+
+                            <div class="form-row">
+                                <label for="location" class="form-label">Vị trí kho</label>
+                                <input id="location" name="location" class="form-input" type="text" placeholder="VD: Kệ A-01" />
+                            </div>
+
+                            <div class="modal-panel__actions">
+                                <button type="button" class="modalCancel">Hủy</button>
+                                <button type="submit" class="modalSubmit">Lưu</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

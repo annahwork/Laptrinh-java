@@ -1,0 +1,50 @@
+<section class="job-notifications-page">
+    <div class="app-layout">
+        <link rel="stylesheet" href="/evm/assets/css/SC-Staff/job_notifications.css">
+        <div class="content-wrapper" id="innerContent">
+            <div class="main-content-area">
+
+                <div class="search-filter-bar">
+                    <div class="search-box-wrapper">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="searchNotifications" class="form-control search-input-with-icon"
+                            placeholder="Tìm thông báo...">
+                    </div>
+                </div>
+
+                <div class="card notifications-card">
+                    <div class="card-body">
+                        <div class="notifications-header">
+                            <h3>Thông báo công việc</h3>
+                            <div class="notifications-actions">
+                                <button id="btnCreateNotification" class="btn-primary">Tạo thông báo</button>
+                            </div>
+                        </div>
+
+                        <ul id="notificationsList" class="notificatio-list">
+                            </ul>
+
+                        <div class="card-footer">
+                            <div class="pagination-wrapper">
+                                <span class="pagination-info">Hiển thị 0 của 0</span>
+                                <div>
+                                    <button class="pagination-btn">« Trước</button>
+                                    <button class="btn-primary pagination-btn-active">1</button>
+                                    <button class="pagination-btn">Sau »</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="modalNotification" class="notification__modal" style="display:none;">
+                    </div>
+                
+                <div id="modalCreateNotification" class="notification__modal" style="display:none;">
+                    </div>
+
+            </div>
+        </div>
+        <script src="/evm/assets/js/SC-Staff/job_notifications.js"></script>
+    </div>
+</section>

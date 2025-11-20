@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ - SC Technician</title>
+
+    <link rel="stylesheet" href="/evm/assets/css/main.css">
+    <link rel="stylesheet" href="/evm/assets/css/sidebar.css">
+    <link rel="stylesheet" href="/evm/assets/css/SC-Technician/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+</head>
+<body>
+
+<div class="layout-wrapper">
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar__header">
+            <h2 class="sidebar__logo">OEM EV</h2>
+            <img src="/evm/assets/pic/logo_EVM.png" alt="Logo" class="sidebar__avatar">
+        </div>
+
+        <div class="sidebar__user">
+            <div class="sidebar__userinfo">
+                <h4 class="sidebar__username">Name User</h4>
+                <p class="sidebar__role">SC Technician</p>
+            </div>
+        </div>
+
+        <nav class="sidebar__nav">
+            <ul>
+                <li class="sidebar__item">
+                    <a href="#" data-page="dashboard.html" class="sidebar__link">Trang chủ</a>
+                </li>
+
+                <li class="sidebar__item menu-group">
+                    <div class="menu-group-toggle">
+                        <span>Bảo hành</span>
+                        <span class="arrow">▸</span>
+                    </div>
+                    <ul class="submenu">
+                        <li class="sidebar__item">
+                            <a href="#" data-page="job_list.html" class="sidebar__link">Công việc</a>
+                        </li>
+                        <li class="sidebar__item">
+                            <a href="#" data-page="warranty_result.html" class="sidebar__link">Kết quả</a>
+                        </li>
+                        <li class="sidebar__item">
+                            <a href="#" data-page="spare_part.html" class="sidebar__link">Phụ tùng</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar__item menu-group">
+                    <div class="menu-group-toggle">
+                        <span>Chiến dịch</span>
+                        <span class="arrow">▸</span>
+                    </div>
+                    <ul class="submenu">
+                        <li class="sidebar__item">
+                            <a href="#" data-page="campaign_list.html" class="sidebar__link">Danh sách</a>
+                        </li>
+                        <li class="sidebar__item">
+                            <a href="#" data-page="campaign_vehicle.html" class="sidebar__link">Xe xử lý</a>
+                        </li>
+                        <li class="sidebar__item">
+                            <a href="#" data-page="campaign_report.html" class="sidebar__link">Báo cáo</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar__item">
+                    <a href="#" data-page="notification.html" class="sidebar__link">Thông báo</a>
+                </li>
+
+                <li class="sidebar__item">
+                    <a href="#" data-page="technical_documents.html" class="sidebar__link">Tài liệu</a>
+                </li>
+
+                <li class="sidebar__item">
+                    <a href="#" data-page="performance.html" class="sidebar__link">Hiệu suất</a>
+                </li>
+
+                <li class="sidebar__item">
+                    <a href="#" data-page="account_sctechnician.html" class="sidebar__link">Cài đặt</a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main id="main-content" class="main" style="padding:2rem;"></main>
+</div>
+
+<div id="footer-placeholder"></div>
+
+<script src="/evm/assets/js/SC-Technician/home_sc_technician.js"></script>
+
+<script>
+    fetch('/evm/components/footer.html')
+        .then(res => res.text())
+        .then(html => {
+            html = html.replace(/href="Section\//g, 'href="../SC-Technician/Section/');
+            html = html.replace(/data-page="Section\//g, 'data-page="../SC-Technician/Section/');
+            document.getElementById('footer-placeholder').innerHTML = html;
+        })
+        .catch(err => console.error("Khong tai duoc footer:", err));
+</script>
+
+</body>
+</html>

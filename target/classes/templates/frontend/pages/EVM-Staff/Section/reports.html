@@ -1,0 +1,95 @@
+<section id="report_page" class="report-page allocate-parts-page">
+    <div class="app-layout">
+        <link rel="stylesheet" href="/evm/assets/css/EVM-Staff/reports.css">
+        <script src="/evm/assets/js/EVM-Staff/reports.js"></script>  
+        <div class="content-wrapper" id="innerContent">
+            <div class="main-content-area">
+
+                <div class="section-header">
+                    <div>
+                        <h2 class="page-title">Báo cáo tổng hợp</h2>
+                    </div>
+                </div>
+
+                <div class="search-filter-bar card">
+                    <div class="filter-group-left">
+                        <div class="input-wrapper">
+                            <input type="month" class="form-control report__month-picker" aria-label="Chọn tháng" />
+                        </div>
+                        
+                        <div class="input-wrapper">
+                            <select class="form-control report__select">
+                                <option value="">Tất cả loại danh mục</option>
+                                <option value="warranty">Bảo hành</option>
+                                <option value="campaign">Chiến dịch</option>
+                                <option value="inventory">Tồn kho</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="action-group-right">
+                        <button class="btn btn-primary report__btn report__btn--generate">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M2 12h10"/><path d="M9 4v16"/><path d="M3 9l3 3-3 3"/><path d="M14 8v8"/><path d="M18 6v12"/><path d="M22 4v16"/></svg>
+                            Tạo báo cáo
+                        </button>
+                        <button class="btn btn-success report__btn report__btn--export">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            Xuất Excel
+                        </button>
+                    </div>
+                </div>
+
+                <div class="report-summary-grid">
+                    <div class="card summary-card bg-blue-light">
+                        <div class="card-body">
+                            <h3 class="report__card-title">Tổng chi phí bảo hành</h3>
+                            <p class="report__card-value">15.000.000 VND</p>
+                        </div>
+                    </div>
+                    <div class="card summary-card bg-cyan-light">
+                        <div class="card-body">
+                            <h3 class="report__card-title">Chiến dịch thực hiện</h3>
+                            <p class="report__card-value">12 chiến dịch</p>
+                        </div>
+                    </div>
+                    <div class="card summary-card bg-orange-light">
+                        <div class="card-body">
+                            <h3 class="report__card-title">Tồn kho linh kiện</h3>
+                            <p class="report__card-value">328 bộ</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="data-table report__table">
+                            <thead>
+                                <tr>
+                                    <th class="text-left">Loại báo cáo</th>
+                                    <th class="text-left">Hạng mục</th>
+                                    <th class="text-right">Thống kê (VND)</th>
+                                    <th class="text-left">Ghi chú / Tỉ lệ lỗi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reportTableBody">
+                                <tr>
+                                    <td class="report__td">Bảo hành chuẩn</td>
+                                    <td class="report__td">8 chiến dịch</td>
+                                    <td class="report__td text-right font-bold">4.500.000</td>
+                                    <td class="report__td text-muted">–</td>
+                                </tr>
+                                <tr>
+                                    <td class="report__td">Bảo hành mở rộng</td>
+                                    <td class="report__td">4 chiến dịch</td>
+                                    <td class="report__td text-right font-bold">10.500.000</td>
+                                    <td class="report__td">Có linh kiện điện tử</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

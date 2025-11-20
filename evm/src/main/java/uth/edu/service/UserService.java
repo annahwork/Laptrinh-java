@@ -1,17 +1,5 @@
 package uth.edu.service;
 
-import uth.edu.pojo.Admin;
-import uth.edu.pojo.EVMStaff;
-import uth.edu.pojo.SCStaff;
-import uth.edu.pojo.SCTechnician;
-import uth.edu.pojo.User;
-import uth.edu.repositories.AdminRepository;
-import uth.edu.repositories.ClaimServiceRepository;
-import uth.edu.repositories.UserRepository;
-import uth.edu.repositories.VehicleRepository;
-import uth.edu.repositories.SCTechnicianRepository;
-import uth.edu.repositories.CustomerRepository;
-import uth.edu.repositories.WarrantyClaimRepository;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
+import uth.edu.pojo.Admin;
+import uth.edu.pojo.Customer;
+import uth.edu.pojo.EVMStaff;
+import uth.edu.pojo.SCStaff;
+import uth.edu.pojo.SCTechnician;
+import uth.edu.pojo.User;
+import uth.edu.repositories.AdminRepository;
+import uth.edu.repositories.ClaimServiceRepository;
+import uth.edu.repositories.CustomerRepository;
+import uth.edu.repositories.SCTechnicianRepository;
+import uth.edu.repositories.UserRepository;
+import uth.edu.repositories.VehicleRepository;
+import uth.edu.repositories.WarrantyClaimRepository;
 
 @Service
 public class UserService {
@@ -32,7 +33,9 @@ public class UserService {
     private ClaimServiceRepository claimServiceRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, AdminRepository adminRepository, SCTechnicianRepository technicianRepository, CustomerRepository customerRepository, WarrantyClaimRepository warrantyclaimRepository, ClaimServiceRepository claimServiceRepository) {
+    public UserService(UserRepository userRepository, AdminRepository adminRepository,
+            SCTechnicianRepository technicianRepository, CustomerRepository customerRepository,
+            WarrantyClaimRepository warrantyclaimRepository, ClaimServiceRepository claimServiceRepository) {
         this.userRepository = userRepository;
         this.adminRepository = adminRepository;
         this.vehicleRepository = vehicleRepository;
@@ -54,7 +57,7 @@ public class UserService {
             return null;
         }
     }
-    
+
     public List<User> GetUsers() {
         try {
             return userRepository.getAllUsers(1, 9999);
@@ -101,7 +104,7 @@ public class UserService {
                 return false;
             }
 
-            userRepository.deleteUser(existingUser); 
+            userRepository.deleteUser(existingUser);
             return true;
 
         } catch (Exception e) {
@@ -110,40 +113,43 @@ public class UserService {
         }
     }
 
-
     public User ManageUserAccount(Integer adminId, User userData, String role) {
-    try {
-        Admin admin = adminRepository.getAdminById(adminId);
-        if (admin == null) {
-            System.out.println("Admin không tồn tại hoặc không có quyền thực hiện thao tác này.");
+        try {
+            Admin admin = adminRepository.getAdminById(adminId);
+            if (admin == null) {
+                System.out.println("Admin không tồn tại hoặc không có quyền thực hiện thao tác này.");
+                return null;
+            }
+
+            if (userData == null) {
+                System.out.println("Dữ liệu user không hợp lệ.");
+                return null;
+            }
+
+            if (userData.getUserID() == null || userData.getUserID() <= 0) {
+                return createUserWithRole(userData, role);
+            } else {
+                return updateUserWithRole(userData, role);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
-
-        if (userData == null) {
-            System.out.println("Dữ liệu user không hợp lệ.");
-            return null;
-        }
-
-        if (userData.getUserID() == null || userData.getUserID() <= 0) {
-            return createUserWithRole(userData, role);
-        } else {
-            return updateUserWithRole(userData, role);
-        }
-    } catch (Exception e) {
-        e.printStackTrace();
-        return null;
     }
-}
 
     @Transactional
     public User createUserWithRole(User userData, String role) {
         try {
             User newUser = null;
             switch (role.toUpperCase()) {
-                case "ADMIN" -> newUser = new Admin(userData.getUserName(), userData.getPassword(), userData.getName(), userData.getEmail(), userData.getPhone());
-                case "SC_STAFF" -> newUser = new SCStaff(userData.getUserName(), userData.getPassword(), userData.getName(), userData.getEmail(), userData.getPhone());
-                case "SC_TECHNICIAN" -> newUser = new SCTechnician(userData.getUserName(), userData.getPassword(), userData.getName(), userData.getEmail(), userData.getPhone());
-                case "EVM_STAFF" -> newUser = new EVMStaff(userData.getUserName(), userData.getPassword(), userData.getName(), userData.getEmail(), userData.getPhone());
+                case "ADMIN" -> newUser = new Admin(userData.getUserName(), userData.getPassword(), userData.getName(),
+                        userData.getEmail(), userData.getPhone());
+                case "SC_STAFF" -> newUser = new SCStaff(userData.getUserName(), userData.getPassword(),
+                        userData.getName(), userData.getEmail(), userData.getPhone());
+                case "SC_TECHNICIAN" -> newUser = new SCTechnician(userData.getUserName(), userData.getPassword(),
+                        userData.getName(), userData.getEmail(), userData.getPhone());
+                case "EVM_STAFF" -> newUser = new EVMStaff(userData.getUserName(), userData.getPassword(),
+                        userData.getName(), userData.getEmail(), userData.getPhone());
                 default -> {
                     System.out.println("Role không hợp lệ: " + role);
                     return null;
@@ -178,7 +184,7 @@ public class UserService {
 
             userRepository.updateUser(existingUser);
 
-            return existingUser; 
+            return existingUser;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -186,26 +192,26 @@ public class UserService {
     }
 
     public User updateUser(User userData) {
-        if (userData == null || userData.getUserID() == null) return null;
+        if (userData == null || userData.getUserID() == null)
+            return null;
         return updateUserWithRole(userData, userData.getUser_Role());
     }
 
-
     public List<User> GetUserByRole(String role) {
-         try {
-              if (role == null || role.isEmpty()) {
-               return GetUsers(); 
+        try {
+            if (role == null || role.isEmpty()) {
+                return GetUsers();
             }
             return userRepository.getUsersByRole(role.toUpperCase());
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
-            }
         }
+    }
 
     public int countAllUsers() {
         try {
-            int userCount = userRepository.countAllUsers(); 
+            int userCount = userRepository.countAllUsers();
             return (int) userCount;
         } catch (Exception e) {
             e.printStackTrace();
@@ -215,7 +221,7 @@ public class UserService {
 
     public int countAllCustomer() {
         try {
-            int customerCount = customerRepository.countAllCustomers(); 
+            int customerCount = customerRepository.countAllCustomers();
             return (int) customerCount;
         } catch (Exception e) {
             e.printStackTrace();
@@ -223,19 +229,50 @@ public class UserService {
         }
     }
 
+    public List<Customer> getAllCustomers(int page, int pageSize) {
+        try {
+            return customerRepository.getAllCustomers(1, 9999);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public Customer getCustomerById(int id) {
+        return customerRepository.getCustomerById(id);
+    }
+
+    public void addCustomer(Customer customer) {
+        customerRepository.addCustomer(customer);
+    }
+
+    public void updateCustomer(Customer customer) {
+        customerRepository.updateCustomer(customer);
+    }
+
+    public void deleteCustomer(Customer customer) {
+        customerRepository.deleteCustomer(customer);
+    }
+
+    public int countAllCustomers() {
+        return customerRepository.countAllCustomers();
+    }
+
+
     public int countAllWarrantyClaims() {
         try {
-                int warrantyclaimCount = warrantyclaimRepository.countAllWarrantyClaims() ; 
-                return warrantyclaimCount;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return 0;
-            }
+            int warrantyclaimCount = warrantyclaimRepository.countAllWarrantyClaims();
+            return warrantyclaimCount;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     public int countUsersByRole(String role) {
         try {
-            if (role == null || role.isEmpty()) return 0;
+            if (role == null || role.isEmpty())
+                return 0;
             List<User> users = userRepository.getUsersByRole(role.toUpperCase());
             return users.size();
         } catch (Exception e) {
@@ -246,13 +283,13 @@ public class UserService {
 
     public List<User> GetTechnicians() {
         try {
-            List<User> technicians = userRepository.getAllTechnicians(1, 9999); 
-            
+            List<User> technicians = userRepository.getAllTechnicians(1, 9999);
+
             for (User tech : technicians) {
                 String taskNote = claimServiceRepository.getFirstActiveTaskNote(tech.getUserID());
                 ((SCTechnician) tech).setCurrentTask(taskNote);
             }
-            return technicians; 
+            return technicians;
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
@@ -261,13 +298,13 @@ public class UserService {
 
     public List<User> GetTechniciansForSCT() {
         try {
-            List<User> technicians = userRepository.getAllTechnicians(1, 9999); 
-            
+            List<User> technicians = userRepository.getAllTechnicians(1, 9999);
+
             for (User tech : technicians) {
                 String taskNote = claimServiceRepository.getFirstActiveTaskNoteForSCT(tech.getUserID());
                 ((SCTechnician) tech).setCurrentTask(taskNote);
             }
-            return technicians; 
+            return technicians;
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
@@ -276,10 +313,56 @@ public class UserService {
 
     public int countVehicles() {
         try {
-            return vehicleRepository.countAllVehicles(); 
+            return vehicleRepository.countAllVehicles();
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
+        }
+    }
+    public boolean verifyPassword(Integer userId, String oldPassword) {
+        try {
+            User user = userRepository.getUserById(userId);
+            if (user != null && user.getPassword().equals(oldPassword)) {
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Transactional
+    public boolean updatePassword(Integer userId, String newPassword) {
+        try {
+            User user = userRepository.getUserById(userId);
+            if (user == null) {
+                return false;
+            }
+            user.setPassword(newPassword); 
+            userRepository.updateUser(user);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean updateFullName(Integer userId, String newFullName) {
+        try {
+            User user = userRepository.getUserById(userId);
+
+            if (user == null) {
+                System.err.println("Lỗi updateFullName: Không tìm thấy User với ID: " + userId);
+                return false;
+            }
+            user.setName(newFullName);
+            userRepository.updateUser(user);
+            
+            return true; 
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 

@@ -1,54 +1,73 @@
-<section id="claim_requests_page" class="claim_requests__section">
+<section id="claim_requests_page" class="allocate-parts-page">
   <div class="app-layout">
-    <!-- Sửa đường dẫn CSS -->
     <link rel="stylesheet" href="/evm/assets/css/EVM-Staff/claim_requests.css">
 
     <div class="content-wrapper" id="innerContent">
       <div class="main-content-area">
 
-        <!-- Bảng yêu cầu bảo hành -->
-        <div class="card">
-          <div class="card-body-no-padding">
-            <table class="table-zebra table-full-width" id="claimTable">
-              <thead>
-                <tr class="table-header-row">
-                  <th>Mã yêu cầu</th>
-                  <th>Mã xe (VIN)</th>
-                  <th>Người yêu cầu (SC)</th>
-                  <th>Ngày yêu cầu</th>
-                  <th>Trạng thái</th>
-                  <th>Hành động</th>
-                </tr>
-              </thead>
-              <tbody id="claimTableBody">
-                <tr>
-                  <td colspan="6" class="no-data">Đang tải dữ liệu...</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <div class="section-header">
+            <div>
+                <h2>Yêu cầu bảo hành (Chờ duyệt)</h2>
+            </div>
+            </div>
 
-      </div>
+        <div class="card">
+            <div class="table-responsive">
+                <table class="data-table" id="claimTable">
+                    <thead>
+                        <tr>
+                            <th class="text-left">Mã yêu cầu</th>
+                            <th class="text-left">Mã xe (VIN)</th>
+                            <th class="text-left">Người yêu cầu (SC)</th>
+                            <th class="text-center">Ngày yêu cầu</th>
+                            <th class="text-center">Trạng thái</th>
+                            <th class="text-right">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="claimTableBody">
+                        <tr>
+                            <td colspan="6" class="text-center" style="padding: 2rem; color: #64748b;">
+                                Đang tải dữ liệu...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-footer">
+                <span class="pagination-info">Hiển thị 0 của 0</span>
+
+                <div class="pagination-wrapper">
+                    <button class="pagination-btn">« Trước</button>
+                    <button class="pagination-btn-active">1</button>
+                    <button class="pagination-btn">Sau »</button>
+                </div>
+            </div>
+        </div>
+        </div>
     </div>
   </div>
 
   <div class="modal" id="approvalModal" style="display:none;">
     <div class="modal-content">
-        <span class="modal-close" id="closeApprovalModal">&times;</span>
-        <h3>Xác nhận xử lý yêu cầu <span id="modalClaimId"></span></h3>
+        <div class="modal-header">
+            <h3>Xác nhận xử lý <span id="modalClaimId"></span></h3>
+            <button type="button" class="modal-close-btn" id="closeApprovalModal">×</button>
+        </div>
         
-        <p>Chi tiết: <span id="modalClaimDetails" style="font-weight: 600;"></span></p>
+        <form id="approvalForm" class="modal-form">
+            <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
+                Chi tiết: <span id="modalClaimDetails" style="color: var(--text); font-weight: 600;"></span>
+            </p>
 
-        <form id="approvalForm">
             <div class="form-group">
-                <label for="approvalNote">Ghi chú (Bắt buộc khi từ chối):</label>
-                <textarea id="approvalNote" rows="3" placeholder="Nhập lý do..."></textarea>
+                <label for="approvalNote">Ghi chú xử lý (Bắt buộc khi từ chối):</label>
+                <textarea id="approvalNote" class="form-control" rows="3" placeholder="Nhập lý do..."></textarea>
             </div>
             
             <input type="hidden" id="modalClaimIdInput" />
 
-            <div class="modal-actions">
+            <div class="modal-footer-actions">
                 <button type="submit" class="btn btn-danger" id="btnReject">Từ chối</button>
                 <button type="submit" class="btn btn-success" id="btnApprove">Duyệt</button>
             </div>
@@ -56,5 +75,5 @@
     </div>
   </div>
 
-  <script src="/evm/assets/js/EVM-Staff/claim_requests.js" render></script>
+  <script src="/evm/assets/js/EVM-Staff/claim_requests.js"></script>
 </section>

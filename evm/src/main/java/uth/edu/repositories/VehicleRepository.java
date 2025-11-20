@@ -2,6 +2,7 @@ package uth.edu.repositories;
 
 import java.util.List;
 
+import org.hibernate.mapping.Map;
 import org.springframework.stereotype.Repository;
 
 import uth.edu.dao.VehicleDAO;
@@ -40,7 +41,7 @@ public class VehicleRepository implements IVehicleRepository {
         return VehicleDAO.getVehiclesByModel(model, page, pageSize);
     }
     @Override
-    public List<Vehicle> getAllVehicles(int page, int pageSize) {
+    public List<Map> getAllVehicles(int page, int pageSize) {
         return VehicleDAO.getAllVehicles(page, pageSize);
     }
     @Override

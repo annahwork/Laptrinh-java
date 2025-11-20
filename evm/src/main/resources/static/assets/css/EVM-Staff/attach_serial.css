@@ -1,349 +1,401 @@
-* {
+/* --- 2. LAYOUT & BASE --- */
+#attach_serial_page {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text);
+    background-color: var(--bg-body);
+    min-height: 100vh;
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'Inter', system-ui, sans-serif;
-}
-
-/* ================= LAYOUT TRANG (ĐÃ ĐỒNG BỘ) ================= */
-#attach_serial_page {
-    padding: 32px 24px;
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-    min-height: 100vh;
-    color: var(--gray-900);
+.attach-serial-page {
+    padding: 1.5rem;
 }
 
 .content-wrapper {
-    width: 100%;
-}
-
-/* ================= LAYOUT HÀNG TÌM KIẾM (ĐÃ SỬA) ================= */
-.main-content-area {
-    max-width: 1240px;
+    max-width: 1400px;
     margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 1rem;
 }
 
-/* ================= CARD BẢNG (ĐÃ ĐỒNG BỘ) ================= */
+.main-content-area {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+/* Card Component */
 .card {
-    width: 100%;
-    background: white;
-    border-radius: var(--radius);
-    padding: 20px;
-    box-shadow: var(--shadow);
-    margin-bottom: 24px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
-.card-body-no-padding {
-    padding: 0;
-}
-
-/* ================= TÌM KIẾM (ĐÃ SỬA & ĐỒNG BỘ) ================= */
-.attach_serial-search {
-    width: 450px;
-    max-width: 100%;
-}
-
-.search-input-wrapper {
-    position: relative;
-    width: 100%;
-}
-
-.attach_serial-search__input {
-    width: 100%;
-    padding: 11px 14px 11px 38px;
-    border: 1.5px solid var(--gray-200);
-    border-radius: 8px;
-    background: #fcfdfe;
-    font-size: 14px;
-    color: var(--gray-900);
-    outline: none;
-    transition: var(--transition);
-}
-
-.attach_serial-search__input::placeholder {
-    color: #94a3b8;
-}
-
-.attach_serial-search__input:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
-}
-
-.search-icon {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 18px;
-    height: 18px;
-    color: var(--gray-500);
-    pointer-events: none;
-}
-
-.attach_serial-search__input:focus+.search-icon {
-    color: var(--primary);
-}
-
-/* ================= NÚT "GẮN SERIAL" (ĐÃ ĐỒNG BỘ) ================= */
-.attach_serial__button--create {
-    background: var(--success);
-    color: white;
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    border: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: var(--transition);
-}
-
-.attach_serial__button--create:hover {
-    background: #059669;
-    transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.2);
-}
-
-/* ================= BẢNG (ĐÃ ĐỒNG BỘ) ================= */
-.table-zebra {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 16px;
-    font-size: 14px;
-}
-
-.table-zebra thead th {
-    text-align: center;
-    padding: 12px 14px;
-    background: #f8fafc;
-    color: var(--gray-700);
-    font-weight: 600;
-    font-size: 13px;
-    border-bottom: 2px solid var(--gray-200);
-}
-
-.table-zebra tbody td {
-    padding: 12px 14px;
-    color: var(--gray-900);
-    border-bottom: 1px solid var(--gray-100);
-    text-align: center;
-    vertical-align: middle;
-}
-
-.table-zebra tbody tr:hover {
-    background: #f8fbfd;
-}
-
-.no-data {
-    text-align: center;
-    padding: 32px;
-    color: #94a3b8;
-    font-style: italic;
-    font-size: 14px;
-}
-
-/* ================= PHÂN TRANG (CHƯA CÓ TRONG HTML) ================= */
-.pagination-wrapper {
+/* --- 3. SEARCH & HEADER BAR --- */
+.search-filter-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 16px;
+    padding: 1rem 1.5rem;
+    gap: 1rem;
+    /* Nếu dùng class .card cho header thì reset đè flex-direction nếu cần */
+    flex-direction: row;
+}
+
+.search-box-wrapper {
+    flex-grow: 1;
+    max-width: 500px;
+}
+
+.search-input-group {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background-color: var(--gray-50);
+    padding: 0.5rem 0.75rem;
+    transition: all var(--transition);
+}
+
+.search-input-group:focus-within {
+    background-color: var(--card-bg);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.15);
+}
+
+.search-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--text-muted);
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+}
+
+.search-input {
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 100%;
+    font-size: 0.95rem;
+    color: var(--text);
+}
+
+.search-input::placeholder {
+    color: #94a3b8;
+}
+
+/* --- 4. BUTTONS --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition);
+    border: 1px solid transparent;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.btn-cancel {
+    background-color: white;
+    border-color: var(--border);
+    color: var(--text);
+}
+
+.btn-cancel:hover {
+    background-color: var(--gray-50);
+    border-color: var(--gray-300);
+}
+
+/* --- 5. TABLE STYLES --- */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    /* padding-bottom: 0.5rem; */
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.925rem;
+}
+
+.data-table thead th {
+    background: var(--gray-100);
+    color: var(--text);
+    /* <--- Quy định màu chữ */
+    text-align: left;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    /* <--- Quy định độ in đậm */
+    border-bottom: 2px solid var(--border);
+}
+
+.data-table tbody td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--gray-100);
+    color: var(--text);
+    vertical-align: middle;
+}
+
+.data-table tbody tr:hover {
+    background-color: var(--gray-50);
+}
+
+.data-table .text-center {
+    text-align: center;
+}
+
+.data-table .text-left {
+    text-align: left;
+}
+
+.data-table .text-right {
+    text-align: right;
+}
+
+.no-data-cell {
+    text-align: center;
+    padding: 2rem !important;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* --- 6. PAGINATION (PHẦN CHÂN TRANG) --- */
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border);
+    background-color: var(--gray-50);
+    margin-top: auto;
+    /* Đẩy xuống đáy nếu card có height cố định */
 }
 
 .pagination-info {
-    color: #555;
-    font-size: 14px;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    font-weight: 500;
 }
 
-.pagination-controls {
+.pagination-wrapper {
     display: flex;
-    gap: 8px;
-    align-items: center;
+    gap: 0.5rem;
+}
+
+.pagination-btn,
+.pagination-btn-active {
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    border: 1px solid var(--gray-300);
 }
 
 .pagination-btn {
-    padding: 6px 12px;
-    border: 1px solid #d1d5db;
-    background-color: #fff;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.2s ease;
+    background-color: white;
+    color: var(--text);
 }
 
 .pagination-btn:hover {
-    background-color: #f3f4f6;
+    background-color: var(--gray-100);
+    border-color: var(--gray-300);
 }
 
-.pagination-btn--active {
-    background-color: #2563eb;
-    color: #fff;
-    border-color: #2563eb;
-    font-weight: 500;
+.pagination-btn-active {
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    box-shadow: 0 2px 4px rgba(10, 102, 194, 0.2);
 }
 
-.pagination-btn--active:hover {
-    background-color: #1d4ed8;
+/* --- 7. MODAL --- */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Overlay */
+    z-index: 1050;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-out, visibility 0.2s;
 }
 
-/* ================= FORM/MODAL (ĐÃ ĐỒNG BỘ) ================= */
-.form-row {
+/* Class này dùng JS để toggle hiển thị */
+.modal[style*="display: block"] {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: var(--card-bg);
+    width: 95%;
+    max-width: 500px;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    margin-bottom: 14px;
+    animation: modalSlideIn 0.3s ease-out;
+    max-height: 90vh;
+    /* Tránh modal dài quá màn hình */
+    overflow-y: auto;
 }
 
-.form-label {
-    margin-bottom: 6px;
-    font-size: 14px;
-    color: #374151;
-    font-weight: 500;
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
-.form-input,
-select {
-    padding: 8px 12px;
-    border-radius: 6px;
-    border: 1px solid #d1d5db;
-    font-size: 14px;
-    outline: none;
-    box-sizing: border-box;
-}
-
-.form-input:focus,
-select:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
-}
-
-.modal-panel {
-    position: fixed;
-    inset: 0;
-    z-index: 1500;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 28px;
-    background: rgba(15, 23, 42, 0.45);
-    backdrop-filter: blur(3px);
-}
-
-.modal-panel[aria-hidden="false"],
-.modal-panel.show {
+.modal-header {
     display: flex;
-}
-
-.modal-panel__backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.45);
-    backdrop-filter: blur(3px);
-}
-
-.modal-panel__dialog {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    max-width: 720px;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 18px 50px rgba(2, 6, 23, 0.25);
-    padding: 22px 28px 20px;
-    box-sizing: border-box;
-    overflow: auto;
-}
-
-.modal-panel__dialog::before {
-    content: "";
-    position: absolute;
-    left: 0;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
     top: 0;
+    background: var(--card-bg);
+    z-index: 10;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.modal-close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0;
+}
+
+.modal-close-btn:hover {
+    color: var(--danger);
+}
+
+.modal-form {
+    padding: 1.5rem;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-group.half {
+    flex: 1;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--text);
+}
+
+.required {
+    color: var(--danger);
+    margin-left: 2px;
+}
+
+.form-control {
     width: 100%;
-    height: 6px;
-    background: linear-gradient(90deg, #2563eb, #1d4ed8);
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
+    padding: 0.625rem 0.875rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    color: var(--text);
+    background-color: var(--gray-50);
+    box-sizing: border-box;
+    transition: border-color var(--transition);
 }
 
-.modal-panel__close {
-    position: absolute;
-    right: 16px;
-    top: 8px;
-    width: 36px;
-    height: 36px;
-    border: none;
-    background: transparent;
-    font-size: 22px;
-    cursor: pointer;
-    color: #374151;
-    border-radius: 8px;
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary);
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.1);
 }
 
-.modal-panel__close:hover {
-    color: #111827;
-}
-
-.modalSubmit {
-    background: var(--primary);
-    color: white;
-    padding: 10px 18px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 13.5px;
-}
-
-.modalSubmit:hover {
-    background: #1d4ed8;
-}
-
-.modalCancel {
-    background: #4b5563;
-    color: white;
-    border: none;
-    padding: 10px 18px;
-    font-weight: 600;
-    font-size: 13.5px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.modalCancel:hover {
-    background: #374151;
-}
-
-.modal-panel__actions {
+.modal-footer-actions {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
-    margin-top: 12px;
+    gap: 0.75rem;
 }
 
-/* ================= RESPONSIVE ================= */
+/* --- 8. RESPONSIVE --- */
 @media (max-width: 768px) {
-    .modal-panel__dialog {
-        max-width: 90%;
-        padding: 20px;
-    }
-}
-
-@media (max-width: 520px) {
-    .modal-panel__dialog {
-        max-width: 96%;
-        padding: 16px;
+    .search-filter-bar {
+        flex-direction: column;
+        align-items: stretch;
     }
 
-    .modal-panel__actions {
-        justify-content: space-between;
+    .search-box-wrapper {
+        max-width: 100%;
+    }
+
+    .action-wrapper .btn {
+        width: 100%;
+    }
+
+    .form-group-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .card-footer {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .pagination-wrapper {
+        width: 100%;
+        justify-content: flex-end;
     }
 }

@@ -1,466 +1,205 @@
-/* ==================
-   LAYOUT CHÍNH
-=================== */
-.campaign-page {
-  padding: 20px;
-  background-color: var(--page-bg);
-  min-height: 100vh;
-  font-family: var(--font-sans);
-  color: var(--text);
+
+/* --- 2. LAYOUT & BASE --- */
+#campaign_page {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: var(--text);
+    background-color: var(--bg-body);
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
-.page-header {
-  margin-bottom: 20px;
+.campaign-page { padding: 1.5rem; }
+.content-wrapper { max-width: 1400px; margin: 0 auto; }
+.main-content-area { display: grid; gap: 1.5rem; }
+
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
-.page-header h2 {
-  font-size: var(--h2-size);
-  font-weight: 600;
-  color: var(--text);
-  margin: 0;
+/* --- 3. HEADER & SEARCH BAR (QUAN TRỌNG) --- */
+.section-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 0.5rem;
 }
 
-/* ==================
-   KHUNG TÌM KIẾM & LỌC
-=================== */
-.filter-section.actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 20px;
-  background-color: var(--card-bg);
-  padding: 16px;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
+.page-title { font-size: var(--h2-size); font-weight: 600; margin: 0; color: var(--text); }
+.subtitle { font-size: 0.875rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+/* Container chính: Ép tất cả lên 1 dòng */
+.search-filter-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    gap: 1rem;
+    flex-wrap: nowrap; /* Không cho xuống dòng */
 }
 
-/* ===== SỬA LỖI 1: THANH TÌM KIẾM ===== */
-.search-box {
-  /*     Đổi từ 'flex-grow: 1' thành 'flex: 1 1 300px'.
-    Cho phép co giãn (grow 1, shrink 1) nhưng có
-    kích thước cơ bản là 300px, tránh đè lên nút.
-  */
-  flex: 1 1 300px;
-  min-width: 250px;
+/* Ô tìm kiếm: Co giãn linh hoạt */
+.search-box-wrapper {
+    flex-grow: 1;
+    max-width: 450px;
 }
 
-.filter-controls {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  flex-shrink: 0;
-  /* Thêm: Ngăn không cho co lại */
+.search-input-group {
+    display: flex; align-items: center;
+    border: 1px solid var(--border); border-radius: var(--radius-md);
+    background-color: var(--gray-50); padding: 0.5rem 0.75rem;
+    transition: all var(--transition);
+}
+.search-input-group:focus-within {
+    background-color: var(--card-bg); border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.15);
+}
+.search-icon { width: 20px; height: 20px; color: var(--text-muted); margin-right: 0.75rem; }
+.search-input { border: none; background: transparent; outline: none; width: 100%; font-size: 0.95rem; color: var(--text); }
+
+/* Nhóm hành động (Select + Button): Ép nằm ngang */
+.action-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0; /* Không bị co lại khi màn hình nhỏ */
 }
 
-/* ===== KẾT THÚC SỬA LỖI 1 ===== */
-
-
-/* Style cho Input và Select */
-.filter-section.actions input[type="text"],
-.filter-section.actions select {
-  padding: 8px 10px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  background-color: var(--card-bg);
-  color: var(--text);
-  font-size: 14px;
-  transition: border-color 0.2s, box-shadow 0.2s;
+.filter-select {
+    padding: 0.625rem 1rem;
+    border: 1px solid var(--border); border-radius: var(--radius-md);
+    background-color: var(--card-bg); color: var(--text);
+    font-size: 0.9rem; cursor: pointer; outline: none;
+    min-width: 160px; /* Đảm bảo độ rộng tối thiểu */
 }
+.filter-select:focus { border-color: var(--primary); }
 
-.filter-section.actions input[type="text"]:focus,
-.filter-section.actions select:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary), transparent 70%);
-  outline: none;
+/* --- 4. BUTTONS --- */
+.btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 0.625rem 1.25rem; border-radius: var(--radius-md);
+    font-weight: 600; cursor: pointer; transition: all var(--transition);
+    border: 1px solid transparent; font-size: 0.9rem; white-space: nowrap;
 }
+.btn-save { background-color: var(--primary); color: white; }
+.btn-save:hover { background-color: var(--primary-hover); transform: translateY(-1px); }
 
-.filter-section.actions input[type="text"] {
-  width: 100%;
+.btn-cancel { background-color: white; border-color: var(--border); color: var(--text); }
+.btn-cancel:hover { background-color: var(--gray-50); border-color: var(--gray-300); }
+
+/* --- 5. TABLE STYLES --- */
+.table-responsive { width: 100%; overflow-x: auto; }
+.data-table { width: 100%; border-collapse: collapse; font-size: var(--p-size); }
+
+.data-table thead th {
+    background: var(--gray-100);
+    color: var(--text);
+    /* <--- Quy định màu chữ */
+    text-align: left;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    /* <--- Quy định độ in đậm */
+    border-bottom: 2px solid var(--border);
 }
-
-.filter-controls .filter-select {
-  min-width: 200px;
-  width: auto;
+.data-table tbody td {
+    padding: 0.75rem 1.5rem; border-bottom: 1px solid var(--gray-100);
+    color: var(--text); vertical-align: middle;
 }
+.data-table tbody tr:hover { background-color: var(--gray-50); }
+.data-table .text-left { text-align: left; }
+.data-table .text-center { text-align: center; }
+.data-table .text-right { text-align: right; }
+.no-data-cell { text-align: center; padding: 2rem !important; color: var(--text-muted); font-style: italic; }
 
-
-/* ==================
-   KHUNG BẢNG DỮ LIỆU
-=================== */
-.table-section {
-  background-color: var(--card-bg);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
-  overflow: hidden;
+/* --- 6. PAGINATION --- */
+.card-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 1.5rem; border-top: 1px solid var(--border);
+    background-color: var(--gray-50); margin-top: auto;
 }
-
-.table-container {
-  width: 100%;
-  overflow-x: auto;
+.pagination-info { color: var(--text-muted); font-size: 0.9rem; font-weight: 500; }
+.pagination-wrapper { display: flex; gap: 0.5rem; }
+.pagination-btn, .pagination-btn-active {
+    padding: 0.4rem 0.8rem; border-radius: var(--radius-md);
+    font-size: 0.875rem; font-weight: 500; cursor: pointer;
+    transition: var(--transition); border: 1px solid var(--gray-300);
 }
-
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-
-.data-table th,
-.data-table td {
-  padding: 12px 16px;
-  text-align: left;
-  border-bottom: 1px solid var(--border);
-  vertical-align: middle;
-}
-
-.data-table th {
-  background-color: var(--gray-50);
-  font-weight: 600;
-  color: var(--text-muted);
-}
-
-.data-table tbody tr:hover {
-  background-color: var(--gray-100);
-}
-
-.data-table .no-data {
-  text-align: center;
-  color: var(--text-muted);
-  font-style: italic;
-  padding: 24px;
-}
-
-/* ===== SỬA LỖI 2: CĂN CHỈNH BẢNG ===== */
-.data-table td:last-child {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  /* Thêm: Căn giữa các nút */
-}
-
-/* Thêm: Căn giữa cho header "Hành động" */
-.data-table th:last-child {
-  text-align: center;
-}
-
-/* ===== KẾT THÚC SỬA LỖI 2 ===== */
-
-
-/* ==================
-   CÁC LOẠI NÚT (Buttons)
-=================== */
-.btn-primary {
-  background: var(--primary);
-  color: var(--primary-contrast);
-  border: 1px solid var(--primary);
-  padding: 8px 16px;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: background var(--transition), transform var(--transition);
-  font-weight: 500;
-  font-size: 14px;
-}
-
-.btn-primary:hover {
-  background: color-mix(in srgb, var(--primary), white 10%);
-}
-
-.btn-primary:active {
-  transform: scale(0.98);
-}
-
-/* (Các style .btn-outline và .btn-light được dùng 
-   cho các nút hành động bên dưới)
-*/
-.btn-outline {
-  background-color: var(--primary);
-  color: var(--primary-contrast);
-  border: 1px solid var(--primary);
-  padding: 6px 16px;
-  border-radius: var(--radius-md);
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 2px rgba(37, 99, 235, 0.25);
-}
-
-.btn-outline:hover {
-  background-color: color-mix(in srgb, var(--primary), white 8%);
-  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.35);
-}
-
-.btn-light {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border);
-  color: var(--text-muted);
-  padding: 6px 16px;
-  border-radius: var(--radius-md);
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
-}
-
-.btn-light:hover {
-  background-color: var(--gray-100);
-  color: var(--text);
-  box-shadow: 0 2px 5px rgba(15, 23, 42, 0.1);
-}
-
-/* ===== THÊM MỚI: NÚT HÀNH ĐỘNG BẢNG (LỖI 3) ===== */
-/* Nút Duyệt (Màu Xanh lá) */
-.btn-approve {
-  background-color: var(--success);
-  color: var(--primary-contrast);
-  /* Giả định là màu trắng */
-  border: 1px solid var(--success);
-  padding: 6px 16px;
-  border-radius: var(--radius-md);
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 2px rgba(16, 185, 129, 0.25);
-}
-
-.btn-approve:hover {
-  background-color: color-mix(in srgb, var(--success), white 8%);
-  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.35);
-}
-
-/* Ghi chú: 
-  Nút "Xem" (Xám) -> Dùng class: .btn-light
-  Nút "Sửa" (Xanh) -> Dùng class: .btn-outline
-  Nút "Duyệt" (Xanh lá) -> Dùng class: .btn-approve 
-*/
-/* ===== KẾT THÚC THÊM MỚI (LỖI 3) ===== */
-
-
-/* ==================
-   STATUS BADGE
-=================== */
-.status-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 600;
-  border: 1px solid transparent;
-}
-
-.status-badge.Active {
-  background: var(--info-bg);
-  color: var(--info-text);
-  border-color: var(--info);
-}
-
-.status-badge.Completed {
-  background: var(--success-bg);
-  color: var(--success-text);
-  border-color: var(--success);
-}
-
-.status-badge.Pending {
-  background: var(--warning-bg);
-  color: var(--warning-text);
-  border-color: var(--warning);
-}
-
-.status-badge.Rejected {
-  background: var(--danger-bg);
-  color: var(--danger-text);
-  border-color: var(--danger);
-}
-
-/* ==================
-   PHÂN TRANG (Pagination)
-=================== */
-.table-section .card-footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-top: 1px solid var(--border);
-  padding: 12px 16px;
-}
-
-.pagination-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.pagination-info {
-  font-size: 14px;
-  color: var(--text-muted);
-}
-
-.pagination-controls {
-  display: flex;
-  gap: 8px;
-}
-
-.pagination-btn,
+.pagination-btn { background-color: white; color: var(--text); }
+.pagination-btn:hover { background-color: var(--gray-100); }
 .pagination-btn-active {
-  padding: 6px 12px;
-  border-radius: var(--radius-md);
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 14px;
-  border: 1px solid var(--border);
+    background-color: var(--primary); color: white; border-color: var(--primary);
+    box-shadow: 0 2px 4px rgba(10, 102, 194, 0.2);
 }
 
-.pagination-btn {
-  background-color: var(--card-bg);
-  color: var(--text-muted);
+/* --- 7. MODALS --- */
+.modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); z-index: 1050;
+    display: flex; justify-content: center; align-items: center;
+}
+.modal-content {
+    background: var(--card-bg); width: 95%; max-width: 550px;
+    border-radius: var(--radius-lg); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    display: flex; flex-direction: column; animation: fadeIn 0.3s ease-out;
+    overflow: hidden;
+}
+.modal-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border);
+    background-color: var(--bg-body);
+}
+.modal-header h3 { margin: 0; font-size: var(--h3-size); font-weight: 600; }
+.modal-close-btn {
+    background: none; border: none; font-size: 1.75rem; line-height: 1;
+    color: var(--text-muted); cursor: pointer; transition: color 0.2s; padding: 0;
+}
+.modal-close-btn:hover { color: var(--danger); }
+.modal-body { padding: 1.5rem; }
+
+.form-group { margin-bottom: 1.25rem; }
+.form-label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; }
+.text-danger { color: var(--danger); }
+.form-control {
+    width: 100%; padding: 0.625rem 0.875rem;
+    border: 1px solid var(--border); border-radius: var(--radius-md);
+    font-size: 0.95rem; color: var(--text); background-color: var(--gray-50);
+    box-sizing: border-box; transition: border-color var(--transition);
+    font-family: inherit;
+}
+.form-control:focus {
+    outline: none; border-color: var(--primary); background-color: white;
+    box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.1);
+}
+.modal-footer-actions {
+    display: flex; justify-content: flex-end; gap: 0.75rem;
+    margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);
 }
 
-.pagination-btn:hover:not(:disabled) {
-  background-color: var(--gray-100);
-  color: var(--text);
+/* Info Grid */
+.info-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+.info-item { display: flex; flex-direction: column; }
+.info-label { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+.info-value { font-size: 0.95rem; color: var(--text); font-weight: 500; }
+.font-monospace { font-family: monospace; }
+.highlight-text { color: var(--primary); font-weight: 600; }
+.info-desc {
+    background: var(--gray-50); padding: 0.75rem; border-radius: var(--radius-md);
+    border: 1px solid var(--border); margin-top: 0.25rem;
+    font-size: 0.9rem; line-height: 1.5;
 }
 
-.pagination-btn-active {
-  background: var(--primary);
-  color: var(--primary-contrast);
-  border-color: var(--primary);
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .search-filter-bar { flex-direction: column; align-items: stretch; }
+    .search-box-wrapper { max-width: 100%; }
+    .action-group { justify-content: space-between; width: 100%; }
+    .card-footer { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .pagination-wrapper { width: 100%; justify-content: space-between; }
 }
 
-.pagination-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-
-/* ==================
-   MODAL (Giữ nguyên)
-=================== */
-.campaign__modal {
-  position: fixed;
-  inset: 0;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(15, 23, 42, 0.45);
-  z-index: 9999;
-  animation: fadeIn 0.25s ease-in;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-.campaign__modal-content {
-  background-color: var(--card-bg);
-  width: 480px;
-  max-width: 90%;
-  border-radius: var(--radius-lg);
-  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
-  padding: 24px;
-  position: relative;
-  animation: slideDown 0.25s ease;
-}
-
-@keyframes slideDown {
-  from {
-    transform: translateY(-10px);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.campaign__close-button {
-  position: absolute;
-  top: 10px;
-  right: 14px;
-  background: transparent;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: var(--text-muted);
-}
-
-.campaign__close-button:hover {
-  color: var(--text);
-}
-
-.campaign__form-group {
-  margin-bottom: 14px;
-  display: flex;
-  flex-direction: column;
-}
-
-.campaign__label {
-  font-size: var(--caption-size);
-  color: var(--text-muted);
-  margin-bottom: 6px;
-}
-
-.campaign__input,
-.campaign__select,
-.campaign__textarea {
-  padding: 8px 10px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  background: var(--card-bg);
-  color: var(--text);
-}
-
-.campaign__input:focus,
-.campaign__select:focus,
-.campaign__textarea:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary), transparent 70%);
-  outline: none;
-}
-
-.campaign__button-group {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.campaign__button {
-  padding: 8px 16px;
-  border-radius: var(--radius-md);
-  font-weight: 500;
-  cursor: pointer;
-  border: none;
-}
-
-.campaign__button--cancel {
-  background-color: var(--gray-100);
-  color: var(--text-muted);
-  border: 1px solid var(--border);
-}
-
-.campaign__button--cancel:hover {
-  background-color: var(--gray-300);
-}
-
-.campaign__button--submit {
-  background-color: var(--primary);
-  color: var(--primary-contrast);
-}
-
-.campaign__button--submit:hover {
-  background-color: color-mix(in srgb, var(--primary), white 10%);
-}

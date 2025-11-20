@@ -27,6 +27,8 @@
   flex-wrap: wrap;
   gap: 18px;
 }
+
+
 .card {
   flex: 1;
   min-width: 220px;

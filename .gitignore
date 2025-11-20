@@ -5130,3 +5130,8 @@ nohup.out
 # Allow EVM-Staff js folder
 !evm/frontend/assets/js/EVM-Staff/
 !evm/frontend/assets/js/EVM-Staff/*
+
+# Ensure EVM source files are not ignored so we can add them
+!evm/
+!evm/src/
+!evm/src/**

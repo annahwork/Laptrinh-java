@@ -198,6 +198,9 @@ Cargo.lock
 *.jp2
 *.j2k
 *.jpf
+
+# Ignore build artifacts for the evm module
+evm/target/
 *.jpx
 *.jpm
 *.mj2

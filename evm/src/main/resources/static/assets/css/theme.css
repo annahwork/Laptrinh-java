@@ -1,4 +1,7 @@
-html,
+/* 1. NHÚNG FONT INTER TỪ GOOGLE FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* 2. RESET CSS (Giữ nguyên code của bạn) */
 body,
 div,
 span,
@@ -84,8 +87,10 @@ video {
     border: 0;
     font-size: 100%;
     font: inherit;
+    /* Quan trọng: Kế thừa font từ body */
     vertical-align: baseline;
 }
+
 article,
 aside,
 details,
@@ -99,25 +104,30 @@ nav,
 section {
     display: block;
 }
+
 ol,
 ul {
     list-style: none;
 }
+
 blockquote,
 q {
     quotes: none;
 }
+
 blockquote::before,
 blockquote::after,
 q::before,
 q::after {
     content: "";
 }
+
 table {
     border-collapse: collapse;
     border-spacing: 0;
 }
 
+/* 3. KHAI BÁO BIẾN (ROOT) */
 :root {
     --primary: #0a66c2;
     --primary-contrast: #ffffff;
@@ -140,7 +150,7 @@ table {
     --gray-100: #f1f5f9;
     --gray-300: #cbd5e1;
     --gray-600: #475569;
-    --gray-900: #0f172a;
+    --gray-900: black;
 
     /* Semantic states */
     --success: #16a34a;
@@ -167,7 +177,9 @@ table {
     --card-bg: #ffffff;
     --border: var(--gray-300);
 
-    --font-sans: "Inter", system-ui, sans-serif;
+    /* --- ĐÂY LÀ CHỖ ĐÃ SỬA FONT --- */
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
     --text: var(--gray-900);
     --text-muted: var(--gray-600);
     --h1-size: 2rem;
@@ -197,13 +209,16 @@ table {
     --primary-contrast: #ffffff;
 }
 
+/* 4. ÁP DỤNG FONT CHO BODY */
 body {
     background: var(--page-bg);
     color: var(--text);
+    /* Biến này chứa font Inter bạn cần */
     font-family: var(--font-sans);
     line-height: var(--line-height);
 }
 
+/* Các class tiện ích khác */
 .btn-primary {
     background: var(--primary);
     color: var(--primary-contrast);
@@ -212,13 +227,18 @@ body {
     border-radius: var(--radius-md);
     cursor: pointer;
     transition: background var(--transition), transform var(--transition);
+    font-family: var(--font-sans);
+    /* Đảm bảo nút bấm cũng nhận font */
 }
+
 .btn-primary:hover {
     background: color-mix(in srgb, var(--primary), white 10%);
 }
+
 .btn-primary:active {
     transform: scale(0.98);
-    }
+}
+
 .btn-primary:disabled {
     opacity: 0.6;
     cursor: not-allowed;
@@ -249,21 +269,25 @@ body {
     color: var(--success-text);
     border-color: var(--success);
 }
+
 .badge--warning {
     background: var(--warning-bg);
     color: var(--warning-text);
     border-color: var(--warning);
 }
+
 .badge--danger {
     background: var(--danger-bg);
     color: var(--danger-text);
     border-color: var(--danger);
 }
+
 .badge--info {
     background: var(--info-bg);
     color: var(--info-text);
     border-color: var(--info);
 }
+
 .badge--pending {
     background: var(--pending-bg);
     color: var(--pending-text);
@@ -273,6 +297,7 @@ body {
 .table-zebra tr:nth-child(even) {
     background: var(--gray-50);
 }
+
 .table thead th {
     background: var(--gray-100);
     color: var(--text);

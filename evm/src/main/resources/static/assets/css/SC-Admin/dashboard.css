@@ -59,9 +59,10 @@
 }
 
 .stat-label {
-    font-size: 0.9rem;
-    color: var(--text-muted);
+    font-size: var(--h3-size);
+    color: var(--gray-900);
     margin: 0;
+    font-weight: 500;
 }
 
 .dashboard-section {
@@ -76,8 +77,8 @@
 }
 
 .section-title {
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size:  var(--h2-size);
+    font-weight: 500;
     color: var(--text);
     margin: 0 0 1.5rem 0;
     padding-bottom: 0.75rem;
@@ -141,42 +142,47 @@
 
 .role-count {
     font-size: 1.75rem;
-    font-weight: 700;
+    font-weight: 500;
     color: var(--text);
     margin: 0 0 0.25rem 0;
 }
 
 .role-name {
-    font-size: 0.875rem;
-    color: var(--text-muted);
+    font-size: var(--caption-size);
+    color: var(--gray-900);
     margin: 0;
 }
 
 .data-table {
+    color: var(--gray-900);
     width: 100%;
     border-collapse: collapse;
+    font-weight: 500;
+    font-size: var(--caption-size);
 }
 
 .data-table thead {
-    background: var(--gray-100);
+    background:var(--gray-900);
+    font-size: var(--p-size);
+
 }
 
 .data-table th {
     padding: 1rem;
     text-align: left;
     font-weight: 600;
-    color: var(--text);
     border-bottom: 2px solid var(--border);
+    color: var(--gray-900);
 }
 
 .data-table td {
     padding: 1rem;
     border-bottom: 1px solid var(--border);
-    color: var(--text-muted);
+    color: var(--gray-900);
 }
 
 .data-table tbody tr:hover {
-    background: var(--gray-50);
+    color: var(--gray-900);
 }
 
 .no-data {

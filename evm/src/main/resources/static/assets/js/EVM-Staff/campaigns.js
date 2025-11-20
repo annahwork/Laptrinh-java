@@ -2,9 +2,6 @@
     'use strict';
     console.log('Campaigns script loaded with Custom Styles');
 
-    // ============================================================
-    // 1. INJECT CSS (Đã thêm !important để BẮT BUỘC nhận màu)
-    // ============================================================
     const styleId = 'campaign-custom-css-force';
     if (!document.getElementById(styleId)) {
         const style = document.createElement('style');

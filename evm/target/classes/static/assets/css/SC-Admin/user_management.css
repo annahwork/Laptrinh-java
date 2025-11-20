@@ -1,3 +1,49 @@
+#usersTableBody td:last-child {
+    display: flex !important;
+    gap: 8px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 10px !important;
+}
+
+#usersTableBody .btn-action {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 6px 12px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    border-radius: 6px !important;
+    border: 1px solid transparent !important;
+    cursor: pointer !important;
+    color: white !important;
+    line-height: 1.2 !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15) !important;
+    transition: all 0.2s ease !important;
+    text-decoration: none !important;
+    min-width: 60px !important;
+}
+
+#usersTableBody .btn-edit { 
+    background-color: #f59e0b !important;
+}
+
+#usersTableBody .btn-edit:hover { 
+    background-color: #d97706 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(245, 158, 11, 0.3) !important;
+}
+
+#usersTableBody .btn-delete { 
+    background-color: #ef4444 !important;
+}
+
+#usersTableBody .btn-delete:hover { 
+    background-color: #dc2626 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3) !important;
+}
+
 .user-management-container {
     background: var(--page-bg);
     color: var(--text);
@@ -384,10 +430,12 @@
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--p-600), transparent 75%);
     background: color-mix(in srgb, var(--card-bg), var(--gray-100) 50%);
 }
+
 #userModal .form-row,
 #deleteModal .form-row {
     grid-template-columns: 1fr;
 }
+
 @media (max-width: 1200px) {
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);

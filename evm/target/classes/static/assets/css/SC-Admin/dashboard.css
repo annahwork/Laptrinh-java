@@ -1,3 +1,6 @@
+/* =========================================
+   1. DASHBOARD LAYOUT & MAIN AREA
+   ========================================= */
 .dashboard-page {
     background: var(--page-bg);
     min-height: 100vh;
@@ -10,6 +13,29 @@
     margin: 0 auto;
 }
 
+.dashboard-section {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.section-title {
+    font-size: var(--h2-size);
+    font-weight: 500;
+    color: var(--text);
+    margin: 0 0 1.5rem 0;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--border);
+}
+
+/* =========================================
+   2. STATS GRID (Các thẻ thống kê màu sắc)
+   ========================================= */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -34,22 +60,12 @@
     box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
 }
 
-.stat-card--blue {
-    border-left: 6px solid var(--p-600);
-}
-.stat-card--green {
-    border-left: 6px solid var(--success);
-}
-.stat-card--orange {
-    border-left: 6px solid var(--warning);
-}
-.stat-card--purple {
-    border-left: 6px solid var(--p-700);
-}
+.stat-card--blue { border-left: 6px solid var(--p-600); }
+.stat-card--green { border-left: 6px solid var(--success); }
+.stat-card--orange { border-left: 6px solid var(--warning); }
+.stat-card--purple { border-left: 6px solid var(--p-700); }
 
-.stat-info {
-    flex: 1;
-}
+.stat-info { flex: 1; }
 
 .stat-number {
     font-size: 2rem;
@@ -65,26 +81,9 @@
     font-weight: 500;
 }
 
-.dashboard-section {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    box-shadow: var(--shadow-sm);
-    position: relative;
-    overflow: hidden;
-}
-
-.section-title {
-    font-size:  var(--h2-size);
-    font-weight: 500;
-    color: var(--text);
-    margin: 0 0 1.5rem 0;
-    padding-bottom: 0.75rem;
-    border-bottom: 2px solid var(--border);
-}
-
+/* =========================================
+   3. ROLE GRID (Các thẻ phân quyền)
+   ========================================= */
 .role-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -120,25 +119,12 @@
     flex-shrink: 0;
 }
 
-.role-icon--admin {
-    background: linear-gradient(135deg, var(--p-500) 0%, var(--p-700) 100%);
-}
+.role-icon--admin { background: linear-gradient(135deg, var(--p-500) 0%, var(--p-700) 100%); }
+.role-icon--staff { background: linear-gradient(135deg, var(--secondary) 0%, var(--p-400) 100%); }
+.role-icon--tech { background: linear-gradient(135deg, var(--warning) 0%, var(--danger) 100%); }
+.role-icon--evm { background: linear-gradient(135deg, var(--p-400) 0%, var(--info) 100%); }
 
-.role-icon--staff {
-    background: linear-gradient(135deg, var(--secondary) 0%, var(--p-400) 100%);
-}
-
-.role-icon--tech {
-    background: linear-gradient(135deg, var(--warning) 0%, var(--danger) 100%);
-}
-
-.role-icon--evm {
-    background: linear-gradient(135deg, var(--p-400) 0%, var(--info) 100%);
-}
-
-.role-info {
-    flex: 1;
-}
+.role-info { flex: 1; }
 
 .role-count {
     font-size: 1.75rem;
@@ -153,110 +139,118 @@
     margin: 0;
 }
 
-.data-table {
-    color: var(--gray-900);
+/* =========================================
+   4. TABLE STYLE: CLEAN & ROUNDED (Bảng bo góc)
+   ========================================= */
+
+/* Khung bao bọc tạo viền bo tròn */
+.table-outer-card {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 10px; /* Bo tròn góc khung */
+    overflow: hidden;    /* Cắt gọn nội dung thừa ở góc */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.02); /* Đổ bóng nhẹ */
+    margin-top: 1rem;
+}
+
+/* Thiết lập bảng */
+.table-outer-card .data-table {
     width: 100%;
     border-collapse: collapse;
-    font-weight: 500;
-    font-size: var(--caption-size);
-}
-
-.data-table thead {
-    background:var(--gray-900);
-    font-size: var(--p-size);
-
-}
-
-.data-table th {
-    padding: 1rem;
+    font-family: var(--font-sans);
     text-align: left;
-    font-weight: 600;
-    border-bottom: 2px solid var(--border);
-    color: var(--gray-900);
 }
 
-.data-table td {
-    padding: 1rem;
+/* Style Header (Tiêu đề bảng) */
+.table-outer-card .data-table thead tr {
+    background-color: var(--gray-50);
     border-bottom: 1px solid var(--border);
-    color: var(--gray-900);
 }
 
-.data-table tbody tr:hover {
+.table-outer-card .data-table th {
+    padding: 16px 24px;
+    font-weight: 600;
     color: var(--gray-900);
+    font-size: 0.95rem;
+    white-space: nowrap;
+    background: transparent; /* Reset background mặc định nếu có */
 }
 
-.no-data {
+/* Style Body (Nội dung bảng) */
+.table-outer-card .data-table tbody tr {
+    background-color: #fff;
+    border-bottom: 1px solid var(--border);
+    transition: background-color 0.2s ease;
+}
+
+.table-outer-card .data-table td {
+    padding: 16px 24px;
+    color: var(--text);
+    font-size: 0.95rem;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border);
+}
+
+/* Hiệu ứng khi di chuột vào dòng */
+.table-outer-card .data-table tbody tr:hover {
+    background-color: #fafafa;
+}
+
+/* Dòng thông báo không có dữ liệu */
+.table-outer-card .no-data {
     text-align: center;
+    color: var(--text-muted);
     padding: 2rem;
-    color: var(--text-muted);
-    font-size: var(--caption-size);
+    font-style: italic;
 }
 
-/* ==== Pagination inside dashboard-section ==== */
-.dashboard-section .card-footer {
-    padding: .75rem 1rem;
-    background: var(--card-bg);
-    border-top: 1px solid var(--border);
-    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+/* =========================================
+   5. PAGINATION (Phân trang)
+   ========================================= */
+
+/* Footer phân trang bên trong khung bo góc */
+.table-outer-card .card-footer {
+    background-color: #fff;
+    border-top: none;
+    padding: 0;
 }
 
-.dashboard-section .pagination-wrapper {
+.table-outer-card .pagination-wrapper {
+    padding: 1rem 1.5rem;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 12px;
-    justify-content: flex-end;
     flex-wrap: wrap;
+    gap: 12px;
 }
 
-.dashboard-section .pagination-info {
-    margin-right: auto;
+.pagination-info {
     color: var(--text-muted);
-    font-size: .95rem;
+    font-size: 0.95rem;
 }
 
+/* Style nút bấm phân trang */
 .pagination-btn,
-.pagination-btn-active,
-.btn-primary {
+.btn-load {
     appearance: none;
     padding: 8px 14px;
-    font-size: .95rem;
+    font-size: 0.95rem;
     border-radius: 8px;
     border: 1px solid var(--border);
     background: color-mix(in srgb, var(--card-bg), var(--gray-100) 40%);
     color: var(--text);
     cursor: pointer;
-    transition: background .2s ease, box-shadow .2s ease, transform .1s ease;
+    transition: all 0.2s ease;
 }
 
-.pagination-btn:hover {
+.pagination-btn:hover,
+.btn-load:hover {
     background: color-mix(in srgb, var(--card-bg), var(--gray-100) 60%);
 }
 
-.pagination-btn:disabled {
-    opacity: .55;
-    cursor: not-allowed;
-}
-
-.pagination-btn-active,
-.btn-primary {
-    background: var(--p-600);
-    color: var(--primary-contrast);
-    border-color: color-mix(in srgb, var(--p-600), black 15%);
-    box-shadow: 0 1px 0 rgba(0,0,0,.05);
-}
-
-.pagination-btn-active:hover,
-.btn-primary:hover {
-    background: var(--p-700);
-}
-
-@media (max-width: 768px) {
-    .dashboard-section .pagination-wrapper {
-        justify-content: center;
-    }
-}
-
-/* ==== Activity list ==== */
+/* =========================================
+   6. ACTIVITY LIST (Danh sách hoạt động)
+   ========================================= */
 .activity-list {
     display: flex;
     flex-direction: column;
@@ -290,9 +284,7 @@
     background: linear-gradient(135deg, var(--p-400) 0%, var(--info) 100%);
 }
 
-.activity-content {
-    flex: 1;
-}
+.activity-content { flex: 1; }
 
 .activity-text {
     font-size: 0.95rem;
@@ -306,11 +298,11 @@
     margin: 0;
 }
 
-/* ==== Responsive ==== */
+/* =========================================
+   7. RESPONSIVE
+   ========================================= */
 @media (max-width: 1200px) {
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    .stats-grid,
     .role-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -320,12 +312,19 @@
     .main-content-area {
         padding: 1rem;
     }
+    
     .stats-grid,
     .role-grid {
         grid-template-columns: 1fr;
     }
+
     .stat-number,
     .role-count {
         font-size: 1.5rem;
+    }
+
+    .table-outer-card .pagination-wrapper {
+        flex-direction: column;
+        align-items: center;
     }
 }

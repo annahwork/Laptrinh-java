@@ -1,12 +1,8 @@
 <section class="user-management-container">
     <div class="filter-section">
         <div class="search-box">
-            <input
-                type="text" 
-                id="searchInput"
-                placeholder="Tìm kiếm theo tên, email, username..."
-                aria-label="Tìm kiếm người dùng"
-            />
+            <input type="text" id="searchInput" placeholder="Tìm kiếm theo tên, email, username..."
+                aria-label="Tìm kiếm..." />
         </div>
 
         <div class="filter-controls">
@@ -17,10 +13,10 @@
                 <option value="SC_TECHNICIAN">SC Technician</option>
                 <option value="EVM_STAFF">EVM Staff</option>
             </select>
-
-            <button class="btn btn-primary" id="btnAddUser" onclick="openUserModal()">
-                Thêm người dùng
+            <button type="button" id="btnAddUser" class="btn-action btn-add">
+                <i class="fas fa-plus"></i> Thêm người dùng
             </button>
+
         </div>
     </div>
 
@@ -52,9 +48,9 @@
             <div class="pagination-wrapper">
                 <span class="pagination-info" id="paginationInfo">Hiển thị 0 của 0</span>
                 <div class="pagination-controls">
-                    <button class="pagination-btn" id="btnPrev" disabled>« Trước</button>
-                    <button class="pagination-btn-active" id="btnCurrent" aria-current="page">1</button>
-                    <button class="pagination-btn" id="btnNext" disabled>Sau »</button>
+                    <button class="btn-action btn-load" id="btnPrev" disabled>« Trước</button>
+                    <button class="btn-action btn-load" id="btnCurrent" aria-current="page">1</button>
+                    <button class="btn-action btn-load" id="btnNext" disabled>Sau »</button>
                 </div>
             </div>
         </div>
@@ -62,10 +58,6 @@
 
     <div id="userModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modalTitle">Thêm người dùng </h2>
-            </div>
-
             <form id="userForm">
                 <div class="modal-body">
                     <input type="hidden" id="userId" />
@@ -74,7 +66,7 @@
                             <label for="userName">Username <span class="required">*</span></label>
                             <input type="text" id="userName" required />
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="name">Tên <span class="required">*</span></label>
                             <input type="text" id="name" required />
@@ -109,8 +101,9 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="btnCancelModal" onclick="closeUserModal()">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Lưu</button>
+                    <button type="button" class="btn-action btn-cancel" id="btnCancelModal"
+                        onclick="closeUserModal()">Hủy</button>
+                    <button type="submit" class="btn-action btn-save">Lưu</button>
                 </div>
             </form>
         </div>
@@ -118,17 +111,15 @@
 
     <div id="deleteModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="deleteTitle">
         <div class="modal-content modal-small">
-            <div class="modal-header">
-                <h2 id="deleteTitle">Xác nhận xóa</h2>
-                <button class="modal-close" id="btnCloseDeleteModal" onclick="closeDeleteModal()" aria-label="Đóng">&times;</button>
-            </div>
             <div class="modal-body">
                 <p>Bạn có chắc chắn muốn xóa người dùng này không?</p>
                 <p class="warning-text">Hành động này không thể hoàn tác!</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id="btnCancelDelete" onclick="closeDeleteModal()">Hủy</button>
-                <button type="button" class="btn btn-danger" id="btnConfirmDelete" onclick="handleDelete(event)">Xóa</button>
+                <button type="button" class="btn-action btn-edit" id="btnCancelDelete"
+                    onclick="closeDeleteModal()">Hủy</button>
+                <button type="button" class="btn-action btn-delete" id="btnConfirmDelete"
+                    onclick="handleDelete(event)">Xóa</button>
             </div>
         </div>
     </div>

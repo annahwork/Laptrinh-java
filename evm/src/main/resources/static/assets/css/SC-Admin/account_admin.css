@@ -396,17 +396,6 @@ input:checked + .slider:before {
     color: var(--text-main);
 }
 
-.close-btn {
-    font-size: 24px;
-    cursor: pointer;
-    color: var(--text-light);
-    line-height: 1;
-    transition: color 0.2s;
-}
-
-.close-btn:hover {
-    color: var(--danger);
-}
 
 .modal-body {
     padding: 24px;
@@ -457,32 +446,3 @@ input:checked + .slider:before {
     border-top: 1px solid var(--border);
 }
 
-.btn-primary {
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background 0.2s;
-}
-
-.btn-primary:hover {
-    background: var(--primary-hover);
-}
-
-.btn-cancel {
-    background: #fff;
-    color: var(--text-main);
-    border: 1px solid var(--border);
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background 0.2s;
-}
-
-.btn-cancel:hover {
-    background: #f1f5f9;
-}

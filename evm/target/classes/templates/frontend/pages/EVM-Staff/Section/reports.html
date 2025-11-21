@@ -15,7 +15,7 @@
                         <div class="input-wrapper">
                             <input type="month" class="form-control report__month-picker" aria-label="Chọn tháng" />
                         </div>
-                        
+
                         <div class="input-wrapper">
                             <select class="form-control report__select">
                                 <option value="">Tất cả loại danh mục</option>
@@ -28,11 +28,26 @@
 
                     <div class="action-group-right">
                         <button class="btn btn-primary report__btn report__btn--generate">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M2 12h10"/><path d="M9 4v16"/><path d="M3 9l3 3-3 3"/><path d="M14 8v8"/><path d="M18 6v12"/><path d="M22 4v16"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" style="margin-right: 6px;">
+                                <path d="M2 12h10" />
+                                <path d="M9 4v16" />
+                                <path d="M3 9l3 3-3 3" />
+                                <path d="M14 8v8" />
+                                <path d="M18 6v12" />
+                                <path d="M22 4v16" />
+                            </svg>
                             Tạo báo cáo
                         </button>
                         <button class="btn btn-success report__btn report__btn--export">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" style="margin-right: 6px;">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
                             Xuất Excel
                         </button>
                     </div>
@@ -85,6 +100,59 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+
+                <div class="card ai-analysis-card">
+                    <div class="card-header ai-header">
+                        <div class="ai-title-group">
+                            <div class="ai-icon-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="ai-sparkle">
+                                    <path
+                                        d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="report__card-title ai-text-gradient">Phân tích & Dự báo thông minh</h3>
+                                <p class="text-muted mb-0" style="font-size: 0.85rem;">AI sẽ tổng hợp số liệu và đưa ra
+                                    cảnh báo rủi ro hoặc đề xuất tối ưu chi phí.</p>
+                            </div>
+                        </div>
+                        <button class="btn btn-ai-generate">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" style="margin-right: 6px;">
+                                <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 12z" />
+                                <path d="M21 3v9h-9" />
+                            </svg>
+                            Yêu cầu phân tích
+                        </button>
+                    </div>
+
+                    <div class="card-body ai-body">
+                        <div class="ai-placeholder">
+                            <p>Nhấn nút <strong>"Yêu cầu phân tích"</strong> để AI quét dữ liệu báo cáo tháng này...</p>
+                        </div>
+
+                        <div class="ai-result-content" style="display: none;">
+                            <div class="ai-insight-item success">
+                                <span class="dot"></span>
+                                <strong>Hiệu suất tốt:</strong> Tỷ lệ tồn kho giảm 12% so với tháng trước, tối ưu hóa
+                                dòng tiền lưu động.
+                            </div>
+                            <div class="ai-insight-item warning">
+                                <span class="dot"></span>
+                                <strong>Cảnh báo:</strong> Chi phí "Bảo hành mở rộng" đang chiếm 70% tổng ngân sách. Cần
+                                kiểm tra lại chất lượng lô linh kiện nhập ngày 15/10.
+                            </div>
+                            <div class="ai-insight-item info">
+                                <span class="dot"></span>
+                                <strong>Dự báo:</strong> Dựa trên xu hướng hiện tại, chi phí bảo hành tháng tới có thể
+                                tăng nhẹ khoảng 5%.
+                            </div>
+                        </div>
                     </div>
                 </div>
 

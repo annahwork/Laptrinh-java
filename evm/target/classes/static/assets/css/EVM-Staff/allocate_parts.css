@@ -1,17 +1,4 @@
-/* ==========================================================================
-   allocate_parts.css
-   Style riêng cho trang phân bổ phụ tùng (Bố cục 1 cột, Phân trang)
-   ========================================================================== */
 
-/* Giả định: Các biến CSS (:root), reset, và base component (.card, etc.)
-   đã được định nghĩa ở một file khác và được tham chiếu qua var(--...)
-*/
-
-/* --- LAYOUT & GRID (1 CỘT) --- */
-
-.allocate-parts-page {
-    padding: 1.5rem;
-}
 
 .content-wrapper {
     max-width: 1400px;
@@ -124,7 +111,7 @@
     padding: 0.625rem 1rem;
     border-radius: var(--radius-md);
     cursor: pointer;
-    transition: background var(--transition), transform var(--transition);
+    transition: background var(--p-400), transform var(--transition);
     font-weight: 500;
     display: inline-flex;
     align-items: center;
@@ -132,7 +119,7 @@
 }
 
 .btn-refresh {
-    background: var(--gray-100);
+    background: var(--p-400);
     color: var(--text);
     border: 1px solid var(--border);
 }

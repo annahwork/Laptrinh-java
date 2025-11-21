@@ -164,3 +164,117 @@
     .action-group-right { flex-direction: column; width: 100%; }
     .btn, .input-wrapper { width: 100%; }
 }
+/* AI Card Styles */
+.ai-analysis-card {
+    margin-top: 24px;
+    border: 1px solid #e0e7ff; /* Viền xanh nhạt */
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.1); /* Bóng đổ tím nhẹ */
+    overflow: hidden;
+}
+
+.ai-header {
+    background: linear-gradient(to right, #f8faff, #ffffff);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.ai-title-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ai-icon-wrapper {
+    width: 40px;
+    height: 40px;
+    background: #eff6ff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4f46e5; /* Màu Indigo */
+}
+
+.ai-text-gradient {
+    background: linear-gradient(90deg, #4f46e5, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+/* Button AI */
+.btn-ai-generate {
+    background: linear-gradient(90deg, #4f46e5, #4338ca);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(79, 70, 229, 0.3);
+}
+
+.btn-ai-generate:hover {
+    background: linear-gradient(90deg, #4338ca, #3730a3);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(79, 70, 229, 0.4);
+}
+
+/* Content Styles */
+.ai-body {
+    padding: 24px;
+    background-color: #fff;
+    min-height: 100px;
+}
+
+.ai-placeholder {
+    text-align: center;
+    color: #9ca3af;
+    font-style: italic;
+}
+
+/* Insight Items */
+.ai-insight-item {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: flex-start;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.ai-insight-item:last-child {
+    margin-bottom: 0;
+}
+
+.ai-insight-item .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 6px;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+/* Màu sắc trạng thái */
+.ai-insight-item.success {
+    background-color: #ecfdf5;
+    color: #065f46;
+}
+.ai-insight-item.success .dot { background-color: #10b981; }
+
+.ai-insight-item.warning {
+    background-color: #fffbeb;
+    color: #92400e;
+}
+.ai-insight-item.warning .dot { background-color: #f59e0b; }
+
+.ai-insight-item.info {
+    background-color: #eff6ff;
+    color: #1e40af;
+}
+.ai-insight-item.info .dot { background-color: #3b82f6; }

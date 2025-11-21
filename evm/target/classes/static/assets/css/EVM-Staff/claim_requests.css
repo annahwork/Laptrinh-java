@@ -196,7 +196,7 @@
 
 /* --- MODAL - THEO MẪU --- */
 .modal {
-    position: fixed;
+    position: center;
     top: 0;
     left: 0;
     width: 100%;
@@ -206,7 +206,6 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    /* Logic JS sẽ toggle style display */
 }
 
 .modal-content {

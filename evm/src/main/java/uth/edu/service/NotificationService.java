@@ -142,27 +142,29 @@ public class NotificationService {
         }
     }
 
-    // thêm hàm updateNotification ở đây
-    public boolean updateNotification(Integer notificationID, String title, String message) {
-        try {
-            // 1. Tìm thông báo cũ
-            Notification notification = notificationRepository.getNotificationById(notificationID);
-            if (notification == null) {
-                return false; // Không tìm thấy
-            }
+    // // thêm hàm updateNotification ở đây
+    // public boolean updateNotification(Integer notificationID, String title,
+    // String message) {
+    // try {
+    // // 1. Tìm thông báo cũ
+    // Notification notification =
+    // notificationRepository.getNotificationById(notificationID);
+    // if (notification == null) {
+    // return false; // Không tìm thấy
+    // }
 
-            // 2. Đập data mới vào
-            notification.setTitle(title);
-            notification.setMessage(message);
-            // (M có thể set IsRead = false nếu muốn)
+    // // 2. Đập data mới vào
+    // notification.setTitle(title);
+    // notification.setMessage(message);
+    // // (M có thể set IsRead = false nếu muốn)
 
-            // 3. Gọi Repo (M phải tự thêm hàm này bên DAO)
-            notificationRepository.updateNotification(notification);
-            return true;
+    // // 3. Gọi Repo (M phải tự thêm hàm này bên DAO)
+    // notificationRepository.updateNotification(notification);
+    // return true;
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+    // } catch (Exception e) {
+    // e.printStackTrace();
+    // return false;
+    // }
+    // }
 }

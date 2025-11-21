@@ -1,0 +1,214 @@
+<section id="account_admin_page" class="account-page">
+    <div class="content-wrapper" id="innerContent">
+        <div class="settings-grid">
+            
+            <div class="left-sidebar">
+                <div class="card profile-card">
+                    <div class="profile-header">
+                        <div class="avatar-container">
+                            <div class="avatar-image">
+                                <svg class="avatar-icon" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                                </svg>
+                                </div>
+                            <button class="avatar-edit-btn" title="Đổi ảnh đại diện">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <h2 class="user-name">Lê Thị Mỹ Hậu</h2>
+                        <p class="user-role">Quản lý Vận hành</p>
+                    </div>
+
+                    <ul class="settings-menu">
+                        <li>
+                            <a href="#" id="edit-info-trigger" class="menu-link"> 
+                                <span class="menu-item-content"> 
+                                    <span class="icon-wrapper">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20"> 
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path> 
+                                        </svg> 
+                                    </span>
+                                    <span>Chỉnh sửa thông tin</span> 
+                                </span> 
+                                <span class="menu-chevron">›</span> 
+                            </a> 
+                        </li>
+                        <li>
+                            <a href="#" id="change-password-trigger" class="menu-link"> 
+                                <span class="menu-item-content">
+                                    <span class="icon-wrapper">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                        </svg>
+                                    </span>
+                                    <span>Đổi Mật Khẩu</span>
+                                </span>
+                                <span class="menu-chevron">›</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="logout-wrapper">
+                        <button class="logout-button btn-danger-outline">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                            Đăng Xuất
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-content">
+                
+                <div class="card detail-card">
+                    <div class="detail-header">
+                        <h3>Tùy chỉnh hệ thống</h3>
+                    </div>
+                    <div class="detail-body">
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <span class="setting-label">Ngôn ngữ</span>
+                            </div>
+                            <select class="form-control setting-select">
+                                <option value="vi">Tiếng Việt</option>
+                                <option value="en">English</option>
+                            </select>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <span class="setting-label">Chế độ tối (Dark Mode)</span>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card detail-card">
+                    <div class="detail-header">
+                        <h3>Cấu hình thông báo</h3>
+                    </div>
+                    <div class="detail-body">
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <span class="setting-label">Thông báo Email</span>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <span class="setting-label">Cảnh báo tồn kho</span>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card detail-card">
+                    <div class="detail-header">
+                        <h3>Phiên đăng nhập gần đây</h3>
+                    </div>
+                    <div class="detail-body p-0">
+                        <div class="table-responsive">
+                            <table class="login-history-table">
+                                <thead>
+                                    <tr>
+                                        <th>Thiết bị</th>
+                                        <th>Địa điểm</th>
+                                        <th>Thời gian</th>
+                                        <th class="text-right">Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="device-info">
+                                                <span class="device-icon">💻</span> Chrome - Windows
+                                            </div>
+                                        </td>
+                                        <td>Hồ Chí Minh, VN</td>
+                                        <td>Vừa xong</td>
+                                        <td class="text-right"><span class="badge badge-active">Đang hoạt động</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="device-info">
+                                                <span class="device-icon">📱</span> Safari - iPhone
+                                            </div>
+                                        </td>
+                                        <td>Hồ Chí Minh, VN</td>
+                                        <td>20/11/2025 08:30</td>
+                                        <td class="text-right"><span class="badge badge-inactive">Đã đăng xuất</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div> 
+        </div>
+    </div>
+
+    <div id="password-change-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Đổi Mật Khẩu</h3>
+                <span class="close-btn">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="change-password-form">
+                    <div class="form-group">
+                        <label for="oldPassword">Mật khẩu cũ</label>
+                        <input type="password" id="oldPassword" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">Mật khẩu mới</label>
+                        <input type="password" id="newPassword" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Xác nhận mật khẩu mới</label>
+                        <input type="password" id="confirmPassword" class="form-control" required>
+                    </div>
+                    <p id="password-message" class="message-area text-danger"></p>
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel close-modal-btn">Hủy</button>
+                        <button type="submit" class="btn-primary">Xác nhận</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="edit-info-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Chỉnh sửa thông tin</h3>
+                <span class="close-btn">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="edit-info-form">
+                    <div class="form-group">
+                        <label for="fullName">Họ và tên</label>
+                        <input type="text" id="fullName" class="form-control" value="Lê Thị Mỹ Hậu" required>
+                    </div>
+                    <p id="edit-info-message" class="message-area text-danger"></p>
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel close-modal-btn">Hủy</button>
+                        <button type="submit" class="btn-primary">Lưu thay đổi</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

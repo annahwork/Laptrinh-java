@@ -1,6 +1,4 @@
 <section class="warranty-claim-management-page">
-    <link rel="stylesheet" href="/evm/assets/css/SC-Staff/warranty_claim_management.css">
-
     <div class="app-layout">
         <main class="content-wrapper" id="innerContent">
             <div class="main-content-area">
@@ -17,13 +15,16 @@
                     <div class="filter-card-body">
                         <div class="filter-controls">
                             <select id="statusFilter" class="filter-select">
-                                <option value=""selected>Tất cả trạng thái</option>
+                                <option value="" selected>Tất cả trạng thái</option>
                                 <option value="approved">Chờ xử lý</option>
                                 <option value="assigned">Đã xác nhận</option>
                                 <option value="completed">Đã hoàn thành</option>
                             </select>
+
                             <input type="date" id="dateFilter" class="filter-input">
-                            <button type="button" id="btnMoFormYeuCau">Tạo yêu cầu mới</button>
+                            <button type="button" id="btnMoFormYeuCau" class="btn-action btn-add">
+                                <i class="fas fa-plus"></i> Tạo yêu cầu mới
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -65,7 +66,7 @@
 
                 <div id="modalYeuCauBaoHanh" class="warranty-claim__modal" style="display:none;">
                     <div class="warranty-claim__modal-content">
-                        <span class="warranty-claim__close-button">&times;</span>
+                        <span class="close-button">&times;</span>
                         <form class="warranty-claim__form">
                             <div class="warranty-claim__form-group">
                                 <label for="warranty_code" class="warranty-claim__label">Mã yêu cầu bảo hành</label>
@@ -90,11 +91,10 @@
                                 <textarea id="warranty_desc" name="description" class="warranty-claim__textarea"
                                     rows="3"></textarea>
                             </div>
-                            <div class="warranty-claim__button-group">
-                                <button type="button" id="warrantyCancelBtn"
-                                    class="warranty-claim__button warranty-claim__button--cancel">Huỷ</button>
-                                <button type="submit" id="warrantySubmitBtn"
-                                    class="warranty-claim__button warranty-claim__button--submit">Tạo</button>
+
+                            <div class="button-group">
+                                <button type="button" id="warrantyCancelBtn" class="btn-action btn-cancel">Huỷ</button>
+                                <button type="submit" id="warrantySubmitBtn" class="btn-action btn-save">Tạo</button>
                             </div>
                         </form>
                     </div>
@@ -104,5 +104,4 @@
         </main>
     </div>
 
-    <script src="/evm/assets/js/SC-Staff/warranty_claim_management.js"></script>
 </section>

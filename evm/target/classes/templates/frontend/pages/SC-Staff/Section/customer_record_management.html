@@ -1,6 +1,5 @@
 <section class="customer-record-management-page">
     <div class="app-layout">
-        <link rel="stylesheet" href="/evm/assets/css/SC-Staff/customer_record_management.css">
         <div class="content-wrapper" id="innerContent">
             <div class="main-content-area">
                 <div class="search-filter-bar">
@@ -14,7 +13,9 @@
                 <div class="card filter-card">
                     <div class="filter-card-body">
                         <div class="filter-controls">
-                            <button type="button" id="btnMoFormCustomer">Thêm Khách Hàng</button>
+                            <button type="button" id="btnMoFormCustomer" class="btn-action btn-add">
+                                <i class="fas fa-plus"></i> Thêm Khách Hàng
+                            </button>
                         </div>
                     </div>
 
@@ -40,11 +41,13 @@
                         <div class="card-footer">
                             <div class="pagination-wrapper">
                                 <span class="pagination-info">Hiển thị 0 của 0</span>
-                                <div>
-                                    <button class="pagination-btn">« Trước</button>
-                                    <button class="btn-primary pagination-btn-active">1</button>
-                                    <button class="pagination-btn">Sau »</button>
+                                <div class="d-flex justify-content-end align-items-center gap-2 mt-2">
+                                    <button id="customerPrevBtn">« Trước</button>
+                                    <span id="customerPageNumber">1</span>
+                                    <button id="customerNextBtn">Sau »</button>
+
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -52,7 +55,7 @@
 
                 <div id="modalQuanLyCustomer" class="customer__modal" style="display:none;">
                     <div class="customer__modal-content">
-                        <button class="customer__close-button" aria-label="Close">&times;</button>
+                        <button class="close-button" aria-label="Close">&times;</button>
                         <h2 class="customer__modal-title">Thông tin khách hàng</h2>
                         <form class="customer__form">
                             <div class="customer__form-group">
@@ -78,11 +81,11 @@
                                 <input id="customer_address" name="notes" class="customer__input"></input>
                             </div>
 
-                            <div class="customer__button-group">
+                            <div class="button-group">
                                 <button type="button" id="customerCancelBtn"
-                                    class="customer__button customer__button--cancel">Hủy</button>
+                                    class="btn-action btn-cancel">Hủy</button>
                                 <button type="submit" id="customerSubmitBtn"
-                                    class="customer__button customer__button--submit">Lưu</button>
+                                    class="btn-action btn-save">Lưu</button>
                             </div>
                         </form>
                     </div>
@@ -90,5 +93,4 @@
 
             </div>
         </div>
-        <script src="/evm/assets/js/SC-Staff/customer_record_management.js"></script>
 </section>

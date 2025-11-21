@@ -1,6 +1,5 @@
 <section class="job-notifications-page">
     <div class="app-layout">
-        <link rel="stylesheet" href="/evm/assets/css/SC-Staff/job_notifications.css">
         <div class="content-wrapper" id="innerContent">
             <div class="main-content-area">
 
@@ -17,34 +16,48 @@
                         <div class="notifications-header">
                             <h3>Thông báo công việc</h3>
                             <div class="notifications-actions">
-                                <button id="btnCreateNotification" class="btn-primary">Tạo thông báo</button>
+                                <!-- <button id="btnCreateNotification" class="btn-primary"> -->
+                                    <!-- Tạo thông báo -->
+                                <!-- </button> -->
                             </div>
                         </div>
 
-                        <ul id="notificationsList" class="notificatio-list">
-                            </ul>
+                        <!-- LIST THÔNG BÁO -->
+                        <ul id="notificationsList" class="notification-list">
+                            <!-- JS render item ở đây -->
+                        </ul>
 
+                        <!-- PHÂN TRANG -->
                         <div class="card-footer">
                             <div class="pagination-wrapper">
-                                <span class="pagination-info">Hiển thị 0 của 0</span>
+                                <span class="pagination-info" id="notificationsPaginationInfo">
+                                    Hiển thị 0 của 0
+                                </span>
                                 <div>
-                                    <button class="pagination-btn">« Trước</button>
-                                    <button class="btn-primary pagination-btn-active">1</button>
-                                    <button class="pagination-btn">Sau »</button>
+                                    <button class="pagination-btn" id="notificationsPrevBtn">
+                                        « Trước
+                                    </button>
+                                    <span id="notificationsPageNumber" style="margin: 0 10px;">
+                                        1
+                                    </span>
+                                    <button class="pagination-btn" id="notificationsNextBtn">
+                                        Sau »
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- modal xem chi tiết (nếu sau này dùng) -->
                 <div id="modalNotification" class="notification__modal" style="display:none;">
-                    </div>
-                
+                </div>
+
+                <!-- modal tạo thông báo (nếu sau này dùng) -->
                 <div id="modalCreateNotification" class="notification__modal" style="display:none;">
-                    </div>
+                </div>
 
             </div>
         </div>
-        <script src="/evm/assets/js/SC-Staff/job_notifications.js"></script>
     </div>
 </section>

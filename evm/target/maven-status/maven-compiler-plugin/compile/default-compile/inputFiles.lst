@@ -67,6 +67,7 @@ D:\Laptrinh-java\evm\src\main\java\uth\edu\dao\ClaimServiceDAO.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\pojo\Admin.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\IInventoryRepository.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\InventoryRepository.java
+D:\Laptrinh-java\evm\src\main\java\uth\edu\controllers\ScStaffVehicleApiController.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\pojo\User.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\pojo\Notification.java
 D:\Laptrinh-java\evm\src\main\java\uth\edu\repositories\ISCStaffRepository.java

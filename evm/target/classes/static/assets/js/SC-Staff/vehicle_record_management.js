@@ -1,10 +1,12 @@
 (function () {
   'use strict';
 
-  let vehiclesCache = [];     
+  let vehiclesCache = [];
   let currentEditingVin = null;
-  
-  const API_BASE_URL = "/evm/api/vehicles";
+
+  let currentPage = 1;
+  const PAGE_SIZE = 5; // muốn 10 dòng/trang thì đổi 10
+  const API_BASE_URL = "/evm/api/sc-staff/vehicles";
 
   function mapVehicleStatus(status) {
     switch (String(status).toLowerCase()) {
@@ -17,10 +19,6 @@
 
   function mapVehicleModel(model) {
     switch (model) {
-      case 'Model S': return 'Model S';
-      case 'Model 3': return 'Model 3';
-      case 'Model X': return 'Model X';
-      case 'Model Y': return 'Model Y';
       case 'Toyota': return 'Toyota';
       case 'Honda': return 'Honda';
       case 'Mercedes-Benz': return 'Mercedes-Benz';
@@ -31,14 +29,12 @@
 
   function getCustomerNameFromVehicle(vehicle) {
     return (vehicle.customer && vehicle.customer.name) ||
-      vehicle.customerName || 
-      '';
+      vehicle.customerName || '';
   }
 
   function getCustomerPhoneFromVehicle(vehicle) {
     return (vehicle.customer && vehicle.customer.phone) ||
-      vehicle.customerPhone || 
-      '';
+      vehicle.customerPhone || '';
   }
 
   function renderVehiclesTable() {
@@ -51,7 +47,7 @@
     const searchValue = (searchInputEl?.value || '').trim().toLowerCase();
     const statusFilter = statusFilterEl?.value || '';
 
-    let filtered = vehiclesCache.slice(); 
+    let filtered = vehiclesCache.slice();
 
     if (searchValue) {
       filtered = filtered.filter(v => {
@@ -68,24 +64,45 @@
       });
     }
 
+    const total = filtered.length;
+    const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+
+    // nếu đang ở trang lớn hơn tổng trang (do filter) thì kéo về trang cuối
+    if (currentPage > totalPages) currentPage = totalPages;
+    if (currentPage < 1) currentPage = 1;
+
+    const startIndex = (currentPage - 1) * PAGE_SIZE;
+    const endIndex = startIndex + PAGE_SIZE;
+    const pageItems = filtered.slice(startIndex, endIndex);
+
     const paginationInfo = document.querySelector('.pagination-info');
     if (paginationInfo) {
-      const total = vehiclesCache.length;
-      const showing = filtered.length;
+      const showing = pageItems.length;
       paginationInfo.textContent = `Hiển thị ${showing} của ${total}`;
     }
 
-    if (!filtered.length) {
+    // cập nhật hiển thị số trang (nếu có)
+    const pageLabel = document.getElementById('vehiclePageNumber');
+    if (pageLabel) {
+      pageLabel.textContent = currentPage.toString();
+    }
+
+    // disable / enable nút Trước / Sau
+    const prevBtn = document.getElementById('vehiclePrevBtn');
+    const nextBtn = document.getElementById('vehicleNextBtn');
+    if (prevBtn) prevBtn.disabled = currentPage <= 1;
+    if (nextBtn) nextBtn.disabled = currentPage >= totalPages;
+
+    if (!pageItems.length) {
       tableBody.innerHTML = '<tr><td colspan="6">Không tìm thấy xe phù hợp.</td></tr>';
       return;
     }
 
     tableBody.innerHTML = '';
-    filtered.forEach(item => {
+    pageItems.forEach(item => {
       const customerName = getCustomerNameFromVehicle(item) || 'N/A';
       const customerPhone = getCustomerPhoneFromVehicle(item) || 'N/A';
-
-      const vehicleData = item.vehicle || {}; 
+      const vehicleData = item.vehicle || {};
 
       const rowHTML = `
       <tr>
@@ -95,14 +112,15 @@
         <td>${mapVehicleModel(vehicleData.model)}</td>
         <td>${mapVehicleStatus(vehicleData.status)}</td>
         <td>
-          <button class="btn-sua" data-vin="${vehicleData.vin || ''}">Sửa</button>
-          <button class="btn-xoa" data-vin="${vehicleData.vin || ''}">Xóa</button>
+          <button class="btn-action btn-edit" data-vin="${vehicleData.vin || ''}">Sửa</button>
+          <button class="btn-action btn-delete" data-vin="${vehicleData.vin || ''}">Xóa</button>
         </td>
       </tr>
     `;
       tableBody.insertAdjacentHTML('beforeend', rowHTML);
     });
   }
+
 
 
   function loadVehiclesTable() {
@@ -141,7 +159,7 @@
     const customerEl = document.getElementById('vehicle_customer');
     const phoneEl = document.getElementById('vehicle_phone');
     const typeEl = document.getElementById('vehicle_type');
-    const yearEl = document.getElementById('vehicle_year');        
+    const yearEl = document.getElementById('vehicle_year');
     const warrantyEl = document.getElementById('vehicle_warranty');
     const statusEl = document.getElementById('vehicle_status');
     const notesEl = document.getElementById('vehicle_notes');
@@ -152,20 +170,20 @@
 
     if (plateEl) {
       plateEl.value = vehicleData.vin || '';
-      plateEl.readOnly = !!currentEditingVin; 
+      plateEl.readOnly = !!currentEditingVin;
     }
 
     if (customerEl) customerEl.value = customerName || '';
     if (phoneEl) phoneEl.value = customerPhone || '';
 
     if (typeEl) typeEl.value = vehicleData.model || '';
-    
+
     if (statusEl) {
-        statusEl.value = (vehicleData.status || 'active').toLowerCase();
+      statusEl.value = (vehicleData.status || 'active').toLowerCase();
     }
-    
-    if (notesEl) notesEl.value = vehicleData.notes || ''; 
-    
+
+    if (notesEl) notesEl.value = vehicleData.notes || '';
+
     if (yearEl) yearEl.value = vehicleData.year_Of_Manufacture || '';
     if (warrantyEl) warrantyEl.value = vehicleData.warranty_Time || '';
   }
@@ -175,7 +193,7 @@
     const plateEl = document.getElementById('vehicle_plate');
     if (form) form.reset();
     if (plateEl) {
-      plateEl.readOnly = false; 
+      plateEl.readOnly = false;
     }
     const statusEl = document.getElementById('vehicle_status');
     if (statusEl) statusEl.value = 'active';
@@ -223,7 +241,7 @@
       if (form) {
         form.addEventListener('submit', function (e) {
           e.preventDefault();
-          const currentStaffId = 2; 
+          const currentStaffId = 2; 7
 
           const vinValue = document.getElementById('vehicle_plate')?.value || '';
           const modelValue = document.getElementById('vehicle_type')?.value || '';
@@ -255,11 +273,11 @@
           if (currentEditingVin) {
             method = 'PUT';
             url = `${API_BASE_URL}/update/${encodeURIComponent(currentEditingVin)}?staffId=${currentStaffId}`;
-            
+
             const oldData = vehiclesCache.find(v => v.vehicle.vin === currentEditingVin);
             if (oldData) {
-                requestBody.vehicle.year_Of_Manufacture = oldData.vehicle.year_Of_Manufacture;
-                requestBody.vehicle.warranty_Time = oldData.vehicle.warranty_Time;
+              requestBody.vehicle.year_Of_Manufacture = oldData.vehicle.year_Of_Manufacture;
+              requestBody.vehicle.warranty_Time = oldData.vehicle.warranty_Time;
             }
 
           } else {
@@ -280,7 +298,7 @@
               console.log(message);
               alert(currentEditingVin ? 'Cập nhật xe thành công!' : 'Đăng ký xe thành công!');
               closeModal();
-              loadVehiclesTable(); 
+              loadVehiclesTable();
             })
             .catch((error) => {
               console.error('Lỗi khi tạo/cập nhật xe:', error);
@@ -377,6 +395,7 @@
       initVehicleModal();
       initVehicleTableActions();
       initSearchAndFilter();
+      initPagination();
       loadVehiclesTable();
     }
 
@@ -386,4 +405,23 @@
       init();
     }
   })();
+  function initPagination() {
+    const prevBtn = document.getElementById('vehiclePrevBtn');
+    const nextBtn = document.getElementById('vehicleNextBtn');
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function () {
+        currentPage--;
+        renderVehiclesTable();
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function () {
+        currentPage++;
+        renderVehiclesTable();
+      });
+    }
+  }
+
 })();

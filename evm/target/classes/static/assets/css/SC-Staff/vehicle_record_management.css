@@ -1,3 +1,4 @@
+
 .vehicle__section {
   background: #fff;
   border-radius: 10px;
@@ -5,6 +6,8 @@
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
   margin-top: 1rem;
 }
+
+/* ===== FORM GROUP ========================================================= */
 
 .vehicle__form-group {
   margin-bottom: 14px;
@@ -14,8 +17,8 @@
   display: block;
   margin-bottom: 6px;
   font-weight: 600;
-  color: #333;
-  font-size: 0.95rem;
+  color: var(--text);
+  font-size: var(--p-size);
 }
 
 .vehicle__input,
@@ -23,19 +26,21 @@
 .vehicle__textarea {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
   box-sizing: border-box;
-  transition: all 0.2s ease;
-  font-size: 0.95rem;
+  transition: var(--transition);
+  background: var(--input-bg);
+  color: var(--text);
+  font-size: var(--p-size);
 }
 
 .vehicle__input:focus,
 .vehicle__select:focus,
 .vehicle__textarea:focus {
-  border-color: #007bff;
+  border-color: var(--primary);
   outline: none;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+  box-shadow: 0 0 0 2px var(--primary-shadow);
 }
 
 .vehicle__textarea {
@@ -49,44 +54,8 @@
   gap: 12px;
 }
 
-.vehicle__button-group {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 20px;
-  padding-top: 16px;
-  border-top: 1px solid #e9ecef;
-}
 
-.vehicle__button {
-  padding: 10px 16px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: background-color 0.25s ease, box-shadow 0.25s ease;
-}
-
-.vehicle__button--submit {
-  background: #007bff;
-  color: #fff;
-}
-
-.vehicle__button--submit:hover {
-  background: #0056b3;
-  box-shadow: 0 3px 8px rgba(0, 123, 255, 0.25);
-}
-
-.vehicle__button--cancel {
-  background: #f8f9fa;
-  color: #333;
-  border: 1px solid #ccc;
-}
-
-.vehicle__button--cancel:hover {
-  background: #e9ecef;
-}
+/* ===== FILTER CONTROLS ==================================================== */
 
 .filter-controls {
   display: flex;
@@ -99,49 +68,33 @@
 .filter-controls select,
 .filter-controls input[type="date"] {
   padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background-color: #f8fafc;
-  font-size: 0.95rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background-color: var(--input-bg);
+  font-size: var(--p-size);
   min-width: 200px;
   height: 36px;
   box-sizing: border-box;
-  transition: all 0.2s ease;
+  transition: var(--transition);
+  color: var(--text);
 }
 
 .filter-controls select:focus,
 .filter-controls input[type="date"]:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary-shadow);
 }
 
-#btnMoFormVehicle {
-  margin-left: auto;
-  background: #007bff;
-  color: #fff;
-  border: 1px solid #0056b3;
-  padding: 8px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.25s ease, transform 0.15s ease;
-}
 
-#btnMoFormVehicle:hover {
-  background: #0056b3;
-  transform: translateY(-1px);
-}
-
+/* Responsive */
 @media (max-width: 768px) {
   .filter-controls {
     flex-direction: column;
     align-items: stretch;
   }
-
-  #btnMoFormVehicle {
-    margin-left: 0;
-    width: 100%;
-  }
 }
+
+/* ===== MODAL =============================================================== */
 
 .vehicle__modal {
   display: none;
@@ -156,29 +109,29 @@
 }
 
 .vehicle__modal-content {
-  background: #ffffff;
+  background: var(--card-bg);
   margin: 4vh auto;
   padding: 18px;
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
   width: 100%;
   max-width: 520px;
   max-height: calc(100vh - 80px);
   overflow-y: auto;
   position: relative;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-  border-top: 4px solid #007bff;
+  box-shadow: var(--shadow-md);
+  border-top: 4px solid var(--primary);
   box-sizing: border-box;
 }
 
 .vehicle__modal-title {
   margin-top: 0;
   margin-bottom: 18px;
-  font-size: 1.35rem;
-  color: #1a1a1a;
+  font-size: var(--h3-size);
+  color: var(--text);
   font-weight: 600;
 }
 
-.vehicle__close-button {
+.close-button {
   position: absolute;
   right: 18px;
   top: 10px;
@@ -186,17 +139,22 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #888;
-  transition: color 0.2s ease;
+}
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+.close-button:hover {
+  color: var(--text);
 }
 
-.vehicle__close-button:hover {
-  color: #000;
-}
+/* ===== EMPTY STATE ======================================================== */
 
 .table-placeholder-cell {
-  color: #666;
+  color: var(--text-muted);
   padding: 18px;
   text-align: center;
   font-style: italic;
+  font-size: var(--caption-size);
 }

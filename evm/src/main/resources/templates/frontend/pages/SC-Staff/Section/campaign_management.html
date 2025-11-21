@@ -1,10 +1,10 @@
 <section class="campaign-management-page">
     <div class="app-layout">
-        <link rel="stylesheet" href="/evm/assets/css/SC-Staff/campaign_management.css">
         <div class="content-wrapper" id="innerContent">
             <div class="main-content-area">
                 <h2 style="margin-bottom: 20px;">Quản Lý Chiến Dịch Thu Hồi</h2>
 
+                <!-- Thanh search + filter -->
                 <div class="search-filter-bar">
                     <div class="search-box-wrapper">
                         <i class="fas fa-search search-icon"></i>
@@ -23,10 +23,7 @@
                                 <option value="completed">Đã hoàn thành</option>
                             </select>
                             <input type="date" id="campaignDateFilter" class="filter-input" name="Date">
-                            <button type="button" id="btnMoFormCampaign"
-                                class="campaign__button campaign__button--submit">
-                                <i class="fas fa-plus"></i> Tạo Chiến Dịch
-                            </button>
+                            <!-- CHỈ XEM nên bỏ nút tạo chiến dịch -->
                         </div>
                     </div>
 
@@ -36,15 +33,18 @@
                                 <thead>
                                     <tr class="table-header-row">
                                         <th>Mã chiến dịch</th>
-                                        <th>VIN</th>
+                                        <th>Tên chiến dịch</th>
                                         <th>Ngày</th>
-                                        <th>Kỹ thuật viên</th>
-                                        <th>Thao tác</th>
+                                        <th>Trạng thái</th>
+                                        <th>Mô tả</th>
                                     </tr>
                                 </thead>
-                                <tbody id="campaignsTbody"></tbody>
+                                <tbody id="campaignsTbody">
+                                    <!-- JS sẽ fill dữ liệu; để rỗng -->
+                                </tbody>
                             </table>
                         </div>
+
                         <div class="card-footer" style="padding: 15px; border-top: 1px solid #eee;">
                             <div class="pagination-wrapper"
                                 style="display: flex; justify-content: space-between; align-items: center;">
@@ -59,47 +59,8 @@
                     </div>
                 </div>
 
-                <div id="modalQuanLyChienDich" class="campaign__modal" style="display:none;">
-                    <div class="campaign__modal-content">
-                        <button class="campaign__close-button" id="campaignCloseBtn" aria-label="Close">&times;</button>
-                        <h3 id="modalTitle">Tạo Chiến Dịch Mới</h3>
-                        <form class="campaign__form" id="campaignForm">
-                            <input type="hidden" id="campaign_id" name="CampaignID">
-
-                            <div class="campaign__form-group">
-                                <label for="campaign_name" class="campaign__label">Tên chiến dịch</label>
-                                <input type="text" id="campaign_name" name="Name" class="campaign__input" required>
-                            </div>
-                            <div class="campaign__form-group">
-                                <label for="campaign_start" class="campaign__label">Ngày bắt đầu</label>
-                                <input type="date" id="campaign_start" name="Date" class="campaign__input">
-                            </div>
-                            <div class="campaign__form-group">
-                                <label for="campaign_status" class="campaign__label">Trạng thái</label>
-                                <select id="campaign_status" name="Status" class="campaign__select">
-                                    <option value="planned">Đã lên kế hoạch</option>
-                                    <option value="active">Đang diễn ra</option>
-                                    <option value="completed">Đã hoàn thành</option>
-                                </select>
-                            </div>
-                            <div class="campaign__form-group">
-                                <label for="campaign_desc" class="campaign__label">Mô tả</label>
-                                <textarea id="campaign_desc" name="Description" class="campaign__textarea"
-                                    rows="4"></textarea>
-                            </div>
-
-                            <div class="campaign__button-group">
-                                <button type="button" id="campaignCancelBtn"
-                                    class="campaign__button campaign__button--cancel">Huỷ</button>
-                                <button type="submit" id="campaignSubmitBtn"
-                                    class="campaign__button campaign__button--submit">Tạo</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
 
             </div>
         </div>
-        <script src="/evm/assets/js/SC-Staff/campaign_management.js"></script>
     </div>
 </section>

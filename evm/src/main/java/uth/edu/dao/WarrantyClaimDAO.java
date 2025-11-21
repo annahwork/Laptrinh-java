@@ -20,30 +20,59 @@ public class WarrantyClaimDAO {
         sessionFactory = configuration.buildSessionFactory();
     }
 
+    // public boolean addWarrantyClaim(WarrantyClaim claim, WarrantyHistory history)
+    // {
+    // Session session = null;
+    // try {
+    // session = sessionFactory.openSession();
+    // session.beginTransaction();
+    // session.persist(claim);
+    // session.flush();
+    // history.setWarrantyClaim(claim);
+    // session.persist(history);
+    // session.getTransaction().commit();
+    // return true;
+    // } catch (Exception e) {
+    // System.err.println("Error in addWarrantyClaim: " + e.getMessage());
+    // e.printStackTrace();
+    // if (session != null && session.getTransaction().isActive()) {
+    // session.getTransaction().rollback();
+    // return false;
+    // }
+    // } finally {
+    // if (session != null) {
+    // session.close();
+    // }
+    // }
+    // return true;
+    // }
     public boolean addWarrantyClaim(WarrantyClaim claim, WarrantyHistory history) {
         Session session = null;
         try {
             session = sessionFactory.openSession();
             session.beginTransaction();
+
             session.persist(claim);
             session.flush();
+
             history.setWarrantyClaim(claim);
             session.persist(history);
+
             session.getTransaction().commit();
             return true;
+
         } catch (Exception e) {
             System.err.println("Error in addWarrantyClaim: " + e.getMessage());
             e.printStackTrace();
             if (session != null && session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
-                return false;
             }
+            return false; // Đưa return false ra đây
         } finally {
             if (session != null) {
                 session.close();
             }
         }
-        return true;
     }
 
     public boolean updateWarrantyClaim(WarrantyClaim claim, WarrantyHistory history) {
@@ -150,12 +179,12 @@ public class WarrantyClaimDAO {
             int firstResult = (pageNumber - 1) * pageSize;
 
             String hql = "SELECT cs.WarrantyClaim.ClaimID, cs.WarrantyClaim.vehicle.VIN, cs.WarrantyClaim.Date, cs.technician.name FROM ClaimService cs JOIN cs.WarrantyClaim wc JOIN wc.vehicle v LEFT JOIN cs.technician t";
-            
+
             results = session.createQuery(hql, Object[].class)
-                    .setFirstResult(firstResult) 
-                    .setMaxResults(pageSize)    
+                    .setFirstResult(firstResult)
+                    .setMaxResults(pageSize)
                     .list();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

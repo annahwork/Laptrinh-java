@@ -10,6 +10,8 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -23,6 +25,8 @@ import jakarta.persistence.TemporalType;
 public class WarrantyClaim {
 
     @Id
+    // Hibernate/Spring sẽ không cố gán ClaimID, mà để SQL Server tự tăng.
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ClaimID", nullable = false, unique = true, length = 20)
     private Integer ClaimID;
 
@@ -35,7 +39,7 @@ public class WarrantyClaim {
     private VehiclePart VehiclePart;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "UserID") 
+    @JoinColumn(name = "UserID")
     private SCStaff CreatedByStaff;
 
     @Column(name = "Description", length = 500, columnDefinition = "NVARCHAR(500)")
@@ -51,25 +55,17 @@ public class WarrantyClaim {
     @Column(name = "Attachment", length = 255, columnDefinition = "NVARCHAR(255)")
     private String Attachment;
 
-    @OneToMany(
-            mappedBy = "WarrantyClaim",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY
-    )
+    @OneToMany(mappedBy = "WarrantyClaim", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<WarrantyHistory> History = new ArrayList<>();
 
-    @OneToMany(
-            mappedBy = "WarrantyClaim",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY
-    )
+    @OneToMany(mappedBy = "WarrantyClaim", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ClaimService> ClaimServices = new ArrayList<>();
 
-    public WarrantyClaim() {}
+    public WarrantyClaim() {
+    }
 
-    public WarrantyClaim(Integer ClaimID, VehiclePart VehiclePart, SCStaff CreatedByStaff, String Description, String Status, Date Date, String Attachment) {
+    public WarrantyClaim(Integer ClaimID, VehiclePart VehiclePart, SCStaff CreatedByStaff, String Description,
+            String Status, Date Date, String Attachment) {
         this.ClaimID = ClaimID;
         this.VehiclePart = VehiclePart;
         this.CreatedByStaff = CreatedByStaff;
@@ -83,17 +79,17 @@ public class WarrantyClaim {
         return this.ClaimID;
     }
 
-    @JsonIgnore 
+    @JsonIgnore
     public Vehicle getVehicle() {
         return vehicle;
     }
 
-    @JsonIgnore 
+    @JsonIgnore
     public VehiclePart getVehiclePart() {
         return this.VehiclePart;
     }
 
-    @JsonIgnore 
+    @JsonIgnore
     public User getCreatedByStaff() {
         return this.CreatedByStaff;
     }
@@ -119,7 +115,7 @@ public class WarrantyClaim {
         return this.History;
     }
 
-    @JsonIgnore 
+    @JsonIgnore
     public List<ClaimService> getClaimServices() {
         return this.ClaimServices;
     }
@@ -155,7 +151,6 @@ public class WarrantyClaim {
     public void setAttachment(String Attachment) {
         this.Attachment = Attachment;
     }
-    
 
     public void setHistory(List<WarrantyHistory> history) {
         History = history;

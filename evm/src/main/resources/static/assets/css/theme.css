@@ -304,3 +304,124 @@ body {
     text-align: left;
     padding: 0.5rem;
 }
+
+
+/* BASE CHUNG CHO NÚT TRONG BẢNG */
+
+.btn-action {
+    padding: 6px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    font-size: var(--caption-size);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--transition), box-shadow var(--transition), transform var(--transition);
+    font-family: var(--font-sans);
+}
+ 
+/* BUTTON SỬA */
+.btn-edit {
+    background: var(--info-bg);
+    color: var(--info-text);
+    border-color: var(--info);
+}
+
+.btn-edit:hover {
+    background: color-mix(in srgb, var(--info-bg), white 10%);
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.25);
+    transform: translateY(-1px);
+}
+
+.btn-edit:active {
+    transform: scale(0.97);
+}
+
+/* BUTTON XÓA */
+.btn-delete {
+    background: var(--danger-bg);
+    color: var(--danger-text);
+    border-color: var(--danger);
+}
+
+.btn-delete:hover {
+    background: color-mix(in srgb, var(--danger-bg), white 10%);
+    box-shadow: 0 2px 6px rgba(220, 38, 38, 0.25);
+    transform: translateY(-1px);
+}
+
+.btn-delete:active {
+    transform: scale(0.97);
+}
+
+/* BUTTON XEM */
+.btn-view {
+    background: var(--success-bg);
+    color: var(--success-text);
+    border-color: var(--success);
+}
+
+.btn-view:hover {
+    background: color-mix(in srgb, var(--success-bg), white 10%);
+    box-shadow: 0 2px 6px rgba(22, 163, 74, 0.25);
+    transform: translateY(-1px);
+}
+
+.btn-view:active {
+    transform: scale(0.97);
+}
+
+/* BUTTON THÊM  */
+
+.btn-add {
+    margin-left: auto;
+    background: var(--primary);
+    color: var(--gray-900);
+    border-color: var(--info);
+}
+
+.btn-add:hover {
+    background: color-mix(in srgb, var(--info-bg), white 10%);
+    box-shadow: 0 2px 6px rgba(20, 64, 135, 0.25);
+    transform: translateY(-1px);
+}
+
+.btn-add:active {
+    transform: scale(0.97);
+}
+
+/* BUTTON HỦY  */
+.btn-cancel {
+    background: var(--danger-bg);
+    color: var(--danger-text);
+    border-color: var(--danger);
+}
+
+.btn-cancel:hover {
+    background: color-mix(in srgb, var(--danger-bg), white 10%);
+    box-shadow: 0 2px 6px rgba(220, 38, 38, 0.25);
+    transform: translateY(-1px);
+}
+
+.btn-cancel:active {
+    transform: scale(0.97);
+}
+
+/* BUTTON LƯU */
+.btn-save {
+    background: var(--success-bg);
+    color: var(--success-text);
+    border-color: var(--success);
+}
+
+.btn-save:hover {
+    background: color-mix(in srgb, var(--success-bg), white 10%);
+    box-shadow: 0 2px 6px rgba(22, 163, 74, 0.25);
+    transform: translateY(-1px);
+}
+
+.btn-save:active {
+    transform: scale(0.97);
+}
+
+/* BASE CHUNG CHO NÚT TRONG BẢNG */
+

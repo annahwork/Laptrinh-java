@@ -407,6 +407,7 @@ body {
 }
 
 /* BUTTON LƯU */
+
 .btn-save {
     background: var(--success-bg);
     color: var(--success-text);
@@ -423,5 +424,21 @@ body {
     transform: scale(0.97);
 }
 
+/* BUTTON TRƯỚC - SAU */
+.btn-load {
+    background: var(--success-bg);
+    color: var(--gray-900);
+    border-color: var(--success-bg);
+}
+
+.btn-load:hover {
+    background: color-mix(in srgb, var(--success-bg), white 10%);
+    box-shadow: 0 2px 6px rgba(192, 210, 199, 0.25);
+    transform: translateY(-1px);
+}
+
+.btn-load:active {
+    transform: scale(0.97);
+}
 /* BASE CHUNG CHO NÚT TRONG BẢNG */
 

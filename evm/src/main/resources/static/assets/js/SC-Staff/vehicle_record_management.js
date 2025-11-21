@@ -211,7 +211,7 @@
     function initVehicleModal() {
       const btnOpen = document.getElementById('btnMoFormVehicle');
       const modal = document.getElementById('modalQuanLyVehicle');
-      const btnClose = modal ? modal.querySelector('.vehicle__close-button') : null;
+      const btnClose = modal ? modal.querySelector('.close-button') : null;
       const btnCancel = document.getElementById('vehicleCancelBtn');
       const form = modal ? modal.querySelector('.vehicle__form') : null;
 

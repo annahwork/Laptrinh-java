@@ -15,31 +15,26 @@
                         <div class="notifications-header">
                             <h3>Thông báo công việc</h3>
                             <div class="notifications-actions">
-                                <!-- <button id="btnCreateNotification" class="btn-primary"> -->
-                                    <!-- Tạo thông báo -->
-                                <!-- </button> -->
                             </div>
                         </div>
 
-                        <!-- LIST THÔNG BÁO -->
                         <ul id="notificationsList" class="notification-list">
-                            <!-- JS render item ở đây -->
                         </ul>
 
-                        <!-- PHÂN TRANG -->
                         <div class="card-footer">
                             <div class="pagination-wrapper">
                                 <span class="pagination-info" id="notificationsPaginationInfo">
                                     Hiển thị 0 của 0
                                 </span>
                                 <div>
-                                    <button class="pagination-btn" id="notificationsPrevBtn">
+                                    <button class="btn-action btn-load" id="notificationsPrevBtn">
                                         « Trước
                                     </button>
-                                    <span id="notificationsPageNumber" style="margin: 0 10px;">
+                                    <span class="btn-action btn-load" id="notificationsPageNumber"
+                                        style="margin: 0 10px;">
                                         1
                                     </span>
-                                    <button class="pagination-btn" id="notificationsNextBtn">
+                                    <button class="btn-action btn-load" id="notificationsNextBtn">
                                         Sau »
                                     </button>
                                 </div>
@@ -48,11 +43,9 @@
                     </div>
                 </div>
 
-                <!-- modal xem chi tiết (nếu sau này dùng) -->
                 <div id="modalNotification" class="notification__modal" style="display:none;">
                 </div>
 
-                <!-- modal tạo thông báo (nếu sau này dùng) -->
                 <div id="modalCreateNotification" class="notification__modal" style="display:none;">
                 </div>
 

@@ -426,9 +426,9 @@ body {
 
 /* BUTTON TRƯỚC - SAU */
 .btn-load {
-    background: var(--success-bg);
+    background: var(--card-bg);
     color: var(--gray-900);
-    border-color: var(--success-bg);
+    border-color: var(--gray-900);
 }
 
 .btn-load:hover {

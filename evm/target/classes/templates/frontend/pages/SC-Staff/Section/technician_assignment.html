@@ -14,7 +14,7 @@
                 <div class="card filter-card">
                     <div class="filter-card-body">
                         <div class="filter-right">
-                            <button id="btntechnician_assignment" class="btn-primary">
+                            <button id="btntechnician_assignment" class="btn-action btn-add">
                                 Tạo yêu cầu mới
                             </button>
                         </div>
@@ -48,9 +48,9 @@
                     <div class="pagination-wrapper">
                         <span class="pagination-info">Hiển thị 0 của 0</span>
                         <div>
-                            <button class="pagination-btn prev-btn">« Trước</button>
-                            <button class="btn-primary pagination-btn-active page-number-btn">1</button>
-                            <button class="pagination-btn next-btn">Sau »</button>
+                            <button class="btn-action btn-load">« Trước</button>
+                            <button class="btn-action btn-load">1</button>
+                            <button class="btn-action btn-load">Sau »</button>
                         </div>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
 
             <div id="modalYeuCauDieuPhoi" class="technician-assign__modal" style="display:none;">
                 <div class="technician-assign__modal-content">
-                    <button class="technician-assign__close-button" id="newReqCloseBtn"
+                    <button class="close-button" id="newReqCloseBtn"
                         aria-label="Close">&times;</button>
 
                     <form class="technician-assign__form" id="newRequestForm">
@@ -124,11 +124,11 @@
                             <textarea id="assign_desc" ...></textarea>
                         </div>
 
-                        <div class="technician-assign__button-group">
+                        <div class="button-group">
                             <button type="button" id="assignCancelBtnModal"
-                                class="technician-assign__button technician-assign__button--cancel">Huỷ</button>
+                                class="btn-action btn-cancel">Huỷ</button>
                             <button type="submit"
-                                class="technician-assign__button technician-assign__button--submit">Tạo</button>
+                                class="btn-action btn-save">Tạo</button>
                         </div>
                     </form>
                 </div>

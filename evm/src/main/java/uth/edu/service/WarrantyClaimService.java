@@ -3,6 +3,7 @@ package uth.edu.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.hibernate.mapping.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +85,6 @@ public class WarrantyClaimService {
             ClaimData.setStatus("Pending");
             ClaimData.setAttachment(AttachmentUrl);
 
-            // Set the ClaimID manually
             int nextId = warrantyClaimRepository.getNextClaimId();
             ClaimData.setClaimID(nextId);
 
@@ -424,6 +424,23 @@ public class WarrantyClaimService {
             return new ArrayList<>();
         }
     }
+
+    public List<java.util.Map<String, Object>> getAllClaimDescriptionsForAnalysis() {
+    try {
+        List<Object[]> rawData = warrantyClaimRepository.getAllClaimDescriptions();
+        return rawData.stream()
+            .map(row -> {
+                java.util.Map<String, Object> map = new java.util.HashMap<>();
+                map.put("claimID", (Integer) row[0]);
+                map.put("description", (String) row[1]);
+                return map;
+            })
+            .collect(Collectors.toList());
+    } catch (Exception e) {
+        e.printStackTrace();
+        return new ArrayList<>(); 
+    }
+}
 
     public void closeResources() {
         try {

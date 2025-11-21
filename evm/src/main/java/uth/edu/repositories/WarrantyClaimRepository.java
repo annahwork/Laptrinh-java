@@ -76,6 +76,11 @@ public class WarrantyClaimRepository implements IWarrantyClaimRepository {
     }
 
     @Override
+    public List<Object[]> getAllClaimDescriptions() {
+        return WarrantyClaimDAO.getAllClaimDescriptions();
+    }
+
+    @Override
     public void closeResources() {
         if (WarrantyClaimDAO != null) {
             WarrantyClaimDAO.closeSessionFactory();

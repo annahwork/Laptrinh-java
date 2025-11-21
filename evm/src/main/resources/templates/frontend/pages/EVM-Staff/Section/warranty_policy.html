@@ -15,9 +15,12 @@
                     <div class="search-box-wrapper">
                         <div class="search-input-group">
                             <svg class="search-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8.5 3.5a5 5 0 100 10 5 5 0 000-10zm-7 5a7 7 0 1112.67 4.15l3.68 3.68a1 1 0 01-1.42 1.42l-3.68-3.68A7 7 0 011.5 8.5z" stroke="currentColor" stroke-width="1.5"></path>
+                                <path
+                                    d="M8.5 3.5a5 5 0 100 10 5 5 0 000-10zm-7 5a7 7 0 1112.67 4.15l3.68 3.68a1 1 0 01-1.42 1.42l-3.68-3.68A7 7 0 011.5 8.5z"
+                                    stroke="currentColor" stroke-width="1.5"></path>
                             </svg>
-                            <input type="text" class="search-input warranty-policy__search" placeholder="Tìm kiếm theo tên chính sách..." aria-label="Tìm kiếm chính sách">
+                            <input type="text" class="search-input warranty-policy__search"
+                                placeholder="Tìm kiếm theo tên chính sách..." aria-label="Tìm kiếm chính sách">
                         </div>
                     </div>
 
@@ -26,13 +29,12 @@
                             <option value="">Tất cả loại</option>
                             <option value="standard">Bảo hành chuẩn</option>
                             <option value="extended">Bảo hành mở rộng</option>
-                            <option value="recall">Thu hồi</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="warranty-policy__grid">
-                    
+
                     <div class="card policy-card">
                         <div class="policy-card-header">
                             <div class="header-top">
@@ -47,11 +49,13 @@
                             </div>
                             <div class="info-row description">
                                 <span class="label">Mô tả:</span>
-                                <p class="value">Bao gồm bảo hành các linh kiện cơ bản và sửa chữa miễn phí theo chính sách.</p>
+                                <p class="value">Bao gồm bảo hành các linh kiện cơ bản và sửa chữa miễn phí theo chính
+                                    sách.</p>
                             </div>
                         </div>
                         <div class="policy-card-footer">
-                            <button class="btn btn-view warranty-policy__btn warranty-policy__btn--view" data-id="WP001">Xem chi tiết</button>
+                            <button class="btn btn-view warranty-policy__btn warranty-policy__btn--view"
+                                data-id="WP001">Xem chi tiết</button>
                         </div>
                     </div>
 
@@ -69,11 +73,13 @@
                             </div>
                             <div class="info-row description">
                                 <span class="label">Mô tả:</span>
-                                <p class="value">Bao gồm bảo hành chuẩn và thêm các linh kiện điện tử, cảm biến, hệ thống an toàn.</p>
+                                <p class="value">Bao gồm bảo hành chuẩn và thêm các linh kiện điện tử, cảm biến, hệ
+                                    thống an toàn.</p>
                             </div>
                         </div>
                         <div class="policy-card-footer">
-                            <button class="btn btn-view warranty-policy__btn warranty-policy__btn--view" data-id="WP002">Xem chi tiết</button>
+                            <button class="btn btn-view warranty-policy__btn warranty-policy__btn--view"
+                                data-id="WP002">Xem chi tiết</button>
                         </div>
                     </div>
 
@@ -82,7 +88,7 @@
         </div>
     </div>
 
-    <div id="modalPolicy" class="modal warranty-policy__modal" style="display:none;">
+    <div id="modalPolicy" class="modal warranty-policy__modal">
         <div class="modal-content warranty-policy__modal-content">
             <div class="modal-header">
                 <h3 id="modalPolicyTitle" class="warranty-policy__modal-title">Chi tiết chính sách</h3>
@@ -98,9 +104,15 @@
                     <span class="info-label">Thời hạn áp dụng:</span>
                     <span id="modalPolicyDuration" class="info-value"></span>
                 </div>
+
                 <div class="info-item full-width">
-                    <span class="info-label">Mô tả chi tiết:</span>
-                    <div id="modalPolicyDescription" class="info-desc"></div>
+                    <span class="info-label">Mô tả tóm tắt:</span>
+                    <div id="modalPolicySummary" class="info-desc"></div>
+                </div>
+
+                <div class="info-item full-width">
+                    <span class="info-label">Nội dung chi tiết chính sách:</span>
+                    <div id="modalPolicyDetails" class="policy-details-content"></div>
                 </div>
             </div>
 
@@ -109,6 +121,6 @@
             </div>
         </div>
     </div>
-
+    </div>
+    </div>
 </section>
-

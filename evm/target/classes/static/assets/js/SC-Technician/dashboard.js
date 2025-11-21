@@ -47,14 +47,13 @@
         
         scheduleData.forEach(row => {
             const tr = document.createElement("tr");
-            const statusInfo = formatScheduleStatus(row[4]); 
             
+            const statusInfo = formatScheduleStatus(row[4]); 
+
             tr.innerHTML = `
-                <td>${formatTime(row[0])}</td>  
-                <td>${row[1] || 'N/A'}</td>   
-                <td>${row[2] || 'N/A'}</td>   
-                <td>${row[3] || 'N/A'}</td>   
-                <td><span class="status ${statusInfo.class}">${statusInfo.text}</span></td>
+                <td>${formatTime(row[0])}</td>
+                <td>${row[1] || 'N/A'}</td>
+                <td>${row[2] || 'N/A'}</td>  <td>${row[3] || 'N/A'}</td>  <td><span class="status ${statusInfo.class}">${statusInfo.text}</span></td>
             `;
             tbody.appendChild(tr);
         });

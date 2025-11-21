@@ -67,7 +67,7 @@ public class WarrantyClaimDAO {
             if (session != null && session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            return false; // Đưa return false ra đây
+            return false;
         } finally {
             if (session != null) {
                 session.close();
@@ -210,7 +210,7 @@ public class WarrantyClaimDAO {
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
-            return new ArrayList<>(); // Trả về list rỗng
+            return new ArrayList<>(); 
         } finally {
             if (session != null) {
                 session.close();
@@ -224,7 +224,6 @@ public class WarrantyClaimDAO {
         List<WarrantyClaim> claims = null;
         try {
             session = sessionFactory.openSession();
-            // SỬA: Thêm JOIN FETCH
             String hql = "FROM WarrantyClaim wc " +
                     "JOIN FETCH wc.vehicle v " +
                     "JOIN FETCH wc.CreatedByStaff " +
@@ -237,7 +236,7 @@ public class WarrantyClaimDAO {
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
-            return new ArrayList<>(); // Trả về list rỗng
+            return new ArrayList<>();
         } finally {
             if (session != null)
                 session.close();
@@ -250,7 +249,6 @@ public class WarrantyClaimDAO {
         List<WarrantyClaim> claims = null;
         try {
             session = sessionFactory.openSession();
-            // SỬA: Thêm JOIN FETCH
             String hql = "FROM WarrantyClaim wc " +
                     "JOIN FETCH wc.vehicle v " +
                     "JOIN FETCH wc.CreatedByStaff s " +
@@ -263,7 +261,7 @@ public class WarrantyClaimDAO {
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
-            return new ArrayList<>(); // Trả về list rỗng
+            return new ArrayList<>();
         } finally {
             if (session != null)
                 session.close();
@@ -287,7 +285,7 @@ public class WarrantyClaimDAO {
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
-            return new ArrayList<>(); // Trả về list rỗng
+            return new ArrayList<>();  
         } finally {
             if (session != null)
                 session.close();
@@ -342,6 +340,26 @@ public class WarrantyClaimDAO {
             e.printStackTrace();
         }
         return nextId;
+    }
+
+    public List<Object[]> getAllClaimDescriptions() {
+        Session session = null;
+        List<Object[]> results = null;
+        try {
+            session = sessionFactory.openSession();
+            String hql = "SELECT wc.ClaimID, wc.Description FROM WarrantyClaim wc ORDER BY wc.ClaimID ASC";
+            
+            results = session.createQuery(hql, Object[].class)
+                            .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>(); 
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return results;
     }
 
     public void closeSessionFactory() {

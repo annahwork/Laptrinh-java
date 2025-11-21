@@ -27,8 +27,10 @@ uth\edu\service\CampaignService.class
 uth\edu\repositories\IRecallCampaignRepository.class
 uth\edu\repositories\AdminRepository.class
 uth\edu\pojo\Notification.class
+uth\edu\controllers\GeminiController.class
 uth\edu\repositories\ISCTechnicianRepository.class
 uth\edu\repositories\IAdminRepository.class
+uth\edu\controllers\ScStaffVehicleApiController.class
 uth\edu\dao\WarrantyClaimDAO.class
 uth\edu\repositories\IVehicleRepository.class
 uth\edu\pojo\Vehicle.class

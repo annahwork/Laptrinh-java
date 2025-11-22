@@ -101,23 +101,6 @@
     font-weight: 600;
 }
 
-/* Action Button */
-.btn-action {
-    padding: 0.4rem 0.8rem;
-    border: 1px solid var(--primary);
-    background-color: white;
-    color: var(--primary);
-    border-radius: var(--radius-md);
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.btn-action:hover {
-    background-color: var(--primary);
-    color: white;
-}
 
 /* --- 5. FOOTER (Total + Pagination) --- */
 .card-footer {

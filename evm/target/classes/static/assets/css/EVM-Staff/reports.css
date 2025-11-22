@@ -32,7 +32,7 @@
 
 /* --- 3. HEADER & FILTER BAR (FIX LỖI BỊ ĐÈ) --- */
 .section-header {
-    margin-bottom: 0.5rem;
+    margin-bottom: 14px;
 }
 
 .page-title {
@@ -55,7 +55,6 @@
     padding: 1rem 1.5rem;
     gap: 1rem;
     flex-wrap: wrap;
-    /* Quan trọng: Cho phép xuống dòng nếu màn hình nhỏ */
 }
 
 .filter-group-left {
@@ -64,7 +63,6 @@
     align-items: center;
     flex-grow: 1;
     flex-wrap: wrap;
-    /* FIX: Cho phép các input con xuống dòng, tránh bị đè */
 }
 
 .action-group-right {
@@ -72,14 +70,11 @@
     gap: 0.75rem;
     align-items: center;
     flex-shrink: 0;
-    /* Giữ nút không bị co lại */
 }
 
 .input-wrapper {
     flex: 1;
-    /* Co giãn đều */
     min-width: 220px;
-    /* Đảm bảo độ rộng tối thiểu để chữ không bị mất */
 }
 
 /* Form Control */
@@ -102,7 +97,7 @@
     box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.15);
 }
 
-/* Buttons */
+/* Buttons (General) */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -147,7 +142,6 @@
 .summary-card {
     transition: transform var(--transition), box-shadow var(--transition);
     border: 1px solid transparent;
-    /* Để màu nền tràn viền đẹp hơn */
 }
 
 .summary-card:hover {
@@ -206,88 +200,116 @@
     color: var(--text-orange);
 }
 
-
-/* --- 5. TABLE STYLES --- */
+/* --- 5. TABLE STYLES (CẬP NHẬT CĂN TRÁI) --- */
 .table-responsive {
     width: 100%;
     overflow-x: auto;
+    border: 1px solid var(--border); /* Viền bao quanh khung bảng */
+    border-radius: var(--radius-lg); /* Bo góc khung ngoài */
 }
 
 .data-table {
     width: 100%;
-    border-collapse: collapse;
-    font-size: var(--p-size);
+    border-collapse: collapse; /* Gộp đường viền để tạo dạng lưới */
+    font-size: 0.95rem;
+    background-color: #fff;
 }
 
+/* Header: Căn trái toàn bộ */
 .data-table thead th {
-    background: var(--gray-100);
-    color: var(--text);
-    /* <--- Quy định màu chữ */
-    text-align: left;
-    padding: 0.75rem 1rem;
-    font-weight: 600;
-    /* <--- Quy định độ in đậm */
-    border-bottom: 2px solid var(--border);
+    background-color: #f1f5f9; /* Màu nền xám xanh nhạt */
+    color: #1e293b; /* Màu chữ đậm */
+    font-weight: 700;
+    text-align: left !important; /* <--- FORCE LEFT ALIGN */
+    padding: 0.85rem 1rem;
+    border: 1px solid #e2e8f0; /* Đường kẻ lưới */
+    white-space: nowrap;
 }
 
+/* Body: Căn trái toàn bộ */
 .data-table tbody td {
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid var(--gray-100);
-    color: var(--text);
+    padding: 0.75rem 1rem;
+    border: 1px solid #e2e8f0;
+    color: #334155;
     vertical-align: middle;
+    text-align: left !important; /* <--- FORCE LEFT ALIGN cho cả cột số */
 }
 
+/* Hiệu ứng hover dòng */
 .data-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Cột thao tác (Action Column) */
+.data-table tbody td:last-child {
+    white-space: nowrap;
+    text-align: left !important; /* Đảm bảo cột cuối cũng căn trái */
+}
+
+
+
+/* --- PAGINATION (PHÂN TRANG DƯỚI CÙNG) --- */
+.table-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+
+.showing-info {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.pagination {
+    display: flex;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.page-item .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--border);
+    background-color: #fff;
+    color: var(--text);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.page-item .page-link:hover {
+    background-color: var(--gray-50);
+    border-color: var(--gray-400);
+}
+
+.page-item.active .page-link {
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.page-item.disabled .page-link {
+    color: var(--text-muted);
+    pointer-events: none;
     background-color: var(--gray-50);
 }
 
-.text-left {
-    text-align: left;
-}
-
-.text-right {
-    text-align: right;
-}
-
-.font-bold {
-    font-weight: 600;
-}
-
-.text-muted {
-    color: var(--text-muted);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .search-filter-bar {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .filter-group-left {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .action-group-right {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .btn,
-    .input-wrapper {
-        width: 100%;
-    }
-}
-
-/* AI Card Styles */
+/* --- 6. AI ANALYSIS CARD STYLES --- */
 .ai-analysis-card {
     margin-top: 24px;
     border: 1px solid #e0e7ff;
-    /* Viền xanh nhạt */
     box-shadow: 0 4px 20px rgba(99, 102, 241, 0.1);
-    /* Bóng đổ tím nhẹ */
     overflow: hidden;
+    background-color: #fff;
+    border-radius: var(--radius-lg);
 }
 
 .ai-header {
@@ -314,7 +336,6 @@
     align-items: center;
     justify-content: center;
     color: #4f46e5;
-    /* Màu Indigo */
 }
 
 .ai-text-gradient {
@@ -323,9 +344,9 @@
     -webkit-text-fill-color: transparent;
     font-weight: 700;
     margin-bottom: 4px;
+    font-size: 1.1rem;
 }
 
-/* Button AI */
 .btn-ai-generate {
     background: linear-gradient(90deg, #4f46e5, #4338ca);
     color: white;
@@ -334,6 +355,11 @@
     border-radius: 6px;
     transition: all 0.3s ease;
     box-shadow: 0 2px 5px rgba(79, 70, 229, 0.3);
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .btn-ai-generate:hover {
@@ -342,7 +368,6 @@
     box-shadow: 0 4px 8px rgba(79, 70, 229, 0.4);
 }
 
-/* Content Styles */
 .ai-body {
     padding: 24px;
     background-color: #fff;
@@ -353,9 +378,9 @@
     text-align: center;
     color: #9ca3af;
     font-style: italic;
+    padding: 2rem 0;
 }
 
-/* Insight Items */
 .ai-insight-item {
     padding: 12px 16px;
     border-radius: 8px;
@@ -379,7 +404,6 @@
     flex-shrink: 0;
 }
 
-/* Màu sắc trạng thái */
 .ai-insight-item.success {
     background-color: #ecfdf5;
     color: #065f46;
@@ -405,4 +429,33 @@
 
 .ai-insight-item.info .dot {
     background-color: #3b82f6;
+}
+
+/* Tiện ích text alignment (Ghi đè nếu cần thiết) */
+.text-left { text-align: left !important; }
+.text-right { text-align: left !important; } /* Cố tình ghi đè class này để mọi thứ đều về trái theo yêu cầu */
+.font-bold { font-weight: 600; }
+.text-muted { color: var(--text-muted); }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .search-filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-group-left {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .action-group-right {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .btn,
+    .input-wrapper {
+        width: 100%;
+    }
 }

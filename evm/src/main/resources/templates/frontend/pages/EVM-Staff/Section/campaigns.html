@@ -14,9 +14,6 @@
                 <div class="search-filter-bar card">
                     <div class="search-box-wrapper">
                         <div class="search-input-group">
-                            <svg class="search-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8.5 3.5a5 5 0 100 10 5 5 0 000-10zm-7 5a7 7 0 1112.67 4.15l3.68 3.68a1 1 0 01-1.42 1.42l-3.68-3.68A7 7 0 011.5 8.5z" stroke="currentColor" stroke-width="1.5"></path>
-                            </svg>
                             <input type="text" id="searchInput" class="search-input" placeholder="Tìm kiếm theo tên chiến dịch..." aria-label="Tìm kiếm chiến dịch" />
                         </div>
                     </div>
@@ -29,10 +26,9 @@
                             <option value="Completed">Hoàn thành (Completed)</option>
                             <option value="Rejected">Từ chối (Rejected)</option>
                         </select>
-                        
-                        <button class="btn btn-primary" id="btnCreateCampaign">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
-                            Tạo chiến dịch mới
+
+                        <button type="button" id="btnCreateCampaign" class="btn-action btn-add">
+                            <i class="fas fa-plus"></i> Tạo chiến dịch
                         </button>
                     </div>
                 </div>
@@ -61,9 +57,9 @@
                     <div class="card-footer">
                         <span class="pagination-info" id="paginationInfo">Hiển thị 0 của 0</span>
                         <div class="pagination-wrapper">
-                            <button class="pagination-btn" id="btnPrev" disabled>« Trước</button>
-                            <button class="pagination-btn-active" id="btnCurrent">1</button>
-                            <button class="pagination-btn" id="btnNext" disabled>Sau »</button>
+                            <button class="btn-action btn-load" id="btnPrev" disabled>« Trước</button>
+                            <button class="btn-action btn-load" id="btnCurrent">1</button>
+                            <button class="btn-action btn-load" id="btnNext" disabled>Sau »</button>
                         </div>
                     </div>
                 </div>
@@ -99,8 +95,8 @@
                     <input type="hidden" id="campaignId" />
 
                     <div class="modal-footer-actions">
-                        <button type="button" class="btn btn-cancel" id="btnCancelModal">Hủy</button>
-                        <button type="submit" class="btn btn-save">Lưu thông tin</button>
+                        <button type="button" class="btn-action btn-cancel" id="btnCancelModal">Hủy</button>
+                        <button type="submit" class="btn-action btn-save">Lưu thông tin</button>
                     </div>
                 </form>
             </div>
@@ -111,7 +107,7 @@
         <div class="modal-content campaign__modal-content" style="max-width: 500px;">
             <div class="modal-header">
                 <h3 id="approveModalTitle">Chi tiết chiến dịch</h3>
-                <button class="modal-close-btn" id="btnCloseApproveModal">×</button>
+                <button class="close-button" id="btnCloseApproveModal">×</button>
             </div>
             
             <div class="modal-body info-grid">

@@ -433,6 +433,13 @@ dist/
 *.pid
 
 # End local additions
+
+# === Exceptions: ensure source files are tracked ===
+# Some previous global rules ignore many paths (e.g. '/*').
+# Explicitly allow the evm source tree (templates, static assets, java sources).
+!evm/src/
+!evm/src/**
+!evm/pom.xml
 !/var/package
 /var/package/*
 !/var/package/*.xml

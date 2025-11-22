@@ -1,6 +1,13 @@
-/* =========================================
-   LAYOUT & CONTAINER
-   ========================================= */
+#manage_ev_parts_page {
+    color: var(--text);
+    background-color: var(--bg-body);
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+.manage_ev_parts_page{
+    padding: 0.5rem;
+    padding-bottom: 20px;
+}
 .content-wrapper {
     padding: 1.5rem; /* ~24px */
     max-width: 100%;

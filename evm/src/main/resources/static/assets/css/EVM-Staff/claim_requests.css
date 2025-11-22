@@ -104,39 +104,6 @@
     text-align: right;
 }
 
-/* --- BUTTONS (Thêm style cho nút Duyệt/Từ chối) --- */
-.btn {
-    padding: 0.625rem 1rem;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: background var(--transition), transform var(--transition);
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    border: none;
-    color: white;
-    font-size: 0.9rem;
-}
-
-.btn-success {
-    background: var(--success);
-}
-
-.btn-success:hover {
-    background: var(--success-hover);
-    transform: translateY(-1px);
-}
-
-.btn-danger {
-    background: var(--danger);
-}
-
-.btn-danger:hover {
-    background: var(--danger-hover);
-    transform: translateY(-1px);
-}
 
 /* --- PHÂN TRANG (PAGINATION) - THEO MẪU --- */
 .card-footer {
@@ -166,33 +133,6 @@
     margin-left: auto;
 }
 
-.pagination-btn,
-.pagination-btn-active {
-    border: 1px solid #cbd5e1;
-    background: var(--card-bg);
-    color: var(--text);
-    padding: 6px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    font-weight: 500;
-    transition: all 0.25s ease;
-    min-width: 44px;
-    text-align: center;
-}
-
-.pagination-btn:hover {
-    background: #f1f5fb;
-    border-color: #94a3b8;
-}
-
-.pagination-btn-active {
-    background: #0a66c2;
-    color: #fff;
-    border-color: #0a66c2;
-    font-weight: 600;
-    box-shadow: 0 2px 6px rgba(10, 102, 194, 0.3);
-}
 
 /* --- MODAL - THEO MẪU --- */
 .modal {
@@ -233,20 +173,6 @@
     margin: 0;
 }
 
-.modal-close-btn {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--text-muted);
-    transition: color var(--transition);
-    line-height: 1;
-    padding: 0;
-}
-
-.modal-close-btn:hover {
-    color: var(--danger);
-}
 
 .modal-form {
     padding: 1.5rem;

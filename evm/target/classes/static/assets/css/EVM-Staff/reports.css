@@ -1,6 +1,5 @@
 /* --- 2. LAYOUT & BASE --- */
 #report_page {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     color: var(--text);
     background-color: var(--bg-body);
     min-height: 100vh;
@@ -8,7 +7,7 @@
 }
 
 .report-page {
-    padding: 1.5rem;
+    padding: 0.5rem;
 }
 
 .content-wrapper {
@@ -347,25 +346,15 @@
     font-size: 1.1rem;
 }
 
-.btn-ai-generate {
-    background: linear-gradient(90deg, #4f46e5, #4338ca);
-    color: white;
+.btn-add {
     border: none;
     padding: 10px 20px;
     border-radius: 6px;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(79, 70, 229, 0.3);
     cursor: pointer;
     font-weight: 600;
     display: flex;
     align-items: center;
     gap: 8px;
-}
-
-.btn-ai-generate:hover {
-    background: linear-gradient(90deg, #4338ca, #3730a3);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(79, 70, 229, 0.4);
 }
 
 .ai-body {

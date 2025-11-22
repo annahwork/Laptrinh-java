@@ -95,23 +95,6 @@
     text-align: center;
 }
 
-/* Button View (Nút Xem tiến trình) */
-.btn-view {
-    padding: 0.4rem 0.8rem;
-    border: 1px solid var(--primary);
-    background-color: white;
-    color: var(--primary);
-    border-radius: var(--radius-md);
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.btn-view:hover {
-    background-color: var(--primary);
-    color: white;
-}
 
 /* Status Badges (Hiển thị trạng thái đẹp hơn) */
 .status-badge {
@@ -167,35 +150,6 @@
     gap: 8px;
 }
 
-.pagination-btn,
-.pagination-btn-active {
-    border: 1px solid var(--gray-300);
-    background: var(--card-bg);
-    color: var(--text);
-    padding: 6px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    min-width: 44px;
-    text-align: center;
-}
-
-.pagination-btn:hover {
-    background: #f1f5fb;
-    border-color: #94a3b8;
-}
-
-.pagination-btn-active,
-.pagination-btn--active {
-    /* Support cả 2 class */
-    background: var(--primary);
-    color: #fff;
-    border-color: var(--primary);
-    font-weight: 600;
-    box-shadow: 0 2px 4px rgba(10, 102, 194, 0.2);
-}
 
 /* --- 6. MODAL --- */
 .modal {
@@ -242,20 +196,7 @@
     color: var(--primary);
 }
 
-.modal-close-btn {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    line-height: 1;
-    color: var(--text-muted);
-    cursor: pointer;
-    transition: color 0.2s;
-    padding: 0;
-}
 
-.modal-close-btn:hover {
-    color: var(--danger);
-}
 
 .modal-body {
     padding: 0;

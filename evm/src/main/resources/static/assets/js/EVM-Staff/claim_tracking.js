@@ -60,7 +60,7 @@
                 <td>${claim.date}</td>
                 <td><span class="status-badge ${statusClass}">${claim.status}</span></td>
                 <td>
-                    <button class="btn-view" data-id="${claim.claimId.replace('CR-', '')}">
+                    <button class="btn-action btn-view" data-id="${claim.claimId.replace('CR-', '')}">
                         Xem tiến trình
                     </button>
                 </td>

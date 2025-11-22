@@ -79,7 +79,7 @@
                 <td>${c.date || 'N/A'}</td>
                 <td class="text-right">${currencyFormatter.format(c.totalCost || 0).replace(/\s/g, '')}</td>
                 <td class="text-center">
-                    <button class="btn-action" data-id="${c.claimIdRaw}">
+                    <button class="btn-action btn-view" data-id="${c.claimIdRaw}">
                       Xem chi tiết
                     </button>
                 </td>
@@ -156,7 +156,7 @@
     }
 
     tableBody.addEventListener('click', function(e) {
-        if (e.target && e.target.classList.contains('btn-action')) {
+        if (e.target && e.target.classList.contains('btn-view')) {
             const id = e.target.getAttribute('data-id');
             if (id) {
                 openModal(id);

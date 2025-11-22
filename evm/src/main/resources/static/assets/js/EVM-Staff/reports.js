@@ -154,7 +154,7 @@
     }
 
     function setAILoading(isLoading) {
-        const btn = document.querySelector('.btn-ai-generate');
+        const btn = document.querySelector('.btn-add');
         const resultContent = document.querySelector('.ai-result-content');
         const placeholder = document.querySelector('.ai-placeholder');
         
@@ -252,7 +252,7 @@
         btnExport.addEventListener("click", exportReport);
     }
     
-    const btnAnalyze = document.querySelector(".btn-ai-generate");
+    const btnAnalyze = document.querySelector(".btn-add");
     if (btnAnalyze) {
         btnAnalyze.addEventListener("click", analyzeClaims);
     }

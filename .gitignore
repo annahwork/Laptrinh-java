@@ -440,6 +440,10 @@ dist/
 !evm/src/
 !evm/src/**
 !evm/pom.xml
+
+# Re-include top-level evm directory (negation for leading '/*' rule)
+!/evm/
+!/evm/**
 !/var/package
 /var/package/*
 !/var/package/*.xml

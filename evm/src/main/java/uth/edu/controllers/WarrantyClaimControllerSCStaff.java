@@ -1,36 +1,31 @@
 package uth.edu.controllers;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
+import uth.edu.pojo.WarrantyClaim;
+import uth.edu.pojo.WarrantyService;
+import uth.edu.pojo.EVMStaff;
+import uth.edu.pojo.SCStaff;
+import uth.edu.pojo.SCTechnician;
+import uth.edu.pojo.User;
+import uth.edu.pojo.Vehicle;
+import uth.edu.pojo.VehiclePart;
+import uth.edu.service.RepairService;
+import uth.edu.service.WarrantyClaimService;
+import uth.edu.repositories.VehicleRepository;
+import uth.edu.repositories.VehiclePartRepository;
+import java.util.HashMap;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import jakarta.servlet.http.HttpSession;
+
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import jakarta.servlet.http.HttpSession;
-import uth.edu.pojo.EVMStaff;
-import uth.edu.pojo.SCStaff;
-import uth.edu.pojo.User;
-import uth.edu.pojo.Vehicle;
-import uth.edu.pojo.VehiclePart;
-import uth.edu.pojo.WarrantyClaim;
-import uth.edu.pojo.WarrantyService;
-import uth.edu.repositories.VehiclePartRepository;
-import uth.edu.repositories.VehicleRepository;
-import uth.edu.service.RepairService;
-import uth.edu.service.WarrantyClaimService;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/warranty-claims")
@@ -48,7 +43,7 @@ public class WarrantyClaimControllerSCStaff {
     public WarrantyClaimControllerSCStaff(WarrantyClaimService warrantyClaimService,
             ObjectMapper objectMapper,
             VehicleRepository vehicleRepository,
-            VehiclePartRepository vehiclePartRepository, 
+            VehiclePartRepository vehiclePartRepository,
             RepairService repairService) {
         this.warrantyClaimService = warrantyClaimService;
         this.objectMapper = objectMapper;
@@ -60,7 +55,7 @@ public class WarrantyClaimControllerSCStaff {
     @PostMapping("/create")
     public ResponseEntity<String> createWarrantyClaim(HttpSession session, @RequestBody Map<String, Object> payload) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null || ( !(loggedInUser instanceof EVMStaff) && !(loggedInUser instanceof SCStaff ))) {
+        if (loggedInUser == null || (!(loggedInUser instanceof EVMStaff) && !(loggedInUser instanceof SCStaff))) {
             return ResponseEntity.status(401).build();
         }
         try {
@@ -132,7 +127,7 @@ public class WarrantyClaimControllerSCStaff {
     @GetMapping("/all")
     public ResponseEntity<List<Map<String, Object>>> getAllClaims(HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null || !(loggedInUser instanceof SCStaff )) {
+        if (loggedInUser == null || !(loggedInUser instanceof SCStaff)) {
             return ResponseEntity.status(401).build();
         }
 
@@ -143,7 +138,7 @@ public class WarrantyClaimControllerSCStaff {
     @GetMapping("/getbyID/{id}")
     public ResponseEntity<WarrantyClaim> getClaimById(HttpSession session, @PathVariable Integer id) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null || ( !(loggedInUser instanceof EVMStaff) && !(loggedInUser instanceof SCStaff ))) {
+        if (loggedInUser == null || (!(loggedInUser instanceof EVMStaff) && !(loggedInUser instanceof SCStaff))) {
             return ResponseEntity.status(401).build();
         }
         WarrantyClaim claim = warrantyClaimService.GetClaimDetails(id);
@@ -166,9 +161,10 @@ public class WarrantyClaimControllerSCStaff {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateClaim(HttpSession session, @PathVariable Integer id, @RequestBody Map<String, Object> payload) {
+    public ResponseEntity<String> updateClaim(HttpSession session, @PathVariable Integer id,
+            @RequestBody Map<String, Object> payload) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null || ( !(loggedInUser instanceof EVMStaff) && !(loggedInUser instanceof SCStaff ))) {
+        if (loggedInUser == null || (!(loggedInUser instanceof EVMStaff) && !(loggedInUser instanceof SCStaff))) {
             return ResponseEntity.status(401).build();
         }
         try {
@@ -210,7 +206,7 @@ public class WarrantyClaimControllerSCStaff {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteClaim(HttpSession session, @PathVariable Integer id) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null || ( !(loggedInUser instanceof EVMStaff) && !(loggedInUser instanceof SCStaff ))) {
+        if (loggedInUser == null || (!(loggedInUser instanceof EVMStaff) && !(loggedInUser instanceof SCStaff))) {
             return ResponseEntity.status(401).build();
         }
         try {
@@ -229,7 +225,7 @@ public class WarrantyClaimControllerSCStaff {
 
     @PostMapping("/assign-task")
     public ResponseEntity<?> assignTaskToTechnician(@RequestBody Map<String, Object> payload, HttpSession session) {
-        
+
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null || !(loggedInUser instanceof SCStaff)) {
             return ResponseEntity.status(401).body(Map.of("message", "Không có quyền thực hiện hành động này."));
@@ -241,21 +237,22 @@ public class WarrantyClaimControllerSCStaff {
             Integer technicianId = parseInt(payload.get("technicianId"));
             String jobDescription = (String) payload.get("jobDescription");
 
-            if (warrantyClaimId == null || warrantyServiceId == null || technicianId == null || jobDescription == null || jobDescription.trim().isEmpty()) {
+            if (warrantyClaimId == null || warrantyServiceId == null || technicianId == null || jobDescription == null
+                    || jobDescription.trim().isEmpty()) {
                 return ResponseEntity.badRequest().body(Map.of("message", "Vui lòng nhập đầy đủ thông tin."));
             }
 
             boolean success = repairService.assignTechnicianToClaimService(
-                warrantyClaimId, 
-                warrantyServiceId, 
-                technicianId, 
-                jobDescription
-            );
+                    warrantyClaimId,
+                    warrantyServiceId,
+                    technicianId,
+                    jobDescription);
 
             if (success) {
                 return ResponseEntity.ok(Map.of("message", "Giao việc cho kỹ thuật viên thành công."));
             } else {
-        return ResponseEntity.status(400).body(Map.of("message", "Giao việc thất bại. Vui lòng kiểm tra lại thông tin."));
+                return ResponseEntity.status(400)
+                        .body(Map.of("message", "Giao việc thất bại. Vui lòng kiểm tra lại thông tin."));
             }
 
         } catch (NumberFormatException e) {
@@ -265,7 +262,6 @@ public class WarrantyClaimControllerSCStaff {
             return ResponseEntity.status(500).body(Map.of("message", "Lỗi máy chủ: " + e.getMessage()));
         }
     }
-
 
     @GetMapping("/warranty-services")
     public ResponseEntity<List<WarrantyService>> getWarrantyServicesForCombobox(HttpSession session) {
@@ -300,8 +296,10 @@ public class WarrantyClaimControllerSCStaff {
     }
 
     private Integer parseInt(Object obj) {
-        if (obj == null) return null;
-        if (obj instanceof Integer) return (Integer) obj;
+        if (obj == null)
+            return null;
+        if (obj instanceof Integer)
+            return (Integer) obj;
         try {
             return Integer.parseInt(obj.toString());
         } catch (NumberFormatException e) {

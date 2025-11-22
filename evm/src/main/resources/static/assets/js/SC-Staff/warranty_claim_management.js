@@ -1,6 +1,24 @@
 (function () {
     'use strict';
 
+    // Fallback helpers: if modal.js didn't load, provide Promise-based wrappers
+    if (typeof window.showAlert !== 'function') {
+        window.showAlert = function (message) {
+            return new Promise((resolve) => {
+                alert(message);
+                resolve();
+            });
+        };
+    }
+    if (typeof window.showConfirm !== 'function') {
+        window.showConfirm = function (message, opts) {
+            return new Promise((resolve) => {
+                const ok = confirm(message);
+                resolve(Boolean(ok));
+            });
+        };
+    }
+
     const API_BASE_URL = "/evm/api/warranty-claims";
 
     const CURRENT_SC_STAFF_ID = 2;      // id SC-Staff hiện tại (tạm)
@@ -93,8 +111,11 @@
         }
 
         try {
-            const res = await fetch(`${API_BASE_URL}/all`);
-            if (!res.ok) throw new Error(`Server trả về ${res.status}`);
+            const res = await fetch(`${API_BASE_URL}/all`, { credentials: 'same-origin' });
+            if (!res.ok) {
+                const txt = await res.text().catch(() => '');
+                throw new Error(txt || `Server trả về ${res.status}`);
+            }
 
             const claims = await res.json();
             claimsCache = Array.isArray(claims) ? claims : [];
@@ -296,7 +317,7 @@
     function initClaimModal() {
         const btnOpen = document.getElementById('btnMoFormYeuCau');
         const modal = document.getElementById('modalYeuCauBaoHanh');
-        const closeBtn = modal ? modal.querySelector('.warranty-claim__close-button') : null;
+        const closeBtn = modal ? (modal.querySelector('.warranty-claim__close-button') || modal.querySelector('.close-button')) : null;
         const cancelBtn = document.getElementById('warrantyCancelBtn');
         const form = modal ? modal.querySelector('.warranty-claim__form') : null;
 
@@ -304,6 +325,8 @@
             if (!form) return;
             form.reset();
             currentEditingId = null;
+            // clear dataset marker if present
+            try { form.dataset.editingId = ''; } catch (e) { }
             const codeInput = document.getElementById('warranty_code');
             if (codeInput) codeInput.readOnly = false;
         }
@@ -343,6 +366,7 @@
         if (form) {
             form.addEventListener('submit', async function (e) {
                 e.preventDefault();
+                console.log('Submitting warranty form; currentEditingId (var) =', currentEditingId, ' form.dataset.editingId =', form.dataset.editingId);
 
                 const vinInput = document.getElementById('warranty_vin');
                 const descInput = document.getElementById('warranty_desc');
@@ -353,16 +377,15 @@
                 const status = statusInput?.value || 'pending';
 
                 if (!vin) {
-                    alert('Vui lòng nhập Biển số / VIN');
+                    await window.showAlert('Vui lòng nhập Biển số / VIN');
                     return;
                 }
                 if (!description) {
-                    alert('Vui lòng nhập mô tả vấn đề');
+                    await window.showAlert('Vui lòng nhập mô tả vấn đề');
                     return;
                 }
 
                 const payload = {
-                    scStaffId: CURRENT_SC_STAFF_ID,
                     vehiclePartId: DEFAULT_PART_ID,
                     vin: vin,
                     description: description,
@@ -371,23 +394,47 @@
                 };
 
                 try {
-                    const res = await fetch(`${API_BASE_URL}/create`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
+                    // prefer dataset on form (set during edit), fallback to currentEditingId
+                    const editingId = (form.dataset && form.dataset.editingId) ? form.dataset.editingId : currentEditingId;
+                    console.log('Resolved editingId =', editingId);
+                    if (editingId) {
+                        // Update existing claim
+                        const res = await fetch(`${API_BASE_URL}/update/${editingId}`, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            credentials: 'same-origin',
+                            body: JSON.stringify({ vin, description, status })
+                        });
+                        if (!res.ok) {
+                            const text = await res.text().catch(() => '');
+                            console.error('Update failed', { status: res.status, body: text });
+                            throw new Error(text || `Server trả về ${res.status}`);
+                        }
+                        await window.showAlert('Cập nhật yêu cầu thành công!');
+                        closeModal();
+                        currentEditingId = null;
+                        await loadClaims();
+                    } else {
+                        // Create new claim
+                        const res = await fetch(`${API_BASE_URL}/create`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            credentials: 'same-origin',
+                            body: JSON.stringify(payload)
+                        });
 
-                    if (!res.ok) {
-                        const text = await res.text().catch(() => '');
-                        throw new Error(text || `Server trả về ${res.status}`);
+                        if (!res.ok) {
+                            const text = await res.text().catch(() => '');
+                            throw new Error(text || `Server trả về ${res.status}`);
+                        }
+
+                        await window.showAlert('Tạo yêu cầu bảo hành thành công!');
+                        closeModal();
+                        await loadClaims();
                     }
-
-                    alert('Tạo yêu cầu bảo hành thành công!');
-                    closeModal();
-                    await loadClaims();
                 } catch (err) {
-                    console.error('Lỗi tạo yêu cầu bảo hành:', err);
-                    alert('Lỗi khi tạo yêu cầu bảo hành: ' + err.message);
+                    console.error('Lỗi tạo/cập nhật yêu cầu bảo hành:', err);
+                    await window.showAlert('Lỗi khi tạo/cập nhật yêu cầu bảo hành: ' + err.message);
                 }
             });
         }
@@ -399,15 +446,35 @@
         if (!tbody) return;
 
         tbody.addEventListener('click', async function (e) {
-            const viewBtn = e.target.closest('.btn-claim-view');
-            const editBtn = e.target.closest('.btn-claim-edit');
-            const delBtn = e.target.closest('.btn-claim-delete');
+            const viewBtn = e.target.closest('.btn-claim-view, .btn-view');
+            const editBtn = e.target.closest('.btn-claim-edit, .btn-edit');
+            const delBtn = e.target.closest('.btn-claim-delete, .btn-delete');
 
             if (viewBtn) {
                 const id = viewBtn.dataset.id;
                 if (!id) return;
                 console.log('Xem chi tiết claim', id);
-                // TODO: sau này m gọi GET /api/warranty-claims/getbyID/{id} rồi hiện modal
+                try {
+                    const resp = await fetch(`${API_BASE_URL}/getbyID/${id}`, { credentials: 'same-origin' });
+                    if (!resp.ok) {
+                        const t = await resp.text().catch(() => '');
+                        throw new Error(t || `Server trả về ${resp.status}`);
+                    }
+                    const claim = await resp.json();
+                    console.log('claim from getbyID (view):', claim);
+                    // Hiện thông tin chi tiết đơn giản
+                    const info = [
+                        `Mã Y/C: ${claim.claimID}`,
+                        `VIN: ${claim.vehicle ? claim.vehicle.VIN : 'N/A'}`,
+                        `Mô tả: ${claim.description || ''}`,
+                        `Ngày tạo: ${claim.date || 'N/A'}`,
+                        `Trạng thái: ${claim.status || 'N/A'}`
+                    ].join('\n');
+                    await window.showAlert(info);
+                } catch (err) {
+                    console.error('Lỗi khi lấy chi tiết claim:', err);
+                    await window.showAlert('Lỗi khi lấy chi tiết: ' + err.message);
+                }
                 return;
             }
 
@@ -415,27 +482,65 @@
                 const id = editBtn.dataset.id;
                 if (!id) return;
                 console.log('Sửa claim', id);
-                // TODO: sau này m fetch chi tiết, fill form, rồi gọi PUT /update/{id}
+                try {
+                    const resp = await fetch(`${API_BASE_URL}/getbyID/${id}`, { credentials: 'same-origin' });
+                    if (!resp.ok) {
+                        const t = await resp.text().catch(() => '');
+                        throw new Error(t || `Server trả về ${resp.status}`);
+                    }
+                    const claim = await resp.json();
+                    console.log('claim from getbyID (edit):', claim);
+                    // Fill form and open modal for edit
+                    const modal = document.getElementById('modalYeuCauBaoHanh');
+                    const form = modal ? modal.querySelector('.warranty-claim__form') : null;
+                    if (form) {
+                        const vinInput = document.getElementById('warranty_vin');
+                        const descInput = document.getElementById('warranty_desc');
+                        const statusInput = document.getElementById('warranty_status');
+                        const codeInput = document.getElementById('warranty_code');
+
+                        if (vinInput) vinInput.value = claim.vehicle ? (claim.vehicle.VIN || '') : '';
+                        if (descInput) descInput.value = claim.description || '';
+                        if (statusInput) statusInput.value = claim.status || 'pending';
+                        if (codeInput) codeInput.value = claim.claimID || '';
+                        if (codeInput) codeInput.readOnly = true;
+
+                        // tolerate different naming conventions from server
+                        currentEditingId = claim.claimID || claim.claimId || claim.id || null;
+                        console.log('currentEditingId set to', currentEditingId);
+                        try { form.dataset.editingId = String(currentEditingId); } catch (e) { }
+                        const titleEl = modal.querySelector('.warranty-claim__modal-title');
+                        if (titleEl) titleEl.textContent = 'Sửa yêu cầu bảo hành';
+                        modal.style.display = 'block';
+                    } else {
+                        await window.showAlert('Không tìm thấy form để sửa.');
+                    }
+                } catch (err) {
+                    console.error('Lỗi khi load claim để sửa:', err);
+                    await window.showAlert('Lỗi khi load dữ liệu sửa: ' + err.message);
+                }
                 return;
             }
 
             if (delBtn) {
                 const id = delBtn.dataset.id;
                 if (!id) return;
-                if (!confirm('Bạn có chắc muốn xóa yêu cầu bảo hành này?')) return;
+                if (!await window.showConfirm('Bạn có chắc muốn xóa yêu cầu bảo hành này?', { okIsDanger: true })) return;
 
                 try {
                     const res = await fetch(`${API_BASE_URL}/delete/${id}`, {
-                        method: 'DELETE'
+                        method: 'DELETE',
+                        credentials: 'same-origin'
                     });
                     if (!res.ok) {
                         const text = await res.text().catch(() => '');
+                        console.error('Delete failed', { status: res.status, body: text });
                         throw new Error(text || `Server trả về ${res.status}`);
                     }
-                    alert('Xóa yêu cầu thành công!');
+                    await window.showAlert('Xóa yêu cầu thành công!');
                     await loadClaims();
                 } catch (err) {
-                    alert('Lỗi khi xóa yêu cầu: ' + err.message);
+                    await window.showAlert('Lỗi khi xóa yêu cầu: ' + err.message);
                 }
             }
         });

@@ -7,18 +7,21 @@
     <title>Trang chủ - SC Admin</title>
 
     <link rel="stylesheet" href="/evm/assets/css/main.css">
+    <link rel="stylesheet" href="/evm/assets/css/sidebar.css">
     <link rel="stylesheet" href="/evm/assets/css/SC-Admin/dashboard.css">
-    <link rel="stylesheet" href="/evm/assets/css/SC-Admin/account_admin.css"/>
-    <link rel="stylesheet" href="/evm/assets/css/SC-Admin/user_management.css"/>
+    <link rel="stylesheet" href="/evm/assets/css/SC-Admin/account_admin.css" />
+    <link rel="stylesheet" href="/evm/assets/css/SC-Admin/user_management.css" />
 
+    <script src="/evm/assets/js/ui/modal.js"></script>
+    <script src="/evm/assets/js/SC-Staff/profile_popup.js"></script>
     <script src="/evm/assets/js/SC-Admin/home_sc_admin.js"></script>
     <script src="/evm/assets/js/SC-Admin/user_management.js"></script>
     <script src="/evm/assets/js/SC-Admin/account_admin.js"></script>
     <script src="/evm/assets/js/SC-Admin/dashboard.js"></script>
-    
-    
+
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    
+
 </head>
 
 <body>
@@ -30,12 +33,34 @@
                 <img src="/evm/assets/pic/logo_EVM.png" alt="Logo" class="sidebar__avatar">
             </div>
 
-            <div class="sidebar__user">
+            <div class="sidebar__user" id="userProfileGroup">
                 <div class="sidebar__userinfo">
                     <h4 class="sidebar__username">Admin User</h4>
                     <p class="sidebar__role">SC Admin</p>
                 </div>
                 <img src="/evm/assets/pic/avatar.png" alt="Avatar" class="sidebar__user-avatar">
+
+                <div class="user-dropdown-menu" id="userDropdown" role="menu" aria-hidden="true">
+                    <ul>
+                        <li>
+                            <a href="#" id="btnSettings" class="dropdown-action"><i class="fas fa-cog dropdown-icon"
+                                    aria-hidden="true"></i>Cài đặt</a>
+                        </li>
+                        <li>
+                            <div class="dropdown-action dropdown-switch-row">
+                                <span class="dropdown-switch-label">Giao diện tối</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="darkmodeToggle">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="/evm/login.html" id="btnLogin" class="dropdown-action text-danger">Đăng xuất</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
             <nav class="sidebar__nav">
@@ -65,19 +90,19 @@
     <div id="footer-placeholder"></div>
 
     <script src="/evm/assets/js/SC-Admin/home_sc_admin.js"></script>
-    
+
     <script>
-    fetch('/evm/components/footer.html')
-        .then(res => res.text())
-        .then(html => {
-            html = html.replace(/href="Section\//g, 'href="../SC-Admin/Section/');
-            html = html.replace(/data-page="Section\//g, 'data-page="../SC-Staff/Section/');
-            
-            document.getElementById('footer-placeholder').innerHTML = html;
-        })
-        .catch(err => console.error("Khong tai duoc footer:", err));
-</script>
-</script>
+        fetch('/evm/components/footer.html')
+            .then(res => res.text())
+            .then(html => {
+                html = html.replace(/href="Section\//g, 'href="../SC-Admin/Section/');
+                html = html.replace(/data-page="Section\//g, 'data-page="../SC-Staff/Section/');
+
+                document.getElementById('footer-placeholder').innerHTML = html;
+            })
+            .catch(err => console.error("Khong tai duoc footer:", err));
+    </script>
+    </script>
 </body>
 
 </html>

@@ -398,6 +398,41 @@ __pypackages__/
 !/media/xmlconnect/system/ok.gif
 /var/*
 !/var/.htaccess
+
+# === Local additions for Laptrinh-java (added by dev) ===
+# Ignore Maven / Gradle build outputs and generated artifacts
+target/
+**/target/
+evm/target/
+target/classes/
+
+# Java build artifacts
+*.class
+*.jar
+*.war
+
+# IDE/editor
+.idea/
+.vscode/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Node
+node_modules/
+
+# NPM / Yarn
+dist/
+
+# Runtime files
+*.pid
+
+# End local additions
 !/var/package
 /var/package/*
 !/var/package/*.xml

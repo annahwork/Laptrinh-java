@@ -38,6 +38,7 @@
   }
 
   function renderVehiclesTable() {
+    console.log('renderVehiclesTable called, cacheLen=', vehiclesCache.length);
     const tableBody = document.getElementById('vehiclesTbody');
     if (!tableBody) return;
 
@@ -241,7 +242,7 @@
       if (form) {
         form.addEventListener('submit', function (e) {
           e.preventDefault();
-          const currentStaffId = 2; 7
+          const currentStaffId = 2;
 
           const vinValue = document.getElementById('vehicle_plate')?.value || '';
           const modelValue = document.getElementById('vehicle_type')?.value || '';
@@ -288,21 +289,22 @@
           fetch(url, {
             method: method,
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
             body: JSON.stringify(requestBody),
           })
             .then((response) => {
               if (response.ok) return response.text();
               return response.text().then((text) => { throw new Error(text); });
             })
-            .then((message) => {
+            .then(async (message) => {
               console.log(message);
-              alert(currentEditingVin ? 'Cập nhật xe thành công!' : 'Đăng ký xe thành công!');
+              await window.showAlert(currentEditingVin ? 'Cập nhật xe thành công!' : 'Đăng ký xe thành công!');
               closeModal();
               loadVehiclesTable();
             })
-            .catch((error) => {
+            .catch(async (error) => {
               console.error('Lỗi khi tạo/cập nhật xe:', error);
-              alert(`Lỗi: ${error.message}`);
+              await window.showAlert(`Lỗi: ${error.message}`);
             });
         });
       }
@@ -317,6 +319,7 @@
     function initVehicleTableActions() {
       const tableBody = document.getElementById('vehiclesTbody');
       const modal = document.getElementById('modalQuanLyVehicle');
+      console.log('initVehicleTableActions - tableBody=', !!tableBody, 'modal=', !!modal);
 
       function openModal() {
         if (modal) modal.style.display = 'block';
@@ -324,19 +327,23 @@
 
       if (!tableBody) return;
 
-      tableBody.addEventListener('click', function (e) {
-        const target = e.target;
-        if (!(target instanceof HTMLElement)) return;
+      tableBody.addEventListener('click', async function (e) {
+        const clicked = e.target;
+        if (!(clicked instanceof HTMLElement)) return;
 
-        const targetVin = target.dataset.vin;
+        const btn = clicked.closest('button');
+        console.log('vehicle table click - btn=', btn, 'clicked=', clicked);
+        if (!btn) return;
+        const targetVin = btn.dataset.vin;
 
-        if (target.classList.contains('btn-xoa')) {
+        if (btn.classList.contains('btn-delete')) {
           if (!targetVin) return;
 
-          if (!confirm(`M có chắc muốn xóa xe với VIN/Biển số: ${targetVin}?`)) return;
+          if (!await window.showConfirm(`Bạn có chắc muốn xóa xe với VIN/Biển số: ${targetVin}?`, { okIsDanger: true })) return;
 
           fetch(`${API_BASE_URL}/delete/${encodeURIComponent(targetVin)}`, {
             method: 'DELETE',
+            credentials: 'same-origin'
           })
             .then((response) => {
               if (!response.ok) {
@@ -344,18 +351,18 @@
               }
               return response.text();
             })
-            .then((msg) => {
+            .then(async (msg) => {
               console.log(msg);
-              alert('Xóa xe thành công!');
+              await window.showAlert('Xóa xe thành công!');
               loadVehiclesTable();
             })
             .catch((error) => {
               console.error('Lỗi khi xóa xe:', error);
-              alert(`Lỗi xóa: ${error.message}`);
+              window.showAlert(`Lỗi xóa: ${error.message}`);
             });
         }
 
-        if (target.classList.contains('btn-sua')) {
+        if (btn.classList.contains('btn-edit')) {
           if (!targetVin) return;
 
           currentEditingVin = targetVin;
@@ -367,7 +374,7 @@
             openModal();
           } else {
             console.error('Không tìm thấy xe trong cache với VIN:', targetVin);
-            alert('Lỗi: Không tìm thấy dữ liệu xe để sửa.');
+            await window.showAlert('Lỗi: Không tìm thấy dữ liệu xe để sửa.');
             currentEditingVin = null;
           }
         }

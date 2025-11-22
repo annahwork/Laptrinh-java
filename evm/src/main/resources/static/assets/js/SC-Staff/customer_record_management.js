@@ -39,7 +39,7 @@
   async function loadCustomers() {
     try {
       // lấy nhiều 1 lần, paginate ở client
-      const res = await fetch(`/evm/api/sc-staff/dashboard/customers?page=1&pageSize=1000`);
+      const res = await fetch(`/evm/api/sc-staff/dashboard/customers?page=1&pageSize=1000`, { credentials: 'same-origin' });
       if (!res.ok) throw new Error(`Server trả về ${res.status}`);
 
       const customers = await res.json();
@@ -61,6 +61,7 @@
     const res = await fetch('/evm/api/sc-staff/dashboard/customer/create', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
       body: JSON.stringify(data)
     });
     if (!res.ok) {
@@ -74,6 +75,7 @@
     const res = await fetch(`/evm/api/sc-staff/dashboard/customer/update/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
       body: JSON.stringify(data)
     });
     if (!res.ok) {
@@ -85,7 +87,8 @@
 
   async function deleteCustomer(id) {
     const res = await fetch(`/evm/api/sc-staff/dashboard/customer/delete/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      credentials: 'same-origin'
     });
     if (!res.ok) {
       const text = await res.text().catch(() => '');
@@ -95,7 +98,7 @@
   }
 
   async function fetchCustomer(id) {
-    const res = await fetch(`/evm/api/sc-staff/dashboard/customer/get/${id}`);
+    const res = await fetch(`/evm/api/sc-staff/dashboard/customer/get/${id}`, { credentials: 'same-origin' });
     if (!res.ok) throw new Error(`Không lấy được khách hàng (${res.status})`);
     return await res.json();
   }
@@ -273,15 +276,15 @@
         try {
           if (id) {
             await updateCustomer(id, data);
-            alert('Cập nhật khách hàng thành công!');
+            await window.showAlert('Cập nhật khách hàng thành công!');
           } else {
             await addCustomer(data);
-            alert('Thêm khách hàng thành công!');
+            await window.showAlert('Thêm khách hàng thành công!');
           }
           await loadCustomers();
           closeModal();
         } catch (err) {
-          alert(`Lỗi khi lưu khách hàng: ${err.message}`);
+          await window.showAlert(`Lỗi khi lưu khách hàng: ${err.message}`);
         }
       });
     }
@@ -292,13 +295,13 @@
         if (delBtn) {
           const id = delBtn.dataset.id;
           if (!id) return;
-          if (!confirm('Bạn có chắc muốn xóa khách hàng này?')) return;
+          if (!await window.showConfirm('Bạn có chắc muốn xóa khách hàng này?', { okIsDanger: true })) return;
           try {
             await deleteCustomer(id);
-            alert('Xóa khách hàng thành công!');
+            await window.showAlert('Xóa khách hàng thành công!');
             await loadCustomers();
           } catch (err) {
-            alert('Lỗi khi xóa khách hàng: ' + err.message);
+            await window.showAlert('Lỗi khi xóa khách hàng: ' + err.message);
           }
           return;
         }
@@ -311,7 +314,7 @@
             const c = await fetchCustomer(id);
             const formEl = ensureFormExists();
             if (!formEl) {
-              alert('Form quản lý khách hàng không tìm thấy.');
+              await window.showAlert('Form quản lý khách hàng không tìm thấy.');
               return;
             }
             formEl.dataset.editingId = id;
@@ -329,7 +332,7 @@
 
             if (modal) modal.style.display = 'block';
           } catch (err) {
-            alert('Lỗi khi tải thông tin khách hàng: ' + err.message);
+            await window.showAlert('Lỗi khi tải thông tin khách hàng: ' + err.message);
           }
         }
       });

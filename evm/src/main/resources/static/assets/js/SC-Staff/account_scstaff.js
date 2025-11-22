@@ -41,30 +41,30 @@
             console.log('No user info to update.');
             return;
         }
-        
+
         const userNameElement = document.querySelector('.user-name');
         const userRoleElement = document.querySelector('.user-role');
 
         if (userNameElement && userInfo.fullName) {
             userNameElement.textContent = userInfo.fullName;
         } else if (userNameElement) {
-             console.log('User full name not available in user info.');
+            console.log('User full name not available in user info.');
         }
-        
+
         if (userRoleElement && userInfo.roleName) {
             userRoleElement.textContent = userInfo.roleName;
         } else if (userRoleElement) {
-             console.log('User role name not available in user info.');
+            console.log('User role name not available in user info.');
         }
     }
-    
+
     async function handleLogout(e) {
         e.preventDefault();
-        
+
         try {
             console.log('Calling logout API...');
             await fetch(`${CONTEXT_PATH}/api/login/logout`, { method: 'GET' });
-            
+
             console.log('Redirecting to login page...');
             window.location.href = CONTEXT_PATH + '/login';
 
@@ -76,7 +76,7 @@
 
     function toggleModal(show) {
         if (modal) {
-            modal.style.display = show ? 'flex' : 'none'; 
+            modal.style.display = show ? 'flex' : 'none';
             if (!show && form) {
                 form.reset();
                 messageArea.textContent = '';
@@ -89,13 +89,13 @@
         e.preventDefault();
         messageArea.textContent = 'Đang xử lý...';
         messageArea.style.color = '#007bff';
-        
+
         const oldPassword = form.querySelector('#oldPassword').value;
         const newPassword = form.querySelector('#newPassword').value;
         const confirmPassword = form.querySelector('#confirmPassword').value;
 
         try {
-           const response = await fetch(`${CONTEXT_PATH}/api/account/change-password`, {
+            const response = await fetch(`${CONTEXT_PATH}/api/account/change-password`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -107,11 +107,11 @@
 
             if (response.ok) {
                 messageArea.textContent = result.message || 'Đổi mật khẩu thành công. Đang đăng xuất...';
-                messageArea.style.color = '#28a745'; 
-                
+                messageArea.style.color = '#28a745';
+
                 setTimeout(() => {
                     toggleModal(false);
-                    window.location.href = CONTEXT_PATH + '/login'; 
+                    window.location.href = CONTEXT_PATH + '/login';
                 }, 1500);
 
             } else {
@@ -165,7 +165,7 @@
                 if (userNameElement) {
                     userNameElement.textContent = newFullName;
                 }
-                
+
                 setTimeout(() => {
                     toggleEditInfoModal(false);
                 }, 1500);
@@ -184,7 +184,7 @@
 
     async function init() {
         const logoutButton = document.querySelector('.logout-button');
-        
+
         if (logoutButton) {
             logoutButton.addEventListener('click', handleLogout);
         } else {
@@ -212,18 +212,18 @@
         if (editInfoTrigger && editInfoModal && editInfoCloseBtn && editInfoForm) {
             editInfoTrigger.addEventListener('click', (e) => {
                 e.preventDefault();
-                
+
                 const currentName = userNameElement ? userNameElement.textContent : '';
                 const fullNameInput = editInfoForm.querySelector('#fullName');
                 if (fullNameInput) {
                     fullNameInput.value = currentName;
                 }
-                
+
                 toggleEditInfoModal(true);
             });
 
             editInfoCloseBtn.addEventListener('click', () => toggleEditInfoModal(false));
-            
+
             window.addEventListener('click', (e) => {
                 if (e.target === editInfoModal) {
                     toggleEditInfoModal(false);

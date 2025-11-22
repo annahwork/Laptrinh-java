@@ -18,9 +18,11 @@
     <link rel="stylesheet" href="/evm/assets/css/SC-Staff/terms_of_service.css">
     <link rel="stylesheet" href="/evm/assets/css/SC-Staff/vehicle_record_management.css">
     <link rel="stylesheet" href="/evm/assets/css/SC-Staff/warranty_claim_management.css">
-    
+
     <script src="/evm/assets/js/SC-Staff/home_sc_staff.js"></script>
     <script src="/evm/assets/js/SC-Staff/account_scstaff.js"></script>
+    <script src="/evm/assets/js/ui/modal.js"></script>
+    <script src="/evm/assets/js/SC-Staff/profile_popup.js"></script>
     <script src="/evm/assets/js/SC-Staff/campaign_management.js"></script>
     <script src="/evm/assets/js/SC-Staff/customer_record_management.js"></script>
     <script src="/evm/assets/js/SC-Staff/dashboard.js"></script>
@@ -40,12 +42,43 @@
                 <img src="/evm/assets/pic/logo_EVM.png" alt="Logo" class="sidebar__avatar">
             </div>
 
-            <div class="sidebar__user">
+            <!-- <div class="sidebar__user">
                 <div class="sidebar__userinfo">
                     <h4 class="sidebar__username">Name User</h4>
                     <p class="sidebar__role">SC Staff</p>
                 </div>
                 <img src="/evm/assets/pic/avatar.png" alt="Avatar" class="sidebar__user-avatar">
+            </div> -->
+            <div class="sidebar__user" id="userProfileGroup">
+
+                <div class="sidebar__userinfo">
+                    <h4 class="sidebar__username">Name User</h4>
+                    <p class="sidebar__role">SC Staff</p>
+                </div>
+
+                <img src="/evm/assets/pic/avatar.png" alt="Avatar" class="sidebar__user-avatar">
+
+                <div class="user-dropdown-menu" id="userDropdown" role="menu" aria-hidden="true">
+                    <ul>
+                        <li>
+                            <a href="#" id="btnSettings" class="dropdown-action"><i class="fas fa-cog dropdown-icon"
+                                    aria-hidden="true"></i>Cài đặt</a>
+                        </li>
+                        <li>
+                            <div class="dropdown-action dropdown-switch-row">
+                                <span class="dropdown-switch-label">Giao diện tối</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="darkmodeToggle">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="/evm/login.html" id="btnLogin" class="dropdown-action text-danger">Đăng xuất</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
 

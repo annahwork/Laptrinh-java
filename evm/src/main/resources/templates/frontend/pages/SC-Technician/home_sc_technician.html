@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,100 +13,127 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
 </head>
+
 <body>
 
-<div class="layout-wrapper">
-    <aside class="sidebar" id="sidebar">
-        <div class="sidebar__header">
-            <h2 class="sidebar__logo">OEM EV</h2>
-            <img src="/evm/assets/pic/logo_EVM.png" alt="Logo" class="sidebar__avatar">
-        </div>
-
-        <div class="sidebar__user">
-            <div class="sidebar__userinfo">
-                <h4 class="sidebar__username">Name User</h4>
-                <p class="sidebar__role">SC Technician</p>
+    <div class="layout-wrapper">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar__header">
+                <h2 class="sidebar__logo">OEM EV</h2>
+                <img src="/evm/assets/pic/logo_EVM.png" alt="Logo" class="sidebar__avatar">
             </div>
-        </div>
 
-        <nav class="sidebar__nav">
-            <ul>
-                <li class="sidebar__item">
-                    <a href="#" data-page="dashboard.html" class="sidebar__link">Trang chủ</a>
-                </li>
+            <div class="sidebar__user" id="userProfileGroup">
+                <div class="sidebar__userinfo">
+                    <h4 class="sidebar__username">Name User</h4>
+                    <p class="sidebar__role">SC Technician</p>
+                </div>
+                <img src="/evm/assets/pic/avatar.png" alt="Avatar" class="sidebar__user-avatar">
 
-                <li class="sidebar__item menu-group">
-                    <div class="menu-group-toggle">
-                        <span>Bảo hành</span>
-                        <span class="arrow">▸</span>
-                    </div>
-                    <ul class="submenu">
-                        <li class="sidebar__item">
-                            <a href="#" data-page="job_list.html" class="sidebar__link">Công việc</a>
+                <div class="user-dropdown-menu" id="userDropdown" role="menu" aria-hidden="true">
+                    <ul>
+                        <li>
+                            <a href="#" id="btnSettings" class="dropdown-action"><i class="fas fa-cog dropdown-icon"
+                                    aria-hidden="true"></i>Cài đặt</a>
                         </li>
-                        <li class="sidebar__item">
-                            <a href="#" data-page="warranty_result.html" class="sidebar__link">Kết quả</a>
+                        <li>
+                            <div class="dropdown-action dropdown-switch-row">
+                                <span class="dropdown-switch-label">Giao diện tối</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="darkmodeToggle">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
                         </li>
-                        <li class="sidebar__item">
-                            <a href="#" data-page="spare_part.html" class="sidebar__link">Phụ tùng</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="sidebar__item menu-group">
-                    <div class="menu-group-toggle">
-                        <span>Chiến dịch</span>
-                        <span class="arrow">▸</span>
-                    </div>
-                    <ul class="submenu">
-                        <li class="sidebar__item">
-                            <a href="#" data-page="campaign_list.html" class="sidebar__link">Danh sách</a>
-                        </li>
-                        <li class="sidebar__item">
-                            <a href="#" data-page="campaign_vehicle.html" class="sidebar__link">Xe xử lý</a>
-                        </li>
-                        <li class="sidebar__item">
-                            <a href="#" data-page="campaign_report.html" class="sidebar__link">Báo cáo</a>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="/evm/login.html" id="btnLogin" class="dropdown-action text-danger">Đăng xuất</a>
                         </li>
                     </ul>
-                </li>
+                </div>
+            </div>
 
-                <li class="sidebar__item">
-                    <a href="#" data-page="notification.html" class="sidebar__link">Thông báo</a>
-                </li>
+            <nav class="sidebar__nav">
+                <ul>
+                    <li class="sidebar__item">
+                        <a href="#" data-page="dashboard.html" class="sidebar__link">Trang chủ</a>
+                    </li>
 
-                <li class="sidebar__item">
-                    <a href="#" data-page="technical_documents.html" class="sidebar__link">Tài liệu</a>
-                </li>
+                    <li class="sidebar__item menu-group">
+                        <div class="menu-group-toggle">
+                            <span>Bảo hành</span>
+                            <span class="arrow">▸</span>
+                        </div>
+                        <ul class="submenu">
+                            <li class="sidebar__item">
+                                <a href="#" data-page="job_list.html" class="sidebar__link">Công việc</a>
+                            </li>
+                            <li class="sidebar__item">
+                                <a href="#" data-page="warranty_result.html" class="sidebar__link">Kết quả</a>
+                            </li>
+                            <li class="sidebar__item">
+                                <a href="#" data-page="spare_part.html" class="sidebar__link">Phụ tùng</a>
+                            </li>
+                        </ul>
+                    </li>
 
-                <li class="sidebar__item">
-                    <a href="#" data-page="performance.html" class="sidebar__link">Hiệu suất</a>
-                </li>
+                    <li class="sidebar__item menu-group">
+                        <div class="menu-group-toggle">
+                            <span>Chiến dịch</span>
+                            <span class="arrow">▸</span>
+                        </div>
+                        <ul class="submenu">
+                            <li class="sidebar__item">
+                                <a href="#" data-page="campaign_list.html" class="sidebar__link">Danh sách</a>
+                            </li>
+                            <li class="sidebar__item">
+                                <a href="#" data-page="campaign_vehicle.html" class="sidebar__link">Xe xử lý</a>
+                            </li>
+                            <li class="sidebar__item">
+                                <a href="#" data-page="campaign_report.html" class="sidebar__link">Báo cáo</a>
+                            </li>
+                        </ul>
+                    </li>
 
-                <li class="sidebar__item">
-                    <a href="#" data-page="account_sctechnician.html" class="sidebar__link">Cài đặt</a>
-                </li>
-            </ul>
-        </nav>
-    </aside>
+                    <li class="sidebar__item">
+                        <a href="#" data-page="notification.html" class="sidebar__link">Thông báo</a>
+                    </li>
 
-    <main id="main-content" class="main" style="padding:2rem;"></main>
-</div>
+                    <li class="sidebar__item">
+                        <a href="#" data-page="technical_documents.html" class="sidebar__link">Tài liệu</a>
+                    </li>
 
-<div id="footer-placeholder"></div>
+                    <li class="sidebar__item">
+                        <a href="#" data-page="performance.html" class="sidebar__link">Hiệu suất</a>
+                    </li>
 
-<script src="/evm/assets/js/SC-Technician/home_sc_technician.js"></script>
+                    <li class="sidebar__item">
+                        <a href="#" data-page="account_sctechnician.html" class="sidebar__link">Cài đặt</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
 
-<script>
-    fetch('/evm/components/footer.html')
-        .then(res => res.text())
-        .then(html => {
-            html = html.replace(/href="Section\//g, 'href="../SC-Technician/Section/');
-            html = html.replace(/data-page="Section\//g, 'data-page="../SC-Technician/Section/');
-            document.getElementById('footer-placeholder').innerHTML = html;
-        })
-        .catch(err => console.error("Khong tai duoc footer:", err));
-</script>
+        <main id="main-content" class="main" style="padding:2rem;"></main>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="/evm/assets/js/ui/modal.js"></script>
+    <script src="/evm/assets/js/SC-Staff/profile_popup.js"></script>
+    <script src="/evm/assets/js/SC-Technician/home_sc_technician.js"></script>
+
+    <script>
+        fetch('/evm/components/footer.html')
+            .then(res => res.text())
+            .then(html => {
+                html = html.replace(/href="Section\//g, 'href="../SC-Technician/Section/');
+                html = html.replace(/data-page="Section\//g, 'data-page="../SC-Technician/Section/');
+                document.getElementById('footer-placeholder').innerHTML = html;
+            })
+            .catch(err => console.error("Khong tai duoc footer:", err));
+    </script>
 
 </body>
+
 </html>

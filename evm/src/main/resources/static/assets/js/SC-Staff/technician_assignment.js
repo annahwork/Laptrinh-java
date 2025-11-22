@@ -1,6 +1,24 @@
 (function () {
     'use strict';
 
+    // Fallback helpers: if modal.js didn't load, provide Promise-based wrappers
+    if (typeof window.showAlert !== 'function') {
+        window.showAlert = function (message) {
+            return new Promise((resolve) => {
+                alert(message);
+                resolve();
+            });
+        };
+    }
+    if (typeof window.showConfirm !== 'function') {
+        window.showConfirm = function (message, opts) {
+            return new Promise((resolve) => {
+                const ok = confirm(message);
+                resolve(Boolean(ok));
+            });
+        };
+    }
+
     // ========== STATE PHÂN TRANG & FILTER ==========
     let assignmentsCache = [];        // cache toàn bộ kết quả /allwc
     let currentPage = 1;              // trang hiện tại
@@ -341,7 +359,7 @@
                 const jobDescription = document.getElementById('assign_desc')?.value?.trim();
 
                 if (!warrantyClaimId || !warrantyServiceId || !technicianId || !jobDescription) {
-                    alert('Vui lòng nhập đầy đủ: Mã Yêu Cầu, Dịch Vụ, Kỹ Thuật Viên, và Mô Tả.');
+                    await window.showAlert('Vui lòng nhập đầy đủ: Mã Yêu Cầu, Dịch Vụ, Kỹ Thuật Viên, và Mô Tả.');
                     return;
                 }
 
@@ -368,13 +386,13 @@
                         throw new Error(data.message || 'Giao việc thất bại');
                     }
 
-                    alert(data.message || 'Giao việc thành công!');
+                    await window.showAlert(data.message || 'Giao việc thành công!');
                     closeNewReqModal();
                     loadAllAssignments();
 
                 } catch (err) {
                     console.error('[TechAssign] lỗi giao việc:', err);
-                    alert(err.message || 'Có lỗi xảy ra, vui lòng thử lại');
+                    await window.showAlert(err.message || 'Có lỗi xảy ra, vui lòng thử lại');
                 }
             });
         }
@@ -382,7 +400,7 @@
         // ========== DELETE ==========
         async function handleDeleteClaim(claimId) {
             if (!claimId) return;
-            if (!confirm(`Bạn có chắc chắn muốn xóa yêu cầu "${claimId}"?`)) {
+            if (!await window.showConfirm(`Bạn có chắc chắn muốn xóa yêu cầu "${claimId}"?`, { okIsDanger: true })) {
                 return;
             }
             try {
@@ -392,14 +410,14 @@
                 });
                 const message = await response.text();
                 if (response.ok) {
-                    alert(message || 'Xóa thành công!');
+                    await window.showAlert(message || 'Xóa thành công!');
                     loadAllAssignments();
                 } else {
                     throw new Error(message || 'Xóa thất bại');
                 }
             } catch (err) {
                 console.error('Lỗi khi xóa:', err);
-                alert(err.message || 'Lỗi server, không thể xóa.');
+                await window.showAlert(err.message || 'Lỗi server, không thể xóa.');
             }
         }
 
@@ -407,11 +425,11 @@
             claimsTbody.addEventListener('click', function (e) {
                 const target = e.target;
 
-                if (target.classList.contains('btn-xoa')) {
+                if (target.classList.contains('btn-delete')) {
                     handleDeleteClaim(target.dataset.id);
                 }
 
-                if (target.classList.contains('btn-sua')) {
+                if (target.classList.contains('btn-edit')) {
                     const claimId = target.dataset.id;
                     openAssignModal(claimId, claimId);
                 }

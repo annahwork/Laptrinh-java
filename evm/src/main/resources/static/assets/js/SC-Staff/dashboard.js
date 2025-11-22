@@ -7,6 +7,7 @@
 
     const contextPath = getContextPath();
     const apiBase = `${contextPath}/api/sc-staff/dashboard`;
+    const loginPath = contextPath + '/login';
 
     loadSummary();
     loadCampaigns();
@@ -15,7 +16,12 @@
 
     async function loadSummary() {
         try {
-            const res = await fetch(`${apiBase}/summary`);
+            const res = await fetch(`${apiBase}/summary`, { credentials: 'same-origin' });
+            if (res.status === 401 || res.status === 403) {
+                // not authorized for SCStaff -> redirect to login
+                window.location.href = loginPath;
+                return;
+            }
             if (!res.ok) throw new Error("Failed to load summary");
 
             const data = await res.json();
@@ -49,7 +55,11 @@
         `;
 
         try {
-            const res = await fetch(`${apiBase}/campaigns`);
+            const res = await fetch(`${apiBase}/campaigns`, { credentials: 'same-origin' });
+            if (res.status === 401 || res.status === 403) {
+                window.location.href = loginPath;
+                return;
+            }
             if (!res.ok) throw new Error("Failed to load campaigns");
 
             const campaigns = await res.json();
@@ -111,7 +121,11 @@
         `;
 
         try {
-            const res = await fetch(`${apiBase}/schedule-today`);
+            const res = await fetch(`${apiBase}/schedule-today`, { credentials: 'same-origin' });
+            if (res.status === 401 || res.status === 403) {
+                window.location.href = loginPath;
+                return;
+            }
             if (!res.ok) throw new Error("Failed to load schedule");
 
             const schedules = await res.json();
@@ -175,7 +189,11 @@
         container.innerHTML = `<p class="empty-message">Đang tải thông báo...</p>`;
 
         try {
-            const res = await fetch(`${apiBase}/notifications`);
+            const res = await fetch(`${apiBase}/notifications`, { credentials: 'same-origin' });
+            if (res.status === 401 || res.status === 403) {
+                window.location.href = loginPath;
+                return;
+            }
             if (!res.ok) throw new Error("Failed to load notifications");
 
             const notifications = await res.json();

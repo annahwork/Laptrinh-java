@@ -36,6 +36,7 @@ import uth.edu.pojo.Vehicle;
 import uth.edu.service.CampaignService;
 import uth.edu.service.NotificationService;
 import uth.edu.service.ScheduleService;
+import uth.edu.service.WarrantyClaimService;
 import uth.edu.service.UserService;
 
 @RestController
@@ -52,18 +53,21 @@ public class ScStaffDashboardController {
     private NotificationService notificationService;
 
     @Autowired
+    private WarrantyClaimService warrantyClaimService;
+
+    @Autowired
     private UserService userService;
 
     private Integer resolveUserId(HttpSession session, Integer paramUserId) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null || !(loggedInUser instanceof SCStaff )) {
+        if (loggedInUser == null || !(loggedInUser instanceof SCStaff)) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Người dùng không có quyền");
         }
 
         if (paramUserId != null)
             return paramUserId;
 
-        Object obj = session.getAttribute("user"); 
+        Object obj = session.getAttribute("user");
         if (obj instanceof User u)
             return u.getUserID();
 
@@ -75,9 +79,9 @@ public class ScStaffDashboardController {
             @RequestParam(name = "userId", required = false) Integer userId) {
 
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-                if (loggedInUser == null || !(loggedInUser instanceof SCStaff )) {
-                    throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Người dùng không có quyền");
-                }
+        if (loggedInUser == null || !(loggedInUser instanceof SCStaff)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Người dùng không có quyền");
+        }
         Integer uid = resolveUserId(session, userId);
 
         Map<String, Long> result = new HashMap<>();
@@ -90,13 +94,23 @@ public class ScStaffDashboardController {
         long totalVehicles = recallVehicles.stream()
                 .map(RecallVehicle::getVehicle)
                 .filter(Objects::nonNull)
-                .map(Vehicle::getVIN)  
+                .map(Vehicle::getVIN)
                 .filter(Objects::nonNull)
                 .distinct()
                 .count();
 
         long totalCustomers = (long) userService.countAllCustomers();
+        // total warranty requests: prefer counting actual warranty claims if available
         long totalWarranty = recallVehicles.size();
+        try {
+            List<?> claims = warrantyClaimService.GetClaims(uid, 1, 9999);
+            if (claims != null) {
+                totalWarranty = claims.size();
+            }
+        } catch (Exception ex) {
+            // fallback to recallVehicles size if warranty service fails
+            totalWarranty = recallVehicles.size();
+        }
         long totalCampaigns = campaigns.size();
 
         result.put("totalVehicles", totalVehicles);
@@ -110,9 +124,9 @@ public class ScStaffDashboardController {
     @GetMapping("/campaigns")
     public List<RecallCampaign> getCampaigns(HttpSession session,
             @RequestParam(name = "userId", required = false) Integer userId) {
-        
+
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null || !(loggedInUser instanceof SCStaff )) {
+        if (loggedInUser == null || !(loggedInUser instanceof SCStaff)) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Người dùng không có quyền");
 
         }
@@ -124,9 +138,9 @@ public class ScStaffDashboardController {
     @GetMapping("/schedule-today")
     public List<Schedule> getScheduleToday(HttpSession session,
             @RequestParam(name = "userId", required = false) Integer userId) {
-        
+
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null || !(loggedInUser instanceof SCStaff )) {
+        if (loggedInUser == null || !(loggedInUser instanceof SCStaff)) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Người dùng không có quyền");
         }
 
@@ -147,9 +161,9 @@ public class ScStaffDashboardController {
     @GetMapping("/notifications")
     public List<Notification> getNotifications(HttpSession session,
             @RequestParam(name = "userId", required = false) Integer userId) {
-        
+
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null || !(loggedInUser instanceof SCStaff )) {
+        if (loggedInUser == null || !(loggedInUser instanceof SCStaff)) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Người dùng không có quyền");
         }
 
@@ -157,12 +171,29 @@ public class ScStaffDashboardController {
         return notificationService.GetNotifications(uid);
     }
 
+    @PutMapping("/notifications/{id}/read")
+    public ResponseEntity<?> markNotificationRead(HttpSession session, @PathVariable("id") Integer id) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null || !(loggedInUser instanceof SCStaff)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Người dùng không có quyền");
+        }
+
+        if (id == null) {
+            return ResponseEntity.badRequest().body("Thiếu id");
+        }
+
+        boolean ok = notificationService.MarkNotificationAsRead(id);
+        if (ok)
+            return ResponseEntity.ok("Đã đánh dấu đã đọc");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Notification not found");
+    }
+
     @GetMapping("/customers")
     public ResponseEntity<List<Customer>> getCustomers(HttpSession session,
             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
             @RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null || !(loggedInUser instanceof SCStaff )) {
+        if (loggedInUser == null || !(loggedInUser instanceof SCStaff)) {
             return ResponseEntity.status(401).build();
         }
 
@@ -173,10 +204,10 @@ public class ScStaffDashboardController {
     @GetMapping("/customer/count")
     public ResponseEntity<Integer> countCustomers(HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null || !(loggedInUser instanceof SCStaff )) {
+        if (loggedInUser == null || !(loggedInUser instanceof SCStaff)) {
             return ResponseEntity.status(401).build();
         }
-        
+
         int count = userService.countAllCustomers();
         return ResponseEntity.ok(count);
     }
@@ -184,7 +215,7 @@ public class ScStaffDashboardController {
     @GetMapping("/customer/get/{id}")
     public ResponseEntity<Customer> getCustomer(HttpSession session, @PathVariable("id") int id) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null || !(loggedInUser instanceof SCStaff )) {
+        if (loggedInUser == null || !(loggedInUser instanceof SCStaff)) {
             return ResponseEntity.status(401).build();
         }
         Customer customer = userService.getCustomerById(id);
@@ -196,7 +227,13 @@ public class ScStaffDashboardController {
     @PostMapping("/customer/create")
     public ResponseEntity<?> addCustomer(HttpSession session, @RequestBody Customer customer) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null || !(loggedInUser instanceof EVMStaff)) {
+        try {
+            System.out.println("[DEBUG] addCustomer - sessionId=" + (session != null ? session.getId() : "<no-session>")
+                    + " loggedInUser=" + (loggedInUser == null ? "null" : loggedInUser.getClass().getName()));
+        } catch (Exception ex) {
+            System.out.println("[DEBUG] addCustomer - couldn't read session: " + ex.getMessage());
+        }
+        if (loggedInUser == null || !(loggedInUser instanceof SCStaff)) {
             return ResponseEntity.status(401).build();
         }
         try {

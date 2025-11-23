@@ -167,35 +167,6 @@
     gap: 8px;
 }
 
-.pagination-btn,
-.pagination-btn-active {
-    border: 1px solid var(--gray-300);
-    background: var(--card-bg);
-    color: var(--text);
-    padding: 6px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    min-width: 44px;
-    text-align: center;
-}
-
-.pagination-btn:hover {
-    background: #f1f5fb;
-    border-color: #94a3b8;
-}
-
-.pagination-btn-active,
-.pagination-btn--active {
-    /* Support cả 2 class */
-    background: var(--primary);
-    color: #fff;
-    border-color: var(--primary);
-    font-weight: 600;
-    box-shadow: 0 2px 4px rgba(10, 102, 194, 0.2);
-}
 
 /* --- 6. MODAL --- */
 .modal {
@@ -241,7 +212,7 @@
 .highlight-text {
     color: var(--primary);
 }
-
+/* 
 .modal-close-btn {
     background: none;
     border: none;
@@ -255,7 +226,7 @@
 
 .modal-close-btn:hover {
     color: var(--danger);
-}
+} */
 
 .modal-body {
     padding: 0;

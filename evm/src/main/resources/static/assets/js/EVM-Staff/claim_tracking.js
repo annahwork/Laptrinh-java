@@ -79,7 +79,7 @@
     async function openTrackingModal(claimId) {
         modalClaimIdSpan.textContent = `(CR-${claimId})`;
         modalProgressBody.innerHTML = `<tr><td colspan="4" class="no-data">Đang tải lịch sử...</td></tr>`;
-        modal.style.display = 'block';
+        modal.style.display = 'flex';
 
         try {
             const response = await fetch(`${API_HISTORY}/${claimId}`);

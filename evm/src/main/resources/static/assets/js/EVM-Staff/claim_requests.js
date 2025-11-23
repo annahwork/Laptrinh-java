@@ -175,8 +175,7 @@
         
         // Hiển thị modal
         if (modal) {
-            modal.style.display = 'block'; // Hoặc 'flex' tùy CSS modal của bạn
-            // Nếu bạn dùng class show như bài trước: modal.classList.add('show');
+            modal.style.display = 'flex';
         }
     }
 

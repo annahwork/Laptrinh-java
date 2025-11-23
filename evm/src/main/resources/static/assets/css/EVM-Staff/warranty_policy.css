@@ -271,18 +271,16 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1050;
-    display: flex; 
+    display: none; 
     justify-content: center;
     align-items: center;
-    visibility: hidden;
-    opacity: 0;
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .modal.show {
-    visibility: visible;
-    opacity: 1;
+    display: flex;
 }
+
 
 .modal-content {
     background: var(--card-bg);
@@ -310,7 +308,7 @@
     font-size: 1.125rem;
     font-weight: 600;
 }
-
+/* 
 .modal-close-btn {
     background: none;
     border: none;
@@ -324,7 +322,7 @@
 
 .modal-close-btn:hover {
     color: var(--primary);
-}
+} */
 
 .modal-body {
     padding: 1.5rem;

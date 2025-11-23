@@ -1,77 +1,77 @@
-<section id="claim_requests_page" class="allocate-parts-page">
-  <div class="app-layout">
+<section id="claim_requests_page" class="allocate-parts-page" xmlns:th="http://www.thymeleaf.org">
+    <div class="app-layout">
 
-    <div class="content-wrapper" id="innerContent">
-      <div class="main-content-area">
+        <div class="content-wrapper" id="innerContent">
+            <div class="main-content-area">
 
-        <div class="section-header">
-            <div>
-                <h2>Yêu cầu bảo hành (Chờ duyệt)</h2>
-            </div>
-            </div>
+                <div class="section-header">
+                    <div>
+                        <h2 th:text="#{claim.requests.title}">Yêu cầu bảo hành (Chờ duyệt)</h2>
+                    </div>
+                </div>
 
-        <div class="card">
-            <div class="table-responsive">
-                <table class="data-table" id="claimTable">
-                    <thead>
-                        <tr>
-                            <th class="text-left">Mã yêu cầu</th>
-                            <th class="text-left">Mã xe (VIN)</th>
-                            <th class="text-left">Người yêu cầu (SC)</th>
-                            <th class="text-center">Ngày yêu cầu</th>
-                            <th class="text-center">Trạng thái</th>
-                            <th class="text-right">Hành động</th>
-                        </tr>
-                    </thead>
-                    <tbody id="claimTableBody">
-                        <tr>
-                            <td colspan="6" class="text-center" style="padding: 2rem; color: #64748b;">
-                                Đang tải dữ liệu...
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="data-table" id="claimTable">
+                            <thead>
+                            <tr>
+                                <th class="text-left" th:text="#{table.header.claim_code}">Mã yêu cầu</th>
+                                <th class="text-left" th:text="#{table.header.vin}">Mã xe (VIN)</th>
+                                <th class="text-left" th:text="#{table.header.requester}">Người yêu cầu (SC)</th>
+                                <th class="text-center" th:text="#{table.header.request_date}">Ngày yêu cầu</th>
+                                <th class="text-center" th:text="#{table.header.status}">Trạng thái</th>
+                                <th class="text-right" th:text="#{table.header.action}">Hành động</th>
+                            </tr>
+                            </thead>
+                            <tbody id="claimTableBody">
+                            <tr>
+                                <td colspan="6" class="text-center" style="padding: 2rem; color: #64748b;">
+                                    Đang tải dữ liệu...
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-            <div class="card-footer">
-                <span class="pagination-info">Hiển thị 0 của 0</span>
+                    <div class="card-footer">
+                        <span class="pagination-info" th:text="#{pagination.display_info}">Hiển thị 0 của 0</span>
 
-                <div class="pagination-wrapper">
-                    <button class="btn-action btn-load">« Trước</button>
-                    <button class="btn-action btn-load">1</button>
-                    <button class="btn-action btn-load">Sau »</button>
+                        <div class="pagination-wrapper">
+                            <button class="btn-action btn-load" th:text="#{button.previous}">« Trước</button>
+                            <button class="btn-action btn-load">1</button>
+                            <button class="btn-action btn-load" th:text="#{button.next}">Sau »</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="modal" id="approvalModal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 th:text="#{claim.requests.modal.title}">Xác nhận xử lý <span id="modalClaimId"></span></h3>
+                <button type="button" class="modal-close-btn" id="closeApprovalModal" th:aria-label="#{button.close}">×</button>
+            </div>
+
+            <form id="approvalForm" class="modal-form">
+                <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
+                    <span th:text="#{claim.requests.modal.details_label}">Chi tiết:</span> <span id="modalClaimDetails" style="color: var(--text); font-weight: 600;"></span>
+                </p>
+
+                <div class="form-group">
+                    <label for="approvalNote" th:text="#{claim.requests.modal.note_label}">Ghi chú xử lý (Bắt buộc khi từ chối):</label>
+                    <textarea id="approvalNote" class="form-control" rows="3" th:placeholder="#{claim.requests.modal.note_placeholder}"></textarea>
+                </div>
+
+                <input type="hidden" id="modalClaimIdInput" />
+
+                <div class="modal-footer-actions">
+                    <button type="submit" class="btn-action btn-delete" id="btnReject" th:text="#{button.reject}">Từ chối</button>
+                    <button type="submit" class="btn-action btn-save" id="btnApprove" th:text="#{button.approve}">Duyệt</button>
+                </div>
+            </form>
         </div>
     </div>
-  </div>
-
-  <div class="modal" id="approvalModal" style="display:none;">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3>Xác nhận xử lý <span id="modalClaimId"></span></h3>
-            <button type="button" class="modal-close-btn" id="closeApprovalModal">×</button>
-        </div>
-        
-        <form id="approvalForm" class="modal-form">
-            <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
-                Chi tiết: <span id="modalClaimDetails" style="color: var(--text); font-weight: 600;"></span>
-            </p>
-
-            <div class="form-group">
-                <label for="approvalNote">Ghi chú xử lý (Bắt buộc khi từ chối):</label>
-                <textarea id="approvalNote" class="form-control" rows="3" placeholder="Nhập lý do..."></textarea>
-            </div>
-            
-            <input type="hidden" id="modalClaimIdInput" />
-
-            <div class="modal-footer-actions">
-                <button type="submit" class="btn-action btn-delete" id="btnReject">Từ chối</button>
-                <button type="submit" class="btn-action btn-save" id="btnApprove">Duyệt</button>
-            </div>
-        </form>
-    </div>
-  </div>
 
 </section>

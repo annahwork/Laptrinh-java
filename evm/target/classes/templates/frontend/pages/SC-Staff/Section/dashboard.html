@@ -1,10 +1,10 @@
-<section class="dashboard-page">
+<section class="dashboard-page" xmlns:th="http://www.thymeleaf.org">
     <div class="app-layout">
         <div class="content-wrapper" id="innerContent">
             <div class="main-content-area">
 
                 <div class="dashboard-section">
-                    <h2 class="section-title">Tổng quan công việc</h2>
+                    <h2 class="section-title" th:text="#{dashboard.sc_staff.subtitle.overview}">Tổng quan công việc</h2>
                     <div class="stats-grid">
                         <div class="stat-card stat-card--blue">
                             <div class="stat-icon">
@@ -12,7 +12,7 @@
                             </div>
                             <div class="stat-info">
                                 <h3 class="stat-number" id="total-vehicles">--</h3>
-                                <p class="stat-label">Tổng số xe</p>
+                                <p class="stat-label" th:text="#{dashboard.sc_staff.stat.total_vehicles}">Tổng số xe</p>
                             </div>
                         </div>
 
@@ -22,7 +22,7 @@
                             </div>
                             <div class="stat-info">
                                 <h3 class="stat-number" id="total-customers">--</h3>
-                                <p class="stat-label">Khách hàng</p>
+                                <p class="stat-label" th:text="#{dashboard.sc_staff.stat.customers}">Khách hàng</p>
                             </div>
                         </div>
 
@@ -32,7 +32,7 @@
                             </div>
                             <div class="stat-info">
                                 <h3 class="stat-number" id="total-warranty">--</h3>
-                                <p class="stat-label">Yêu cầu bảo hành</p>
+                                <p class="stat-label" th:text="#{dashboard.sc_staff.stat.warranty_claims}">Yêu cầu bảo hành</p>
                             </div>
                         </div>
 
@@ -42,63 +42,63 @@
                             </div>
                             <div class="stat-info">
                                 <h3 class="stat-number" id="total-campaigns">--</h3>
-                                <p class="stat-label">Chiến dịch</p>
+                                <p class="stat-label" th:text="#{dashboard.sc_staff.stat.campaigns}">Chiến dịch</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="dashboard-section">
-                    <h2 class="section-title">Chiến dịch đang tham gia</h2>
+                    <h2 class="section-title" th:text="#{dashboard.sc_staff.subtitle.active_campaigns}">Chiến dịch đang tham gia</h2>
                     <div class="card">
                         <table class="table-zebra table-full-width">
                             <thead>
-                                <tr class="table-header-row">
-                                    <th>Mã chiến dịch</th>
-                                    <th>Hạng mục</th>
-                                    <th>Xe liên quan</th>
-                                    <th>Tiến độ</th>
-                                </tr>
+                            <tr class="table-header-row">
+                                <th th:text="#{table.header.campaign_code}">Mã chiến dịch</th>
+                                <th th:text="#{table.header.category}">Hạng mục</th>
+                                <th th:text="#{table.header.related_vehicles}">Xe liên quan</th>
+                                <th th:text="#{table.header.progress}">Tiến độ</th>
+                            </tr>
                             </thead>
                             <tbody id="campaigns-tbody">
-                                <tr>
-                                    <td colspan="4" class="table-placeholder-cell">
-                                        <em>Dữ liệu sẽ được load từ database</em>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td colspan="4" class="table-placeholder-cell" th:text="#{message.loading_data}">
+                                    <em>Dữ liệu sẽ được load từ database</em>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
 
                 <div class="dashboard-section">
-                    <h2 class="section-title">Lịch làm việc hôm nay</h2>
+                    <h2 class="section-title" th:text="#{dashboard.sc_staff.subtitle.schedule_today}">Lịch làm việc hôm nay</h2>
                     <div class="card">
                         <table class="table-zebra table-full-width">
                             <thead>
-                                <tr class="table-header-row">
-                                    <th>Thời gian</th>
-                                    <th>VIN</th>
-                                    <th>Khách hàng</th>
-                                    <th>Nội dung</th>
-                                    <th>Trạng thái</th>
-                                </tr>
+                            <tr class="table-header-row">
+                                <th th:text="#{table.header.time}">Thời gian</th>
+                                <th th:text="#{table.header.vin}">VIN</th>
+                                <th th:text="#{table.header.customer}">Khách hàng</th>
+                                <th th:text="#{table.header.content}">Nội dung</th>
+                                <th th:text="#{table.header.status}">Trạng thái</th>
+                            </tr>
                             </thead>
                             <tbody id="schedule-tbody">
-                                <tr>
-                                    <td colspan="5" class="table-placeholder-cell">
-                                        <em>Dữ liệu sẽ được load từ database</em>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td colspan="5" class="table-placeholder-cell" th:text="#{message.loading_data}">
+                                    <em>Dữ liệu sẽ được load từ database</em>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
 
                 <div class="dashboard-section">
-                    <h2 class="section-title">Thông báo mới nhất</h2>
+                    <h2 class="section-title" th:text="#{dashboard.sc_staff.subtitle.notifications}">Thông báo mới nhất</h2>
                     <div class="notifications-container" id="notifications-container">
-                        <p class="empty-message">Chưa có thông báo mới</p>
+                        <p class="empty-message" th:text="#{notification.empty_message}">Chưa có thông báo mới</p>
                     </div>
                 </div>
 

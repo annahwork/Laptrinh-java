@@ -1,19 +1,19 @@
-<section class="user-management-container">
+<section class="user-management-container" xmlns:th="http://www.thymeleaf.org">
     <div class="filter-section">
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Tìm kiếm theo tên, email, username..."
-                aria-label="Tìm kiếm..." />
+            <input type="text" id="searchInput" th:placeholder="#{user.search.placeholder}"
+                   th:aria-label="#{user.search.aria}" />
         </div>
 
         <div class="filter-controls">
-            <select id="roleFilter" class="filter-select" aria-label="Lọc vai trò">
-                <option value="">Vai trò</option>
-                <option value="ADMIN">Admin</option>
-                <option value="SC_STAFF">SC Staff</option>
-                <option value="SC_TECHNICIAN">SC Technician</option>
-                <option value="EVM_STAFF">EVM Staff</option>
+            <select id="roleFilter" class="filter-select" th:aria-label="#{user.filter.aria}">
+                <option value="" th:text="#{user.filter.role_all}">Vai trò</option>
+                <option value="ADMIN" th:text="#{user.role.admin}">Admin</option>
+                <option value="SC_STAFF" th:text="#{user.role.sc_staff}">SC Staff</option>
+                <option value="SC_TECHNICIAN" th:text="#{user.role.sc_technician}">SC Technician</option>
+                <option value="EVM_STAFF" th:text="#{user.role.evm_staff_short}">EVM Staff</option>
             </select>
-            <button type="button" id="btnAddUser" class="btn-action btn-add">
+            <button type="button" id="btnAddUser" class="btn-action btn-add" th:text="#{user.button.add}">
                 <i class="fas fa-plus"></i> Thêm người dùng
             </button>
 
@@ -24,102 +24,106 @@
         <div class="table-container">
             <table class="data-table">
                 <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Username</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Số điện thoại</th>
-                        <th>Vai trò</th>
-                        <th>Hành động</th>
-                    </tr>
+                <tr>
+                    <th th:text="#{table.header.id}">ID</th>
+                    <th th:text="#{table.header.username}">Username</th>
+                    <th th:text="#{table.header.name}">Name</th>
+                    <th th:text="#{table.header.email}">Email</th>
+                    <th th:text="#{table.header.phone}">Số điện thoại</th>
+                    <th th:text="#{table.header.role}">Vai trò</th>
+                    <th th:text="#{table.header.action}">Hành động</th>
+                </tr>
                 </thead>
                 <tbody id="usersTableBody">
-                    <tr>
-                        <td colspan="7" class="no-data">
-                            <p>Chưa có dữ liệu từ database</p>
-                        </td>
-                    </tr>
+                <tr>
+                    <td colspan="7" class="no-data">
+                        <p th:text="#{user.table.no_data_initial}">Chưa có dữ liệu từ database</p>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>
 
         <div class="card-footer">
             <div class="pagination-wrapper">
-                <span class="pagination-info" id="paginationInfo">Hiển thị 0 của 0</span>
+                <span class="pagination-info" id="paginationInfo" th:text="#{pagination.display_info_of_tracking}">Hiển thị 0 của 0</span>
                 <div class="pagination-controls">
-                    <button class="btn-action btn-load" id="btnPrev" disabled>« Trước</button>
+                    <button class="btn-action btn-load" id="btnPrev" disabled th:text="#{button.previous}">« Trước</button>
                     <button class="btn-action btn-load" id="btnCurrent" aria-current="page">1</button>
-                    <button class="btn-action btn-load" id="btnNext" disabled>Sau »</button>
+                    <button class="btn-action btn-load" id="btnNext" disabled th:text="#{button.next}">Sau »</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="userModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div id="userModal" class="modal" role="dialog" aria-modal="true" th:aria-labelledby="#{user.modal.add_title}">
         <div class="modal-content">
             <form id="userForm">
+                <div class="modal-header">
+                    <h3 id="modalTitle" th:text="#{user.modal.add_title}">Thêm người dùng mới</h3>
+                    <button class="modal-close-btn" id="btnCloseUserModal" th:aria-label="#{button.close}">&times;</button>
+                </div>
                 <div class="modal-body">
                     <input type="hidden" id="userId" />
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="userName">Username <span class="required">*</span></label>
+                            <label for="userName" th:text="#{user.label.username}">Username <span class="required">*</span></label>
                             <input type="text" id="userName" required />
                         </div>
 
                         <div class="form-group">
-                            <label for="name">Tên <span class="required">*</span></label>
+                            <label for="name" th:text="#{table.header.name}">Tên <span class="required">*</span></label>
                             <input type="text" id="name" required />
                         </div>
 
                         <div class="form-group">
-                            <label for="password">Mật khẩu <span class="required">*</span></label>
+                            <label for="password" th:text="#{modal.label.password}">Mật khẩu <span class="required">*</span></label>
                             <input type="password" id="password" required />
                         </div>
 
                         <div class="form-group">
-                            <label for="userRole">Vai trò <span class="required">*</span></label>
+                            <label for="userRole" th:text="#{table.header.role}">Vai trò <span class="required">*</span></label>
                             <select id="userRole" required>
-                                <option value="">Chọn vai trò</option>
-                                <option value="ADMIN">Admin</option>
-                                <option value="SC_STAFF">SC Staff</option>
-                                <option value="SC_TECHNICIAN">SC Technician</option>
-                                <option value="EVM_STAFF">EVM Staff</option>
+                                <option value="" th:text="#{user.select.role_placeholder}">Chọn vai trò</option>
+                                <option value="ADMIN" th:text="#{user.role.admin}">Admin</option>
+                                <option value="SC_STAFF" th:text="#{user.role.sc_staff}">SC Staff</option>
+                                <option value="SC_TECHNICIAN" th:text="#{user.role.sc_technician}">SC Technician</option>
+                                <option value="EVM_STAFF" th:text="#{user.role.evm_staff_short}">EVM Staff</option>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="email">Email</label>
+                            <label for="email" th:text="#{table.header.email}">Email</label>
                             <input type="email" id="email" />
                         </div>
 
                         <div class="form-group">
-                            <label for="phone">Số điện thoại</label>
+                            <label for="phone" th:text="#{table.header.phone}">Số điện thoại</label>
                             <input type="tel" id="phone" />
                         </div>
                     </div>
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn-action btn-cancel" id="btnCancelModal"
-                        onclick="closeUserModal()">Hủy</button>
-                    <button type="submit" class="btn-action btn-save">Lưu</button>
+                    <button type="button" class="btn-action btn-cancel" id="btnCancelModal" th:text="#{button.cancel}">Hủy</button>
+                    <button type="submit" class="btn-action btn-save" th:text="#{button.save}">Lưu</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <div id="deleteModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="deleteTitle">
+    <div id="deleteModal" class="modal" role="dialog" aria-modal="true" th:aria-labelledby="#{user.modal.delete_title}">
         <div class="modal-content modal-small">
-            <div class="modal-body">
-                <p>Bạn có chắc chắn muốn xóa người dùng này không?</p>
-                <p class="warning-text">Hành động này không thể hoàn tác!</p>
+            <div class="modal-header" style="justify-content: flex-start; border-bottom: none;">
+                <h3 th:text="#{user.modal.delete_title}" id="deleteTitle">Xác nhận xóa</h3>
+            </div>
+            <div class="modal-body" style="padding-top: 0;">
+                <p th:text="#{user.alert.confirm_delete}">Bạn có chắc chắn muốn xóa người dùng này không?</p>
+                <p class="warning-text" th:utext="#{user.alert.cannot_undo}">Hành động này không thể hoàn tác!</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn-action btn-edit" id="btnCancelDelete"
-                    onclick="closeDeleteModal()">Hủy</button>
-                <button type="button" class="btn-action btn-delete" id="btnConfirmDelete"
-                    onclick="handleDelete(event)">Xóa</button>
+                <button type="button" class="btn-action btn-edit" id="btnCancelDelete" th:text="#{button.cancel}">Hủy</button>
+                <button type="button" class="btn-action btn-delete" id="btnConfirmDelete" th:text="#{button.delete}">Xóa</button>
             </div>
         </div>
     </div>

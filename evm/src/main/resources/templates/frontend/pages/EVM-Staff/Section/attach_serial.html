@@ -1,95 +1,94 @@
-<section id="attach_serial_page" class="attach-serial-page modern-layout">
+<section id="attach_serial_page" class="attach-serial-page modern-layout" xmlns:th="http://www.thymeleaf.org">
     <div class="app-layout">
 
         <div class="search-container card">
-            <input type="text" id="searchInput" class="search-input"  placeholder="Tìm kiếm...">
+            <input type="text" id="searchInput" class="search-input" th:placeholder="#{attach.serial.search.placeholder}"/>
         </div>
 
         <div class="action-container card">
             <button type="button" id="btnMoFormAttachSerial" class="btn-action btn-add">
-                <i class="fas fa-plus"></i> Gắn số serial
+                <i class="fas fa-plus"></i> <span th:text="#{attach.serial.button}">Gắn số serial</span>
             </button>
         </div>
 
         <div class="content-wrapper" id="innerContent">
             <div class="main-content-area">
 
-               
                 <div class="card">
                     <div class="table-responsive">
                         <table class="data-table">
                             <thead>
-                                <tr>
-                                    <th class="text-left">Số VIN</th>
-                                    <th class="text-left">Tên phụ tùng</th>
-                                    <th class="text-center">Số serial</th>
-                                    <th class="text-center">Ngày gắn</th>
-                                    <th class="text-left">Người gắn</th>
-                                </tr>
+                            <tr>
+                                <th class="text-left" th:text="#{table.header.vin}">Số VIN</th>
+                                <th class="text-left" th:text="#{table.header.part_name}">Tên phụ tùng</th>
+                                <th class="text-center" th:text="#{table.header.serial_number}">Số serial</th>
+                                <th class="text-center" th:text="#{table.header.date_attached}">Ngày gắn</th>
+                                <th class="text-left" th:text="#{table.header.installer}">Người gắn</th>
+                            </tr>
                             </thead>
                             <tbody id="partsTableBody">
-                                <tr>
-                                    <td colspan="5" class="no-data-cell">Đang tải dữ liệu...</td>
-                                </tr>
+                            <tr>
+                                <td colspan="5" class="no-data-cell">Đang tải dữ liệu...</td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
 
                     <div class="card-footer">
-                        <span class="pagination-info">Hiển thị 0 của 0</span>
+                        <span class="pagination-info" th:text="#{pagination.display_info}">Hiển thị 0 của 0</span>
 
                         <div class="pagination-wrapper">
-                            <button class="btn-action btn-load">« Trước</button>
+                            <button class="btn-action btn-load" th:text="#{button.previous}">« Trước</button>
                             <button class="btn-action btn-load">1</button>
-                            <button class="btn-action btn-load">Sau »</button>
+                            <button class="btn-action btn-load" th:text="#{button.next}">Sau »</button>
                         </div>
                     </div>
                 </div>
-                
+
                 <div id="modalCreate" class="modal" style="display: none;">
                     <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
                         <div class="modal-header">
-                            <h3 id="modal-title">Gắn Serial cho Phụ tùng</h3>
-                            <button type="button" class="modal-close-btn modalCancel" aria-label="Đóng">
+                            <h3 id="modal-title" th:text="#{attach.serial.modal.title}">Gắn Serial cho Phụ tùng</h3>
+                            <button type="button" class="modal-close-btn modalCancel" th:aria-label="#{button.close}">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
 
                         <form id="modalForm" class="modal-form" autocomplete="off">
-                            
+
                             <div class="form-group">
-                                <label for="vinInput">Số VIN của xe <span class="required">*</span></label>
-                                <input type="text" id="vinInput" name="vinInput" class="form-control" required placeholder="Nhập mã VIN"/>
+                                <label for="vinInput" th:text="#{attach.serial.label.vin}">Số VIN của xe <span class="required">*</span></label>
+                                <input type="text" id="vinInput" name="vinInput" class="form-control" required th:placeholder="#{attach.serial.placeholder.vin}"/>
                             </div>
-                            
+
                             <div class="form-group">
-                                <label for="partSelect">Phụ tùng <span class="required">*</span></label>
+                                <label for="partSelect" th:text="#{modal.label.part}">Phụ tùng <span class="required">*</span></label>
                                 <select id="partSelect" name="partSelect" class="form-control" required>
-                                    <option value="">-- Chọn phụ tùng --</option>
+                                    <option value="" th:text="#{modal.placeholder.select_part}">-- Chọn phụ tùng --</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="serialNumber">Số serial <span class="required">*</span></label>
-                                <input type="text" id="serialNumber" name="serialNumber" class="form-control" required placeholder="Nhập số serial"/>
+                                <label for="serialNumber" th:text="#{attach.serial.label.serial}">Số serial <span class="required">*</span></label>
+                                <input type="text" id="serialNumber" name="serialNumber" class="form-control" required th:placeholder="#{attach.serial.placeholder.serial}"/>
                             </div>
-                            
+
                             <div class="form-group-row">
                                 <div class="form-group half">
-                                    <label for="dateAttach">Ngày gắn <span class="required">*</span></label>
+                                    <label for="dateAttach" th:text="#{attach.serial.label.date}">Ngày gắn <span class="required">*</span></label>
                                     <input type="date" id="dateAttach" name="dateAttach" class="form-control" required />
                                 </div>
                                 <div class="form-group half">
-                                    <label for="installerSelect">Người gắn <span class="required">*</span></label>
+                                    <label for="installerSelect" th:text="#{attach.serial.label.installer}">Người gắn <span class="required">*</span></label>
                                     <select id="installerSelect" name="installerSelect" class="form-control" required>
-                                         <option value="">-- Chọn người gắn --</option>
+                                        <option value="" th:text="#{attach.serial.placeholder.select_installer}">-- Chọn người gắn --</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="modal-footer-actions">
-                                <button type="submit" class="btn btn-primary modalSubmit">Lưu thông tin</button> 
-                                <button type="button" class="btn btn-cancel modalCancel">Hủy bỏ</button>
+                                <button type="submit" class="btn btn-primary modalSubmit" th:text="#{button.save_info}">Lưu thông tin</button>
+                                <button type="button" class="btn btn-cancel modalCancel" th:text="#{button.cancel_abort}">Hủy bỏ</button>
                             </div>
                         </form>
                     </div>

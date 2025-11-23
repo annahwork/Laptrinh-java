@@ -1,6 +1,9 @@
 (function () {
     console.log("SC-Staff Dashboard script loaded");
 
+    // 💡 Hàm tra cứu dịch thuật (giả định)
+    const T = (key, fallbackText) => window.messages && window.messages[key] ? window.messages[key] : fallbackText;
+
     function getContextPath() {
         return (window.contextPath || '/evm').replace(/\/$/, '');
     }
@@ -16,7 +19,8 @@
     async function loadSummary() {
         try {
             const res = await fetch(`${apiBase}/summary`);
-            if (!res.ok) throw new Error("Failed to load summary");
+            // 💡 Dịch: Failed to load summary
+            if (!res.ok) throw new Error(T('error.load_summary_failed', "Failed to load summary"));
 
             const data = await res.json();
 
@@ -25,7 +29,7 @@
             setText("total-warranty", data.totalWarranty ?? 0);
             setText("total-campaigns", data.totalCampaigns ?? 0);
         } catch (e) {
-            console.error("Lỗi load summary:", e);
+            console.error(T('error.load_summary_failed', "Lỗi load summary:"), e);
             setText("total-vehicles", "--");
             setText("total-customers", "--");
             setText("total-warranty", "--");
@@ -35,6 +39,8 @@
 
     async function loadCampaigns() {
         const tbody = document.getElementById("campaigns-tbody");
+        const loadingText = T('message.loading_data', 'Đang tải dữ liệu...');
+
         if (!tbody) {
             console.warn("Không tìm thấy #campaigns-tbody");
             return;
@@ -43,22 +49,23 @@
         tbody.innerHTML = `
             <tr>
                 <td colspan="4" class="table-placeholder-cell">
-                    <em>Đang tải dữ liệu...</em>
+                    <em>${loadingText}</em>
                 </td>
             </tr>
         `;
 
         try {
             const res = await fetch(`${apiBase}/campaigns`);
-            if (!res.ok) throw new Error("Failed to load campaigns");
+            if (!res.ok) throw new Error(T('campaign.error.load_list', "Failed to load campaigns"));
 
             const campaigns = await res.json();
 
             if (!campaigns || campaigns.length === 0) {
+                // 💡 Dịch: Không có chiến dịch đang tham gia
                 tbody.innerHTML = `
                     <tr>
                         <td colspan="4" class="table-placeholder-cell">
-                            <em>Không có chiến dịch đang tham gia</em>
+                            <em>${T('dashboard.sc_staff.no_campaigns', 'Không có chiến dịch đang tham gia')}</em>
                         </td>
                     </tr>
                 `;
@@ -79,16 +86,17 @@
                     <td>${escapeHtml(code)}</td>
                     <td>${escapeHtml(category)}</td>
                     <td>${escapeHtml(relatedVehicles)}</td>
-                    <td>${escapeHtml(progress)}</td>
+                    <td>${escapeHtml(T(`status.${progress.toLowerCase()}`, progress))}</td>
                 `;
                 tbody.appendChild(tr);
             });
         } catch (e) {
-            console.error("Lỗi load campaigns:", e);
+            console.error(T('campaign.error.load_list', "Lỗi load campaigns:"), e);
+            // 💡 Dịch: Lỗi tải dữ liệu chiến dịch
             tbody.innerHTML = `
                 <tr>
                     <td colspan="4" class="table-placeholder-cell">
-                        <em>Lỗi tải dữ liệu chiến dịch</em>
+                        <em>${T('campaign.error.load_data', 'Lỗi tải dữ liệu chiến dịch')}</em>
                     </td>
                 </tr>
             `;
@@ -97,6 +105,8 @@
 
     async function loadSchedule() {
         const tbody = document.getElementById("schedule-tbody");
+        const loadingText = T('message.loading_data', 'Đang tải dữ liệu...');
+
         if (!tbody) {
             console.warn("Không tìm thấy #schedule-tbody");
             return;
@@ -105,22 +115,23 @@
         tbody.innerHTML = `
             <tr>
                 <td colspan="5" class="table-placeholder-cell">
-                    <em>Đang tải dữ liệu...</em>
+                    <em>${loadingText}</em>
                 </td>
             </tr>
         `;
 
         try {
             const res = await fetch(`${apiBase}/schedule-today`);
-            if (!res.ok) throw new Error("Failed to load schedule");
+            if (!res.ok) throw new Error(T('schedule.error.load', "Failed to load schedule"));
 
             const schedules = await res.json();
 
             if (!schedules || schedules.length === 0) {
+                // 💡 Dịch: Hôm nay chưa có lịch làm việc
                 tbody.innerHTML = `
                     <tr>
                         <td colspan="5" class="table-placeholder-cell">
-                            <em>Hôm nay chưa có lịch làm việc</em>
+                            <em>${T('schedule.no_data_today', 'Hôm nay chưa có lịch làm việc')}</em>
                         </td>
                     </tr>
                 `;
@@ -128,6 +139,7 @@
             }
 
             tbody.innerHTML = "";
+            const scheduledStatus = T('status.scheduled', 'Đã lên lịch');
 
             schedules.forEach(s => {
                 const tr = document.createElement("tr");
@@ -142,7 +154,7 @@
                     (s.recallCampaign && (s.recallCampaign.name || s.recallCampaign.description)) ||
                     s.note ||
                     "";
-                const status = "Đã lên lịch";
+                const status = scheduledStatus; // Sử dụng chuỗi dịch
 
                 tr.innerHTML = `
                     <td>${escapeHtml(time)}</td>
@@ -154,11 +166,12 @@
                 tbody.appendChild(tr);
             });
         } catch (e) {
-            console.error("Lỗi load schedule:", e);
+            console.error(T('schedule.error.load', "Lỗi load schedule:"), e);
+            // 💡 Dịch: Lỗi tải lịch làm việc
             tbody.innerHTML = `
                 <tr>
                     <td colspan="5" class="table-placeholder-cell">
-                        <em>Lỗi tải lịch làm việc</em>
+                        <em>${T('schedule.error.load_data', 'Lỗi tải lịch làm việc')}</em>
                     </td>
                 </tr>
             `;
@@ -167,31 +180,36 @@
 
     async function loadNotifications() {
         const container = document.getElementById("notifications-container");
+        const loadingText = T('notification.loading', 'Đang tải thông báo...');
+
         if (!container) {
             console.warn("Không tìm thấy #notifications-container");
             return;
         }
 
-        container.innerHTML = `<p class="empty-message">Đang tải thông báo...</p>`;
+        container.innerHTML = `<p class="empty-message">${loadingText}</p>`;
 
         try {
             const res = await fetch(`${apiBase}/notifications`);
-            if (!res.ok) throw new Error("Failed to load notifications");
+            if (!res.ok) throw new Error(T('notification.error.load', "Failed to load notifications"));
 
             const notifications = await res.json();
 
             if (!notifications || notifications.length === 0) {
-                container.innerHTML = `<p class="empty-message">Chưa có thông báo mới</p>`;
+                // 💡 Dịch: Chưa có thông báo mới
+                container.innerHTML = `<p class="empty-message">${T('notification.empty_message', 'Chưa có thông báo mới')}</p>`;
                 return;
             }
 
             container.innerHTML = "";
 
+            const notificationTitle = T('notification.title_default', 'Thông báo');
+
             notifications.forEach(n => {
                 const div = document.createElement("div");
                 div.classList.add("notification-item");
 
-                const title = n.title ?? "Thông báo";
+                const title = n.title ?? notificationTitle;
                 const message = n.message ?? "";
                 const createdAt = n.createdAt ? formatDateTime(n.createdAt) : "";
 
@@ -203,8 +221,9 @@
                 container.appendChild(div);
             });
         } catch (e) {
-            console.error("Lỗi load notifications:", e);
-            container.innerHTML = `<p class="empty-message">Lỗi tải thông báo</p>`;
+            console.error(T('notification.error.load', "Lỗi load notifications:"), e);
+            // 💡 Dịch: Lỗi tải thông báo
+            container.innerHTML = `<p class="empty-message">${T('notification.error.load_data', 'Lỗi tải thông báo')}</p>`;
         }
     }
 

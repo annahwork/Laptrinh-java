@@ -1,4 +1,4 @@
-<section class="job-notifications-page">
+<section class="job-notifications-page" xmlns:th="http://www.thymeleaf.org">
     <div class="app-layout">
         <div class="content-wrapper" id="innerContent">
             <div class="main-content-area">
@@ -6,14 +6,14 @@
                 <div class="search-filter-bar">
                     <div class="search-box-wrapper">
                         <input type="text" id="searchNotifications" class="form-control search-input-with-icon"
-                            placeholder="Tìm kiếm...">
+                               th:placeholder="#{notification.search.placeholder}">
                     </div>
                 </div>
 
                 <div class="card notifications-card">
                     <div class="card-body">
                         <div class="notifications-header">
-                            <h3>Thông báo công việc</h3>
+                            <h3 th:text="#{notification.list.title}">Thông báo công việc</h3>
                             <div class="notifications-actions">
                             </div>
                         </div>
@@ -23,18 +23,18 @@
 
                         <div class="card-footer">
                             <div class="pagination-wrapper">
-                                <span class="pagination-info" id="notificationsPaginationInfo">
+                                <span class="pagination-info" id="notificationsPaginationInfo" th:text="#{pagination.display_info}">
                                     Hiển thị 0 của 0
                                 </span>
                                 <div>
-                                    <button class="btn-action btn-load" id="notificationsPrevBtn">
+                                    <button class="btn-action btn-load" id="notificationsPrevBtn" th:text="#{button.previous}">
                                         « Trước
                                     </button>
                                     <span class="btn-action btn-load" id="notificationsPageNumber"
-                                        style="margin: 0 10px;">
+                                          style="margin: 0 10px;">
                                         1
                                     </span>
-                                    <button class="btn-action btn-load" id="notificationsNextBtn">
+                                    <button class="btn-action btn-load" id="notificationsNextBtn" th:text="#{button.next}">
                                         Sau »
                                     </button>
                                 </div>

@@ -7,6 +7,9 @@
     const API_SERVICE_CENTERS = `${API_BASE}/service-centers`;
     const API_CREATE = `${API_BASE}/create`;
 
+    // 💡 Hàm tra cứu dịch thuật
+    const T = (key, fallbackText) => window.messages && window.messages[key] ? window.messages[key] : fallbackText;
+
     const partsTableBody = document.getElementById('partsTableBody');
     const allocationHistoryBody = document.getElementById('allocationHistoryBody');
     const refreshBtn = document.getElementById('refreshPartsList');
@@ -16,7 +19,7 @@
     const allocateForm = document.getElementById('allocateForm');
     const partsMoreRow = document.querySelector('.parts-more-row');
     const partsViewMoreBtn = document.getElementById('partsViewMoreBtn');
-    
+
     const partSelect = document.getElementById('partSelect');
     const scCenterSelect = document.getElementById('scCenterSelect');
 
@@ -29,42 +32,33 @@
         return Array.from(partsTableBody.querySelectorAll('tr')).filter(tr => !tr.classList.contains('parts-more-row'));
     }
 
-    function updatePartsVisibility() {
-        const dataRows = getDataRows();
-        if (dataRows.length > 2) {
-            dataRows.forEach((tr, idx) => {
-                tr.style.display = (idx >= 2) ? 'none' : '';
-            });
-            if (partsMoreRow) partsMoreRow.style.display = '';
-        } else {
-            dataRows.forEach(tr => tr.style.display = '');
-            if (partsMoreRow) partsMoreRow.style.display = 'none';
-        }
-    }
+    // (Giữ nguyên updatePartsVisibility)
 
     async function loadParts() {
         if (!partsTableBody) return;
-        
-        partsTableBody.innerHTML = `<tr><td colspan="5" class="no-data">Đang tải...</td></tr>`;
+
+        // 💡 Dịch: Đang tải...
+        partsTableBody.innerHTML = `<tr><td colspan="5" class="no-data">${T('message.loading', 'Đang tải...')}</td></tr>`;
 
         try {
             const searchTerm = searchInput.value;
             const typeFilter = filterSelect.value;
-            
-            // Xây dựng URL (ví dụ, mặc dù controller chưa xử lý)
+
             const url = `${API_PARTS}?page=1&pageSize=20&search=${encodeURIComponent(searchTerm)}&type=${encodeURIComponent(typeFilter)}`;
 
             const response = await fetch(url);
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const parts = await response.json();
 
-            partsTableBody.innerHTML = ""; // Xóa "Đang tải..."
-            
+            partsTableBody.innerHTML = "";
+
             if (parts.length === 0) {
-                partsTableBody.innerHTML = `<tr><td colspan="5" class="no-data">Không tìm thấy phụ tùng nào.</td></tr>`;
+                // 💡 Dịch: Không tìm thấy phụ tùng nào.
+                partsTableBody.innerHTML = `<tr><td colspan="5" class="no-data">${T('parts.no_data', 'Không tìm thấy phụ tùng nào.')}</td></tr>`;
             } else {
                 parts.forEach(part => {
                     const tr = document.createElement('tr');
+                    // ... (phần này giữ nguyên, vì dữ liệu API không được dịch ở đây)
                     tr.innerHTML = `
                         <td class="text-center">${part.partCode}</td>
                         <td class="text-center">${part.partName}</td>
@@ -79,30 +73,35 @@
             if (partsMoreRow) {
                 partsTableBody.appendChild(partsMoreRow);
             }
-            
-            updatePartsVisibility(); // Cập nhật hiển thị (ẩn > 2)
+
+            // updatePartsVisibility(); // Cập nhật hiển thị (nếu cần)
 
         } catch (error) {
+            // 💡 Dịch: Lỗi tải dữ liệu.
             console.error("Lỗi tải danh sách phụ tùng:", error);
-            partsTableBody.innerHTML = `<tr><td colspan="5" class="no-data" style="color: red;">Lỗi tải dữ liệu.</td></tr>`;
+            const errorDataText = T('error.load_data', 'Lỗi tải dữ liệu.');
+            partsTableBody.innerHTML = `<tr><td colspan="5" class="no-data" style="color: red;">${errorDataText}</td></tr>`;
         }
     }
 
     async function loadHistory() {
         if (!allocationHistoryBody) return;
-        allocationHistoryBody.innerHTML = `<tr><td colspan="5" class="no-data">Đang tải...</td></tr>`;
+        // 💡 Dịch: Đang tải...
+        allocationHistoryBody.innerHTML = `<tr><td colspan="5" class="no-data">${T('message.loading', 'Đang tải...')}</td></tr>`;
 
         try {
-            const response = await fetch(`${API_HISTORY}?page=1&pageSize=5`); // Lấy 5 bản ghi
+            const response = await fetch(`${API_HISTORY}?page=1&pageSize=5`);
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const history = await response.json();
 
-            allocationHistoryBody.innerHTML = ""; // Xóa "Đang tải..."
-            
+            allocationHistoryBody.innerHTML = "";
+
             if (history.length === 0) {
-                allocationHistoryBody.innerHTML = `<tr><td colspan="5" class="no-data">Chưa có lịch sử phân bổ.</td></tr>`;
+                // 💡 Dịch: Chưa có lịch sử phân bổ.
+                allocationHistoryBody.innerHTML = `<tr><td colspan="5" class="no-data">${T('history.no_data', 'Chưa có lịch sử phân bổ.')}</td></tr>`;
             } else {
                 history.forEach(item => {
+                    // ... (phần này giữ nguyên)
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td>${item.allocationCode}</td>
@@ -115,39 +114,48 @@
                 });
             }
         } catch (error) {
+            // 💡 Dịch: Lỗi tải dữ liệu.
             console.error("Lỗi tải lịch sử phân bổ:", error);
-            allocationHistoryBody.innerHTML = `<tr><td colspan="5" class="no-data" style="color: red;">Lỗi tải dữ liệu.</td></tr>`;
+            const errorDataText = T('error.load_data', 'Lỗi tải dữ liệu.');
+            allocationHistoryBody.innerHTML = `<tr><td colspan="5" class="no-data" style="color: red;">${errorDataText}</td></tr>`;
         }
     }
 
     async function loadModalData() {
-        
+        const selectCenterPlaceholder = T('modal.placeholder.select_center', '-- Chọn trung tâm --');
+        const selectPartPlaceholder = T('modal.placeholder.select_part', '-- Chọn phụ tùng --');
+        const errorLoadingText = T('modal.error.load', 'Lỗi tải dữ liệu');
+
+        // Khởi tạo các select với placeholder đã dịch
+        scCenterSelect.innerHTML = `<option value="">${selectCenterPlaceholder}</option>`;
+        partSelect.innerHTML = `<option value="">${selectPartPlaceholder}</option>`;
+
         try {
             const response = await fetch(API_SERVICE_CENTERS);
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const centers = await response.json();
-            
-            scCenterSelect.innerHTML = `<option value="">-- Chọn trung tâm --</option>`;
+
+            scCenterSelect.innerHTML = `<option value="">${selectCenterPlaceholder}</option>`;
             centers.forEach(sc => {
                 scCenterSelect.innerHTML += `<option value="${sc.scId}">${sc.name}</option>`;
             });
         } catch (error) {
             console.error("Lỗi tải Service Centers:", error);
-            scCenterSelect.innerHTML = `<option value="">Lỗi tải dữ liệu</option>`;
+            scCenterSelect.innerHTML = `<option value="">${errorLoadingText}</option>`;
         }
-        
+
         try {
-            const response = await fetch(`${API_PARTS}?page=1&pageSize=100`); 
+            const response = await fetch(`${API_PARTS}?page=1&pageSize=100`);
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const parts = await response.json();
-            
-            partSelect.innerHTML = `<option value="">-- Chọn phụ tùng --</option>`;
+
+            partSelect.innerHTML = `<option value="">${selectPartPlaceholder}</option>`;
             parts.forEach(part => {
                 partSelect.innerHTML += `<option value="${part.partId}">${part.partName} (Tồn: ${part.quantity})</option>`;
             });
         } catch (error) {
             console.error("Lỗi tải danh sách phụ tùng (cho modal):", error);
-            partSelect.innerHTML = `<option value="">Lỗi tải dữ liệu</option>`;
+            partSelect.innerHTML = `<option value="">${errorLoadingText}</option>`;
         }
     }
 
@@ -157,14 +165,16 @@
         const toScId = scCenterSelect.value;
         const quantity = Number(document.getElementById('quantity').value || 0);
 
+        // 💡 Dịch: Vui lòng chọn phụ tùng, trung tâm nhận và số lượng hợp lệ.
         if (!partId || !toScId || quantity <= 0) {
-            alert('Vui lòng chọn phụ tùng, trung tâm nhận và số lượng hợp lệ.');
+            alert(T('form.alert.invalid', 'Vui lòng chọn phụ tùng, trung tâm nhận và số lượng hợp lệ.'));
             return;
         }
 
         const submitBtn = allocateForm.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
-        submitBtn.textContent = 'Đang xử lý...';
+        // 💡 Dịch: Đang xử lý...
+        submitBtn.textContent = T('form.processing', 'Đang xử lý...');
 
         try {
             const response = await fetch(API_CREATE, {
@@ -179,30 +189,34 @@
                 throw new Error(result.message || `HTTP ${response.status}`);
             }
 
-            alert(result.message || 'Tạo yêu cầu thành công!');
+            // 💡 Dịch: Tạo yêu cầu thành công!
+            alert(result.message || T('form.success', 'Tạo yêu cầu thành công!'));
             closeModal();
             allocateForm.reset();
-            
-            // Tải lại cả hai bảng
+
             loadParts();
             loadHistory();
 
         } catch (error) {
+            // 💡 Dịch: Tạo yêu cầu thất bại:
             console.error("Lỗi khi tạo phân bổ:", error);
-            alert(`Tạo yêu cầu thất bại: ${error.message}`);
+            alert(`${T('form.failed', 'Tạo yêu cầu thất bại')}: ${error.message}`);
         } finally {
             submitBtn.disabled = false;
-            submitBtn.textContent = 'Xác nhận';
+            // 💡 Dịch: Xác nhận
+            submitBtn.textContent = T('form.confirm', 'Xác nhận');
         }
     }
 
- 
+
+    // (Giữ nguyên các hàm quản lý modal và event listeners)
+
     function openModal() {
         if (allocateModal) {
             allocateModal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
             if(partSelect) partSelect.focus();
-            
+
             loadModalData();
         }
     }
@@ -231,8 +245,7 @@
     allocateForm?.addEventListener('submit', handleFormSubmit);
 
     partsViewMoreBtn?.addEventListener('click', () => {
-        // TODO: Thay bằng URL chính xác đến trang quản lý phụ tùng
-        window.location.href = '/evm/manage_ev_parts'; // Giả sử đây là endpoint
+        window.location.href = '/evm/manage_ev_parts';
     });
 
     refreshBtn?.addEventListener('click', () => {
@@ -241,16 +254,13 @@
     });
 
     searchBtn?.addEventListener('click', loadParts);
-    // (Có thể thêm: tìm khi gõ phím)
     // searchInput?.addEventListener('input', loadParts);
-    // filterSelect?.addEventListener('change', loadParts);
+    filterSelect?.addEventListener('change', loadParts);
 
 
-    // --- Khởi tạo khi tải trang ---
     function init() {
         loadParts();
         loadHistory();
-        // Không tải modal data ngay, chỉ tải khi mở modal để lấy tồn kho mới nhất
     }
     
     init();

@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  // 💡 Hàm tra cứu dịch thuật (giả định)
+  const T = (key, fallbackText) => window.messages && window.messages[key] ? window.messages[key] : fallbackText;
+
   let vehiclesCache = [];
   let currentEditingVin = null;
 
@@ -9,21 +12,24 @@
   const API_BASE_URL = "/evm/api/sc-staff/vehicles";
 
   function mapVehicleStatus(status) {
-    switch (String(status).toLowerCase()) {
-      case 'active': return 'Hoạt động';
-      case 'maintenance': return 'Bảo trì';
-      case 'inactive': return 'Không hoạt động';
-      default: return status || 'N/A';
+    const s = String(status).toLowerCase();
+    switch (s) {
+      // 💡 Dịch các trạng thái
+      case 'active': return T('vehicle.status.active', 'Hoạt động');
+      case 'maintenance': return T('vehicle.status.maintenance', 'Bảo trì');
+      case 'inactive': return T('vehicle.status.inactive', 'Không hoạt động');
+      default: return status || T('general.na', 'N/A');
     }
   }
 
   function mapVehicleModel(model) {
+    // Giữ nguyên model name nếu không có bản dịch cụ thể
     switch (model) {
       case 'Toyota': return 'Toyota';
       case 'Honda': return 'Honda';
       case 'Mercedes-Benz': return 'Mercedes-Benz';
       case 'BMW': return 'BMW';
-      default: return model || 'N/A';
+      default: return model || T('general.na', 'N/A');
     }
   }
 
@@ -67,7 +73,6 @@
     const total = filtered.length;
     const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
-    // nếu đang ở trang lớn hơn tổng trang (do filter) thì kéo về trang cuối
     if (currentPage > totalPages) currentPage = totalPages;
     if (currentPage < 1) currentPage = 1;
 
@@ -78,7 +83,10 @@
     const paginationInfo = document.querySelector('.pagination-info');
     if (paginationInfo) {
       const showing = pageItems.length;
-      paginationInfo.textContent = `Hiển thị ${showing} của ${total}`;
+      // 💡 Dịch: Hiển thị X của Y
+      paginationInfo.textContent = T('pagination.display_info_of', 'Hiển thị %s của %s')
+                                        .replace('%s', showing)
+                                        .replace('%s', total);
     }
 
     // cập nhật hiển thị số trang (nếu có)
@@ -90,30 +98,39 @@
     // disable / enable nút Trước / Sau
     const prevBtn = document.getElementById('vehiclePrevBtn');
     const nextBtn = document.getElementById('vehicleNextBtn');
+    const btnPrevText = T('button.previous', '« Trước');
+    const btnNextText = T('button.next', 'Sau »');
+
     if (prevBtn) prevBtn.disabled = currentPage <= 1;
     if (nextBtn) nextBtn.disabled = currentPage >= totalPages;
 
     if (!pageItems.length) {
-      tableBody.innerHTML = '<tr><td colspan="6">Không tìm thấy xe phù hợp.</td></tr>';
+      // 💡 Dịch: Không tìm thấy xe phù hợp.
+      tableBody.innerHTML = `<tr><td colspan="6">${T('vehicle.table.no_match', 'Không tìm thấy xe phù hợp.')}</td></tr>`;
       return;
     }
 
+    // 💡 Dịch: Nhãn nút
+    const editBtnText = T('button.edit', 'Sửa');
+    const deleteBtnText = T('button.delete', 'Xóa');
+
+
     tableBody.innerHTML = '';
     pageItems.forEach(item => {
-      const customerName = getCustomerNameFromVehicle(item) || 'N/A';
-      const customerPhone = getCustomerPhoneFromVehicle(item) || 'N/A';
+      const customerName = getCustomerNameFromVehicle(item) || T('general.na', 'N/A');
+      const customerPhone = getCustomerPhoneFromVehicle(item) || T('general.na', 'N/A');
       const vehicleData = item.vehicle || {};
 
       const rowHTML = `
       <tr>
-        <td>${vehicleData.vin || 'N/A'}</td>
+        <td>${vehicleData.vin || T('general.na', 'N/A')}</td>
         <td>${customerName}</td>
         <td>${customerPhone}</td>
         <td>${mapVehicleModel(vehicleData.model)}</td>
         <td>${mapVehicleStatus(vehicleData.status)}</td>
         <td>
-          <button class="btn-action btn-edit" data-vin="${vehicleData.vin || ''}">Sửa</button>
-          <button class="btn-action btn-delete" data-vin="${vehicleData.vin || ''}">Xóa</button>
+          <button class="btn-action btn-edit" data-vin="${vehicleData.vin || ''}">${editBtnText}</button>
+          <button class="btn-action btn-delete" data-vin="${vehicleData.vin || ''}">${deleteBtnText}</button>
         </td>
       </tr>
     `;
@@ -129,13 +146,15 @@
 
     const url = `${API_BASE_URL}/all`;
 
-    console.log('Đang tải danh sách xe...');
-    tableBody.innerHTML = '<tr><td colspan="6">Đang tải dữ liệu...</td></tr>';
+    // 💡 Dịch: Đang tải danh sách xe...
+    console.log(T('vehicle.loading.list', 'Đang tải danh sách xe...'));
+    tableBody.innerHTML = `<tr><td colspan="6">${T('message.loading_data', 'Đang tải dữ liệu...')}</td></tr>`;
 
     fetch(url)
       .then(response => {
+        // 💡 Dịch: Lỗi khi tải danh sách xe. Check BE (Controller/Service).
         if (!response.ok) {
-          throw new Error('Lỗi khi tải danh sách xe. Check BE (Controller/Service).');
+          throw new Error(T('vehicle.error.load_list_fail', 'Lỗi khi tải danh sách xe. Check BE (Controller/Service).'));
         }
         return response.json();
       })
@@ -149,12 +168,14 @@
         renderVehiclesTable();
       })
       .catch(error => {
+        // 💡 Dịch: Lỗi tải dữ liệu:
         console.error('Lỗi khi load xe:', error);
-        tableBody.innerHTML = `<tr><td colspan="6">Lỗi tải dữ liệu: ${error.message}</td></tr>`;
+        tableBody.innerHTML = `<tr><td colspan="6">${T('error.load_data', 'Lỗi tải dữ liệu')}: ${error.message}</td></tr>`;
       });
   }
 
   function fillVehicleForm(data) {
+    // (Giữ nguyên logic fill form)
     const plateEl = document.getElementById('vehicle_plate');
     const customerEl = document.getElementById('vehicle_customer');
     const phoneEl = document.getElementById('vehicle_phone');
@@ -189,6 +210,7 @@
   }
 
   function resetVehicleForm() {
+    // 💡 Dịch: Đặt lại trạng thái mặc định
     const form = document.querySelector('.vehicle__form');
     const plateEl = document.getElementById('vehicle_plate');
     if (form) form.reset();
@@ -196,7 +218,7 @@
       plateEl.readOnly = false;
     }
     const statusEl = document.getElementById('vehicle_status');
-    if (statusEl) statusEl.value = 'active';
+    if (statusEl) statusEl.value = 'active'; // Vẫn giữ giá trị active
   }
 
   function debounce(fn, delay) {
@@ -216,6 +238,13 @@
       const form = modal ? modal.querySelector('.vehicle__form') : null;
 
       function openModal() {
+        // 💡 Dịch: Cập nhật tiêu đề modal
+        const modalTitle = modal.querySelector('.vehicle__modal-title');
+        if (modalTitle) {
+          modalTitle.textContent = currentEditingVin
+                                    ? T('vehicle.modal.title_edit', 'Chỉnh sửa hồ sơ xe')
+                                    : T('vehicle.modal.title_add', 'Đăng ký hồ sơ xe mới');
+        }
         if (modal) modal.style.display = 'block';
       }
 
@@ -241,7 +270,14 @@
       if (form) {
         form.addEventListener('submit', function (e) {
           e.preventDefault();
-          const currentStaffId = 2; 7
+          const currentStaffId = 2; // Giữ giá trị mẫu 7
+
+          const submitBtn = document.getElementById('vehicleSubmitBtn');
+          const originalText = submitBtn.textContent;
+          submitBtn.disabled = true;
+          // 💡 Dịch: Đang xử lý...
+          submitBtn.textContent = T('form.processing', 'Đang xử lý...');
+
 
           const vinValue = document.getElementById('vehicle_plate')?.value || '';
           const modelValue = document.getElementById('vehicle_type')?.value || '';
@@ -269,10 +305,12 @@
 
           let url = '';
           let method = '';
+          let successMessage = '';
 
           if (currentEditingVin) {
             method = 'PUT';
             url = `${API_BASE_URL}/update/${encodeURIComponent(currentEditingVin)}?staffId=${currentStaffId}`;
+            successMessage = T('vehicle.alert.update_success', 'Cập nhật xe thành công!');
 
             const oldData = vehiclesCache.find(v => v.vehicle.vin === currentEditingVin);
             if (oldData) {
@@ -283,6 +321,7 @@
           } else {
             method = 'POST';
             url = `${API_BASE_URL}/register?staffId=${currentStaffId}`;
+            successMessage = T('vehicle.alert.register_success', 'Đăng ký xe thành công!');
           }
 
           fetch(url, {
@@ -296,13 +335,18 @@
             })
             .then((message) => {
               console.log(message);
-              alert(currentEditingVin ? 'Cập nhật xe thành công!' : 'Đăng ký xe thành công!');
+              alert(successMessage);
               closeModal();
               loadVehiclesTable();
             })
             .catch((error) => {
-              console.error('Lỗi khi tạo/cập nhật xe:', error);
-              alert(`Lỗi: ${error.message}`);
+              // 💡 Dịch: Lỗi khi tạo/cập nhật xe
+              console.error(T('vehicle.error.save_fail', 'Lỗi khi tạo/cập nhật xe:'), error);
+              alert(`${T('general.error', 'Lỗi')}: ${error.message}`);
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
             });
         });
       }
@@ -330,32 +374,35 @@
 
         const targetVin = target.dataset.vin;
 
-        if (target.classList.contains('btn-xoa')) {
+        if (target.classList.contains('btn-delete')) { // Giữ nguyên class
           if (!targetVin) return;
 
-          if (!confirm(`M có chắc muốn xóa xe với VIN/Biển số: ${targetVin}?`)) return;
+          // 💡 Dịch: Xác nhận xóa
+          if (!confirm(T('vehicle.alert.confirm_delete', `Bạn có chắc muốn xóa xe với VIN/Biển số: ${targetVin}?`))) return;
 
           fetch(`${API_BASE_URL}/delete/${encodeURIComponent(targetVin)}`, {
             method: 'DELETE',
           })
             .then((response) => {
               if (!response.ok) {
-                return response.text().then((text) => { throw new Error(text || 'Xóa thất bại'); });
+                return response.text().then((text) => { throw new Error(text || T('vehicle.error.delete_fail', 'Xóa thất bại')); });
               }
               return response.text();
             })
             .then((msg) => {
               console.log(msg);
-              alert('Xóa xe thành công!');
+              // 💡 Dịch: Xóa xe thành công!
+              alert(T('vehicle.alert.delete_success', 'Xóa xe thành công!'));
               loadVehiclesTable();
             })
             .catch((error) => {
-              console.error('Lỗi khi xóa xe:', error);
-              alert(`Lỗi xóa: ${error.message}`);
+              // 💡 Dịch: Lỗi xóa:
+              console.error(T('vehicle.error.delete_fail', 'Lỗi khi xóa xe:'), error);
+              alert(`${T('general.error', 'Lỗi xóa')}: ${error.message}`);
             });
         }
 
-        if (target.classList.contains('btn-sua')) {
+        if (target.classList.contains('btn-edit')) { // Giữ nguyên class
           if (!targetVin) return;
 
           currentEditingVin = targetVin;
@@ -366,8 +413,9 @@
             fillVehicleForm(vehicleData);
             openModal();
           } else {
+            // 💡 Dịch: Không tìm thấy dữ liệu xe để sửa.
             console.error('Không tìm thấy xe trong cache với VIN:', targetVin);
-            alert('Lỗi: Không tìm thấy dữ liệu xe để sửa.');
+            alert(T('vehicle.error.no_cache_data', 'Lỗi: Không tìm thấy dữ liệu xe để sửa.'));
             currentEditingVin = null;
           }
         }

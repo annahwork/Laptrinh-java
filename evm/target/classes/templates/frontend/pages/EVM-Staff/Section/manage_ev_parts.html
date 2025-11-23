@@ -1,13 +1,13 @@
-<section id="manage_ev_parts_page">
+<section id="manage_ev_parts_page" xmlns:th="http://www.thymeleaf.org">
     <div class="app-layout">
 
         <div class="search-container card">
-            <input type="text" id="searchInput" class="search-input" placeholder="Tìm kiếm...">
+            <input type="text" id="searchInput" class="search-input" th:placeholder="#{manage.parts.search.placeholder}">
         </div>
 
         <div class="action-container card">
             <button type="button" id="btnMoFormAttachSerial" class="btn-action btn-add">
-                <i class="fas fa-plus"></i> Thêm Phụ tùng
+                <i class="fas fa-plus"></i> <span th:text="#{manage.parts.add_button}">Thêm Phụ tùng</span>
             </button>
         </div>
 
@@ -15,79 +15,80 @@
             <div class="card-body-no-padding">
                 <table class="table-zebra table-full-width">
                     <thead>
-                        <tr class="table-header-row">
-                            <th style="text-align: center;">Mã phụ tùng</th>
-                            <th style="text-align: center;">Tên phụ tùng</th>
-                            <th style="text-align: center;">Loại</th>
-                            <th style="text-align: center;">Số lượng tồn</th>
-                            <th style="text-align: center;">Vị trí kho</th>
-                        </tr>
+                    <tr class="table-header-row">
+                        <th style="text-align: center;" th:text="#{table.header.part_code}">Mã phụ tùng</th>
+                        <th style="text-align: center;" th:text="#{table.header.part_name}">Tên phụ tùng</th>
+                        <th style="text-align: center;" th:text="#{table.header.part_type}">Loại</th>
+                        <th style="text-align: center;" th:text="#{table.header.stock_quantity}">Số lượng tồn</th>
+                        <th style="text-align: center;" th:text="#{table.header.warehouse_location}">Vị trí kho</th>
+                    </tr>
                     </thead>
                     <tbody id="partsTableBody">
-                        <tr>
-                            <td colspan="5" class="no-data">Chưa có dữ liệu</td>
-                        </tr>
+                    <tr>
+                        <td colspan="5" class="no-data">Chưa có dữ liệu</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
 
             <div class="card-footer">
                 <div class="pagination-wrapper">
-                    <span class="pagination-info">Hiển thị <span id="pageInfo">0</span> của <span
+                    <span class="pagination-info" th:text="#{pagination.display_info_of}">Hiển thị <span id="pageInfo">0</span> của <span
                             id="totalItems">0</span></span>
                     <div class="pagination-controls">
-                        <button class="btn-action btn-load" id="prevPage">« Trước</button>
+                        <button class="btn-action btn-load" id="prevPage" th:text="#{button.previous}">« Trước</button>
                         <button class="btn-action btn-load" id="currentPage">1</button>
-                        <button class="btn-action btn-load" id="nextPage">Sau »</button>
+                        <button class="btn-action btn-load" id="nextPage" th:text="#{button.next}">Sau »</button>
                     </div>
                 </div>
             </div>
         </div>
+
         <div id="modalCreate" class="modal-panel" aria-hidden="true">
             <div class="modal-panel__backdrop"></div>
             <div class="modal-panel__dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-                <button class="modal-panel__close" aria-label="Đóng">&times;</button>
+                <button class="modal-panel__close" th:aria-label="#{button.close}">&times;</button>
 
                 <form id="modalForm" class="modal-panel__form" autocomplete="off">
-                    <h3 style="margin-bottom: 1.5rem; font-size: 1.25rem; font-weight: 600;">Thêm mới phụ tùng
+                    <h3 style="margin-bottom: 1.5rem; font-size: 1.25rem; font-weight: 600;" th:text="#{manage.parts.modal.title}">Thêm mới phụ tùng
                     </h3>
 
                     <div class="form-row">
-                        <label for="code" class="form-label">Mã phụ tùng <span class="required">*</span></label>
-                        <input id="code" name="code" class="form-input" type="text" placeholder="VD: PT-001" required />
+                        <label for="code" class="form-label" th:text="#{manage.parts.label.code}">Mã phụ tùng <span class="required">*</span></label>
+                        <input id="code" name="code" class="form-input" type="text" th:placeholder="#{manage.parts.placeholder.code}" required />
                     </div>
 
                     <div class="form-row">
-                        <label for="name" class="form-label">Tên phụ tùng <span class="required">*</span></label>
-                        <input id="name" name="name" class="form-input" type="text" placeholder="VD: Má phanh trước"
-                            required />
+                        <label for="name" class="form-label" th:text="#{manage.parts.label.name}">Tên phụ tùng <span class="required">*</span></label>
+                        <input id="name" name="name" class="form-input" type="text" th:placeholder="#{manage.parts.placeholder.name}"
+                               required />
                     </div>
 
                     <div class="form-row">
-                        <label for="partType" class="form-label">Loại <span class="required">*</span></label>
+                        <label for="partType" class="form-label" th:text="#{manage.parts.label.type}">Loại <span class="required">*</span></label>
                         <select id="partType" name="partType" class="form-input" required>
-                            <option value="">-- Chọn loại --</option>
-                            <option value="Động cơ">Động cơ</option>
-                            <option value="Phanh">Phanh</option>
-                            <option value="Hệ thống treo">Hệ thống treo</option>
-                            <option value="Điện tử">Điện tử</option>
-                            <option value="Khác">Khác</option>
+                            <option value="" th:text="#{manage.parts.placeholder.select_type}">-- Chọn loại --</option>
+                            <option value="Động cơ" th:text="#{parts.type.engine}">Động cơ</option>
+                            <option value="Phanh" th:text="#{parts.type.brake}">Phanh</option>
+                            <option value="Hệ thống treo" th:text="#{parts.type.suspension}">Hệ thống treo</option>
+                            <option value="Điện tử" th:text="#{parts.type.electrical}">Điện tử</option>
+                            <option value="Khác" th:text="#{parts.type.other}">Khác</option>
                         </select>
                     </div>
 
                     <div class="form-row">
-                        <label for="quantity" class="form-label">Số lượng tồn</label>
+                        <label for="quantity" class="form-label" th:text="#{manage.parts.label.quantity}">Số lượng tồn</label>
                         <input id="quantity" name="quantity" class="form-input" type="number" min="0" value="0" />
                     </div>
 
                     <div class="form-row">
-                        <label for="location" class="form-label">Vị trí kho</label>
-                        <input id="location" name="location" class="form-input" type="text" placeholder="VD: Kệ A-01" />
+                        <label for="location" class="form-label" th:text="#{manage.parts.label.location}">Vị trí kho</label>
+                        <input id="location" name="location" class="form-input" type="text" th:placeholder="#{manage.parts.placeholder.location}" />
                     </div>
 
                     <div class="modal-panel__actions">
-                        <button type="button" class="btn-action btn-cancel">Hủy</button>
-                        <button type="submit" class="btn-action btn-save">Lưu</button>
+                        <button type="button" class="btn-action btn-cancel" th:text="#{button.cancel}">Hủy</button>
+                        <button type="submit" class="btn-action btn-save" th:text="#{button.save}">Lưu</button>
                     </div>
                 </form>
             </div>

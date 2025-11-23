@@ -1,6 +1,9 @@
 (function () {
     "use strict";
 
+    // 💡 Hàm tra cứu dịch thuật (giả định)
+    const T = (key, fallbackText) => window.messages && window.messages[key] ? window.messages[key] : fallbackText;
+
     console.log("SC-Staff Campaign Management (view only) JS loaded");
 
     // ====== CẤU HÌNH ======
@@ -17,15 +20,13 @@
     const nextPageBtn = document.getElementById("nextPageBtn");
     const currentPageSpan = document.getElementById("currentPageSpan");
 
-    // CHỈ XEM NÊN KHÔNG DÙNG FORM/MODAL NỮA
-
     // state
     let campaigns = [];
     let filteredCampaigns = [];
     let currentPage = 1;
-    const PAGE_SIZE = 5; // mỗi trang 5 chiến dịch
+    const PAGE_SIZE = 5;
 
-    // ====== UTIL ======
+    // ====== UTIL (Giữ nguyên) ======
     function escapeHtml(str) {
         return String(str ?? "").replace(/[&<>"'`=\/]/g, s => ({
             "&": "&amp;",
@@ -41,12 +42,10 @@
 
     function normalizeDateForInput(dateStr) {
         if (!dateStr) return "";
-        // BE trả "2025-11-20T00:00:00" -> "2025-11-20"
         return String(dateStr).substring(0, 10);
     }
 
     function formatDateDisplay(dateStr) {
-        // input: "2025-11-20" hoặc "2025-11-20T00:00:00"
         if (!dateStr) return "";
         const iso = normalizeDateForInput(dateStr);
         const parts = iso.split("-");
@@ -58,7 +57,8 @@
     // ====== API (CHỈ GET) ======
     async function apiGetList() {
         const res = await fetch(API_BASE, { credentials: "include" });
-        if (!res.ok) throw new Error("Không tải được danh sách chiến dịch");
+        // 💡 Dịch: Không tải được danh sách chiến dịch
+        if (!res.ok) throw new Error(T('campaign.error.load_list', "Không tải được danh sách chiến dịch"));
         return await res.json();
     }
 
@@ -69,14 +69,15 @@
         tbody.innerHTML = "";
 
         if (!filteredCampaigns.length) {
+            // 💡 Dịch: Không có chiến dịch nào.
             tbody.innerHTML = `
                 <tr>
                     <td colspan="5" class="table-placeholder-cell">
-                        Không có chiến dịch nào.
+                        ${T('campaign.table.no_data', 'Không có chiến dịch nào.')}
                     </td>
                 </tr>
             `;
-            paginationInfo && (paginationInfo.textContent = "Hiển thị 0 của 0");
+            paginationInfo && (paginationInfo.textContent = T('pagination.display_info', "Hiển thị 0 của 0"));
             currentPageSpan && (currentPageSpan.textContent = "1");
             if (prevPageBtn) prevPageBtn.disabled = true;
             if (nextPageBtn) nextPageBtn.disabled = true;
@@ -92,24 +93,25 @@
         const startIndex = (currentPage - 1) * PAGE_SIZE;
         const pageItems = filteredCampaigns.slice(startIndex, startIndex + PAGE_SIZE);
 
-        // campaignID ở cột đầu tiên như m muốn
         const rowsHtml = pageItems.map(c => `
             <tr>
                 <td>${escapeHtml(c.campaignID)}</td>
                 <td>${escapeHtml(c.name)}</td>
                 <td>${escapeHtml(formatDateDisplay(c.date))}</td>
-                <td>${escapeHtml(c.status)}</td>
+                <td>${escapeHtml(T(`status.${c.status.toLowerCase()}`, c.status))}</td>
                 <td>${escapeHtml(c.description)}</td>
             </tr>
         `).join("");
 
         tbody.innerHTML = rowsHtml;
 
-        // text "Hiển thị X-Y của N"
+        // 💡 Dịch: "Hiển thị X-Y của N"
         if (paginationInfo) {
             const startRow = startIndex + 1;
             const endRow = Math.min(startIndex + PAGE_SIZE, total);
-            paginationInfo.textContent = `Hiển thị ${startRow}-${endRow} của ${total}`;
+            paginationInfo.textContent = T('pagination.display_info_of', 'Hiển thị %s của %s')
+                                            .replace('%s', `${startRow}-${endRow}`)
+                                            .replace('%s', total);
         }
 
         if (currentPageSpan) currentPageSpan.textContent = String(currentPage);
@@ -134,7 +136,7 @@
         }
 
         if (st) {
-            data = data.filter(c => String(c.status || "") === st);
+            data = data.filter(c => String(c.status || "").toLowerCase() === st.toLowerCase());
         }
 
         if (dt) {
@@ -154,7 +156,8 @@
             applyFiltersAndRender();
         } catch (err) {
             console.error(err);
-            alert(err.message || "Lỗi tải danh sách chiến dịch");
+            // 💡 Dịch: Lỗi tải danh sách chiến dịch
+            alert(err.message || T('campaign.error.load_list_alert', "Lỗi tải danh sách chiến dịch"));
         }
     }
 

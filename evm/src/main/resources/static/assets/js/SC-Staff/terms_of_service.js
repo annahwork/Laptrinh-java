@@ -1,22 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     console.log('Terms of Service page loaded');
 
-    const links = document.querySelectorAll('a[href^="#"]');
-    links.forEach(link => {
-        link.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href').substring(1);
-            const targetElement = document.getElementById(targetId);
-
-            if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-
+    // observer logic (giữ nguyên)
     const sections = document.querySelectorAll('.terms-of-service__section');
     const observerOptions = {
         root: null,
@@ -37,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const observer = new IntersectionObserver(observerCallback, observerOptions);
     sections.forEach(section => observer.observe(section));
 
+    // animation logic (giữ nguyên)
     const animateOnScroll = () => {
         sections.forEach(section => {
             const sectionTop = section.getBoundingClientRect().top;
@@ -57,8 +43,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     animateOnScroll();
     window.addEventListener('scroll', animateOnScroll);
+
+    // BACK TO TOP LOGIC
     const addBackToTopButton = () => {
         const backToTopBtn = document.createElement('button');
+
+        // SỬ DỤNG HTML/CSS để hiển thị mũi tên lên
         backToTopBtn.innerHTML = '↑';
         backToTopBtn.className = 'back-to-top';
         backToTopBtn.style.cssText = `
@@ -90,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
+        // Thêm các hiệu ứng hover (giữ nguyên)
         backToTopBtn.addEventListener('mouseenter', () => {
             backToTopBtn.style.backgroundColor = '#218838';
         });

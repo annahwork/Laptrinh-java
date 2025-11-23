@@ -1,5 +1,4 @@
-
-<section class="allocate-parts-page modern-layout">
+<section class="allocate-parts-page modern-layout" xmlns:th="http://www.thymeleaf.org">
     <div class="content-wrapper" id="innerContent">
         <div class="main-content-area grid-container">
 
@@ -8,20 +7,20 @@
                     <div class="search-input-group">
                         <svg class="search-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
-                                d="M8.5 3.5a5 5 0 100 10 5 5 0 000-10zm-7 5a7 7 0 1112.67 4.15l3.68 3.68a1 1 0 01-1.42 1.42l-3.68-3.68A7 7 0 011.5 8.5z"
-                                stroke="currentColor" stroke-width="1.5" />
+                                    d="M8.5 3.5a5 5 0 100 10 5 5 0 000-10zm-7 5a7 7 0 1112.67 4.15l3.68 3.68a1 1 0 01-1.42 1.42l-3.68-3.68A7 7 0 011.5 8.5z"
+                                    stroke="currentColor" stroke-width="1.5" />
                         </svg>
                         <input type="text" id="searchPart" class="search-input"
-                            placeholder="Tìm mã, tên hoặc loại phụ tùng...">
+                               th:placeholder="#{parts.search.placeholder}">
                     </div>
                 </div>
                 <div class="filter-wrapper">
                     <select id="filterCategory" class="filter-select">
-                        <option value="">Tất cả loại phụ tùng</option>
-                        <option value="engine">Động cơ</option>
-                        <option value="brake">Phanh</option>
-                        <option value="suspension">Hệ thống treo</option>
-                        <option value="electrical">Điện tử</option>
+                        <option value="" th:text="#{parts.filter.all}">Tất cả loại phụ tùng</option>
+                        <option value="engine" th:text="#{parts.type.engine}">Động cơ</option>
+                        <option value="brake" th:text="#{parts.type.brake}">Phanh</option>
+                        <option value="suspension" th:text="#{parts.type.suspension}">Hệ thống treo</option>
+                        <option value="electrical" th:text="#{parts.type.electrical}">Điện tử</option>
                     </select>
                 </div>
             </header>
@@ -29,14 +28,14 @@
             <div class="parts-list-section card">
                 <div class="section-header parts-list-section__header">
                     <div class="parts-list-section__title-group">
-                        <h2 class="parts-list-section__title">Danh sách phụ tùng khả dụng</h2>
+                        <h2 class="parts-list-section__title" th:text="#{parts.list.title}">Danh sách phụ tùng khả dụng</h2>
                     </div>
 
                     <div class="parts-list-section__actions">
-                        <button class="btn btn-refresh icon-btn" id="refreshPartsList">
+                        <button class="btn btn-refresh icon-btn" id="refreshPartsList" th:text="#{button.refresh}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round">
                                 <path d="M21.5 2v6h-6" />
                                 <path d="M2.5 22v-6h6" />
                                 <path d="M21.5 8a10 10 0 0 0-17.5 4M2.5 16a10 10 0 0 0 17.5-4" />
@@ -44,10 +43,10 @@
                             Làm mới
                         </button>
 
-                        <button class="btn btn-primary btn-allocate icon-btn" id="openAllocateModal">
+                        <button class="btn btn-primary btn-allocate icon-btn" id="openAllocateModal" th:text="#{button.allocate_parts}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round">
                                 <rect width="18" height="18" x="3" y="3" rx="2" />
                                 <path d="M12 8v8" />
                                 <path d="M8 12h8" />
@@ -60,77 +59,77 @@
                 <div class="table-responsive">
                     <table class="parts-table data-table">
                         <thead>
-                            <tr>
-                                <th class="text-center">Mã phụ tùng</th>
-                                <th class="text-left">Tên phụ tùng</th>
-                                <th class="text-center">Loại</th>
-                                <th class="text-right">Số lượng tồn</th>
-                                <th class="text-center">Vị trí kho</th>
-                            </tr>
+                        <tr>
+                            <th class="text-center" th:text="#{table.header.part_code}">Mã phụ tùng</th>
+                            <th class="text-left" th:text="#{table.header.part_name}">Tên phụ tùng</th>
+                            <th class="text-center" th:text="#{table.header.part_type}">Loại</th>
+                            <th class="text-right" th:text="#{table.header.stock_quantity}">Số lượng tồn</th>
+                            <th class="text-center" th:text="#{table.header.warehouse_location}">Vị trí kho</th>
+                        </tr>
                         </thead>
 
                         <tbody id="partsTableBody">
-                            <tr>
-                                <td class="text-center font-monospace">PT-001</td>
-                                <td class="text-left">Bộ lọc dầu</td>
-                                <td class="text-center tag tag-engine">Động cơ</td>
-                                <td class="text-right stock-level">25</td>
-                                <td class="text-center location-tag">K1-R2</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center font-monospace">PT-002</td>
-                                <td class="text-left">Bình ắc quy</td>
-                                <td class="text-center tag tag-electrical">Điện tử</td>
-                                <td class="text-right stock-level">8</td>
-                                <td class="text-center location-tag">K2-R1</td>
-                            </tr>
+                        <tr>
+                            <td class="text-center font-monospace">PT-001</td>
+                            <td class="text-left">Bộ lọc dầu</td>
+                            <td class="text-center tag tag-engine" th:text="#{parts.type.engine}">Động cơ</td>
+                            <td class="text-right stock-level">25</td>
+                            <td class="text-center location-tag">K1-R2</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center font-monospace">PT-002</td>
+                            <td class="text-left">Bình ắc quy</td>
+                            <td class="text-center tag tag-electrical" th:text="#{parts.type.electrical}">Điện tử</td>
+                            <td class="text-right stock-level">8</td>
+                            <td class="text-center location-tag">K2-R1</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
 
                 <div class="card-footer">
-                    <span class="pagination-info">Hiển thị 0 của 0</span>
+                    <span class="pagination-info" th:text="#{pagination.display_info}">Hiển thị 0 của 0</span>
 
                     <div class="pagination-wrapper">
-                        <button class="btn-action btn-load">« Trước</button>
+                        <button class="btn-action btn-load" th:text="#{button.previous}">« Trước</button>
                         <button class="btn-action btn-load">1</button>
-                        <button class="btn-action btn-load">Sau »</button>
+                        <button class="btn-action btn-load" th:text="#{button.next}">Sau »</button>
                     </div>
                 </div>
             </div>
 
             <div class="allocation-history-section card">
                 <div class="section-header">
-                    <h2>Lịch sử phân bổ gần đây</h2>
-                    <p class="subtitle">Theo dõi các đợt chuyển kho gần nhất</p>
+                    <h2 th:text="#{allocate.history.title}">Lịch sử phân bổ gần đây</h2>
+                    <p class="subtitle" th:text="#{allocate.history.subtitle}">Theo dõi các đợt chuyển kho gần nhất</p>
                 </div>
 
                 <div class="table-responsive">
                     <table class="history-table data-table">
                         <thead>
-                            <tr>
-                                <th>Mã phân bổ</th>
-                                <th>Ngày</th>
-                                <th>Trung tâm nhận</th>
-                                <th>Số lượng</th>
-                                <th>Người thực hiện</th>
-                            </tr>
+                        <tr>
+                            <th th:text="#{table.header.allocation_code}">Mã phân bổ</th>
+                            <th th:text="#{table.header.date}">Ngày</th>
+                            <th th:text="#{table.header.center_received}">Trung tâm nhận</th>
+                            <th th:text="#{table.header.quantity}">Số lượng</th>
+                            <th th:text="#{table.header.executed_by}">Người thực hiện</th>
+                        </tr>
                         </thead>
                         <tbody id="allocationHistoryBody">
-                            <tr>
-                                <td class="font-monospace">ALLOC-20251103-01</td>
-                                <td>03/11/2025</td>
-                                <td>SC001 - Trung tâm **TP.HCM**</td>
-                                <td class="text-right quantity-cell">10</td>
-                                <td>Nguyễn Văn A</td>
-                            </tr>
-                            <tr>
-                                <td class="font-monospace">ALLOC-20251104-02</td>
-                                <td>04/11/2025</td>
-                                <td>SC002 - Trung tâm **Hà Nội**</td>
-                                <td class="text-right quantity-cell">5</td>
-                                <td>Trần Thị B</td>
-                            </tr>
+                        <tr>
+                            <td class="font-monospace">ALLOC-20251103-01</td>
+                            <td>03/11/2025</td>
+                            <td>SC001 - Trung tâm **TP.HCM**</td>
+                            <td class="text-right quantity-cell">10</td>
+                            <td>Nguyễn Văn A</td>
+                        </tr>
+                        <tr>
+                            <td class="font-monospace">ALLOC-20251104-02</td>
+                            <td>04/11/2025</td>
+                            <td>SC002 - Trung tâm **Hà Nội**</td>
+                            <td class="text-right quantity-cell">5</td>
+                            <td>Trần Thị B</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -141,8 +140,8 @@
     <div class="modal fade-in" id="allocateModal" style="display: none;">
         <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="allocateModalTitle">
             <div class="modal-header">
-                <h3 id="allocateModalTitle">Phân bổ phụ tùng</h3>
-                <button type="button" class="modal-close-btn" id="closeAllocateModalHeader" aria-label="Đóng modal">
+                <h3 id="allocateModalTitle" th:text="#{modal.title.allocate_parts}">Phân bổ phụ tùng</h3>
+                <button type="button" class="modal-close-btn" id="closeAllocateModalHeader" th:aria-label="#{button.close_modal}">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
@@ -150,27 +149,27 @@
             <form id="allocateForm" class="modal-form">
 
                 <div class="form-group">
-                    <label for="partSelect">Phụ tùng</label>
+                    <label for="partSelect" th:text="#{modal.label.part}">Phụ tùng</label>
                     <select id="partSelect" class="form-control" required>
-                        <option value="">-- Đang tải danh sách phụ tùng... --</option>
+                        <option value="" th:text="#{modal.placeholder.loading_parts}">-- Đang tải danh sách phụ tùng... --</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="scCenterSelect">Trung tâm nhận</label>
+                    <label for="scCenterSelect" th:text="#{modal.label.center_received}">Trung tâm nhận</label>
                     <select id="scCenterSelect" class="form-control" required>
-                        <option value="">-- Đang tải trung tâm... --</option>
+                        <option value="" th:text="#{modal.placeholder.loading_centers}">-- Đang tải trung tâm... --</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="quantity">Số lượng phân bổ</label>
+                    <label for="quantity" th:text="#{modal.label.quantity_allocate}">Số lượng phân bổ</label>
                     <input type="number" id="quantity" class="form-control" min="1" required
-                        placeholder="Nhập số lượng">
+                           th:placeholder="#{modal.placeholder.enter_quantity}">
                 </div>
 
                 <div class="form-footer modal-footer-actions">
-                    <button type="button" class="btn btn-cancel modal-close-btn" id="cancelAllocateModal">Hủy</button>
-                    <button type="submit" class="btn btn-confirm btn-primary">Lưu</button>
+                    <button type="button" class="btn btn-cancel modal-close-btn" id="cancelAllocateModal" th:text="#{button.cancel}">Hủy</button>
+                    <button type="submit" class="btn btn-confirm btn-primary" th:text="#{button.save}">Lưu</button>
                 </div>
             </form>
         </div>

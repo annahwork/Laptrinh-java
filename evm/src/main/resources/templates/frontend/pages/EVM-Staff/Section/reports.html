@@ -1,4 +1,4 @@
-<section id="report_page" class="report-page allocate-parts-page">
+<section id="report_page" class="report-page allocate-parts-page" xmlns:th="http://www.thymeleaf.org">
     <div class="app-layout">
 
         <div class="content-wrapper" id="innerContent">
@@ -6,18 +6,18 @@
 
                 <div class="section-header">
                     <div>
-                        <h2 class="page-title">Báo cáo tổng hợp</h2>
+                        <h2 class="page-title" th:text="#{report.title}">Báo cáo tổng hợp</h2>
                     </div>
                     <div class="action-group-right">
                         <button class="btn btn-success report__btn report__btn--export">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" style="margin-right: 6px;">
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" style="margin-right: 6px;">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                                 <polyline points="7 10 12 15 17 10" />
                                 <line x1="12" y1="15" x2="12" y2="3" />
                             </svg>
-                            Xuất Excel
+                            <span th:text="#{button.export_excel}">Xuất Excel</span>
                         </button>
                     </div>
                 </div>
@@ -25,19 +25,19 @@
                 <div class="report-summary-grid">
                     <div class="card summary-card bg-blue-light">
                         <div class="card-body">
-                            <h3 class="report__card-title">Tổng chi phí bảo hành</h3>
+                            <h3 class="report__card-title" th:text="#{report.card.warranty_cost}">Tổng chi phí bảo hành</h3>
                             <p class="report__card-value"></p>
                         </div>
                     </div>
                     <div class="card summary-card bg-cyan-light">
                         <div class="card-body">
-                            <h3 class="report__card-title">Chiến dịch thực hiện</h3>
+                            <h3 class="report__card-title" th:text="#{report.card.campaigns}">Chiến dịch thực hiện</h3>
                             <p class="report__card-value"></p>
                         </div>
                     </div>
                     <div class="card summary-card bg-orange-light">
                         <div class="card-body">
-                            <h3 class="report__card-title">Tồn kho linh kiện</h3>
+                            <h3 class="report__card-title" th:text="#{report.card.inventory}">Tồn kho linh kiện</h3>
                             <p class="report__card-value"></p>
                         </div>
                     </div>
@@ -47,15 +47,14 @@
                     <div class="table-responsive">
                         <table class="data-table report__table">
                             <thead>
-                                <tr>
-                                    <th class="text-left">Loại báo cáo</th>
-                                    <th class="text-left">Hạng mục</th>
-                                    <th class="text-right">Thống kê (VND)</th>
-                                    <th class="text-left">Ghi chú / Tỉ lệ lỗi</th>
-                                </tr>
+                            <tr>
+                                <th class="text-left" th:text="#{table.header.report_type}">Loại báo cáo</th>
+                                <th class="text-left" th:text="#{table.header.category}">Hạng mục</th>
+                                <th class="text-right" th:text="#{table.header.stats_vnd}">Thống kê (VND)</th>
+                                <th class="text-left" th:text="#{table.header.note_failure_rate}">Ghi chú / Tỉ lệ lỗi</th>
+                            </tr>
                             </thead>
                             <tbody id="reportTableBody">
-                                <!-- API sẽ render -->
                             </tbody>
                         </table>
                     </div>
@@ -66,36 +65,34 @@
                         <div class="ai-title-group">
                             <div class="ai-icon-wrapper">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="ai-sparkle">
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" class="ai-sparkle">
                                     <path
-                                        d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+                                            d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="report__card-title ai-text-gradient">Phân tích & Dự báo thông minh</h3>
-                                <p class="text-muted mb-0" style="font-size: 0.85rem;">AI sẽ tổng hợp số liệu và đưa ra
-                                    cảnh báo rủi ro hoặc đề xuất tối ưu chi phí.</p>
+                                <h3 class="report__card-title ai-text-gradient" th:text="#{report.ai.title}">Phân tích & Dự báo thông minh</h3>
+                                <p class="text-muted mb-0" style="font-size: 0.85rem;" th:text="#{report.ai.subtitle}">AI sẽ tổng hợp số liệu và đưa ra cảnh báo rủi ro hoặc đề xuất tối ưu chi phí.</p>
                             </div>
                         </div>
                         <button class="btn-action btn-add">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" style="margin-right: 6px;">
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" style="margin-right: 6px;">
                                 <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 12z" />
                                 <path d="M21 3v9h-9" />
                             </svg>
-                            Yêu cầu phân tích
+                            <span th:text="#{button.request_analysis}">Yêu cầu phân tích</span>
                         </button>
                     </div>
 
                     <div class="card-body ai-body">
                         <div class="ai-placeholder">
-                            <p>Nhấn nút <strong>"Yêu cầu phân tích"</strong> để AI quét dữ liệu báo cáo tháng này...</p>
+                            <p th:utext="#{report.ai.placeholder}">Nhấn nút <strong>"Yêu cầu phân tích"</strong> để AI quét dữ liệu báo cáo tháng này...</p>
                         </div>
 
                         <div class="ai-result-content" style="display: none;">
-                            <!-- AI result sẽ render -->
                         </div>
                     </div>
                 </div>

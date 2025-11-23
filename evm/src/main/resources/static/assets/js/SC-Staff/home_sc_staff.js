@@ -1,10 +1,13 @@
 (function () {
     'use strict';
 
+    // 💡 Hàm tra cứu dịch thuật (giả định)
+    const T = (key, fallbackText) => window.messages && window.messages[key] ? window.messages[key] : fallbackText;
+
     document.addEventListener('DOMContentLoaded', function () {
         const mainContent = document.getElementById('main-content');
         const sidebar = document.getElementById('sidebar');
-        const sidebarLinks = document.querySelectorAll('.sidebar__link'); 
+        const sidebarLinks = document.querySelectorAll('.sidebar__link');
 
         if (!mainContent) {
             console.error('Main content not found');
@@ -48,7 +51,7 @@
                 'terms_of_service.html': '/scstaff/terms_of_service',
                 'vehicle_record_management.html': '/scstaff/vehicle_record_management',
                 'warranty_claim_management.html': '/scstaff/warranty_claim_management',
-                'account_scstaff.html': '/account_scstaff',
+                'account_scstaff.html': '/account_scstaff', // Dùng endpoint khác nếu nó là fragment account
             };
 
             const endpoint = pageMap[pageName];
@@ -78,7 +81,7 @@
 
             fetch(urlToFetch)
                 .then(res => {
-                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    if (!res.ok) throw new Error(T('error.http_failed', `HTTP ${res.status}`));
                     return res.text();
                 })
                 .then(html => {
@@ -91,10 +94,15 @@
                 })
                 .catch(err => {
                     console.error('Error loading page:', err);
+
+                    // 💡 Dịch thông báo lỗi tải trang
+                    const errorTitle = T('error.page_load_failed', 'Không tải được trang');
+                    const errorHint = T('error.check_path', 'Vui lòng kiểm tra đường dẫn hoặc thử lại sau.');
+
                     mainContent.innerHTML = `
                         <div style="text-align: center; padding: 3rem; color: #d32f2f;">
-                            <h2>Không tải được trang: ${pageName}</h2>
-                            <p>Vui lòng kiểm tra đường dẫn hoặc thử lại sau.</p>
+                            <h2>${errorTitle}: ${pageName}</h2>
+                            <p>${errorHint}</p>
                             <p style="font-size:0.9rem;color:#999">Error: ${err.message}</p>
                         </div>`;
                 });

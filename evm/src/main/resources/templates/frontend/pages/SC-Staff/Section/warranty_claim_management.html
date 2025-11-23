@@ -1,4 +1,4 @@
-<section class="warranty-claim-management-page">
+<section class="warranty-claim-management-page" xmlns:th="http://www.thymeleaf.org">
     <div class="app-layout">
         <main class="content-wrapper" id="innerContent">
             <div class="main-content-area">
@@ -6,7 +6,7 @@
                 <div class="search-filter-bar">
                     <div class="search-box-wrapper">
                         <input type="text" id="searchBox" class="form-control search-input-with-icon"
-                            placeholder="Tìm kiếm...">
+                               th:placeholder="#{general.search.placeholder}">
                     </div>
                 </div>
 
@@ -14,14 +14,14 @@
                     <div class="filter-card-body">
                         <div class="filter-controls">
                             <select id="statusFilter" class="filter-select">
-                                <option value="" selected>Tất cả trạng thái</option>
-                                <option value="approved">Chờ xử lý</option>
-                                <option value="assigned">Đã xác nhận</option>
-                                <option value="completed">Đã hoàn thành</option>
+                                <option value="" selected th:text="#{claim.filter.all_status}">Tất cả trạng thái</option>
+                                <option value="approved" th:text="#{claim.status.approved_waiting}">Chờ xử lý</option>
+                                <option value="assigned" th:text="#{claim.status.assigned}">Đã xác nhận</option>
+                                <option value="completed" th:text="#{claim.status.completed}">Đã hoàn thành</option>
                             </select>
 
                             <input type="date" id="dateFilter" class="filter-input">
-                            <button type="button" id="btnMoFormYeuCau" class="btn-action btn-add">
+                            <button type="button" id="btnMoFormYeuCau" class="btn-action btn-add" th:text="#{claim.button.create_new}">
                                 <i class="fas fa-plus"></i> Tạo yêu cầu mới
                             </button>
                         </div>
@@ -32,32 +32,32 @@
                     <div class="card-body-no-padding">
                         <table class="table-zebra table-full-width">
                             <thead>
-                                <tr class="table-header-row">
-                                    <th>Mã Y/C</th>
-                                    <th>Biển số / VIN</th>
-                                    <th>Mô tả</th>
-                                    <th>Ngày tạo</th>
-                                    <th>Trạng thái</th>
-                                    <th>Thao tác</th>
-                                </tr>
+                            <tr class="table-header-row">
+                                <th th:text="#{table.header.claim_code}">Mã Y/C</th>
+                                <th th:text="#{table.header.plate_vin}">Biển số / VIN</th>
+                                <th th:text="#{table.header.description}">Mô tả</th>
+                                <th th:text="#{table.header.date_created}">Ngày tạo</th>
+                                <th th:text="#{table.header.status}">Trạng thái</th>
+                                <th th:text="#{table.header.action}">Thao tác</th>
+                            </tr>
                             </thead>
                             <tbody id="claimsTbody">
-                                <tr id="placeholderRow">
-                                    <td colspan="5" class="table-placeholder-cell">
-                                        <em>Dữ liệu sẽ được load từ database — chưa có dữ liệu ở môi trường hiện
-                                            tại.</em>
-                                    </td>
-                                </tr>
+                            <tr id="placeholderRow">
+                                <td colspan="6" class="table-placeholder-cell" th:text="#{claim.table.initial_data}">
+                                    <em>Dữ liệu sẽ được load từ database — chưa có dữ liệu ở môi trường hiện
+                                        tại.</em>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="card-footer">
                         <div class="pagination-wrapper">
-                            <span class="pagination-info">Hiển thị 0 của 0</span>
+                            <span class="pagination-info" th:text="#{pagination.display_info}">Hiển thị 0 của 0</span>
                             <div>
-                                <button class="btn-action btn-load">« Trước</button>
+                                <button class="btn-action btn-load" th:text="#{button.previous}">« Trước</button>
                                 <button class="btn-action btn-load">1</button>
-                                <button class="btn-action btn-load">Sau »</button>
+                                <button class="btn-action btn-load" th:text="#{button.next}">Sau »</button>
                             </div>
                         </div>
                     </div>
@@ -65,35 +65,35 @@
 
                 <div id="modalYeuCauBaoHanh" class="warranty-claim__modal" style="display:none;">
                     <div class="warranty-claim__modal-content">
-                        <span class="close-button">&times;</span>
+                        <span class="close-button" th:aria-label="#{button.close}">&times;</span>
                         <form class="warranty-claim__form">
                             <div class="warranty-claim__form-group">
-                                <label for="warranty_code" class="warranty-claim__label">Mã yêu cầu bảo hành</label>
+                                <label for="warranty_code" class="warranty-claim__label" th:text="#{claim.label.code}">Mã yêu cầu bảo hành</label>
                                 <input type="text" id="warranty_code" name="warrantyCode" class="warranty-claim__input">
                             </div>
                             <div class="warranty-claim__form-group">
-                                <label for="warranty_vin" class="warranty-claim__label">Biển số / VIN</label>
+                                <label for="warranty_vin" class="warranty-claim__label" th:text="#{table.header.plate_vin}">Biển số / VIN</label>
                                 <input type="text" id="warranty_vin" name="vin" class="warranty-claim__input">
                             </div>
                             <div class="warranty-claim__form-group">
-                                <label for="warranty_date" class="warranty-claim__label">Ngày tạo</label>
+                                <label for="warranty_date" class="warranty-claim__label" th:text="#{table.header.date_created}">Ngày tạo</label>
                                 <input type="date" id="warranty_date" name="date" class="warranty-claim__input">
                             </div>
                             <div class="warranty-claim__form-group">
-                                <label for="warranty_status" class="warranty-claim__label">Trạng thái</label>
+                                <label for="warranty_status" class="warranty-claim__label" th:text="#{table.header.status}">Trạng thái</label>
                                 <select id="warranty_status" name="status" class="warranty-claim__select">
-                                    <option value="pending">Chờ xử lý</option>
+                                    <option value="pending" th:text="#{claim.status.pending_form}">Chờ xử lý</option>
                                 </select>
                             </div>
                             <div class="warranty-claim__form-group">
-                                <label for="warranty_desc" class="warranty-claim__label">Mô tả vấn đề</label>
+                                <label for="warranty_desc" class="warranty-claim__label" th:text="#{claim.label.description}">Mô tả vấn đề</label>
                                 <textarea id="warranty_desc" name="description" class="warranty-claim__textarea"
-                                    rows="3"></textarea>
+                                          rows="3"></textarea>
                             </div>
 
                             <div class="button-group">
-                                <button type="button" id="warrantyCancelBtn" class="btn-action btn-cancel">Huỷ</button>
-                                <button type="submit" id="warrantySubmitBtn" class="btn-action btn-save">Tạo</button>
+                                <button type="button" id="warrantyCancelBtn" class="btn-action btn-cancel" th:text="#{button.cancel}">Huỷ</button>
+                                <button type="submit" id="warrantySubmitBtn" class="btn-action btn-save" th:text="#{button.create}">Tạo</button>
                             </div>
                         </form>
                     </div>

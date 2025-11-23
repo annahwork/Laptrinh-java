@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang chủ - EVM Staff</title>
+    <title th:text="#{app.title}">Trang chủ - EVM Staff</title>
 
     <link rel="stylesheet" href="/evm/assets/css/main.css">
     <link rel="stylesheet" href="/evm/assets/css/EVM-Staff/account_evm.css">
@@ -18,8 +18,6 @@
     <link rel="stylesheet" href="/evm/assets/css/EVM-Staff/reports.css">
     <link rel="stylesheet" href="/evm/assets/css/EVM-Staff/warranty_cost.css">
     <link rel="stylesheet" href="/evm/assets/css/EVM-Staff/warranty_policy.css">
-    
-    
 
     <script src="/evm/assets/js/EVM-Staff/home_evm_staff.js"></script>
     <script src="/evm/assets/js/EVM-Staff/account_evm.js"></script>
@@ -34,9 +32,6 @@
     <script src="/evm/assets/js/EVM-Staff/warranty_cost.js"></script>
     <script src="/evm/assets/js/EVM-Staff/warranty_policy.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
-
-
 </head>
 
 <body>
@@ -51,59 +46,56 @@
         <div class="sidebar__user">
             <div class="sidebar__userinfo">
                 <h4 class="sidebar__username">Name User</h4>
-                <p class="sidebar__role">EVM Staff</p>
+                <p class="sidebar__role" th:text="#{user.role.evm_staff}">EVM Staff</p>
             </div>
             <img src="/evm/assets/pic/avatar.png" alt="Avatar" class="sidebar__user-avatar">
         </div>
 
         <nav class="sidebar__nav">
             <ul>
-                <!-- Trang chủ -->
                 <li class="sidebar__item">
-                    <a href="#" data-page="dashboard.html" class="sidebar__link">Trang chủ</a>
+                    <a href="#" data-page="dashboard.html" class="sidebar__link" th:text="#{menu.home}">Trang chủ</a>
                 </li>
 
-                <!-- Phụ tùng -->
                 <li class="sidebar__item menu-group">
                     <div class="menu-group-toggle">
-                        <span>Phụ tùng</span>
+                        <span th:text="#{menu.parts}">Phụ tùng</span>
                         <span class="arrow">▸</span>
                     </div>
                     <ul class="submenu">
-                        <li><a href="#" data-page="allocate_parts.html" class="sidebar__link">Cấp phát phụ tùng</a></li>
-                        <li><a href="#" data-page="manage_ev_parts.html" class="sidebar__link">Quản lý phụ tùng</a></li>
-                        <li><a href="#" data-page="attach_serial.html" class="sidebar__link">Gắn số seri</a></li>
+                        <li><a href="#" data-page="allocate_parts.html" class="sidebar__link" th:text="#{menu.parts.allocate}">Cấp phát phụ tùng</a></li>
+                        <li><a href="#" data-page="manage_ev_parts.html" class="sidebar__link" th:text="#{menu.parts.manage}">Quản lý phụ tùng</a></li>
+                        <li><a href="#" data-page="attach_serial.html" class="sidebar__link" th:text="#{menu.parts.attach_serial}">Gắn số seri</a></li>
                     </ul>
                 </li>
 
-                <!-- Bảo hành -->
                 <li class="sidebar__item menu-group">
                     <div class="menu-group-toggle">
-                        <span>Bảo hành</span>
+                        <span th:text="#{menu.warranty}">Bảo hành</span>
                         <span class="arrow">▸</span>
                     </div>
                     <ul class="submenu">
-                        <li><a href="#" data-page="claim_requests.html" class="sidebar__link">Yêu cầu bảo hành</a></li>
-                        <li><a href="#" data-page="claim_tracking.html" class="sidebar__link">Theo dõi yêu cầu</a></li>
-                        <li><a href="#" data-page="warranty_cost.html" class="sidebar__link">Chi phí bảo hành</a></li>
+                        <li><a href="#" data-page="claim_requests.html" class="sidebar__link" th:text="#{menu.warranty.requests}">Yêu cầu bảo hành</a></li>
+                        <li><a href="#" data-page="claim_tracking.html" class="sidebar__link" th:text="#{menu.warranty.tracking}">Theo dõi yêu cầu</a></li>
+                        <li><a href="#" data-page="warranty_cost.html" class="sidebar__link" th:text="#{menu.warranty.cost}">Chi phí bảo hành</a></li>
                     </ul>
                 </li>
 
                 <li class="sidebar__item">
-                    <a href="#" data-page="campaigns.html" class="sidebar__link">Quản lý chiến dịch</a>
+                    <a href="#" data-page="campaigns.html" class="sidebar__link" th:text="#{menu.campaigns}">Quản lý chiến dịch</a>
                 </li>
 
 
                 <li class="sidebar__item">
-                    <a href="#" data-page="warranty_policy.html" class="sidebar__link">Chính sách bảo hành</a>
+                    <a href="#" data-page="warranty_policy.html" class="sidebar__link" th:text="#{menu.policy}">Chính sách bảo hành</a>
                 </li>
 
                 <li class="sidebar__item">
-                    <a href="#" data-page="reports.html" class="sidebar__link">Báo cáo</a>
+                    <a href="#" data-page="reports.html" class="sidebar__link" th:text="#{menu.reports}">Báo cáo</a>
                 </li>
 
                 <li class="sidebar__item">
-                    <a href="#" data-page="account_evm.html" class="sidebar__link">Cài đặt</a>
+                    <a href="#" data-page="account_evm.html" class="sidebar__link" th:text="#{menu.settings}">Cài đặt</a>
                 </li>
             </ul>
         </nav>

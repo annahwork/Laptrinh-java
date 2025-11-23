@@ -1,6 +1,9 @@
 (function () {
     'use strict';
 
+    // 💡 Hàm tra cứu dịch thuật (giả định)
+    const T = (key, fallbackText) => window.messages && window.messages[key] ? window.messages[key] : fallbackText;
+
     console.log('[SC-Staff] job_notifications.js loaded');
 
     // ====== CONFIG ======
@@ -40,19 +43,21 @@
     }
 
     function formatDateVi(dateStr) {
+        // Giữ nguyên logic format, vì output locale-specific là tốt nhất
         if (!dateStr) return '';
         const d = new Date(dateStr);
         if (Number.isNaN(d.getTime())) return String(dateStr);
+        // Sử dụng locale 'vi-VN' đã có
         return d.toLocaleString('vi-VN');
     }
 
     // ====== API ======
     async function fetchNotifications() {
-        // dùng endpoint: GET /api/sc-staff/notifications/user?userID=...
         const url = `${API_BASE}/user?userID=${encodeURIComponent(CURRENT_SC_STAFF_ID)}`;
         const res = await fetch(url, { credentials: 'include' });
+        // 💡 Dịch: Lỗi tải dữ liệu: HTTP
         if (!res.ok) {
-            throw new Error('Lỗi tải dữ liệu: HTTP ' + res.status);
+            throw new Error(T('notification.error.load_data_http', 'Lỗi tải dữ liệu: HTTP ') + res.status);
         }
         return await res.json();
     }
@@ -64,10 +69,12 @@
             credentials: 'include'
         });
         const text = await res.text().catch(() => '');
+        // 💡 Dịch: Đánh dấu đã đọc thất bại
         if (!res.ok) {
-            throw new Error(text || 'Đánh dấu đã đọc thất bại');
+            throw new Error(text || T('notification.error.mark_read_failed', 'Đánh dấu đã đọc thất bại'));
         }
-        return text || 'Đã đánh dấu đã đọc';
+        // 💡 Dịch: Đã đánh dấu đã đọc
+        return text || T('notification.status.marked_read', 'Đã đánh dấu đã đọc');
     }
 
     // ====== RENDER ======
@@ -76,13 +83,19 @@
 
         listEl.innerHTML = '';
 
+        // 💡 Dịch: Chuỗi hiển thị
+        const noDataText = T('notification.table.no_data', 'Không có thông báo nào.');
+        const isReadText = T('notification.status.read', 'Đã đọc');
+        const markReadText = T('notification.button.mark_read', 'Đã đọc');
+
+
         if (!filteredList.length) {
             listEl.innerHTML = `
                 <li class="notification-item notification-empty">
-                    Không có thông báo nào.
+                    ${noDataText}
                 </li>
             `;
-            if (infoEl) infoEl.textContent = 'Hiển thị 0 của 0';
+            if (infoEl) infoEl.textContent = T('pagination.display_info', 'Hiển thị 0 của 0');
             if (pageNumberEl) pageNumberEl.textContent = '1';
             if (prevBtn) prevBtn.disabled = true;
             if (nextBtn) nextBtn.disabled = true;
@@ -101,7 +114,7 @@
 
         const html = pageItems.map(n => {
             const id = n.notificationID || n.id;
-            const title = n.title || 'Thông báo';
+            const title = n.title || T('notification.title_default', 'Thông báo');
             const message = n.message || n.content || '';
             const date = n.date || n.createdAt || n.createdDate;
             const isRead = !!(n.read || n.isRead || n.readFlag);
@@ -113,11 +126,11 @@
                         <div class="notification-message">${escapeHtml(message)}</div>
                         <div class="notification-meta">
                             <span class="notification-date">${escapeHtml(formatDateVi(date))}</span>
-                            ${isRead ? '<span class="notification-status-badge">Đã đọc</span>' : ''}
+                            ${isRead ? `<span class="notification-status-badge">${isReadText}</span>` : ''}
                         </div>
                     </div>
                     <div class="notification-actions">
-                        ${!isRead ? `<button class="btn-mark-read" data-id="${id}">Đã đọc</button>` : ''}
+                        ${!isRead ? `<button class="btn-mark-read" data-id="${id}">${markReadText}</button>` : ''}
                     </div>
                 </li>
             `;
@@ -126,7 +139,9 @@
         listEl.innerHTML = html;
 
         if (infoEl) {
-            infoEl.textContent = `Hiển thị ${startIndex + 1}-${endIndex} của ${total}`;
+            infoEl.textContent = T('pagination.display_info_of', 'Hiển thị %s của %s')
+                                    .replace('%s', `${startIndex + 1}-${endIndex}`)
+                                    .replace('%s', total);
         }
         if (pageNumberEl) pageNumberEl.textContent = String(currentPage);
 
@@ -210,7 +225,8 @@
                     applyFilterAndRender();
                 } catch (err) {
                     console.error('[Notification] mark as read error:', err);
-                    alert(err.message || 'Không thể đánh dấu đã đọc.');
+                    // 💡 Dịch: Không thể đánh dấu đã đọc.
+                    alert(err.message || T('notification.error.mark_read_alert', 'Không thể đánh dấu đã đọc.'));
                 }
             });
         }
@@ -224,9 +240,10 @@
         }
 
         try {
+            // 💡 Dịch: Đang tải thông báo...
             listEl.innerHTML = `
                 <li class="notification-item notification-loading">
-                    Đang tải thông báo...
+                    ${T('notification.loading', 'Đang tải thông báo...')}
                 </li>
             `;
             const data = await fetchNotifications();
@@ -235,13 +252,14 @@
         } catch (err) {
             console.error('[Notification] load error:', err);
             if (listEl) {
+                // 💡 Dịch: Lỗi tải dữ liệu
                 listEl.innerHTML = `
                     <li class="notification-item notification-error">
-                        Lỗi tải dữ liệu: ${escapeHtml(err.message || 'Không xác định')}
+                        ${T('notification.error.load_data_alert', 'Lỗi tải dữ liệu:')} ${escapeHtml(err.message || T('general.unknown_error', 'Không xác định'))}
                     </li>
                 `;
             }
-            if (infoEl) infoEl.textContent = 'Hiển thị 0 của 0';
+            if (infoEl) infoEl.textContent = T('pagination.display_info', 'Hiển thị 0 của 0');
         }
     }
 

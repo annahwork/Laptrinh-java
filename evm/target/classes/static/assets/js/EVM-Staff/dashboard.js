@@ -3,7 +3,20 @@
 
     const API_BASE = (window.contextPath || '/evm/') + 'api/evm_staff/dashboard';
 
+    // 💡 Hàm tra cứu dịch thuật: Lấy giá trị từ window.messages hoặc sử dụng giá trị mặc định (fallback)
+    const T = (key, fallbackText) => {
+        // Kiểm tra nếu window.messages tồn tại và có chứa key đó
+        if (window.messages && window.messages[key]) {
+            return window.messages[key];
+        }
+        // Trả về giá trị mặc định nếu không tìm thấy
+        return fallbackText;
+    };
+
+
     async function loadOverviewStats() {
+        // Lưu ý: Các chuỗi lỗi console.error không cần phải được dịch qua T()
+        // nhưng chúng ta giữ nguyên các giá trị 'N/A' cho các số liệu.
         try {
             const res = await fetch(`${API_BASE}/overview`, { credentials: 'same-origin' });
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -34,10 +47,12 @@
             tbody.innerHTML = "";
 
             if (data.length === 0) {
+                // 💡 Sử dụng T() với khóa dịch dashboard.table.no_data
+                const noDataText = T('dashboard.table.no_data', 'Không có dữ liệu cấp phát gần đây.');
                 tbody.innerHTML = `
                     <tr class="dashboard__table-row">
                         <td colspan="5" class="dashboard__table-cell dashboard__table-cell--center">
-                            Không có dữ liệu cấp phát gần đây.
+                            ${noDataText}
                         </td>
                     </tr>`;
                 return;
@@ -58,10 +73,12 @@
                 tbody.appendChild(tr);
             });
 
+            // 💡 Sử dụng T() với khóa dịch button.more
+            const seeMoreText = T('button.more', 'Xem thêm');
             tbody.innerHTML += `
                 <tr class="dashboard__table-row dashboard__table-row--more">
                     <td colspan="5" class="dashboard__table-cell dashboard__table-cell--center">
-                        <button class="dashboard__btn-more">Xem thêm</button>
+                        <button class="dashboard__btn-more">${seeMoreText}</button>
                     </td>
                 </tr>
             `;
@@ -70,10 +87,12 @@
             console.error("Lỗi tải lịch sử cấp phát:", error);
             const tbody = document.querySelector(".dashboard__table .dashboard__table-body");
             if (tbody) {
+                // 💡 Sử dụng T() với khóa dịch error.load_data
+                const errorDataText = T('error.load_data', 'Lỗi tải dữ liệu.');
                 tbody.innerHTML = `
                     <tr class="dashboard__table-row">
                         <td colspan="5" class="dashboard__table-cell dashboard__table-cell--center" style="color: red;">
-                            Lỗi tải dữ liệu.
+                            ${errorDataText}
                         </td>
                     </tr>`;
             }
@@ -88,10 +107,12 @@
             const data = await res.json();
             const list = document.querySelector(".dashboard__reminder-list");
             if (!list) return;
-            list.innerHTML = ""; 
+            list.innerHTML = "";
 
             if (data.length === 0) {
-                list.innerHTML = `<li class="dashboard__reminder-item">Không có thông báo mới.</li>`;
+                // 💡 Sử dụng T() với khóa dịch dashboard.notifications.no_new
+                const noNotificationText = T('dashboard.notifications.no_new', 'Không có thông báo mới.');
+                list.innerHTML = `<li class="dashboard__reminder-item">${noNotificationText}</li>`;
                 return;
             }
 
@@ -105,7 +126,9 @@
             console.error("Lỗi tải thông báo:", error);
             const list = document.querySelector(".dashboard__reminder-list");
             if (list) {
-                list.innerHTML = `<li class="dashboard__reminder-item" style="color: red;">Lỗi tải thông báo.</li>`;
+                // 💡 Sử dụng T() với khóa dịch error.load_notifications_display
+                const errorNotificationText = T('error.load_notifications_display', 'Lỗi tải thông báo.');
+                list.innerHTML = `<li class="dashboard__reminder-item" style="color: red;">${errorNotificationText}</li>`;
             }
         }
     }

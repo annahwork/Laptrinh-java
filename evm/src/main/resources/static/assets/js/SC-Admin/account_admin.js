@@ -3,6 +3,9 @@
 
     console.log('Account script loaded');
 
+    // 💡 Hàm tra cứu dịch thuật: Lấy chuỗi từ đối tượng messages được Thymeleaf truyền xuống.
+    const T = (key, fallbackText) => window.messages && window.messages[key] ? window.messages[key] : fallbackText;
+
     const CONTEXT_PATH = (() => {
         const pathParts = window.location.pathname.split('/').filter(Boolean);
         return pathParts.length > 0 ? `/${pathParts[0]}` : '/evm';
@@ -26,12 +29,13 @@
         try {
             const response = await fetch(`${CONTEXT_PATH}/api/account/user-info`);
             if (!response.ok) {
-                console.error('Failed to fetch user info:', response.statusText);
+                // Sử dụng khóa dịch cho console error
+                console.error(T('server.error.fetch_info', 'Failed to fetch user info:'), response.statusText);
                 return null;
             }
             return await response.json();
         } catch (error) {
-            console.error('Error fetching user info:', error);
+            console.error(T('server.error.fetch_info', 'Error fetching user info:'), error);
             return null;
         }
     }
@@ -41,7 +45,7 @@
             console.log('No user info to update.');
             return;
         }
-        
+
         const userNameElement = document.querySelector('.user-name');
         const userRoleElement = document.querySelector('.user-role');
 
@@ -50,21 +54,21 @@
         } else if (userNameElement) {
              console.log('User full name not available in user info.');
         }
-        
+
         if (userRoleElement && userInfo.roleName) {
             userRoleElement.textContent = userInfo.roleName;
         } else if (userRoleElement) {
              console.log('User role name not available in user info.');
         }
     }
-    
+
     async function handleLogout(e) {
         e.preventDefault();
-        
+
         try {
             console.log('Calling logout API...');
             await fetch(`${CONTEXT_PATH}/api/login/logout`, { method: 'GET' });
-            
+
             console.log('Redirecting to login page...');
             window.location.href = CONTEXT_PATH + '/login';
 
@@ -76,7 +80,7 @@
 
     function toggleModal(show) {
         if (modal) {
-            modal.style.display = show ? 'flex' : 'none'; 
+            modal.style.display = show ? 'flex' : 'none';
             if (!show && form) {
                 form.reset();
                 messageArea.textContent = '';
@@ -87,9 +91,10 @@
 
     async function handlePasswordChange(e) {
         e.preventDefault();
-        messageArea.textContent = 'Đang xử lý...';
+        // Dịch: Đang xử lý...
+        messageArea.textContent = T('account.process.processing', 'Đang xử lý...');
         messageArea.style.color = '#007bff';
-        
+
         const oldPassword = form.querySelector('#oldPassword').value;
         const newPassword = form.querySelector('#newPassword').value;
         const confirmPassword = form.querySelector('#confirmPassword').value;
@@ -106,22 +111,25 @@
             const result = await response.json();
 
             if (response.ok) {
-                messageArea.textContent = result.message || 'Đổi mật khẩu thành công. Đang đăng xuất...';
-                messageArea.style.color = '#28a745'; 
-                
+                // Dịch: Đổi mật khẩu thành công. Đang đăng xuất...
+                messageArea.textContent = result.message || T('account.process.password_success', 'Đổi mật khẩu thành công. Đang đăng xuất...');
+                messageArea.style.color = '#28a745';
+
                 setTimeout(() => {
                     toggleModal(false);
-                    window.location.href = CONTEXT_PATH + '/login'; 
+                    window.location.href = CONTEXT_PATH + '/login';
                 }, 1500);
 
             } else {
-                messageArea.textContent = result.message || 'Lỗi: Không thể đổi mật khẩu.';
+                // Dịch: Lỗi: Không thể đổi mật khẩu.
+                messageArea.textContent = result.message || T('account.process.password_failed', 'Lỗi: Không thể đổi mật khẩu.');
                 messageArea.style.color = 'red';
             }
 
         } catch (error) {
-            console.error('Error during password change:', error);
-            messageArea.textContent = 'Lỗi kết nối mạng. Vui lòng thử lại.';
+            // Dịch: Lỗi kết nối mạng. Vui lòng thử lại.
+            console.error(T('server.error.change_password', 'Error during password change:'), error);
+            messageArea.textContent = T('account.process.connection_error', 'Lỗi kết nối mạng. Vui lòng thử lại.');
             messageArea.style.color = 'red';
         }
     }
@@ -142,7 +150,8 @@
         e.preventDefault();
         if (!editInfoMessageArea) return;
 
-        editInfoMessageArea.textContent = 'Đang xử lý...';
+        // Dịch: Đang xử lý...
+        editInfoMessageArea.textContent = T('account.process.processing', 'Đang xử lý...');
         editInfoMessageArea.style.color = '#007bff';
 
         const newFullName = editInfoForm.querySelector('#fullName').value;
@@ -159,32 +168,61 @@
             const result = await response.json();
 
             if (response.ok) {
-                editInfoMessageArea.textContent = result.message || 'Cập nhật thông tin thành công!';
+                // Dịch: Cập nhật thông tin thành công!
+                editInfoMessageArea.textContent = result.message || T('account.process.update_success', 'Cập nhật thông tin thành công!');
                 editInfoMessageArea.style.color = '#28a745';
 
                 if (userNameElement) {
                     userNameElement.textContent = newFullName;
                 }
-                
+
                 setTimeout(() => {
                     toggleEditInfoModal(false);
                 }, 1500);
 
             } else {
-                editInfoMessageArea.textContent = result.message || 'Lỗi: Không thể cập nhật.';
+                // Dịch: Lỗi: Không thể cập nhật.
+                editInfoMessageArea.textContent = result.message || T('account.process.update_failed', 'Lỗi: Không thể cập nhật.');
                 editInfoMessageArea.style.color = 'red';
             }
 
         } catch (error) {
-            console.error('Error during info update:', error);
-            editInfoMessageArea.textContent = 'Lỗi kết nối mạng. Vui lòng thử lại.';
+            // Dịch: Lỗi kết nối mạng. Vui lòng thử lại.
+            console.error(T('server.error.update_info', 'Error during info update:'), error);
+            editInfoMessageArea.textContent = T('account.process.connection_error', 'Lỗi kết nối mạng. Vui lòng thử lại.');
             editInfoMessageArea.style.color = 'red';
         }
     }
 
+    // ====================================================================
+    // LOGIC CHUYỂN ĐỔI NGÔN NGỮ (Cần được định nghĩa/bao gồm từ home_evm_staff.js)
+    // ====================================================================
+
+    // Giả định hàm này được định nghĩa ở home_evm_staff.js hoặc bên ngoài
+    function changeLanguage(lang) {
+        const currentUrl = new URL(window.location.href);
+        currentUrl.searchParams.set('lang', lang);
+        window.location.href = currentUrl.toString();
+    }
+
+    // Giả định hàm này được định nghĩa ở home_evm_staff.js
+    function initializeLanguageSwitcher() {
+        const languageSelect = document.querySelector('.setting-select');
+
+        if (languageSelect) {
+            console.log('Language select element found. Attaching event listener.');
+            languageSelect.addEventListener('change', function() {
+                changeLanguage(this.value);
+            });
+        } else {
+            console.error('Language select element (.setting-select) not found in the DOM.');
+        }
+    }
+    // ====================================================================
+
     async function init() {
         const logoutButton = document.querySelector('.logout-button');
-        
+
         if (logoutButton) {
             logoutButton.addEventListener('click', handleLogout);
         } else {
@@ -212,18 +250,18 @@
         if (editInfoTrigger && editInfoModal && editInfoCloseBtn && editInfoForm) {
             editInfoTrigger.addEventListener('click', (e) => {
                 e.preventDefault();
-                
+
                 const currentName = userNameElement ? userNameElement.textContent : '';
                 const fullNameInput = editInfoForm.querySelector('#fullName');
                 if (fullNameInput) {
                     fullNameInput.value = currentName;
                 }
-                
+
                 toggleEditInfoModal(true);
             });
 
             editInfoCloseBtn.addEventListener('click', () => toggleEditInfoModal(false));
-            
+
             window.addEventListener('click', (e) => {
                 if (e.target === editInfoModal) {
                     toggleEditInfoModal(false);
@@ -238,6 +276,9 @@
 
         const userInfo = await fetchUserInfo();
         updateUserInfo(userInfo);
+
+        // Khởi tạo bộ chuyển đổi ngôn ngữ
+        initializeLanguageSwitcher();
     }
 
     init();

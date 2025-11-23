@@ -1,88 +1,87 @@
-
-<section class="dashboard">
+<section class="dashboard" xmlns:th="http://www.thymeleaf.org">
     <div class="dashboard__content">
 
         <div class="dashboard__stats">
             <div class="dashboard__stat-card dashboard__stat-card--blue">
                 <div class="dashboard__stat-info">
                     <h3 class="dashboard__stat-number" id="stat-total-parts"></h3>
-                    <p class="dashboard__stat-label">Phụ tùng trong kho</p>
+                    <p class="dashboard__stat-label" th:text="#{dashboard.stat.total_parts}">Phụ tùng trong kho</p>
                 </div>
             </div>
 
             <div class="dashboard__stat-card dashboard__stat-card--green">
                 <div class="dashboard__stat-info">
                     <h3 class="dashboard__stat-number" id="stat-active-requests"></h3>
-                    <p class="dashboard__stat-label">Yêu cầu bảo hành</p>
+                    <p class="dashboard__stat-label" th:text="#{dashboard.stat.active_requests}">Yêu cầu bảo hành</p>
                 </div>
             </div>
 
             <div class="dashboard__stat-card dashboard__stat-card--orange">
                 <div class="dashboard__stat-info">
                     <h3 class="dashboard__stat-number" id="stat-campaigns"></h3>
-                    <p class="dashboard__stat-label">Chiến dịch đang diễn ra</p>
+                    <p class="dashboard__stat-label" th:text="#{dashboard.stat.campaigns}">Chiến dịch đang diễn ra</p>
                 </div>
             </div>
 
             <div class="dashboard__stat-card dashboard__stat-card--red">
                 <div class="dashboard__stat-info">
                     <h3 class="dashboard__stat-number" id="stat-low-stock"></h3>
-                    <p class="dashboard__stat-label">Phụ tùng sắp hết</p>
+                    <p class="dashboard__stat-label" th:text="#{dashboard.stat.low_stock}">Phụ tùng sắp hết</p>
                 </div>
             </div>
         </div>
 
         <div class="dashboard__section">
-            <h2 class="dashboard__subtitle">Cấp phát phụ tùng gần đây</h2>
+            <h2 class="dashboard__subtitle" th:text="#{dashboard.subtitle.recent_allocations}">Cấp phát phụ tùng gần đây</h2>
             <table class="dashboard__table">
                 <thead class="dashboard__table-head">
-                    <tr class="dashboard__table-row">
-                        <th class="dashboard__table-header">Mã yêu cầu</th>
-                        <th class="dashboard__table-header">Tên phụ tùng</th>
-                        <th class="dashboard__table-header">Số lượng</th>
-                        <th class="dashboard__table-header">Ngày cấp phát</th>
-                        <th class="dashboard__table-header">Trạng thái</th>
-                    </tr>
+                <tr class="dashboard__table-row">
+                    <th class="dashboard__table-header" th:text="#{table.header.request_code}">Mã yêu cầu</th>
+                    <th class="dashboard__table-header" th:text="#{table.header.part_name}">Tên phụ tùng</th>
+                    <th class="dashboard__table-header" th:text="#{table.header.quantity}">Số lượng</th>
+                    <th class="dashboard__table-header" th:text="#{table.header.allocation_date}">Ngày cấp phát</th>
+                    <th class="dashboard__table-header" th:text="#{table.header.status}">Trạng thái</th>
+                </tr>
                 </thead>
                 <tbody class="dashboard__table-body">
-                    <tr class="dashboard__table-row">
-                        <td class="dashboard__table-cell">REQ-2301</td>
-                        <td class="dashboard__table-cell">Bộ lọc dầu</td>
-                        <td class="dashboard__table-cell">5</td>
-                        <td class="dashboard__table-cell">03/11/2025</td>
-                        <td class="dashboard__table-cell">
-                            <span class="status-tag status-tag--success">Hoàn tất</span>
-                        </td>
-                    </tr>
+                <tr class="dashboard__table-row">
+                    <td class="dashboard__table-cell">REQ-2301</td>
+                    <td class="dashboard__table-cell">Bộ lọc dầu</td>
+                    <td class="dashboard__table-cell">5</td>
+                    <td class="dashboard__table-cell">03/11/2025</td>
+                    <td class="dashboard__table-cell">
+                        <span class="status-tag status-tag--success" th:text="#{status.completed}">Hoàn tất</span>
+                    </td>
+                </tr>
 
-                    <tr class="dashboard__table-row">
-                        <td class="dashboard__table-cell">REQ-2302</td>
-                        <td class="dashboard__table-cell">Bình ắc quy</td>
-                        <td class="dashboard__table-cell">2</td>
-                        <td class="dashboard__table-cell">04/11/2025</td>
-                        <td class="dashboard__table-cell">
-                            <span class="status-tag status-tag--pending">Đang xử lý</span>
-                        </td>
-                    </tr>
+                <tr class="dashboard__table-row">
+                    <td class="dashboard__table-cell">REQ-2302</td>
+                    <td class="dashboard__table-cell">Bình ắc quy</td>
+                    <td class="dashboard__table-cell">2</td>
+                    <td class="dashboard__table-cell">04/11/2025</td>
+                    <td class="dashboard__table-cell">
+                        <span class="status-tag status-tag--pending" th:text="#{status.processing}">Đang xử lý</span>
+                    </td>
+                </tr>
                 </tbody>
             </table>
 
             <div class="card-footer" style="display: flex; justify-content: space-between; align-items: center; padding-top: 15px;">
-                
-                <span class="pagination-info">Hiển thị 0 của 0</span>
+
+                <span class="pagination-info" th:text="#{pagination.display_info}">Hiển thị 0 của 0</span>
 
                 <div class="pagination-wrapper">
-                    <button class="btn-action btn-load">« Trước</button>
+                    <button class="btn-action btn-load" th:text="#{button.previous}">« Trước</button>
                     <button class="btn-action btn-load">1</button>
-                    <button class="btn-action btn-load">Sau »</button>
+                    <button class="btn-action btn-load" th:text="#{button.next}">Sau »</button>
                 </div>
-                
+
             </div>
 
         </div>
 
         <div class="dashboard__section dashboard__reminders">
-            <h2 class="dashboard__subtitle">Thông báo & nhắc việc</h2>
+            <h2 class="dashboard__subtitle" th:text="#{dashboard.subtitle.notifications}">Thông báo & nhắc việc</h2>
             <ul class="dashboard__reminder-list">
                 <li class="dashboard__reminder-item">🔹 Kiểm tra tồn kho phụ tùng “Ắc quy xe điện”.</li>
                 <li class="dashboard__reminder-item">🔹 Có 3 yêu cầu bảo hành chưa duyệt.</li>
@@ -92,3 +91,13 @@
 
     </div>
 </section>
+
+<script th:inline="javascript" xmlns:th="http://www.thymeleaf.org">
+    window.messages = {
+        'dashboard.table.no_data': [[#{dashboard.table.no_data}]],
+        'dashboard.notifications.no_new': [[#{dashboard.notifications.no_new}]],
+        'button.more': [[#{button.more}]],
+        'error.load_data': [[#{error.load_data}]],
+        'error.load_notifications_display': [[#{error.load_notifications_display}]]
+    };
+</script>

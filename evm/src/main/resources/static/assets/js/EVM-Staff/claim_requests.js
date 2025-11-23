@@ -38,20 +38,20 @@
             }
 
             /* Nút DUYỆT - Màu Xanh Lá */
-            #claimTableBody .btn-approve { 
+            #claimTableBody .btn-approve {
                 background-color: #10b981 !important; /* Emerald-500 */
             }
-            #claimTableBody .btn-approve:hover { 
+            #claimTableBody .btn-approve:hover {
                 background-color: #059669 !important; /* Emerald-600 */
                 transform: translateY(-2px);
                 box-shadow: 0 4px 6px rgba(16, 185, 129, 0.3) !important;
             }
 
             /* Nút TỪ CHỐI - Màu Đỏ */
-            #claimTableBody .btn-reject { 
+            #claimTableBody .btn-reject {
                 background-color: #ef4444 !important; /* Red-500 */
             }
-            #claimTableBody .btn-reject:hover { 
+            #claimTableBody .btn-reject:hover {
                 background-color: #dc2626 !important; /* Red-600 */
                 transform: translateY(-2px);
                 box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3) !important;
@@ -70,9 +70,22 @@
     const API_APPROVE = `${API_BASE_URL}/approve`;
     const API_REJECT = `${API_BASE_URL}/reject`;
 
+    // Pagination
+    const PAGE_SIZE = 5;
+    let pendingClaimsCache = [];
+    let currentPage = 1;
+
+    // Pagination DOM (template uses generic buttons inside .pagination-wrapper)
+    const claimCard = document.getElementById('claimTable') ? document.getElementById('claimTable').closest('.card') : null;
+    const paginationInfo = claimCard ? claimCard.querySelector('.pagination-info') : null;
+    const paginationWrapper = claimCard ? claimCard.querySelector('.pagination-wrapper') : null;
+    const btnPrev = paginationWrapper ? paginationWrapper.querySelector('button:nth-child(1)') : null;
+    const btnCurrent = paginationWrapper ? paginationWrapper.querySelector('button:nth-child(2)') : null;
+    const btnNext = paginationWrapper ? paginationWrapper.querySelector('button:nth-child(3)') : null;
+
     // DOM Elements
     const tableBody = document.getElementById('claimTableBody');
-    
+
     // Modal Elements
     const modal = document.getElementById('approvalModal');
     const closeModalBtn = document.getElementById('closeApprovalModal');
@@ -100,7 +113,9 @@
                 throw new Error(`HTTP ${response.status}: ${errorData.message || 'Lỗi tải dữ liệu'}`);
             }
             const claims = await response.json();
-            renderTable(claims);
+            pendingClaimsCache = Array.isArray(claims) ? claims : [];
+            currentPage = 1;
+            renderPaginatedData();
 
         } catch (error) {
             console.error('Lỗi tải danh sách chờ duyệt:', error);
@@ -120,7 +135,7 @@
 
         claims.forEach(claim => {
             const row = document.createElement('tr');
-            
+
             // Mapping badge style (tùy chọn, giữ nguyên logic cũ của bạn)
             let statusClass = '';
             if (claim.status === 'Pending' || claim.status === 'Đã gửi') {
@@ -140,7 +155,7 @@
                     <button class="btn-action btn-approve" data-id="${rawId}" data-details="${claim.vin} - ${claim.requester}" data-action="approve">
                         Duyệt
                     </button>
-                    
+
                     <button class="btn-action btn-reject" data-id="${rawId}" data-details="${claim.vin} - ${claim.requester}" data-action="reject">
                         Từ chối
                     </button>
@@ -153,14 +168,57 @@
         tableBody.querySelectorAll('.btn-action').forEach(button => {
             button.addEventListener('click', (e) => {
                 // Lấy dataset từ chính button (e.target có thể là icon bên trong nếu có, nên dùng closest hoặc e.currentTarget cho chắc chắn)
-                const btn = e.currentTarget; 
+                const btn = e.currentTarget;
                 const id = btn.dataset.id;
                 const details = btn.dataset.details;
-                
+
                 // Mở modal, ta có thể truyền thêm action nếu muốn modal biết đang bấm nút nào
                 openApprovalModal(id, details);
             });
         });
+    }
+
+    // --- Pagination helpers ---
+    function renderPaginatedData() {
+        const totalRecords = pendingClaimsCache.length;
+        if (totalRecords === 0) {
+            renderTable([]);
+            updatePagination(0);
+            return;
+        }
+
+        const totalPages = Math.max(1, Math.ceil(totalRecords / PAGE_SIZE));
+        if (currentPage > totalPages) currentPage = totalPages;
+        if (currentPage < 1) currentPage = 1;
+
+        const startIndex = (currentPage - 1) * PAGE_SIZE;
+        const pageSlice = pendingClaimsCache.slice(startIndex, startIndex + PAGE_SIZE);
+        renderTable(pageSlice);
+        updatePagination(totalRecords);
+    }
+
+    function updatePagination(totalRecords) {
+        const totalPages = Math.max(1, Math.ceil(totalRecords / PAGE_SIZE));
+
+        if (btnPrev) {
+            btnPrev.disabled = currentPage <= 1;
+            btnPrev.style.opacity = currentPage <= 1 ? '0.5' : '1';
+        }
+        if (btnNext) {
+            btnNext.disabled = currentPage >= totalPages;
+            btnNext.style.opacity = currentPage >= totalPages ? '0.5' : '1';
+        }
+        if (btnCurrent) btnCurrent.textContent = currentPage.toString();
+
+        if (paginationInfo) {
+            if (totalRecords === 0) {
+                paginationInfo.textContent = 'Hiển thị 0 của 0';
+            } else {
+                const start = (currentPage - 1) * PAGE_SIZE + 1;
+                const end = Math.min(currentPage * PAGE_SIZE, totalRecords);
+                paginationInfo.textContent = `Hiển thị ${start} - ${end} của ${totalRecords}`;
+            }
+        }
     }
 
     /**
@@ -172,11 +230,10 @@
         modalClaimDetailsSpan.textContent = details;
         modalClaimIdInput.value = claimId;
         approvalNote.value = ''; // Xóa note cũ
-        
+
         // Hiển thị modal
         if (modal) {
-            modal.style.display = 'block'; // Hoặc 'flex' tùy CSS modal của bạn
-            // Nếu bạn dùng class show như bài trước: modal.classList.add('show');
+            modal.style.display = 'flex';
         }
     }
 
@@ -197,10 +254,10 @@
     async function handleApproval(event) {
         event.preventDefault();
         const note = approvalNote.value;
-        
+
         // Xác định hành động dựa trên nút submit nào được bấm trong Modal
         const action = event.submitter.id === 'btnApprove' ? 'approve' : 'reject';
-        
+
         // Build URL (Giả sử API nhận ID trần, nếu API cần 'CR-' thì phải thêm vào)
         const url = action === 'approve' ? `${API_APPROVE}/${currentClaimId}` : `${API_REJECT}/${currentClaimId}`;
 
@@ -221,7 +278,7 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ note: note })
             });
-            
+
             const result = await response.json();
             if (!response.ok) {
                 throw new Error(result.message || 'Xử lý thất bại');
@@ -250,6 +307,10 @@
             closeModal();
         }
     });
+
+    // Gắn sự kiện phân trang nếu có
+    if (btnPrev) btnPrev.addEventListener('click', () => { if (currentPage > 1) { currentPage--; renderPaginatedData(); } });
+    if (btnNext) btnNext.addEventListener('click', () => { const totalPages = Math.ceil(pendingClaimsCache.length / PAGE_SIZE); if (currentPage < totalPages) { currentPage++; renderPaginatedData(); } });
 
     // Tải dữ liệu lần đầu sau 1 khoảng ngắn để DOM ổn định
     setTimeout(loadPendingClaims, 100);

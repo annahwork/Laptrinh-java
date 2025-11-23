@@ -3,17 +3,19 @@
 
     console.log('job_list.js loaded');
 
-    const API_GET_JOBS_LIST = '/evm/api/claimServiceDetails'; 
-    
-    const API_CREATE_JOB = '/evm/api/warranty-claims'; 
+    const API_GET_JOBS_LIST = '/evm/api/claimServiceDetails';
+    const PAGE_SIZE = 5;
+
+    const API_CREATE_JOB = '/evm/api/warranty-claims';
 
     let allJobs = [];
-    let currentFilteredJobs = []; 
+    let currentFilteredJobs = [];
+    let currentPage = 1;
 
     const modal = document.getElementById('formModal');
     const form = document.getElementById('createWarrantyForm');
     const jobGrid = document.getElementById('jobGrid');
-    
+
     const btnOpen = document.getElementById('btnOpenForm');
     const btnClose = document.getElementById('btnCloseForm');
     const btnCancel = document.getElementById('btnCancelForm');
@@ -28,7 +30,7 @@
         modal.style.display = 'flex';
         modal.setAttribute('aria-hidden', 'false');
         document.body.classList.add('modal-open');
-        
+
         const first = form?.querySelector('input, select, textarea');
         if (first) first.focus();
     }
@@ -39,30 +41,30 @@
         modal.style.display = 'none';
         modal.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('modal-open');
-        if (form) form.reset(); 
+        if (form) form.reset();
     }
 
     function formatStatus(status) {
         const lowerStatus = status?.toLowerCase() || '';
-        
+
         if (lowerStatus.includes('hoàn tất')) {
             return { text: 'Hoàn tất', class: 'done' };
         }
-        
+
         if (lowerStatus.includes('đang thực hiện') || lowerStatus.includes('đang xử lý')) {
             return { text: 'Đang thực hiện', class: 'inprogress' };
         }
-        
+
         if (lowerStatus.includes('chờ duyệt')) {
             return { text: 'Chờ duyệt', class: 'waiting' };
         }
-        
+
         return { text: status || 'Không rõ', class: 'default' };
     }
 
     function renderJobs(jobs) {
         if (!jobGrid) return;
-        jobGrid.innerHTML = ''; 
+        jobGrid.innerHTML = '';
 
         if (!jobs || jobs.length === 0) {
             jobGrid.innerHTML = `
@@ -73,10 +75,10 @@
         }
 
         jobs.forEach(job => {
-            const statusInfo = formatStatus(job.result); 
+            const statusInfo = formatStatus(job.result);
             const card = document.createElement('div');
             card.className = 'data-card';
-            
+
             card.innerHTML = `
                 <div class="card-header">
                     <h3>ID: <span>${job.claimServID || 'N/A'}</span></h3>
@@ -88,7 +90,7 @@
                     <p><strong>Ghi chú:</strong> ${job.note || 'Không có ghi chú'}</p>
                 </div>
             `;
-            
+
             jobGrid.appendChild(card);
         });
     }
@@ -99,26 +101,27 @@
 
         try {
             const res = await fetch(API_GET_JOBS_LIST);
-            
+
             if (!res.ok) {
-                 if (res.status === 401) {
-                     throw new Error('Không có quyền truy cập. Vui lòng đăng nhập.');
-                 }
-                 throw new Error(`HTTP error! Status: ${res.status}`);
+                if (res.status === 401) {
+                    throw new Error('Không có quyền truy cập. Vui lòng đăng nhập.');
+                }
+                throw new Error(`HTTP error! Status: ${res.status}`);
             }
-            
-            const data = await res.json(); 
-            
+
+            const data = await res.json();
+
             allJobs = data.map(row => ({
                 claimServID: row[0],
                 vin: row[1],
                 customerName: row[2],
-                result: row[3], 
-                note: row[4]    
+                result: row[3],
+                note: row[4]
             }));
 
             currentFilteredJobs = [...allJobs];
-            renderJobs(currentFilteredJobs);
+            currentPage = 1;
+            renderPaginatedJobs();
         } catch (err) {
             console.error('Fetch error:', err);
             if (jobGrid)
@@ -133,18 +136,53 @@
 
         currentFilteredJobs = allJobs.filter(job => {
             const matchesSearch = searchValue ? (job.vin?.toLowerCase().includes(searchValue) || job.claimServID?.toString().toLowerCase().includes(searchValue)) : true;
-            
-            const matchesStatus = statusValue ? (job.result === statusValue)  : true;
-                
+
+            const matchesStatus = statusValue ? (job.result === statusValue) : true;
+
             return matchesSearch && matchesStatus;
         });
 
-        renderJobs(currentFilteredJobs);
+        currentPage = 1;
+        renderPaginatedJobs();
     }
+
+    function renderPaginatedJobs() {
+        const totalRecords = currentFilteredJobs.length;
+        const startIndex = (currentPage - 1) * PAGE_SIZE;
+        const paginated = currentFilteredJobs.slice(startIndex, startIndex + PAGE_SIZE);
+        renderJobs(paginated);
+        updatePaginationJobs(totalRecords);
+    }
+
+    function updatePaginationJobs(totalRecords) {
+        const totalPages = Math.max(1, Math.ceil(totalRecords / PAGE_SIZE));
+        const paginationInfo = document.querySelector('.pagination-info');
+        const paginationWrapper = document.querySelector('.pagination-wrapper');
+
+        const start = totalRecords === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
+        const end = Math.min(currentPage * PAGE_SIZE, totalRecords);
+
+        if (paginationInfo) paginationInfo.textContent = `Hiển thị ${start} - ${end} của ${totalRecords}`;
+
+        if (paginationWrapper) {
+            paginationWrapper.innerHTML = '';
+            paginationWrapper.innerHTML += `<button class="pagination-btn" ${currentPage === 1 ? 'disabled' : ''} onclick="goToPageJobs(${currentPage - 1})">« Trước</button>`;
+            paginationWrapper.innerHTML += `<button class="pagination-btn-active">${currentPage}</button>`;
+            paginationWrapper.innerHTML += `<button class="pagination-btn" ${currentPage === totalPages ? 'disabled' : ''} onclick="goToPageJobs(${currentPage + 1})">Sau »</button>`;
+        }
+    }
+
+    window.goToPageJobs = function (page) {
+        const totalPages = Math.max(1, Math.ceil(currentFilteredJobs.length / PAGE_SIZE));
+        if (page >= 1 && page <= totalPages) {
+            currentPage = page;
+            renderPaginatedJobs();
+        }
+    };
 
     async function handleSubmit(e) {
         e.preventDefault();
-        
+
         const vin = form.querySelector('#vin')?.value?.trim();
         const customer = form.querySelector('#customerName')?.value?.trim();
         const receiveDate = form.querySelector('#receiveDate')?.value;
@@ -162,7 +200,7 @@
         const payload = new FormData(form);
 
         console.warn(`ĐANG GỬI TỚI ENDPOINT (VÍ DỤ): ${API_CREATE_JOB}. Bạn cần tạo endpoint này trong Controller.`);
-        
+
         try {
             const res = await fetch(API_CREATE_JOB, {
                 method: 'POST',
@@ -176,7 +214,7 @@
 
             alert('Yêu cầu đã được tạo thành công!');
             closeModal();
-            await fetchAllJobs(); 
+            await fetchAllJobs();
 
         } catch (err) {
             console.error('Submit error:', err);
@@ -195,7 +233,7 @@
         if (btnOpen) btnOpen.addEventListener('click', openModal);
         if (btnClose) btnClose.addEventListener('click', closeModal);
         if (btnCancel) btnCancel.addEventListener('click', closeModal);
-        
+
         window.addEventListener('click', (e) => {
             if (e.target === modal) closeModal();
         });

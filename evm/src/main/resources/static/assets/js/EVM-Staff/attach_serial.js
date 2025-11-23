@@ -26,7 +26,7 @@
 
     let currentPage = 1;
     let currentQuery = '';
-    const PAGE_SIZE = 10;
+    const PAGE_SIZE = 5;
     let isLastPage = false;
 
     async function fetchData(page = 1, query = '') {
@@ -35,20 +35,20 @@
         if (!tableBody) return;
 
         tableBody.innerHTML = `<tr><td colspan="5" class="no-data-cell">Đang tải dữ liệu...</td></tr>`;
-        
+
         try {
             const url = `${API_LIST}?page=${page}&pageSize=${PAGE_SIZE}&query=${encodeURIComponent(query)}`;
             console.log("Đang gọi API:", url); // Debug xem URL
 
             const response = await fetch(url);
-            
+
             if (!response.ok) {
                 if (response.status === 401) throw new Error("Lỗi 401: Hết phiên đăng nhập.");
                 if (response.status === 404) throw new Error("Lỗi 404: Sai đường dẫn API.");
                 throw new Error(`Lỗi Server HTTP ${response.status}`);
             }
-            
-            const parts = await response.json(); 
+
+            const parts = await response.json();
 
             if (!parts || !Array.isArray(parts)) {
                 throw new Error("Dữ liệu trả về từ Server không đúng định dạng Mảng.");
@@ -80,7 +80,7 @@
             tableBody.innerHTML = `<tr><td colspan="5" class="no-data-cell">Không tìm thấy dữ liệu${currentQuery ? ' cho "' + currentQuery + '"' : ''}.</td></tr>`;
             return;
         }
-        
+
         tableBody.innerHTML = parts.map(p => `
             <tr>
                 <td class="text-left">${p.vin || 'N/A'}</td>
@@ -92,31 +92,33 @@
         `).join('');
     }
     function renderPaginationInfo(currentCount) {
-        if(paginationInfo) {
-            paginationInfo.innerText = `Trang ${currentPage} `;
-        }
+        if (!paginationInfo) return;
+        const start = (currentPage - 1) * PAGE_SIZE + 1;
+        const end = Math.min(currentPage * PAGE_SIZE, ((currentCount && currentCount > 0) ? ((currentPage - 1) * PAGE_SIZE + currentCount) : 0));
+        if (currentCount === 0) paginationInfo.innerText = 'Hiển thị 0 của 0';
+        else paginationInfo.innerText = `Hiển thị ${start} - ${end}`;
     }
-    
+
     function updatePaginationButtons() {
-        if(!paginationWrapper) return;
+        if (!paginationWrapper) return;
         const btns = paginationWrapper.querySelectorAll('button');
-        if(btns.length >= 3) {
-             const btnPrev = btns[0];
-             const btnNum = btns[1];
-             const btnNext = btns[2];
-             
-             btnNum.innerText = currentPage;
-             
-             btnPrev.style.visibility = currentPage > 1 ? 'visible' : 'hidden';
-             btnNext.style.visibility = isLastPage ? 'hidden' : 'visible';
+        if (btns.length >= 3) {
+            const btnPrev = btns[0];
+            const btnNum = btns[1];
+            const btnNext = btns[2];
+
+            btnNum.innerText = currentPage;
+
+            btnPrev.style.visibility = currentPage > 1 ? 'visible' : 'hidden';
+            btnNext.style.visibility = isLastPage ? 'hidden' : 'visible';
         }
     }
 
     async function openModal() {
-        modal.style.display = 'block';
+        modal.style.display = 'flex';
         modal.setAttribute('aria-hidden', 'false');
-        form.reset(); 
-        
+        form.reset();
+
         dateAttachInput.value = new Date().toISOString().split('T')[0];
 
         await loadDropdownData();
@@ -139,7 +141,7 @@
         }
 
         installerSelect.innerHTML = `<option value="">Đang tải người dùng...</option>`;
-         try {
+        try {
             const resInstallers = await fetch(API_GET_INSTALLERS);
             if (!resInstallers.ok) throw new Error('Lỗi tải người cài đặt');
             const installers = await resInstallers.json();
@@ -173,23 +175,23 @@
                 installDate: dateAttachInput.value,
                 installerId: installerSelect.value
             };
-            
+
             if (!payload.vin || !payload.partId || !payload.serialNumber || !payload.installDate || !payload.installerId) {
                 throw new Error("Vui lòng điền đầy đủ thông tin.");
             }
-            
+
             const response = await fetch(API_CREATE, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
-            
+
             const result = await response.json();
-            
+
             if (!response.ok) {
                 throw new Error(result.message || 'Lỗi không xác định');
             }
-            
+
             alert(result.message || 'Thành công!');
             closeModal();
             fetchData(1, '');
@@ -212,7 +214,7 @@
         paginationWrapper.addEventListener('click', (e) => {
             if (e.target.tagName === 'BUTTON') {
                 const text = e.target.innerText.toLowerCase();
-                
+
                 if (text.includes('trước') || text.includes('«')) {
                     if (currentPage > 1) fetchData(currentPage - 1, currentQuery);
                 }
@@ -228,7 +230,7 @@
         clearTimeout(searchTimeout);
         searchTimeout = setTimeout(() => {
             fetchData(1, searchInput.value);
-        }, 500); 
+        }, 500);
     });
     fetchData(1, '');
 

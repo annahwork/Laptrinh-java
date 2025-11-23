@@ -177,23 +177,27 @@
 
     // --- XỬ LÝ SỰ KIỆN CLICK (Event Delegation) ---
 
+    // --- XỬ LÝ SỰ KIỆN CLICK (Sửa lại tên Class cho đúng với HTML) ---
+
     document.body.addEventListener('click', function(e) {
-        // Click nút View
-        const viewBtn = e.target.closest('.warranty-policy__btn--view');
+        // 1. Click nút View (Sửa class cũ 'warranty-policy__btn--view' thành 'btn-view')
+        const viewBtn = e.target.closest('.btn-view'); 
         if (viewBtn) {
             const id = viewBtn.getAttribute('data-id');
             openModal(id);
             return;
         }
 
-        // Click nút Đóng (trong modal footer hoặc nút '×')
-        if (e.target.closest('.warranty-policy__close-button') ||
-            e.target.closest('.warranty-policy__button--close')) {
+        // 2. Click nút Đóng (Sửa để bắt đúng nút 'X' và nút 'Đóng' ở dưới)
+        // Nút X có class: 'warranty-policy__close-button'
+        // Nút Đóng dưới cùng có class: 'btn-cancel'
+        if (e.target.closest('.warranty-policy__close-button') || 
+            e.target.closest('.btn-cancel')) { // <--- Sửa class này
             closeModal();
             return;
         }
 
-        // Click ra ngoài modal 
+        // 3. Click ra ngoài modal 
         if (e.target === modal && modal.classList.contains('show')) {
             closeModal();
         }

@@ -7,7 +7,7 @@
     const API_DETAILS = `${API_BASE}/details`;
 
     const tableBody = document.getElementById('warrantyCostTableBody');
-    const grandTotalEl = document.getElementById('grandTotalCost'); 
+    const grandTotalEl = document.getElementById('grandTotalCost');
 
     const btnPrev = document.getElementById('prevPage');
     const btnNext = document.getElementById('nextPage');
@@ -36,18 +36,18 @@
         if (!tableBody) return;
 
         tableBody.innerHTML = `<tr><td colspan="6" class="no-data">Đang tải dữ liệu...</td></tr>`;
-        
+
         try {
-            const url = `${API_LIST}?page=${page}&pageSize=10`;
+            const url = `${API_LIST}?page=${page}&pageSize=5`;
             const response = await fetch(url);
-            
+
             if (!response.ok) {
                 const err = await response.json();
                 throw new Error(err.message || `HTTP ${response.status}`);
             }
-            
+
             const result = await response.json();
-            
+
             renderTable(result.data);
             updatePagination(result.totalItems, result.totalPages);
 
@@ -69,7 +69,7 @@
             tableBody.innerHTML = `<tr><td colspan="6" class="no-data">Không tìm thấy dữ liệu chi phí.</td></tr>`;
             return;
         }
-        
+
         tableBody.innerHTML = claims.map(c => `
             <tr>
                 <td>${c.claimId || 'N/A'}</td>
@@ -94,10 +94,10 @@
         btnPrev.disabled = currentPage <= 1;
         btnNext.disabled = currentPage >= totalPages;
         btnCurrent.textContent = currentPage;
-        
-        const start = (currentPage - 1) * 10 + 1;
-        const end = Math.min(currentPage * 10, totalItems);
-        
+
+        const start = (currentPage - 1) * 5 + 1;
+        const end = Math.min(currentPage * 5, totalItems);
+
         pageInfo.textContent = (totalItems > 0) ? `${start} - ${end}` : '0';
         totalItemsEl.textContent = totalItems;
     }
@@ -111,7 +111,7 @@
         modalBody.innerHTML = '<tr><td colspan="4" class="no-data">Đang tải chi tiết...</td></tr>';
         modalClaimId.textContent = `CR-${claimId}`;
 
-        modal.style.display = 'flex'; 
+        modal.style.display = 'flex';
         modal.setAttribute('aria-hidden', 'false');
 
         try {
@@ -128,16 +128,16 @@
             modalBody.innerHTML = `<tr><td colspan="4" class="no-data" style="color: red;">Lỗi: ${error.message}</td></tr>`;
         }
     }
-    
+
     /**
      * Render bảng trong Modal
      */
     function renderModalTable(details) {
-         if (!details || details.length === 0) {
+        if (!details || details.length === 0) {
             modalBody.innerHTML = `<tr><td colspan="4" class="no-data">Không có dịch vụ nào cho yêu cầu này.</td></tr>`;
             return;
         }
-        
+
         modalBody.innerHTML = details.map(d => `
             <tr>
                 <td>${d.serviceName || 'N/A'}</td>
@@ -153,14 +153,14 @@
      */
     function closeModal() {
         if (!modal) return;
-        modal.style.display = 'none'; 
+        modal.style.display = 'none';
         modal.setAttribute('aria-hidden', 'true');
-        modalBody.innerHTML = ''; 
+        modalBody.innerHTML = '';
     }
 
     if (tableBody) {
-        tableBody.addEventListener('click', function(e) {
-            const btn = e.target.closest('.btn-action'); 
+        tableBody.addEventListener('click', function (e) {
+            const btn = e.target.closest('.btn-action');
             if (btn) {
                 const id = btn.getAttribute('data-id');
                 if (id) openModal(id);
@@ -170,7 +170,7 @@
 
     btnClose?.addEventListener('click', closeModal);
     if (modal) {
-        modal.addEventListener('click', function(e) {
+        modal.addEventListener('click', function (e) {
             if (e.target === modal) {
                 closeModal();
             }

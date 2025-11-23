@@ -134,10 +134,16 @@
     const endIndex = startIndex + PAGE_SIZE;
     const pageItems = list.slice(startIndex, endIndex);
 
-    // info "Hiển thị X của Y"
+    // info "Hiển thị X-Y của Y"
     const infoEl = document.querySelector('.pagination-info');
     if (infoEl) {
-      infoEl.textContent = `Hiển thị ${pageItems.length} của ${total} khách hàng`;
+      if (total === 0) {
+        infoEl.textContent = `Hiển thị 0 của 0 khách hàng`;
+      } else {
+        const displayStart = startIndex + 1;
+        const displayEnd = Math.min(total, startIndex + pageItems.length);
+        infoEl.textContent = `Hiển thị ${displayStart}-${displayEnd} của ${total} khách hàng`;
+      }
     }
 
     // số trang & nút trước/sau
@@ -364,15 +370,32 @@
 
     if (prevBtn) {
       prevBtn.addEventListener('click', function () {
-        currentPage--;
-        renderCustomers();
+        if (currentPage > 1) {
+          currentPage--;
+          renderCustomers();
+        }
       });
     }
 
     if (nextBtn) {
       nextBtn.addEventListener('click', function () {
-        currentPage++;
-        renderCustomers();
+        // recompute total pages based on current search
+        let filtered = Array.isArray(customersCache) ? customersCache.slice() : [];
+        const term = String(currentSearchTerm || '').trim().toLowerCase();
+        if (term) {
+          filtered = filtered.filter(c => {
+            const id = String(getId(c)).toLowerCase();
+            const name = String(c.name ?? '').toLowerCase();
+            const phone = String(c.phone ?? '').toLowerCase();
+            return id.includes(term) || name.includes(term) || phone.includes(term);
+          });
+        }
+        const totalFiltered = filtered.length;
+        const totalPages = Math.max(1, Math.ceil(totalFiltered / PAGE_SIZE));
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderCustomers();
+        }
       });
     }
   }

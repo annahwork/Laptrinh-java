@@ -223,43 +223,6 @@
     margin-left: auto;
 }
 
-/* Các button phân trang */
-.pagination-btn,
-.pagination-btn-active {
-    border: 1px solid #cbd5e1; /* Viền xám đồng bộ */
-    background: var(--card-bg);
-    color: var(--text);
-    padding: 6px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    font-weight: 500;
-    transition: all 0.25s ease;
-    min-width: 44px;
-    text-align: center;
-}
-
-.pagination-btn:hover {
-    background: #f1f5fb;
-    border-color: #94a3b8;
-}
-
-/* Nút Active: Màu xanh #0a66c2 */
-.pagination-btn-active {
-    background: #0a66c2;
-    color: #fff;
-    border-color: #0a66c2;
-    font-weight: 600;
-    box-shadow: 0 2px 6px rgba(10, 102, 194, 0.3);
-}
-
-.pagination-btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    background: var(--gray-50);
-    color: var(--text-muted);
-    border-color: var(--border);
-}
 
 @media (max-width: 768px) {
     .card-footer {
@@ -311,7 +274,7 @@
     font-weight: 600;
     margin: 0;
 }
-
+/* 
 .modal-close-btn {
     background: none;
     border: none;
@@ -324,7 +287,7 @@
 
 .modal-close-btn:hover {
     color: var(--danger);
-}
+} */
 
 .modal-form {
     padding: 1.5rem;

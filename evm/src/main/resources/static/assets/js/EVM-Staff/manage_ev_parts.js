@@ -58,7 +58,7 @@
         tableBody.innerHTML = `<tr><td colspan="6" class="no-data">Đang tải dữ liệu...</td></tr>`;
 
         try {
-            const url = `${API_LIST}?page=${page}&pageSize=10&search=${encodeURIComponent(query)}`;
+            const url = `${API_LIST}?page=${page}&pageSize=5&search=${encodeURIComponent(query)}`;
             const response = await fetch(url);
 
             if (!response.ok) {
@@ -107,7 +107,7 @@
         btnNext.disabled = currentPage >= totalPages;
         btnCurrent.textContent = currentPage;
 
-        const start = (currentPage - 1) * 10 + 1;
+        const start = (currentPage - 1) * 5 + 1;
         const end = start + currentCount - 1;
 
         if (total === 0) {
@@ -119,52 +119,52 @@
         }
     }
 
-async function handleFormSubmit(e) {
+    async function handleFormSubmit(e) {
         e.preventDefault();
 
         const submitBtn = form.querySelector('button[type="submit"]');
         const originalText = submitBtn ? submitBtn.innerHTML : 'Lưu';
-        
+
         if (submitBtn) {
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang lưu...';
         }
 
         try {
-            const codeInput = document.getElementById('code'); 
+            const codeInput = document.getElementById('code');
             const nameInput = document.getElementById('name');
             const typeInput = document.getElementById('partType');
             const qtyInput = document.getElementById('quantity');
             const locInput = document.getElementById('location');
 
             const payload = {
-                code: codeInput ? codeInput.value.trim() : '', 
+                code: codeInput ? codeInput.value.trim() : '',
                 name: nameInput ? nameInput.value.trim() : '',
                 partType: typeInput ? typeInput.value : '',
-                quantity: qtyInput ? String(qtyInput.value) : "0", 
+                quantity: qtyInput ? String(qtyInput.value) : "0",
                 location: locInput ? locInput.value.trim() : ''
             };
-            
+
             if (!payload.code || !payload.name || !payload.partType) {
                 throw new Error("Vui lòng điền Mã, Tên và Loại phụ tùng.");
             }
-            
+
             const response = await fetch(API_ADD_PART, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
-            
+
             const result = await response.json().catch(() => ({ message: 'Thao tác thành công' }));
-            
+
             if (!response.ok) {
                 throw new Error(result.message || 'Lỗi server khi thêm phụ tùng');
             }
-            
+
             alert(result.message || 'Thêm phụ tùng thành công!');
             closeModal();
             fetchData(1, '');
-            
+
         } catch (error) {
             console.error("Lỗi submit:", error);
             alert(`Thất bại: ${error.message}`);

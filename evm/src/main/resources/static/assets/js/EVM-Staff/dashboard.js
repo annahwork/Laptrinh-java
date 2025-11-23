@@ -1,4 +1,4 @@
-(function() {
+(function () {
     console.log("dashboard.js đã thực thi, bắt đầu tải dữ liệu...");
 
     const API_BASE = (window.contextPath || '/evm/') + 'api/evm_staff/dashboard';
@@ -87,7 +87,16 @@
 
     function updatePaginationButtons(itemCount) {
         if (btnCurrent) btnCurrent.textContent = allocPage;
-        if (paginationInfo) paginationInfo.textContent = `Trang ${allocPage}`;
+        if (paginationInfo) {
+            const start = (allocPage - 1) * allocPageSize + 1;
+            const end = Math.max(start, start + (itemCount ? itemCount - 1 : 0));
+            // Best-effort: backend may not provide totalRecords here, so we show start-end. If total becomes available, consider appending 'của N'.
+            if (itemCount === 0) {
+                paginationInfo.textContent = 'Hiển thị 0 của 0';
+            } else {
+                paginationInfo.textContent = `Hiển thị ${start} - ${end}`;
+            }
+        }
 
         if (btnPrev) {
             btnPrev.disabled = allocPage <= 1;
@@ -109,7 +118,7 @@
             const data = await res.json();
             const list = document.querySelector(".dashboard__reminder-list");
             if (!list) return;
-            list.innerHTML = ""; 
+            list.innerHTML = "";
 
             if (data.length === 0) {
                 list.innerHTML = `<li class="dashboard__reminder-item">Không có thông báo mới.</li>`;

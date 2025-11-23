@@ -47,7 +47,7 @@
             const statusInfo = formatStatus(c.status);
             const card = document.createElement('div');
             card.className = 'data-card';
-            
+
             card.innerHTML = `
                 <div class="card-header">
                     <h3>Mã: ${c.campaignID || 'N/A'}</h3>
@@ -89,13 +89,13 @@
         currentFilteredCampaigns = allCampaigns.filter(c => {
             const matchesSearch = searchValue
                 ? (c.name?.toLowerCase().includes(searchValue) ||
-                   c.campaignID?.toString().toLowerCase().includes(searchValue)) 
+                    c.campaignID?.toString().toLowerCase().includes(searchValue))
                 : true;
-            
-            const matchesStatus = statusFilter 
-                ? c.status?.toLowerCase() === statusFilter 
+
+            const matchesStatus = statusFilter
+                ? c.status?.toLowerCase() === statusFilter
                 : true;
-            
+
             return matchesSearch && matchesStatus;
         });
 
@@ -112,9 +112,31 @@
     }
 
     function updatePagination(totalRecords) {
-        const totalPages = Math.ceil(totalRecords / PAGE_SIZE) || 1;
+        const totalPages = Math.max(1, Math.ceil(totalRecords / PAGE_SIZE));
+        const paginationInfo = document.querySelector('.pagination-info');
+        const paginationWrapper = document.querySelector('.pagination-wrapper');
+
+        const start = totalRecords === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
+        const end = Math.min(currentPage * PAGE_SIZE, totalRecords);
+
+        if (paginationInfo) paginationInfo.textContent = `Hiển thị ${start} - ${end} của ${totalRecords}`;
+
+        if (paginationWrapper) {
+            paginationWrapper.innerHTML = '';
+            paginationWrapper.innerHTML += `<button class="pagination-btn" ${currentPage === 1 ? 'disabled' : ''} onclick="goToPageCampaigns(${currentPage - 1})">« Trước</button>`;
+            paginationWrapper.innerHTML += `<button class="pagination-btn-active">${currentPage}</button>`;
+            paginationWrapper.innerHTML += `<button class="pagination-btn" ${currentPage === totalPages ? 'disabled' : ''} onclick="goToPageCampaigns(${currentPage + 1})">Sau »</button>`;
+        }
         console.log(`Trang ${currentPage}/${totalPages} (${totalRecords} chiến dịch)`);
     }
+
+    window.goToPageCampaigns = function (page) {
+        const totalPages = Math.max(1, Math.ceil(currentFilteredCampaigns.length / PAGE_SIZE));
+        if (page >= 1 && page <= totalPages) {
+            currentPage = page;
+            renderPaginatedCampaigns();
+        }
+    };
 
     window.openCampaignDetail = function (id) {
         const campaign = allCampaigns.find(c => c.campaignID.toString() === id.toString());
@@ -125,7 +147,7 @@
 
         document.getElementById('detailTitle').textContent = `Chi tiết: ${campaign.name || 'N/A'}`;
         document.getElementById('detailDescription').textContent = campaign.description || 'Không có mô tả.';
-        
+
         modal.style.display = 'flex';
     };
 
@@ -149,7 +171,7 @@
 
         window.addEventListener('click', e => {
             const modalDetail = document.getElementById('modalChiTiet');
-            
+
             if (e.target === modalDetail) closeCampaignDetail();
         });
 
@@ -157,7 +179,7 @@
         if (campaignForm) {
             campaignForm.addEventListener('submit', e => {
                 e.preventDefault();
-                
+
                 const formData = {
                     campaignCode: document.getElementById('campaign_code').value.trim(),
                     name: document.getElementById('campaign_name').value.trim(),

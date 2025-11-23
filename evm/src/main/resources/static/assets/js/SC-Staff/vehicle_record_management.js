@@ -78,14 +78,29 @@
 
     const paginationInfo = document.querySelector('.pagination-info');
     if (paginationInfo) {
-      const showing = pageItems.length;
-      paginationInfo.textContent = `Hiển thị ${showing} của ${total}`;
+      if (total === 0) {
+        paginationInfo.textContent = `Hiển thị 0 của 0`;
+      } else {
+        const displayStart = startIndex + 1;
+        const displayEnd = Math.min(total, startIndex + pageItems.length);
+        paginationInfo.textContent = `Hiển thị ${displayStart}-${displayEnd} của ${total}`;
+      }
     }
 
     // cập nhật hiển thị số trang (nếu có)
     const pageLabel = document.getElementById('vehiclePageNumber');
     if (pageLabel) {
       pageLabel.textContent = currentPage.toString();
+    }
+
+    // If the pagination uses a central page button (pagination-wrapper), update it too
+    const paginationWrapper = document.querySelector('.pagination-wrapper');
+    if (paginationWrapper) {
+      const btns = paginationWrapper.querySelectorAll('button');
+      if (btns && btns.length >= 3) {
+        const pageBtn = btns[1];
+        if (pageBtn) pageBtn.textContent = String(currentPage);
+      }
     }
 
     // disable / enable nút Trước / Sau
@@ -429,15 +444,43 @@
 
     if (prevBtn) {
       prevBtn.addEventListener('click', function () {
-        currentPage--;
-        renderVehiclesTable();
+        if (currentPage > 1) {
+          currentPage--;
+          renderVehiclesTable();
+        }
       });
     }
 
     if (nextBtn) {
       nextBtn.addEventListener('click', function () {
-        currentPage++;
-        renderVehiclesTable();
+        // recompute filtered total to decide if we can advance
+        const searchInputEl = document.getElementById('searchVehicleBox');
+        const statusFilterEl = document.getElementById('vehicleStatusFilter');
+        let filtered = vehiclesCache.slice();
+        const searchValue = (searchInputEl?.value || '').trim().toLowerCase();
+        const statusFilter = statusFilterEl?.value || '';
+
+        if (searchValue) {
+          filtered = filtered.filter(v => {
+            const vin = (v.vehicle && v.vehicle.vin) ? v.vehicle.vin.toString().toLowerCase() : '';
+            const customerName = getCustomerNameFromVehicle(v).toLowerCase();
+            return vin.includes(searchValue) || customerName.includes(searchValue);
+          });
+        }
+
+        if (statusFilter) {
+          filtered = filtered.filter(v => {
+            const status = (v.vehicle && v.vehicle.status) ? v.vehicle.status.toLowerCase() : '';
+            return status === statusFilter;
+          });
+        }
+
+        const total = filtered.length;
+        const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderVehiclesTable();
+        }
       });
     }
   }

@@ -3,15 +3,15 @@
 
     console.log('Warranty Result script loaded');
 
-    const API_CLAIM_DATA = '/evm/api/claimServiceDetails'; 
-    const API_UPDATE_STATUS = '/evm/api/updateClaimServiceStatus/{id}'; 
-    
-    const PAGE_SIZE = 10; 
+    const API_CLAIM_DATA = '/evm/api/claimServiceDetails';
+    const API_UPDATE_STATUS = '/evm/api/updateClaimServiceStatus/{id}';
 
-    let currentFilteredClaims = []; 
+    const PAGE_SIZE = 5;
+
+    let currentFilteredClaims = [];
     let currentPage = 1;
     let allClaimData = [];
-    
+
     const STATUS_OPTIONS = [
         { value: 'Chờ duyệt', text: 'Chờ duyệt' },
         { value: 'Hoàn thành', text: 'Hoàn thành' },
@@ -21,27 +21,27 @@
 
     function mapStatusToDisplay(status) {
         const lowerStatus = status?.toLowerCase() || '';
-        
+
         if (lowerStatus.includes('chờ duyệt') || lowerStatus.includes('pending_parts')) return 'Chờ duyệt';
         if (lowerStatus.includes('hoàn thành') || lowerStatus.includes('completed')) return 'Hoàn thành';
         if (lowerStatus.includes('đang chạy') || lowerStatus.includes('in_progress')) return 'Đang chạy';
         if (lowerStatus.includes('từ chối') || lowerStatus.includes('pending_approval')) return 'Từ chối';
-        
-        return lowerStatus || 'Không xác định'; 
+
+        return lowerStatus || 'Không xác định';
     }
 
     function createStatusDropdown(claimServID, currentStatus) {
         let optionsHtml = '';
         const normalizedCurrentStatus = mapStatusToDisplay(currentStatus);
-        
+
         STATUS_OPTIONS.forEach(opt => {
             const isSelected = opt.text === normalizedCurrentStatus ? 'selected' : '';
             optionsHtml += `<option value="${opt.value}" ${isSelected}>${opt.text}</option>`;
         });
-        
+
         return `
-            <select id="status-${claimServID}" 
-                    class="status-select" 
+            <select id="status-${claimServID}"
+                    class="status-select"
                     onchange="toggleSaveButton('${claimServID}', this.value)">
                 ${optionsHtml}
             </select>
@@ -50,9 +50,9 @@
 
     function renderActionButton(claimServID) {
         return `
-            <button class="action-btn btn-save" 
-                    id="saveBtn-${claimServID}" 
-                    onclick="saveClaimStatus('${claimServID}')" 
+            <button class="action-btn btn-save"
+                    id="saveBtn-${claimServID}"
+                    onclick="saveClaimStatus('${claimServID}')"
                     disabled>
                 Lưu
             </button>
@@ -62,7 +62,7 @@
     window.toggleSaveButton = function (claimServID, newValue) {
         const saveBtn = document.getElementById(`saveBtn-${claimServID}`);
         const originalItem = allClaimData.find(item => item.ClaimServID.toString() === claimServID);
-        
+
         if (saveBtn && originalItem) {
             if (newValue.toLowerCase() !== originalItem.Status.toLowerCase()) {
                 saveBtn.disabled = false;
@@ -71,19 +71,19 @@
             }
         }
     };
-    
+
     window.saveClaimStatus = async function (claimServID) {
         const statusSelect = document.getElementById(`status-${claimServID}`);
         const newStatus = statusSelect ? statusSelect.value : null;
-        
+
         if (!newStatus) return;
 
         const saveBtn = document.getElementById(`saveBtn-${claimServID}`);
         saveBtn.disabled = true;
-        
+
         try {
-            const url = API_UPDATE_STATUS.replace('{id}', claimServID); 
-            const response = await fetch(url, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ status: newStatus }) });
+            const url = API_UPDATE_STATUS.replace('{id}', claimServID);
+            const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: newStatus }) });
 
             if (response.ok) {
                 alert(`Cập nhật trạng thái cho ${claimServID} thành công: ${mapStatusToDisplay(newStatus)}`);
@@ -91,7 +91,7 @@
                 if (originalItem) {
                     originalItem.Status = newStatus;
                 }
-                renderPaginatedClaims(); 
+                renderPaginatedClaims();
             } else {
                 alert(`Cập nhật thất bại cho ${claimServID}.`);
                 saveBtn.disabled = false;
@@ -106,7 +106,7 @@
     function renderTable(claims) {
         const tableBody = document.getElementById('campaignsTbody');
         if (!tableBody) return;
-        tableBody.innerHTML = ''; 
+        tableBody.innerHTML = '';
 
         if (!claims || claims.length === 0) {
             tableBody.innerHTML = `<tr><td colspan="6" class="table-placeholder-cell">Không tìm thấy dịch vụ bảo hành nào.</td></tr>`;
@@ -143,19 +143,19 @@
         try {
             const res = await fetch(API_CLAIM_DATA);
             const rawData = await res.json();
-            
+
             allClaimData = Array.isArray(rawData) ? rawData.map(row => {
-                
+
                 return {
-                    ClaimServID: row[0], 
-                    VIN: row[1],         
+                    ClaimServID: row[0],
+                    VIN: row[1],
                     CustomerName: row[2],
-                    Status: row[3],      
-                    NoteDetail: row[4],  
+                    Status: row[3],
+                    NoteDetail: row[4],
                 };
             }) : [];
 
-            filterClaims(); 
+            filterClaims();
         } catch (err) {
             console.error('Fetch error:', err);
             if (tableBody)
@@ -163,7 +163,7 @@
             updatePagination(0, 0);
         }
     }
-    
+
     function filterClaims() {
         const searchValue = document.getElementById('searchCampaignBox')?.value.trim().toLowerCase() || '';
         const statusFilterValue = document.getElementById('campaignStatusFilter')?.value.trim().toLowerCase() || '';
@@ -171,9 +171,9 @@
 
         currentFilteredClaims = allClaimData.filter(item => {
             const itemStatusText = mapStatusToDisplay(item.Status).toLowerCase();
-            const matchesSearch = searchValue? (item.VIN?.toLowerCase().includes(searchValue) || item.ClaimServID?.toString().toLowerCase().includes(searchValue) || item.CustomerName?.toLowerCase().includes(searchValue) || itemStatusText.includes(searchValue) ||  item.NoteDetail?.toLowerCase().includes(searchValue) )  : true;
-            
-            const matchesStatus = normalizedFilterText ? itemStatusText === normalizedFilterText : true; 
+            const matchesSearch = searchValue ? (item.VIN?.toLowerCase().includes(searchValue) || item.ClaimServID?.toString().toLowerCase().includes(searchValue) || item.CustomerName?.toLowerCase().includes(searchValue) || itemStatusText.includes(searchValue) || item.NoteDetail?.toLowerCase().includes(searchValue)) : true;
+
+            const matchesStatus = normalizedFilterText ? itemStatusText === normalizedFilterText : true;
 
             return matchesSearch && matchesStatus;
         });
@@ -190,10 +190,10 @@
         const currentDisplayEnd = Math.min(startIndex + PAGE_SIZE, totalRecords);
 
         if (paginationInfo) paginationInfo.textContent = `Hiển thị ${currentDisplayStart} - ${currentDisplayEnd} của ${totalRecords}`;
-        
+
         if (paginationWrapper) {
             paginationWrapper.innerHTML = '';
-            
+
             paginationWrapper.innerHTML += `<button class="pagination-btn" ${currentPage === 1 ? 'disabled' : ''} onclick="goToPage(${currentPage - 1})">« Trước</button>`;
             paginationWrapper.innerHTML += `<button class="pagination-btn-active">${currentPage}</button>`;
             paginationWrapper.innerHTML += `<button class="pagination-btn" ${currentPage === totalPages || totalRecords === 0 ? 'disabled' : ''} onclick="goToPage(${currentPage + 1})">Sau »</button>`;
@@ -211,13 +211,13 @@
     window.editClaim = function (claimID) {
         alert(`Không còn chức năng sửa trực tiếp trên trang này (ID: ${claimID}).`);
     };
-    
+
     const modal = document.getElementById('modalQuanLyChienDich');
     const btnMoForm = document.getElementById('btnMoFormCampaign');
     const closeModalBtns = modal ? modal.querySelectorAll('.campaign__close-button, #campaignCancelBtn') : [];
-    
-    if(btnMoForm) {
-        btnMoForm.addEventListener('click', function() {
+
+    if (btnMoForm) {
+        btnMoForm.addEventListener('click', function () {
             if (modal) modal.style.display = 'flex';
         });
     }
@@ -232,12 +232,12 @@
     window.addEventListener('click', e => {
         if (e.target === modal) closeModal();
     });
-    
+
     function init() {
         fetchAndMapData();
 
         document.getElementById('searchCampaignBox')?.addEventListener('input', filterClaims);
-        document.getElementById('campaignStatusFilter')?.addEventListener('change', filterClaims); 
+        document.getElementById('campaignStatusFilter')?.addEventListener('change', filterClaims);
         console.log('Warranty Result initialized successfully');
     }
 

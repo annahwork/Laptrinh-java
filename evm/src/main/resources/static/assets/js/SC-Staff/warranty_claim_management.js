@@ -187,10 +187,16 @@
         const endIndex = startIndex + PAGE_SIZE;
         const pageItems = list.slice(startIndex, endIndex);
 
-        // info
+        // info: show range like "Hiển thị 1-5 của 20"
         const infoEl = document.querySelector('.pagination-info');
         if (infoEl) {
-            infoEl.textContent = `Hiển thị ${pageItems.length} của ${total} yêu cầu`;
+            if (total === 0) {
+                infoEl.textContent = `Hiển thị 0 của 0 yêu cầu`;
+            } else {
+                const displayStart = startIndex + 1;
+                const displayEnd = Math.min(total, startIndex + pageItems.length);
+                infoEl.textContent = `Hiển thị ${displayStart}-${displayEnd} của ${total} yêu cầu`;
+            }
         }
 
         // pagination buttons: « Trước | 1 | Sau »

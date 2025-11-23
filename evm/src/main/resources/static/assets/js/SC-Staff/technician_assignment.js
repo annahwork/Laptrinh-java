@@ -213,9 +213,15 @@
             const endIndex = startIndex + PAGE_SIZE;
             const pageItems = list.slice(startIndex, endIndex);
 
-            // --- cập nhật "Hiển thị X của Y" ---
+            // --- cập nhật "Hiển thị start-end của total" ---
             if (paginationInfo) {
-                paginationInfo.textContent = `Hiển thị ${pageItems.length} của ${total}`;
+                if (total === 0) {
+                    paginationInfo.textContent = 'Hiển thị 0 của 0';
+                } else {
+                    const displayStart = startIndex + 1;
+                    const displayEnd = Math.min(total, startIndex + pageItems.length);
+                    paginationInfo.textContent = `Hiển thị ${displayStart}-${displayEnd} của ${total}`;
+                }
             }
 
             // --- cập nhật số trang + disable nút ---

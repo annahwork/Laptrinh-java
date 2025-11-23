@@ -9,10 +9,20 @@
     const apiBase = `${contextPath}/api/sc-staff/dashboard`;
     const loginPath = contextPath + '/login';
 
-    loadSummary();
-    loadCampaigns();
-    loadSchedule();
-    loadNotifications();
+    // Run loads after DOM is ready so elements exist (prevents early return)
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSummary();
+            loadCampaigns();
+            loadSchedule();
+            loadNotifications();
+        });
+    } else {
+        loadSummary();
+        loadCampaigns();
+        loadSchedule();
+        loadNotifications();
+    }
 
     async function loadSummary() {
         try {
@@ -39,8 +49,14 @@
         }
     }
 
+    // Pagination-enabled campaigns loader: fetch once, then render 5 rows/page
     async function loadCampaigns() {
         const tbody = document.getElementById("campaigns-tbody");
+        const infoEl = document.getElementById('campaignsPaginationInfo');
+        const prevBtn = document.getElementById('campaignsPrevBtn');
+        const nextBtn = document.getElementById('campaignsNextBtn');
+        const pageNumberEl = document.getElementById('campaignsPageNumber');
+
         if (!tbody) {
             console.warn("Không tìm thấy #campaigns-tbody");
             return;
@@ -48,7 +64,7 @@
 
         tbody.innerHTML = `
             <tr>
-                <td colspan="4" class="table-placeholder-cell">
+                <td colspan="5" class="table-placeholder-cell">
                     <em>Đang tải dữ liệu...</em>
                 </td>
             </tr>
@@ -62,46 +78,88 @@
             }
             if (!res.ok) throw new Error("Failed to load campaigns");
 
-            const campaigns = await res.json();
+            const allCampaigns = await res.json();
+            const campaigns = Array.isArray(allCampaigns) ? allCampaigns : [];
 
-            if (!campaigns || campaigns.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="4" class="table-placeholder-cell">
-                            <em>Không có chiến dịch đang tham gia</em>
-                        </td>
-                    </tr>
-                `;
-                return;
+            const PAGE_SIZE = 5;
+            let currentPage = 1;
+
+            function renderPage() {
+                const total = campaigns.length;
+                const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+                if (currentPage < 1) currentPage = 1;
+                if (currentPage > totalPages) currentPage = totalPages;
+
+                const start = (currentPage - 1) * PAGE_SIZE;
+                const pageItems = campaigns.slice(start, start + PAGE_SIZE);
+
+                if (!pageItems.length) {
+                    tbody.innerHTML = `\n                        <tr>\n                            <td colspan="5" class="table-placeholder-cell">Không có chiến dịch đang tham gia</td>\n                        </tr>\n                    `;
+                } else {
+                    // Render same columns as campaign_management: campaignID, name, date, status, description
+                    function formatDateDisplay(dateStr) {
+                        if (!dateStr) return "";
+                        try {
+                            const iso = String(dateStr).substring(0, 10);
+                            const parts = iso.split('-');
+                            if (parts.length !== 3) return dateStr;
+                            return `${parts[2]}/${parts[1]}/${parts[0]}`;
+                        } catch (e) {
+                            return dateStr;
+                        }
+                    }
+
+                    tbody.innerHTML = pageItems.map(c => {
+                        const code = c.campaignID ?? c.id ?? '';
+                        const name = c.name ?? c.title ?? c.description ?? '';
+                        const date = formatDateDisplay(c.date ?? c.createdAt ?? c.createdDate);
+                        const status = c.status ?? c.progress ?? '';
+                        const desc = c.description ?? '';
+                        return `
+                            <tr>
+                                <td>${escapeHtml(code)}</td>
+                                <td>${escapeHtml(name)}</td>
+                                <td>${escapeHtml(date)}</td>
+                                <td>${escapeHtml(status)}</td>
+                                <td>${escapeHtml(desc)}</td>
+                            </tr>
+                        `;
+                    }).join('');
+                }
+
+                // Show range like: "Hiển thị 1-5 của 20" when paging
+                if (infoEl) {
+                    if (total === 0) {
+                        infoEl.textContent = 'Hiển thị 0 của 0';
+                    } else {
+                        const startIndex = (currentPage - 1) * PAGE_SIZE;
+                        const displayStart = startIndex + 1;
+                        const displayEnd = Math.min(total, startIndex + pageItems.length);
+                        infoEl.textContent = `Hiển thị ${displayStart}-${displayEnd} của ${total}`;
+                    }
+                }
+                if (pageNumberEl) pageNumberEl.textContent = String(currentPage);
+                if (prevBtn) prevBtn.disabled = currentPage <= 1;
+                if (nextBtn) nextBtn.disabled = currentPage >= Math.max(1, Math.ceil(campaigns.length / PAGE_SIZE));
             }
 
-            tbody.innerHTML = "";
+            if (prevBtn) prevBtn.addEventListener('click', function () { if (currentPage > 1) { currentPage--; renderPage(); } });
+            if (nextBtn) nextBtn.addEventListener('click', function () { const totalPages = Math.max(1, Math.ceil(campaigns.length / PAGE_SIZE)); if (currentPage < totalPages) { currentPage++; renderPage(); } });
 
-            campaigns.forEach(c => {
-                const tr = document.createElement("tr");
+            // initial render
+            renderPage();
 
-                const code = c.id ?? c.campaignID ?? "";
-                const category = c.name ?? c.description ?? "";
-                const relatedVehicles = Array.isArray(c.vehiclesInCampaign) ? c.vehiclesInCampaign.length : "";
-                const progress = c.status ?? "";
-
-                tr.innerHTML = `
-                    <td>${escapeHtml(code)}</td>
-                    <td>${escapeHtml(category)}</td>
-                    <td>${escapeHtml(relatedVehicles)}</td>
-                    <td>${escapeHtml(progress)}</td>
-                `;
-                tbody.appendChild(tr);
-            });
         } catch (e) {
             console.error("Lỗi load campaigns:", e);
             tbody.innerHTML = `
                 <tr>
-                    <td colspan="4" class="table-placeholder-cell">
+                    <td colspan="5" class="table-placeholder-cell">
                         <em>Lỗi tải dữ liệu chiến dịch</em>
                     </td>
                 </tr>
             `;
+            if (infoEl) infoEl.textContent = 'Hiển thị 0 của 0';
+            if (pageNumberEl) pageNumberEl.textContent = '1';
         }
     }
 

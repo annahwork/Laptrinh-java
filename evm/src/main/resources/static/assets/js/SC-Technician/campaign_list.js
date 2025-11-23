@@ -13,10 +13,10 @@
     function formatStatus(status) {
         const lowerStatus = status?.toLowerCase() || '';
         switch (lowerStatus) {
-            case 'active': return { text: 'Đang diễn ra', class: 'inprogress' };
-            case 'completed': return { text: 'Đã hoàn thành', class: 'done' };
-            case 'planned': return { text: 'Đã lên kế hoạch', class: 'planned' };
-            case 'pending': return { text: 'Đang chờ', class: 'waitting' };
+            case 'đang chạy': return { text: 'Đang chạy', class: 'inprogress' };
+            case 'hoàn thành': return { text: 'Hoàn thành', class: 'done' };
+            case 'chờ duyệt': return { text: 'Chờ duyệt', class: 'planned' };
+            case 'từ chối': return { text: 'Từ chối', class: 'waitting' };
             default: return { text: status || 'Không xác định', class: 'default' };
         }
     }

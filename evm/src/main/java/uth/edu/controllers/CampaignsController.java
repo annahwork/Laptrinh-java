@@ -56,6 +56,7 @@ public class CampaignsController {
                 map.put("status", c.getStatus());
                 map.put("startDate", formatDate(c.getDate()));
                 map.put("createdBy", c.getCreatedByStaffName());
+                map.put("description", c.getDescription());
                 return map;
             }).collect(Collectors.toList());
 
@@ -94,7 +95,7 @@ public class CampaignsController {
             campaign.setDescription(payload.get("description"));
             campaign.setDate(parseDate(payload.get("startDate")));
             // Trạng thái mặc định khi tạo
-            campaign.setStatus("Pending"); 
+            campaign.setStatus("Chờ duyệt"); 
 
             boolean success = campaignService.CreateRecallCampaign(loggedInUser.getUserID(), campaign);
             if (success) {
@@ -121,6 +122,7 @@ public class CampaignsController {
             campaignData.setName(payload.get("name"));
             campaignData.setDescription(payload.get("description"));
             campaignData.setDate(parseDate(payload.get("startDate")));
+            campaignData.setStatus(payload.get("status"));
 
             boolean success = campaignService.updateCampaign(loggedInUser.getUserID(), id, campaignData);
             if (success) {

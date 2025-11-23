@@ -64,17 +64,17 @@
                             <span class="status-tag status-tag--pending">Đang xử lý</span>
                         </td>
                     </tr>
-                    </tbody>
+                </tbody>
             </table>
 
             <div class="card-footer" style="display: flex; justify-content: space-between; align-items: center; padding-top: 15px;">
-                
-                <span class="pagination-info">Hiển thị 0 của 0</span>
+    
+                <span class="pagination-info" id="allocPaginationInfo">Hiển thị trang 1</span>
 
                 <div class="pagination-wrapper">
-                    <button class="pagination-btn">« Trước</button>
-                    <button class="pagination-btn-active">1</button>
-                    <button class="pagination-btn">Sau »</button>
+                    <button class="btn-action btn-load" id="allocBtnPrev" disabled>« Trước</button>
+                    <button class="btn-action btn-load" id="allocBtnCurrent">1</button>
+                    <button class="btn-action btn-load" id="allocBtnNext">Sau »</button>
                 </div>
                 
             </div>

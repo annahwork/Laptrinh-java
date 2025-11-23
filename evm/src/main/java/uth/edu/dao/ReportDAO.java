@@ -88,8 +88,8 @@ public class ReportDAO {
             session = sessionFactory.openSession();
             String hql = "SELECT v.Model, wc.Status, COUNT(wc.ClaimID) " +
                          "FROM WarrantyClaim wc " +
-                         "JOIN wc.vehicle v " + 
-                         "WHERE wc.Status IN ('Approved', 'Rejected')";
+                         "LEFT JOIN wc.vehicle v " + 
+                         "WHERE wc.Status IN ('Đang chạy', 'Từ chối', 'Hoàn thành')";
             
             if (startDate != null && endDate != null) {
                 hql += " AND wc.Date BETWEEN :startDate AND :endDate";
@@ -123,9 +123,9 @@ public class ReportDAO {
             session = sessionFactory.openSession();
             String hql = "SELECT p.Name, wc.Status, COUNT(wc.ClaimID) " +
                          "FROM WarrantyClaim wc " +
-                         "JOIN wc.VehiclePart vp " + //
-                         "JOIN vp.Part p " +
-                         "WHERE wc.Status IN ('Approved', 'Rejected')";
+                         "LEFT JOIN wc.VehiclePart vp " + //
+                         "LEFT JOIN vp.Part p " +
+                         "WHERE wc.Status IN ('Đang chạy', 'Từ chối', 'Hoàn thành')";
 
             if (startDate != null && endDate != null) {
                 hql += " AND wc.Date BETWEEN :startDate AND :endDate";
@@ -154,7 +154,7 @@ public class ReportDAO {
     private List<Map<String, Object>> processRateData(List<Object[]> queryResult, String groupKeyName) {
          Map<String, Map<String, Long>> groupedData = queryResult.stream()
             .collect(Collectors.groupingBy(
-                row -> (String) row[0],
+                row -> (row[0] != null ? (String) row[0] : "Unknown"), // Xử lý null nếu LEFT JOIN không tìm thấy tên
                 Collectors.toMap(
                     row -> (String) row[1], 
                     row -> (Long) row[2]    
@@ -163,8 +163,11 @@ public class ReportDAO {
 
         return groupedData.entrySet().stream().map(entry -> {
             String name = entry.getKey();
-            long approved = entry.getValue().getOrDefault("Approved", 0L);
-            long rejected = entry.getValue().getOrDefault("Rejected", 0L);
+            long running = entry.getValue().getOrDefault("Đang chạy", 0L);
+            long completed = entry.getValue().getOrDefault("Hoàn thành", 0L);
+            long approved = running + completed;
+            long rejected = entry.getValue().getOrDefault("Từ chối", 0L);
+            
             long total = approved + rejected;
             double failureRate = (total == 0) ? 0 : ((double) rejected / total) * 100;
             

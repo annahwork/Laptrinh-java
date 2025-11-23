@@ -50,9 +50,9 @@
                         <div class="pagination-wrapper">
                             <span class="pagination-info">Hiển thị <span id="pageInfo">0</span> của <span id="totalItems">0</span></span>
                             <div class="pagination-controls">
-                                <button class="pagination-btn" id="prevPage">« Trước</button>
-                                <button class="pagination-btn pagination-btn--active" id="currentPage">1</button>
-                                <button class="pagination-btn" id="nextPage">Sau »</button>
+                                <button class="btn-action btn-load" id="prevPage">« Trước</button>
+                                <button class="btn-action btn-load" id="currentPage">1</button>
+                                <button class="btn-action btn-load" id="nextPage">Sau »</button>
                             </div>
                         </div>
                     </div>
@@ -78,11 +78,16 @@
                                 <label for="partType" class="form-label">Loại <span class="required">*</span></label>
                                 <select id="partType" name="partType" class="form-input" required>
                                     <option value="">-- Chọn loại --</option>
-                                    <option value="Động cơ">Động cơ</option>
-                                    <option value="Phanh">Phanh</option>
-                                    <option value="Hệ thống treo">Hệ thống treo</option>
-                                    <option value="Điện tử">Điện tử</option>
-                                    <option value="Khác">Khác</option>
+                                    <option value="Battery">Pin</option>
+                                    <option value="Motor">Động cơ</option>
+                                    <option value="Filter">Lọc</option>
+                                    <option value="Brake">Phanh</option>
+                                    <option value="Light">Đèn</option>
+                                    <option value="ECU">ECU</option>
+                                    <option value="Wiper">Gạt nước</option>
+                                    <option value="Display">Màn hình</option>
+                                    <option value="Tire">Lốp xe</option>
+                                    <option value="Mirrow">Gương</option>
                                 </select>
                             </div>
 
@@ -97,8 +102,8 @@
                             </div>
 
                             <div class="modal-panel__actions">
-                                <button type="button" class="modalCancel">Hủy</button>
-                                <button type="submit" class="modalSubmit">Lưu</button>
+                                <button type="button" class="btn-action btn-cancel">Hủy</button>
+                                <button type="submit" class="btn-action btn-save">Lưu</button>
                             </div>
                         </form>
                     </div>

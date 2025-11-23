@@ -82,10 +82,10 @@ public class VehicleService {
         }
     }
 
-    public boolean AssignPartToVehicle(Integer SCStaffID, String VIN, Integer PartId,
+    public boolean AssignPartToVehicle(Integer UserID, String VIN, Integer PartId,
                                        String SerialNumber, Date InstallDate, Integer SCTechnicianID) {
         try {
-            SCStaff staff = scStaffRepository.getSCStaffById(SCStaffID);
+            User staff = userRepository.getUserById(UserID);
             if (staff == null) 
                 return false;
 

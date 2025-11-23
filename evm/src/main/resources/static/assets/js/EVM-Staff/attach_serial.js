@@ -9,11 +9,14 @@
 
     const btnMo = document.getElementById('btnMoFormAttachSerial');
     const modal = document.getElementById('modalCreate');
-    const btnClose = modal.querySelector('.modal-panel__close');
+    const btnClose = modal.querySelector('.modal-close-btn');
     const btnCancel = modal.querySelector('.modalCancel');
     const form = document.getElementById('modalForm');
     const tableBody = document.getElementById('partsTableBody');
     const searchInput = document.getElementById('searchInput');
+
+    const paginationWrapper = document.querySelector('.pagination-wrapper');
+    const paginationInfo = document.querySelector('.pagination-info');
 
     const vinInput = document.getElementById('vinInput');
     const partSelect = document.getElementById('partSelect');
@@ -23,50 +26,94 @@
 
     let currentPage = 1;
     let currentQuery = '';
-
+    const PAGE_SIZE = 10;
+    let isLastPage = false;
 
     async function fetchData(page = 1, query = '') {
         currentPage = page;
         currentQuery = query;
         if (!tableBody) return;
 
-        tableBody.innerHTML = `<tr><td colspan="5" class="no-data">Đang tải dữ liệu...</td></tr>`;
+        tableBody.innerHTML = `<tr><td colspan="5" class="no-data-cell">Đang tải dữ liệu...</td></tr>`;
         
         try {
-            const url = `${API_LIST}?page=${page}&pageSize=10&query=${encodeURIComponent(query)}`;
+            const url = `${API_LIST}?page=${page}&pageSize=${PAGE_SIZE}&query=${encodeURIComponent(query)}`;
+            console.log("Đang gọi API:", url); // Debug xem URL
+
             const response = await fetch(url);
             
             if (!response.ok) {
-                throw new Error(`HTTP ${response.status}`);
+                if (response.status === 401) throw new Error("Lỗi 401: Hết phiên đăng nhập.");
+                if (response.status === 404) throw new Error("Lỗi 404: Sai đường dẫn API.");
+                throw new Error(`Lỗi Server HTTP ${response.status}`);
             }
             
-            const parts = await response.json();
+            const parts = await response.json(); 
+
+            if (!parts || !Array.isArray(parts)) {
+                throw new Error("Dữ liệu trả về từ Server không đúng định dạng Mảng.");
+            }
+
+            if (parts.length < PAGE_SIZE) {
+                isLastPage = true;
+            } else {
+                isLastPage = false;
+            }
+
+            if (parts.length === 0 && currentPage > 1) {
+                fetchData(currentPage - 1, currentQuery);
+                return;
+            }
+
             renderTable(parts);
+            renderPaginationInfo(parts.length);
+            updatePaginationButtons();
 
         } catch (error) {
-            console.error("Lỗi tải danh sách:", error);
-            tableBody.innerHTML = `<tr><td colspan="5" class="no-data" style="color: red;">Lỗi tải dữ liệu.</td></tr>`;
+            console.error("Chi tiết lỗi:", error);
+            tableBody.innerHTML = `<tr><td colspan="5" class="no-data-cell" style="color: red;">${error.message}</td></tr>`;
         }
     }
 
     function renderTable(parts) {
         if (!parts || parts.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="5" class="no-data">Không tìm thấy dữ liệu${currentQuery ? ' cho "' + currentQuery + '"' : ''}.</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="5" class="no-data-cell">Không tìm thấy dữ liệu${currentQuery ? ' cho "' + currentQuery + '"' : ''}.</td></tr>`;
             return;
         }
         
         tableBody.innerHTML = parts.map(p => `
             <tr>
-                <td>${p.vin || 'N/A'}</td>
-                <td>${p.partName || 'N/A'}</td>
-                <td>${p.serial || 'N/A'}</td>
-                <td>${p.installDate || 'N/A'}</td>
-                <td>${p.installerName || 'N/A'}</td>
+                <td class="text-left">${p.vin || 'N/A'}</td>
+                <td class="text-left">${p.partName || 'N/A'}</td>
+                <td class="text-center">${p.serial || 'N/A'}</td>
+                <td class="text-center">${p.installDate || 'N/A'}</td>
+                <td class="text-left">${p.installerName || 'N/A'}</td>
             </tr>
         `).join('');
     }
+    function renderPaginationInfo(currentCount) {
+        if(paginationInfo) {
+            paginationInfo.innerText = `Trang ${currentPage} `;
+        }
+    }
+    
+    function updatePaginationButtons() {
+        if(!paginationWrapper) return;
+        const btns = paginationWrapper.querySelectorAll('button');
+        if(btns.length >= 3) {
+             const btnPrev = btns[0];
+             const btnNum = btns[1];
+             const btnNext = btns[2];
+             
+             btnNum.innerText = currentPage;
+             
+             btnPrev.style.visibility = currentPage > 1 ? 'visible' : 'hidden';
+             btnNext.style.visibility = isLastPage ? 'hidden' : 'visible';
+        }
+    }
 
     async function openModal() {
+        modal.style.display = 'block';
         modal.setAttribute('aria-hidden', 'false');
         form.reset(); 
         
@@ -77,7 +124,6 @@
 
 
     async function loadDropdownData() {
-        // Tải Phụ tùng
         partSelect.innerHTML = `<option value="">Đang tải phụ tùng...</option>`;
         try {
             const resParts = await fetch(API_GET_PARTS);
@@ -108,6 +154,7 @@
     }
 
     function closeModal() {
+        modal.style.display = 'none';
         modal.setAttribute('aria-hidden', 'true');
         form.reset();
     }
@@ -145,7 +192,7 @@
             
             alert(result.message || 'Thành công!');
             closeModal();
-            fetchData(1, ''); // Tải lại trang đầu tiên
+            fetchData(1, '');
 
         } catch (error) {
             console.error("Lỗi khi lưu:", error);
@@ -156,22 +203,33 @@
         }
     }
 
-    // --- Gắn sự kiện ---
     btnMo?.addEventListener('click', openModal);
     btnClose?.addEventListener('click', closeModal);
     btnCancel?.addEventListener('click', closeModal);
     form?.addEventListener('submit', handleFormSubmit);
 
-    // Tìm kiếm khi người dùng ngừng gõ
+    if (paginationWrapper) {
+        paginationWrapper.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                const text = e.target.innerText.toLowerCase();
+                
+                if (text.includes('trước') || text.includes('«')) {
+                    if (currentPage > 1) fetchData(currentPage - 1, currentQuery);
+                }
+                else if (text.includes('sau') || text.includes('»')) {
+                    if (!isLastPage) fetchData(currentPage + 1, currentQuery);
+                }
+            }
+        });
+    }
+
     let searchTimeout;
     searchInput?.addEventListener('input', () => {
         clearTimeout(searchTimeout);
         searchTimeout = setTimeout(() => {
             fetchData(1, searchInput.value);
-        }, 500); // Đợi 500ms
+        }, 500); 
     });
-
-    // Tải dữ liệu lần đầu
     fetchData(1, '');
 
 })();

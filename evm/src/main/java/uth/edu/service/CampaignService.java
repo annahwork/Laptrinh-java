@@ -47,7 +47,7 @@ private RecallCampaignRepository recallCampaignRepository;
 
             CampaignData.setCreatedByStaff((EVMStaff) staff);
             CampaignData.setDate(new Date());
-            CampaignData.setStatus("Pending");
+            CampaignData.setStatus("Chờ duyệt");
 
             recallCampaignRepository.addRecallCampaign(CampaignData);
             return true;
@@ -232,6 +232,9 @@ private RecallCampaignRepository recallCampaignRepository;
             existingCampaign.setName(campaignData.getName());
             existingCampaign.setDescription(campaignData.getDescription());
             existingCampaign.setDate(campaignData.getDate());
+            if (campaignData.getStatus() != null && !campaignData.getStatus().isEmpty()) {
+                existingCampaign.setStatus(campaignData.getStatus());
+            }
             
             recallCampaignRepository.updateRecallCampaign(existingCampaign);
             return true;
@@ -243,13 +246,13 @@ private RecallCampaignRepository recallCampaignRepository;
 
     @Transactional
     public boolean approveCampaign(Integer EVMStaffID, Integer campaignId) {
-        return updateCampaignStatus(EVMStaffID, campaignId, "Active");
+        return updateCampaignStatus(EVMStaffID, campaignId, "Đang chạy");
     }
 
 
     @Transactional
     public boolean rejectCampaign(Integer EVMStaffID, Integer campaignId) {
-        return updateCampaignStatus(EVMStaffID, campaignId, "Rejected"); 
+        return updateCampaignStatus(EVMStaffID, campaignId, "Từ chối"); 
     }
 
 

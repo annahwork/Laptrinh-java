@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpSession;
@@ -22,7 +23,6 @@ import uth.edu.service.InventoryService;
 import uth.edu.service.NotificationService;
 import uth.edu.service.WarrantyClaimService;
 
-
 @RestController
 @RequestMapping("/api/evm_staff/dashboard")
 public class EVMStaffDashboardController {
@@ -32,8 +32,9 @@ public class EVMStaffDashboardController {
     private final CampaignService campaignService;
     private final NotificationService notificationService;
 
-    @Autowired 
-    public EVMStaffDashboardController( InventoryService inventoryService, WarrantyClaimService warrantyClaimService, CampaignService campaignService, NotificationService notificationService ) {
+    @Autowired
+    public EVMStaffDashboardController(InventoryService inventoryService, WarrantyClaimService warrantyClaimService,
+            CampaignService campaignService, NotificationService notificationService) {
         this.inventoryService = inventoryService;
         this.warrantyClaimService = warrantyClaimService;
         this.campaignService = campaignService;
@@ -49,17 +50,16 @@ public class EVMStaffDashboardController {
 
         try {
             int totalParts = inventoryService.getTotalPartsInStock();
-            List<String> activeStatus = List.of("Pending", "In Progress");
+            List<String> activeStatus = List.of("Chờ duyệt", "Đang chạy");
             int activeRequests = warrantyClaimService.countClaimsByStatus(activeStatus);
-            int activeCampaigns = campaignService.countCampaignsByStatus("Active");
+            int activeCampaigns = campaignService.countCampaignsByStatus("Đang chạy");
             int lowStock = inventoryService.countLowStockItems();
 
             Map<String, Object> stats = Map.of(
-                "totalParts", totalParts,
-                "activeRequests", activeRequests,
-                "activeCampaigns", activeCampaigns,
-                "lowStock", lowStock
-            );
+                    "totalParts", totalParts,
+                    "activeRequests", activeRequests,
+                    "activeCampaigns", activeCampaigns,
+                    "lowStock", lowStock);
 
             return ResponseEntity.ok(stats);
 
@@ -70,13 +70,16 @@ public class EVMStaffDashboardController {
     }
 
     @GetMapping("/recent-allocations")
-    public ResponseEntity<List<Map<String, Object>>> getRecentAllocations(HttpSession session) {
+    public ResponseEntity<List<Map<String, Object>>> getRecentAllocations(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "5") int pageSize,
+            HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null || !(loggedInUser instanceof EVMStaff)) {
             return ResponseEntity.status(401).build();
         }
         try {
-            List<AllocatePartHistory> historyList = inventoryService.getRecentAllocations(1, 5);
+            List<AllocatePartHistory> historyList = inventoryService.getRecentAllocations(page, pageSize);
             if (historyList == null) {
                 historyList = new ArrayList<>();
             }
@@ -87,23 +90,23 @@ public class EVMStaffDashboardController {
                 String status = history.getStatus();
                 String statusClass = "";
 
-                switch (status.toLowerCase()) {
-                    case "completed":
+                switch (status) {
+                    case "Hoàn thành":
                         statusClass = "status-tag--success";
                         break;
-                    case "pending":
+                    case "Chờ duyệt":
                         statusClass = "status-tag--pending";
                         break;
                     default:
                         statusClass = "status-tag--info";
                 }
-                
+
                 String formattedDate = "N/A";
                 if (history.getAllocationDate() != null) {
                     formattedDate = history.getAllocationDate().toInstant()
-                                    .atZone(java.time.ZoneId.systemDefault())
-                                    .toLocalDate()
-                                    .format(dtf);
+                            .atZone(java.time.ZoneId.systemDefault())
+                            .toLocalDate()
+                            .format(dtf);
                 }
 
                 Map<String, Object> map = new java.util.HashMap<>();
@@ -114,9 +117,9 @@ public class EVMStaffDashboardController {
                 map.put("status", status);
                 map.put("statusClass", statusClass);
                 return map;
-                
+
             }).collect(Collectors.toList());
-            
+
             return ResponseEntity.ok(allocations);
 
         } catch (Exception e) {
@@ -125,24 +128,24 @@ public class EVMStaffDashboardController {
         }
     }
 
-   @GetMapping("/notifications")
+    @GetMapping("/notifications")
     public ResponseEntity<?> getNotifications(HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        
+
         if (loggedInUser == null || !(loggedInUser instanceof EVMStaff)) {
-             return ResponseEntity.status(401).body(Map.of("message", "Không có quyền truy cập"));
+            return ResponseEntity.status(401).body(Map.of("message", "Không có quyền truy cập"));
         }
-        
+
         try {
             List<Notification> notifs = notificationService.GetUnreadNotifications(loggedInUser.getUserID(), 1, 5);
-            
+
             List<Map<String, Object>> result = notifs.stream()
-                .map(n -> {
-                    Map<String, Object> map = new java.util.HashMap<>();
-                    map.put("message", "🔹 " + n.getTitle() + ": " + n.getMessage());
-                    return map;
-                })
-                .collect(Collectors.toList());
+                    .map(n -> {
+                        Map<String, Object> map = new java.util.HashMap<>();
+                        map.put("message", "🔹 " + n.getTitle() + ": " + n.getMessage());
+                        return map;
+                    })
+                    .collect(Collectors.toList());
             return ResponseEntity.ok(result);
 
         } catch (Exception e) {

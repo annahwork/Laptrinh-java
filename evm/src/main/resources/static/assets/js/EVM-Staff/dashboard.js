@@ -3,6 +3,14 @@
 
     const API_BASE = (window.contextPath || '/evm/') + 'api/evm_staff/dashboard';
 
+    let allocPage = 1;
+    const allocPageSize = 5;
+
+    // Lấy các element phân trang
+    const btnPrev = document.getElementById('allocBtnPrev');
+    const btnNext = document.getElementById('allocBtnNext');
+    const btnCurrent = document.getElementById('allocBtnCurrent');
+    const paginationInfo = document.getElementById('allocPaginationInfo');
     async function loadOverviewStats() {
         try {
             const res = await fetch(`${API_BASE}/overview`, { credentials: 'same-origin' });
@@ -23,9 +31,11 @@
     }
 
 
-    async function loadRecentAllocations() {
+    async function loadRecentAllocations(page) {
         try {
-            const res = await fetch(`${API_BASE}/recent-allocations`, { credentials: 'same-origin' });
+            allocPage = page;
+
+            const res = await fetch(`${API_BASE}/recent-allocations?page=${page}&pageSize=${allocPageSize}`, { credentials: 'same-origin' });
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
             const data = await res.json();
@@ -37,9 +47,10 @@
                 tbody.innerHTML = `
                     <tr class="dashboard__table-row">
                         <td colspan="5" class="dashboard__table-cell dashboard__table-cell--center">
-                            Không có dữ liệu cấp phát gần đây.
+                            Không có dữ liệu cấp phát.
                         </td>
                     </tr>`;
+                updatePaginationButtons(0);
                 return;
             }
 
@@ -58,13 +69,7 @@
                 tbody.appendChild(tr);
             });
 
-            tbody.innerHTML += `
-                <tr class="dashboard__table-row dashboard__table-row--more">
-                    <td colspan="5" class="dashboard__table-cell dashboard__table-cell--center">
-                        <button class="dashboard__btn-more">Xem thêm</button>
-                    </td>
-                </tr>
-            `;
+            updatePaginationButtons(data.length);
 
         } catch (error) {
             console.error("Lỗi tải lịch sử cấp phát:", error);
@@ -77,6 +82,22 @@
                         </td>
                     </tr>`;
             }
+        }
+    }
+
+    function updatePaginationButtons(itemCount) {
+        if (btnCurrent) btnCurrent.textContent = allocPage;
+        if (paginationInfo) paginationInfo.textContent = `Trang ${allocPage}`;
+
+        if (btnPrev) {
+            btnPrev.disabled = allocPage <= 1;
+            btnPrev.style.opacity = allocPage <= 1 ? '0.5' : '1';
+        }
+
+        if (btnNext) {
+            const isLastPage = itemCount < allocPageSize;
+            btnNext.disabled = isLastPage;
+            btnNext.style.opacity = isLastPage ? '0.5' : '1';
         }
     }
 
@@ -109,9 +130,24 @@
             }
         }
     }
+    if (btnPrev) {
+        btnPrev.addEventListener('click', () => {
+            if (allocPage > 1) {
+                loadRecentAllocations(allocPage - 1);
+            }
+        });
+    }
+
+    if (btnNext) {
+        btnNext.addEventListener('click', () => {
+            if (!btnNext.disabled) {
+                loadRecentAllocations(allocPage + 1);
+            }
+        });
+    }
 
     loadOverviewStats();
-    loadRecentAllocations();
+    loadRecentAllocations(1);
     loadNotifications();
 
 })();

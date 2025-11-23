@@ -18,8 +18,7 @@
     const modal = document.getElementById('warrantyCostModal');
     const modalBody = document.getElementById('modalCostBody');
     const modalClaimId = document.getElementById('modalClaimId');
-    const btnClose = modal.querySelector('.warranty-cost__modal-close');
-    const backdrop = modal.querySelector('.warranty-cost__modal-backdrop');
+    const btnClose = modal ? modal.querySelector('.modal-close-btn') : null;
 
     let currentPage = 1;
     let totalPages = 1;
@@ -107,15 +106,18 @@
      * Mở Modal
      */
     async function openModal(claimId) {
+        if (!modal) return;
+
         modalBody.innerHTML = '<tr><td colspan="4" class="no-data">Đang tải chi tiết...</td></tr>';
         modalClaimId.textContent = `CR-${claimId}`;
-        modal.classList.add('active');
+
+        modal.style.display = 'flex'; 
         modal.setAttribute('aria-hidden', 'false');
 
         try {
             const response = await fetch(`${API_DETAILS}/${claimId}`);
             if (!response.ok) {
-                const err = await response.json();
+                const err = await response.json().catch(() => ({}));
                 throw new Error(err.message || 'Lỗi tải chi tiết');
             }
             const details = await response.json();
@@ -123,7 +125,7 @@
 
         } catch (error) {
             console.error("Lỗi tải chi tiết modal:", error);
-            modalBody.innerHTML = `<tr><td colspan="4" class="no-data" style="color: red;">${error.message}</td></tr>`;
+            modalBody.innerHTML = `<tr><td colspan="4" class="no-data" style="color: red;">Lỗi: ${error.message}</td></tr>`;
         }
     }
     
@@ -150,22 +152,30 @@
      * Đóng Modal
      */
     function closeModal() {
-        modal.classList.remove('active');
+        if (!modal) return;
+        modal.style.display = 'none'; 
         modal.setAttribute('aria-hidden', 'true');
         modalBody.innerHTML = ''; 
     }
 
-    tableBody.addEventListener('click', function(e) {
-        if (e.target && e.target.classList.contains('btn-action')) {
-            const id = e.target.getAttribute('data-id');
-            if (id) {
-                openModal(id);
+    if (tableBody) {
+        tableBody.addEventListener('click', function(e) {
+            const btn = e.target.closest('.btn-action'); 
+            if (btn) {
+                const id = btn.getAttribute('data-id');
+                if (id) openModal(id);
             }
-        }
-    });
+        });
+    }
 
     btnClose?.addEventListener('click', closeModal);
-    backdrop?.addEventListener('click', closeModal);
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    }
 
     btnPrev?.addEventListener('click', () => {
         if (currentPage > 1) fetchData(currentPage - 1);

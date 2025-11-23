@@ -13,19 +13,19 @@
     let allClaimData = [];
     
     const STATUS_OPTIONS = [
-        { value: 'pending_parts', text: 'Đang chờ phụ tùng' },
-        { value: 'completed', text: 'Hoàn thành' },
-        { value: 'in_progress', text: 'Đang thực hiện' },
-        { value: 'pending_approval', text: 'Chờ duyệt' }
+        { value: 'Chờ duyệt', text: 'Chờ duyệt' },
+        { value: 'Hoàn thành', text: 'Hoàn thành' },
+        { value: 'Đang chạy', text: 'Đang chạy' },
+        { value: 'Từ chối', text: 'Từ chối' }
     ];
 
     function mapStatusToDisplay(status) {
         const lowerStatus = status?.toLowerCase() || '';
         
-        if (lowerStatus.includes('ch? ph? tùng') || lowerStatus.includes('pending_parts')) return 'Đang chờ phụ tùng';
+        if (lowerStatus.includes('chờ duyệt') || lowerStatus.includes('pending_parts')) return 'Chờ duyệt';
         if (lowerStatus.includes('hoàn thành') || lowerStatus.includes('completed')) return 'Hoàn thành';
-        if (lowerStatus.includes('th?c hi?n') || lowerStatus.includes('in_progress')) return 'Đang thực hiện';
-        if (lowerStatus.includes('ch? duy?t') || lowerStatus.includes('pending_approval')) return 'Chờ duyệt';
+        if (lowerStatus.includes('đang chạy') || lowerStatus.includes('in_progress')) return 'Đang chạy';
+        if (lowerStatus.includes('từ chối') || lowerStatus.includes('pending_approval')) return 'Từ chối';
         
         return lowerStatus || 'Không xác định'; 
     }

@@ -1,4 +1,3 @@
-
 <section class="technician-assignment">
     <div class="app-layout">
         <div class="content-wrapper" id="innerContent">
@@ -94,8 +93,7 @@
 
             <div id="modalYeuCauDieuPhoi" class="technician-assign__modal" style="display:none;">
                 <div class="technician-assign__modal-content">
-                    <button class="close-button" id="newReqCloseBtn"
-                        aria-label="Close">&times;</button>
+                    <button class="close-button" id="newReqCloseBtn" aria-label="Close">&times;</button>
 
                     <form class="technician-assign__form" id="newRequestForm">
                         <h2 class="technician-assign__title">Tạo yêu cầu điều phối mới</h2>
@@ -103,7 +101,8 @@
                         <div class="technician-assign__form-group">
                             <label for="assign_code" class="technician-assign__label">Mã yêu cầu (WarrantyClaim
                                 ID)</label>
-                            <input type="text" id="assign_code" ...>
+                            <input type="text" id="assign_code" name="assignCode" class="technician-assign__input"
+                                placeholder="(Nhập mã Y/C  bảo hành (Claim id,))" />
                         </div>
 
                         <div class="technician-assign__form-group">
@@ -125,10 +124,8 @@
                         </div>
 
                         <div class="button-group">
-                            <button type="button" id="assignCancelBtnModal"
-                                class="btn-action btn-cancel">Huỷ</button>
-                            <button type="submit"
-                                class="btn-action btn-save">Tạo</button>
+                            <button type="button" id="assignCancelBtnModal" class="btn-action btn-cancel">Huỷ</button>
+                            <button type="submit" class="btn-action btn-save">Tạo</button>
                         </div>
                     </form>
                 </div>

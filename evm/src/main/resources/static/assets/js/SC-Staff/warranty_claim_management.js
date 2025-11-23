@@ -103,11 +103,11 @@
         const tbody = document.getElementById('claimsTbody');
         if (tbody) {
             tbody.innerHTML = `
-        <tr>
-          <td colspan="6" class="table-placeholder-cell">
-            Đang tải dữ liệu...
-          </td>
-        </tr>`;
+                <tr>
+                    <td colspan="5" class="table-placeholder-cell">
+                        Đang tải dữ liệu...
+                    </td>
+                </tr>`;
         }
 
         try {
@@ -125,11 +125,11 @@
             console.error('Lỗi khi load warranty claims:', err);
             if (tbody) {
                 tbody.innerHTML = `
-          <tr>
-            <td colspan="6" class="table-placeholder-cell">
-              Lỗi tải dữ liệu: ${escapeHtml(err.message)}
-            </td>
-          </tr>`;
+                    <tr>
+                        <td colspan="5" class="table-placeholder-cell">
+                            Lỗi tải dữ liệu: ${escapeHtml(err.message)}
+                        </td>
+                    </tr>`;
             }
             const infoEl = document.querySelector('.pagination-info');
             if (infoEl) infoEl.textContent = 'Lỗi tải dữ liệu';
@@ -157,10 +157,13 @@
             });
         }
 
-        // filter status
+        // filter status: compare against the displayed label (use mapStatus)
         if (currentStatusFilter) {
-            const st = currentStatusFilter.toLowerCase();
-            list = list.filter(c => String(c.status ?? '').toLowerCase() === st);
+            const st = String(currentStatusFilter).trim().toLowerCase();
+            list = list.filter(c => {
+                const display = String(mapStatus(c.status)).trim().toLowerCase();
+                return display === st;
+            });
         }
 
         // filter ngày
@@ -210,11 +213,11 @@
 
         if (!pageItems.length) {
             tbody.innerHTML = `
-        <tr>
-          <td colspan="6" class="table-placeholder-cell">
-            Không có yêu cầu bảo hành nào.
-          </td>
-        </tr>`;
+                <tr>
+                    <td colspan="5" class="table-placeholder-cell">
+                        Không có yêu cầu bảo hành nào.
+                    </td>
+                </tr>`;
             return;
         }
 
@@ -226,19 +229,18 @@
             const status = c.status ?? 'N/A';
 
             return `
-        <tr data-id="${id}">
-          <td>${escapeHtml(String(id))}</td>
-          <td>${escapeHtml(vin)}</td>
-          <td>${escapeHtml(desc)}</td>
-          <td>${escapeHtml(date)}</td>
-          <td>${escapeHtml(mapStatus(status))}</td>
-          <td>
-            <button class="btn-action btn-view" data-id="${id}">Xem</button>
-            <button class="btn-action btn-edit" data-id="${id}">Sửa</button>
-            <button class="btn-action btn-delete" data-id="${id}">Xóa</button>
-          </td>
-        </tr>
-      `;
+                <tr data-id="${id}">
+                    <td>${escapeHtml(vin)}</td>
+                    <td>${escapeHtml(desc)}</td>
+                    <td>${escapeHtml(date)}</td>
+                    <td>${escapeHtml(mapStatus(status))}</td>
+                    <td>
+                        <button class="btn-action btn-view" data-id="${id}">Xem</button>
+                        <button class="btn-action btn-edit" data-id="${id}">Sửa</button>
+                        <button class="btn-action btn-delete" data-id="${id}">Xóa</button>
+                    </td>
+                </tr>
+            `;
         }).join('');
 
         tbody.innerHTML = rows;
@@ -327,8 +329,6 @@
             currentEditingId = null;
             // clear dataset marker if present
             try { form.dataset.editingId = ''; } catch (e) { }
-            const codeInput = document.getElementById('warranty_code');
-            if (codeInput) codeInput.readOnly = false;
         }
 
         function openModalForCreate() {
@@ -463,8 +463,9 @@
                     const claim = await resp.json();
                     console.log('claim from getbyID (view):', claim);
                     // Hiện thông tin chi tiết đơn giản
+                    const rawId = claim.claimID || claim.claimId || claim.id || '';
                     const info = [
-                        `Mã Y/C: ${claim.claimID}`,
+                        `Mã Y/C: ${rawId ? + rawId : ''}`,
                         `VIN: ${claim.vehicle ? claim.vehicle.VIN : 'N/A'}`,
                         `Mô tả: ${claim.description || ''}`,
                         `Ngày tạo: ${claim.date || 'N/A'}`,
@@ -497,13 +498,9 @@
                         const vinInput = document.getElementById('warranty_vin');
                         const descInput = document.getElementById('warranty_desc');
                         const statusInput = document.getElementById('warranty_status');
-                        const codeInput = document.getElementById('warranty_code');
-
                         if (vinInput) vinInput.value = claim.vehicle ? (claim.vehicle.VIN || '') : '';
                         if (descInput) descInput.value = claim.description || '';
                         if (statusInput) statusInput.value = claim.status || 'pending';
-                        if (codeInput) codeInput.value = claim.claimID || '';
-                        if (codeInput) codeInput.readOnly = true;
 
                         // tolerate different naming conventions from server
                         currentEditingId = claim.claimID || claim.claimId || claim.id || null;

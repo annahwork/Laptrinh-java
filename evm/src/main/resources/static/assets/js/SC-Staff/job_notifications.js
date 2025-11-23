@@ -3,10 +3,7 @@
 
     console.log('[SC-Staff] job_notifications.js loaded');
 
-    // ====== CONFIG ======
-    // Thay đổi để khớp với controller backend: ScStaffDashboardController.getNotifications()
     const API_BASE = '/evm/api/sc-staff/dashboard/notifications';
-    const CURRENT_SC_STAFF_ID = 2; // TODO: nếu cần thì lấy userID từ server render xuống
 
     const PAGE_SIZE = 5;
 
@@ -49,8 +46,9 @@
 
     // ====== API ======
     async function fetchNotifications() {
-        // dùng endpoint backend: GET /api/sc-staff/dashboard/notifications?userId=...
-        const url = `${API_BASE}?userId=${encodeURIComponent(CURRENT_SC_STAFF_ID)}`;
+        // dùng endpoint backend: GET /api/sc-staff/dashboard/notifications
+        // Server sẽ mặc định dùng `loggedInUser` nếu không có query param `userId`.
+        const url = API_BASE;
         try {
             console.log('[SC-Staff] fetchNotifications ->', url);
             const res = await fetch(url, { credentials: 'include' });

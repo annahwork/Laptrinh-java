@@ -34,7 +34,9 @@ public class VehicleService {
     private UserRepository userRepository;
 
     @Autowired
-    public VehicleService(VehicleRepository vehicleRepository, CustomerRepository customerRepository, VehiclePartRepository vehiclePartRepository, PartRepository partRepository, SCStaffRepository scStaffRepository, UserRepository userRepository) {
+    public VehicleService(VehicleRepository vehicleRepository, CustomerRepository customerRepository,
+            VehiclePartRepository vehiclePartRepository, PartRepository partRepository,
+            SCStaffRepository scStaffRepository, UserRepository userRepository) {
         this.vehicleRepository = vehicleRepository;
         this.customerRepository = customerRepository;
         this.vehiclePartRepository = vehiclePartRepository;
@@ -46,14 +48,14 @@ public class VehicleService {
     public boolean RegisterVehicle(Integer SCStaffID, Vehicle VehicleData, Customer CustomerData) {
         try {
             SCStaff staff = scStaffRepository.getSCStaffById(SCStaffID);
-            if (staff == null) 
+            if (staff == null)
                 return false;
 
-            if (VehicleData == null || CustomerData == null) 
+            if (VehicleData == null || CustomerData == null)
                 return false;
 
             Vehicle existingVehicle = vehicleRepository.getVehicleByVin(VehicleData.getVIN());
-            if (existingVehicle != null) 
+            if (existingVehicle != null)
                 return false;
 
             Customer existingCustomer = null;
@@ -83,34 +85,33 @@ public class VehicleService {
     }
 
     public boolean AssignPartToVehicle(Integer UserID, String VIN, Integer PartId,
-                                       String SerialNumber, Date InstallDate, Integer SCTechnicianID) {
+            String SerialNumber, Date InstallDate, Integer SCTechnicianID) {
         try {
             User staff = userRepository.getUserById(UserID);
-            if (staff == null) 
+            if (staff == null)
                 return false;
 
             Vehicle vehicle = vehicleRepository.getVehicleByVin(VIN);
-            if (vehicle == null) 
+            if (vehicle == null)
                 return false;
 
             Part part = partRepository.getPartById(PartId);
-            if (part == null) 
+            if (part == null)
                 return false;
 
             User technician = userRepository.getUserById(SCTechnicianID);
-            if (technician == null || !(technician instanceof SCTechnician)) 
+            if (technician == null || !(technician instanceof SCTechnician))
                 return false;
 
             VehiclePart vehiclePart = new VehiclePart(
-                null,
-                part,
-                vehicle,
-                SerialNumber,
-                InstallDate,
-                null,
-                technician,
-                "Installed"
-            );
+                    null,
+                    part,
+                    vehicle,
+                    SerialNumber,
+                    InstallDate,
+                    null,
+                    technician,
+                    "Installed");
 
             vehiclePartRepository.addVehiclePart(vehiclePart);
             return true;
@@ -183,7 +184,7 @@ public class VehicleService {
 
     public List<Part> getAllParts() {
         try {
-            return partRepository.getAllParts(1, 1000); 
+            return partRepository.getAllParts(1, 1000);
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
@@ -199,13 +200,13 @@ public class VehicleService {
         }
     }
 
-    public List<VehiclePart> getWarrantyPartsForTechnician(int userID){
+    public List<VehiclePart> getWarrantyPartsForTechnician(int userID) {
         try {
-            return vehiclePartRepository.getWarrantyPartsForTechnician(userID, 1 , 9999);
+            return vehiclePartRepository.getWarrantyPartsForTechnician(userID, 1, 9999);
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
         }
     }
-    
+
 }

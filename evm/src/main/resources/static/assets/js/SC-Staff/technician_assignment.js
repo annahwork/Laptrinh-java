@@ -353,22 +353,34 @@
             newReqForm.addEventListener('submit', async function (e) {
                 e.preventDefault();
 
-                const warrantyClaimId = document.getElementById('assign_code')?.value?.trim();
+                // New behavior: the system will auto-create a WarrantyClaim ID when missing.
+                // Do not require manual input for claim code. Only require service, technician and description.
                 const warrantyServiceId = document.getElementById('warranty_service')?.value;
                 const technicianId = document.getElementById('technician_name')?.value;
                 const jobDescription = document.getElementById('assign_desc')?.value?.trim();
 
-                if (!warrantyClaimId || !warrantyServiceId || !technicianId || !jobDescription) {
-                    await window.showAlert('Vui lòng nhập đầy đủ: Mã Yêu Cầu, Dịch Vụ, Kỹ Thuật Viên, và Mô Tả.');
+                if (!warrantyServiceId || !technicianId || !jobDescription) {
+                    await window.showAlert('Vui lòng nhập đầy đủ: Dịch Vụ, Kỹ Thuật Viên, và Mô Tả.');
                     return;
                 }
 
+                // If user typed an assign_code, include it so backend will use existing WarrantyClaim
+                const userAssignCode = document.getElementById('assign_code')?.value?.trim();
+
                 const payload = {
-                    warrantyClaimId: parseInt(warrantyClaimId, 10),
                     warrantyServiceId: parseInt(warrantyServiceId, 10),
                     technicianId: parseInt(technicianId, 10),
                     jobDescription: jobDescription
                 };
+
+                if (userAssignCode) {
+                    // If it's purely numeric, send as number; otherwise send raw string
+                    if (/^\d+$/.test(userAssignCode)) {
+                        payload.warrantyClaimId = parseInt(userAssignCode, 10);
+                    } else {
+                        payload.warrantyClaimId = userAssignCode;
+                    }
+                }
 
                 try {
                     console.log('[TechAssign] Gửi payload Giao việc:', payload);
@@ -386,7 +398,16 @@
                         throw new Error(data.message || 'Giao việc thất bại');
                     }
 
-                    await window.showAlert(data.message || 'Giao việc thành công!');
+                    // If backend created a claim automatically it may return claimId
+                    const createdClaimId = data && (data.claimId || data.claimID || data.id);
+                    if (createdClaimId) {
+                        // If backend returns a plain numeric id, format as CR-<id> for display
+                        const idStr = String(createdClaimId);
+                        const formattedId = /^\d+$/.test(idStr) ? ('CR-' + idStr) : idStr;
+                        await window.showAlert((data.message || 'Giao việc thành công') + ' (Mã Y/C: ' + formattedId + ')');
+                    } else {
+                        await window.showAlert(data.message || 'Giao việc cho kỹ thuật viên thành công.');
+                    }
                     closeNewReqModal();
                     loadAllAssignments();
 

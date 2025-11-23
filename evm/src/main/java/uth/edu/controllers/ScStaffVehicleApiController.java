@@ -15,6 +15,7 @@ import uth.edu.service.VehicleService;
 
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/sc-staff/vehicles")
@@ -39,7 +40,7 @@ public class ScStaffVehicleApiController {
 
     // ================== LẤY DANH SÁCH XE (SC-STAFF) ==================
     @GetMapping("/all")
-    public ResponseEntity<List<org.hibernate.mapping.Map>> getAllVehiclesForScStaff(
+    public ResponseEntity<List<Map<String, Object>>> getAllVehiclesForScStaff(
             HttpSession session,
             @RequestParam(required = false) String search,
             @RequestParam(required = false) String status) {
@@ -47,8 +48,52 @@ public class ScStaffVehicleApiController {
         if (!isScStaff(session)) {
             return ResponseEntity.status(401).build();
         }
-        List<org.hibernate.mapping.Map> vehicles = vehicleService.GetVehicles();
-        return ResponseEntity.ok(vehicles);
+
+        List<?> raw = vehicleService.GetVehicles();
+        List<Map<String, Object>> filtered = new ArrayList<>();
+
+        for (Object item : raw) {
+            Map row;
+            try {
+                row = (Map) item; // runtime is a java.util.Map from HQL 'new map'
+            } catch (Exception ex) {
+                continue;
+            }
+
+            Object vobj = row.get("vehicle");
+            Vehicle veh = vobj instanceof Vehicle ? (Vehicle) vobj : null;
+            String custName = row.get("customerName") != null ? row.get("customerName").toString() : null;
+            String custPhone = row.get("customerPhone") != null ? row.get("customerPhone").toString() : null;
+
+            boolean keep = true;
+            if (status != null && !status.trim().isEmpty() && !status.trim().equalsIgnoreCase("Tất cả trạng thái")) {
+                String vs = veh != null && veh.getStatus() != null ? veh.getStatus() : "";
+                if (!vs.equals(status.trim()))
+                    keep = false;
+            }
+
+            if (keep && search != null && !search.trim().isEmpty()) {
+                String q = search.trim().toLowerCase();
+                boolean match = false;
+                if (veh != null) {
+                    if (veh.getVIN() != null && veh.getVIN().toLowerCase().contains(q))
+                        match = true;
+                    if (!match && veh.getModel() != null && veh.getModel().toLowerCase().contains(q))
+                        match = true;
+                }
+                if (!match && custName != null && custName.toLowerCase().contains(q))
+                    match = true;
+                if (!match && custPhone != null && custPhone.toLowerCase().contains(q))
+                    match = true;
+                if (!match)
+                    keep = false;
+            }
+
+            if (keep)
+                filtered.add(row);
+        }
+
+        return ResponseEntity.ok(filtered);
     }
 
     // ================== ĐĂNG KÝ XE ==================
@@ -115,6 +160,10 @@ public class ScStaffVehicleApiController {
             customerRepository.updateCustomer(existingCustomer);
 
             existingVehicle.setCustomer(existingCustomer);
+
+            if (vehicleData.getVIN() != null && !vehicleData.getVIN().isEmpty()) {
+                existingVehicle.setVIN(vehicleData.getVIN());
+            }
             existingVehicle.setModel(vehicleData.getModel());
             existingVehicle.setYear_Of_Manufacture(vehicleData.getYear_Of_Manufacture());
             existingVehicle.setWarranty_Time(vehicleData.getWarranty_Time());

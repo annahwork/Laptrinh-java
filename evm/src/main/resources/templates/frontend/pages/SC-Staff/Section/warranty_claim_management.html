@@ -15,10 +15,11 @@
                         <div class="filter-controls">
                             <select id="statusFilter" class="filter-select">
                                 <option value="" selected>Tất cả trạng thái</option>
-                                <option value="Chờ duyệt">Chờ duyệt</option>
-                                <option value="Đang chạy">Đang chạy</option>
+                                <option value="Chờ xử lý">Chờ xử lý</option>
+                                <option value="Đã duyệt">Đã duyệt</option>
+                                <option value="Đã xác nhận">Đã xác nhận</option>
+                                <option value="Đã hoàn thành">Đã hoàn thành</option>
                                 <option value="Từ chối">Từ chối</option>
-                                <option value="Hoàn thành">Hoàn thành</option>
                             </select>
 
                             <input type="date" id="dateFilter" class="filter-input">
@@ -34,7 +35,6 @@
                         <table class="table-zebra table-full-width">
                             <thead>
                                 <tr class="table-header-row">
-                                    <th>Mã Y/C</th>
                                     <th>Biển số / VIN</th>
                                     <th>Mô tả</th>
                                     <th>Ngày tạo</th>
@@ -68,10 +68,7 @@
                     <div class="warranty-claim__modal-content">
                         <span class="close-button">&times;</span>
                         <form class="warranty-claim__form">
-                            <div class="warranty-claim__form-group">
-                                <label for="warranty_code" class="warranty-claim__label">Mã yêu cầu bảo hành</label>
-                                <input type="text" id="warranty_code" name="warrantyCode" class="warranty-claim__input">
-                            </div>
+                            <!-- Mã yêu cầu bảo hành: trường bị loại bỏ, ID được tạo tự động bởi DB -->
                             <div class="warranty-claim__form-group">
                                 <label for="warranty_vin" class="warranty-claim__label">Biển số / VIN</label>
                                 <input type="text" id="warranty_vin" name="vin" class="warranty-claim__input">

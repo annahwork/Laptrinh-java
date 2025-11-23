@@ -127,13 +127,21 @@
   function loadVehiclesTable() {
     const tableBody = document.getElementById('vehiclesTbody');
     if (!tableBody) return;
+    const searchInputEl = document.getElementById('searchVehicleBox');
+    const statusFilterEl = document.getElementById('vehicleStatusFilter');
+    const searchValue = encodeURIComponent((searchInputEl?.value || '').trim());
+    const statusValue = encodeURIComponent((statusFilterEl?.value || '').trim());
 
-    const url = `${API_BASE_URL}/all`;
+    let url = `${API_BASE_URL}/all`;
+    const params = [];
+    if (searchValue) params.push(`search=${searchValue}`);
+    if (statusValue) params.push(`status=${statusValue}`);
+    if (params.length) url += `?${params.join('&')}`;
 
-    console.log('Đang tải danh sách xe...');
+    console.log('Đang tải danh sách xe...', url);
     tableBody.innerHTML = '<tr><td colspan="6">Đang tải dữ liệu...</td></tr>';
 
-    fetch(url)
+    fetch(url, { credentials: 'same-origin' })
       .then(response => {
         if (!response.ok) {
           throw new Error('Lỗi khi tải danh sách xe. Check BE (Controller/Service).');
@@ -171,7 +179,10 @@
 
     if (plateEl) {
       plateEl.value = vehicleData.vin || '';
-      plateEl.readOnly = !!currentEditingVin;
+      // Allow editing the license plate even when editing an existing record.
+      // The update endpoint uses the original VIN (`currentEditingVin`) to locate
+      // the record and the request body may contain a new VIN to update to.
+      plateEl.readOnly = false;
     }
 
     if (customerEl) customerEl.value = customerName || '';

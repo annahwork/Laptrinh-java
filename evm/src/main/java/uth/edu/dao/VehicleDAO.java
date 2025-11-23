@@ -82,7 +82,7 @@ public class VehicleDAO {
     Vehicle vehicle = null;
     try {
         session = sessionFactory.openSession();
-        
+
         String hql = "FROM Vehicle v JOIN FETCH v.customer WHERE v.VIN = :vin";
         vehicle = session.createQuery(hql, Vehicle.class)
                 .setParameter("vin", vin)
@@ -107,7 +107,7 @@ public class VehicleDAO {
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
-            return new ArrayList<>(); 
+            return new ArrayList<>();
         } finally {
             if (session != null) {
                 session.close();
@@ -121,9 +121,9 @@ public class VehicleDAO {
         List<Map> results = null;
         try {
             session = sessionFactory.openSession();
-            
-            String hql = "SELECT new map(v as vehicle, c.Name as customerName, c.Phone as customerPhone) FROM Vehicle v JOIN v.customer c ORDER BY v.VIN";           
-            results = session.createQuery(hql, Map.class) 
+
+            String hql = "SELECT new map(v as vehicle, c.Name as customerName, c.Phone as customerPhone) FROM Vehicle v JOIN v.customer c ORDER BY v.VIN";
+            results = session.createQuery(hql, Map.class)
                     .setFirstResult((page - 1) * pageSize)
                     .setMaxResults(pageSize)
                     .getResultList();

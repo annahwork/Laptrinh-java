@@ -23,6 +23,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.Date;
+import uth.edu.pojo.WarrantyHistory;
 import java.util.List;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,6 +40,8 @@ public class WarrantyClaimControllerSCStaff {
     private final VehicleRepository vehicleRepository;
     private final VehiclePartRepository vehiclePartRepository;
     private final RepairService repairService;
+    @Autowired
+    private uth.edu.repositories.WarrantyClaimRepository warrantyClaimRepository;
 
     @Autowired
     public WarrantyClaimControllerSCStaff(WarrantyClaimService warrantyClaimService,
@@ -65,6 +69,10 @@ public class WarrantyClaimControllerSCStaff {
             String description = (String) payload.get("description");
             String status = (String) payload.get("status");
             String attachmentUrl = (String) payload.get("attachmentUrl");
+            // If scStaffId not provided in payload, use the current logged-in user's ID
+            if (scStaffId == null && loggedInUser != null) {
+                scStaffId = loggedInUser.getUserID();
+            }
             Vehicle vehicle = vehicleRepository.getVehicleByVin(vin);
             if (vehicle == null) {
                 return ResponseEntity.badRequest().body("Lỗi: Không tìm thấy xe (Vehicle) với VIN: " + vin);
@@ -237,19 +245,65 @@ public class WarrantyClaimControllerSCStaff {
             Integer technicianId = parseInt(payload.get("technicianId"));
             String jobDescription = (String) payload.get("jobDescription");
 
-            if (warrantyClaimId == null || warrantyServiceId == null || technicianId == null || jobDescription == null
+            if (warrantyServiceId == null || technicianId == null || jobDescription == null
                     || jobDescription.trim().isEmpty()) {
                 return ResponseEntity.badRequest().body(Map.of("message", "Vui lòng nhập đầy đủ thông tin."));
             }
 
+            // If warrantyClaimId is not provided, create a new WarrantyClaim automatically
+            Integer usedClaimId = warrantyClaimId;
+            if (usedClaimId == null) {
+                try {
+                    WarrantyClaim newClaim = new WarrantyClaim();
+                    newClaim.setDescription(jobDescription);
+                    newClaim.setCreatedByStaff((SCStaff) loggedInUser);
+                    newClaim.setDate(new Date());
+                    newClaim.setStatus("Pending");
+
+                    WarrantyHistory history = new WarrantyHistory();
+                    history.setDate(new Date());
+                    history.setNote("Yêu cầu được tạo tự động khi phân công kỹ thuật viên.");
+
+                    boolean created = warrantyClaimRepository.addWarrantyClaim(newClaim, history);
+                    if (!created) {
+                        return ResponseEntity.status(500).body(Map.of("message", "Không thể tạo yêu cầu mới."));
+                    }
+                    // Try to read generated ClaimID from the persisted entity. If it's still null
+                    // (depends on Hibernate session/flush), fall back to reading nextId-1.
+                    Integer genId = null;
+                    try {
+                        genId = newClaim.getClaimID();
+                    } catch (Exception ignore) {
+                    }
+                    if (genId == null) {
+                        try {
+                            int next = warrantyClaimRepository.getNextClaimId();
+                            genId = Math.max(1, next - 1);
+                        } catch (Exception ex) {
+                            genId = null;
+                        }
+                    }
+                    if (genId == null) {
+                        return ResponseEntity.status(500)
+                                .body(Map.of("message", "Không thể xác định ID của yêu cầu mới."));
+                    }
+                    usedClaimId = genId;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return ResponseEntity.status(500)
+                            .body(Map.of("message", "Lỗi khi tạo yêu cầu mới: " + e.getMessage()));
+                }
+            }
+
             boolean success = repairService.assignTechnicianToClaimService(
-                    warrantyClaimId,
+                    usedClaimId,
                     warrantyServiceId,
                     technicianId,
                     jobDescription);
 
             if (success) {
-                return ResponseEntity.ok(Map.of("message", "Giao việc cho kỹ thuật viên thành công."));
+                return ResponseEntity
+                        .ok(Map.of("message", "Giao việc cho kỹ thuật viên thành công.", "claimId", usedClaimId));
             } else {
                 return ResponseEntity.status(400)
                         .body(Map.of("message", "Giao việc thất bại. Vui lòng kiểm tra lại thông tin."));

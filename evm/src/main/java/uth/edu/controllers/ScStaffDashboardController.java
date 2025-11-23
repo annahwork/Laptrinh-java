@@ -58,20 +58,30 @@ public class ScStaffDashboardController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private uth.edu.service.VehicleService vehicleService;
+
     private Integer resolveUserId(HttpSession session, Integer paramUserId) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null || !(loggedInUser instanceof SCStaff)) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Người dùng không có quyền");
         }
 
-        if (paramUserId != null)
+        if (paramUserId != null) {
             return paramUserId;
+        }
 
-        Object obj = session.getAttribute("user");
-        if (obj instanceof User u)
-            return u.getUserID();
-
-        return 1;
+        // Prefer the logged-in user's id. The session previously stored 'user' in some
+        // flows,
+        // but the standard attribute used across controllers is 'loggedInUser'. Use
+        // that.
+        try {
+            return loggedInUser.getUserID();
+        } catch (Exception ex) {
+            // fallback to 1 (system) to avoid NPE, but this should not happen for
+            // authorized SCStaff
+            return 1;
+        }
     }
 
     @GetMapping("/summary")
@@ -91,13 +101,20 @@ public class ScStaffDashboardController {
         List<Schedule> schedules = scheduleService.GetScheduleForSC(uid);
         List<Notification> notifications = notificationService.GetNotifications(uid);
 
-        long totalVehicles = recallVehicles.stream()
-                .map(RecallVehicle::getVehicle)
-                .filter(Objects::nonNull)
-                .map(Vehicle::getVIN)
-                .filter(Objects::nonNull)
-                .distinct()
-                .count();
+        long totalVehicles;
+        try {
+            // Prefer counting all vehicles from VehicleService (shows actual fleet size)
+            totalVehicles = vehicleService.countAllVehicles();
+        } catch (Exception ex) {
+            // Fallback: count unique VINs from recallVehicles if vehicle service fails
+            totalVehicles = recallVehicles.stream()
+                    .map(RecallVehicle::getVehicle)
+                    .filter(Objects::nonNull)
+                    .map(Vehicle::getVIN)
+                    .filter(Objects::nonNull)
+                    .distinct()
+                    .count();
+        }
 
         long totalCustomers = (long) userService.countAllCustomers();
         // total warranty requests: prefer counting actual warranty claims if available

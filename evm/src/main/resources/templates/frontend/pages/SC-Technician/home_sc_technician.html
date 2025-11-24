@@ -6,17 +6,126 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang chủ - SC Technician</title>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <link rel="stylesheet" href="/evm/assets/css/main.css">
     <link rel="stylesheet" href="/evm/assets/css/sidebar.css">
+    <link rel="stylesheet" href="/evm/assets/css/SC-Technician/account_sctechnician.css">
+    <link rel="stylesheet" href="/evm/assets/css/SC-Technician/campaign_list.css">
+    <link rel="stylesheet" href="/evm/assets/css/SC-Technician/campaign_report.css">
+    <link rel="stylesheet" href="/evm/assets/css/SC-Technician/campaign_vehicle.css">
     <link rel="stylesheet" href="/evm/assets/css/SC-Technician/dashboard.css">
+    <link rel="stylesheet" href="/evm/assets/css/SC-Technician/job_list.css">
+    <link rel="stylesheet" href="/evm/assets/css/SC-Technician/notification.css">
+    <link rel="stylesheet" href="/evm/assets/css/SC-Technician/performance.css">
+    <link rel="stylesheet" href="/evm/assets/css/SC-Technician/spare_part.css">
+    <link rel="stylesheet" href="/evm/assets/css/SC-Technician/technical_documents.css">
+    <link rel="stylesheet" href="/evm/assets/css/SC-Technician/warranty_result.css">
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="/evm/assets/js/SC-Technician/account_sctechnician.js"></script>
+    <script src="/evm/assets/js/SC-Technician/campaign_list.js"></script>
+    <script src="/evm/assets/js/SC-Technician/campaign_report.js"></script>
+    <script src="/evm/assets/js/SC-Technician/campaign_vehicle.js"></script>
+    <script src="/evm/assets/js/SC-Technician/dashboard.js"></script>
+    <script src="/evm/assets/js/SC-Technician/home_sc_technician.js"></script>
+    <script src="/evm/assets/js/SC-Technician/job_list.js"></script>
+    <script src="/evm/assets/js/SC-Technician/notification.js"></script>
+    <script src="/evm/assets/js/SC-Technician/performance.js"></script>
+    <script src="/evm/assets/js/SC-Technician/profile_popup.js"></script>
+    <script src="/evm/assets/js/SC-Technician/spare_part.js"></script>
+    <script src="/evm/assets/js/SC-Technician/technical_documents.js"></script>
+    <script src="/evm/assets/js/SC-Technician/warranty_result.js"></script>
 
+    <script src="/evm/assets/js/ui/modal.js"></script>
+
+    <style>
+        /* Mặc định ẩn nút toggle và overlay trên Desktop */
+        #sidebar-toggle,
+        #sidebar-overlay {
+            display: none;
+        }
+
+        /* Khi màn hình nhỏ hơn 768px (Mobile/Tablet) */
+        @media (max-width: 768px) {
+            
+            /* Hiện nút Menu */
+            #sidebar-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: fixed;
+                top: 15px;
+                left: 15px;
+                z-index: 9999; /* Luôn nổi trên cùng */
+                background: #007bff; /* Màu xanh */
+                color: #fff;
+                border: none;
+                border-radius: 4px;
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+                cursor: pointer;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            }
+
+            /* Cấu hình Sidebar trượt */
+            #sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                width: 260px; /* Độ rộng sidebar */
+                z-index: 10000; /* Cao hơn cả nút toggle */
+                background: #fff;
+                transform: translateX(-100%); /* Ẩn sang trái */
+                transition: transform 0.3s ease-in-out;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            }
+
+            /* Class này được JS thêm vào để hiện Sidebar */
+            #sidebar.show-sidebar {
+                transform: translateX(0);
+            }
+
+            /* Lớp phủ đen mờ */
+            #sidebar-overlay {
+                display: block;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 9998; /* Dưới sidebar, trên nội dung */
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.3s;
+            }
+
+            /* Hiện lớp phủ */
+            #sidebar-overlay.show-overlay {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            /* Đẩy nội dung xuống để không bị nút menu che */
+            .main {
+                padding-top: 70px !important; 
+            }
+        }
+    </style>
 </head>
 
 <body>
 
     <div class="layout-wrapper">
+        
+        <button id="sidebar-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div id="sidebar-overlay"></div>
         <aside class="sidebar" id="sidebar">
             <div class="sidebar__header">
                 <h2 class="sidebar__logo">OEM EV</h2>
@@ -119,10 +228,6 @@
 
     <div id="footer-placeholder"></div>
 
-    <script src="/evm/assets/js/ui/modal.js"></script>
-    <script src="/evm/assets/js/SC-Staff/profile_popup.js"></script>
-    <script src="/evm/assets/js/SC-Technician/home_sc_technician.js"></script>
-
     <script>
         fetch('/evm/components/footer.html')
             .then(res => res.text())
@@ -132,6 +237,34 @@
                 document.getElementById('footer-placeholder').innerHTML = html;
             })
             .catch(err => console.error("Khong tai duoc footer:", err));
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const toggleBtn = document.getElementById('sidebar-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+
+            if(toggleBtn && sidebar && overlay) {
+                // Hàm mở/đóng menu
+                function toggleMenu() {
+                    sidebar.classList.toggle('show-sidebar');
+                    overlay.classList.toggle('show-overlay');
+                }
+
+                // Sự kiện click vào nút
+                toggleBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    toggleMenu();
+                });
+
+                // Sự kiện click ra ngoài (overlay) để đóng
+                overlay.addEventListener('click', function() {
+                    sidebar.classList.remove('show-sidebar');
+                    overlay.classList.remove('show-overlay');
+                });
+            }
+        });
     </script>
 
 </body>

@@ -58,7 +58,7 @@
         tableBody.innerHTML = `<tr><td colspan="6" class="no-data">Đang tải dữ liệu...</td></tr>`;
 
         try {
-            const url = `${API_LIST}?page=${page}&pageSize=10&search=${encodeURIComponent(query)}`;
+            const url = `${API_LIST}?page=${page}&pageSize=5&search=${encodeURIComponent(query)}`;
             const response = await fetch(url);
 
             if (!response.ok) {

@@ -4,7 +4,7 @@
     console.log('Campaign List script loaded');
 
     const API_CAMPAIGN_LIST = '/evm/api/campaigns';
-    const PAGE_SIZE = 5;
+    const PAGE_SIZE = 9999;
 
     let allCampaigns = [];
     let currentFilteredCampaigns = [];
@@ -73,28 +73,24 @@
             if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
             const data = await res.json();
             allCampaigns = Array.isArray(data) ? data : data.data || [];
-            currentFilteredCampaigns = [...allCampaigns];
+currentFilteredCampaigns = [...allCampaigns];
             renderPaginatedCampaigns();
         } catch (err) {
             console.error('Fetch error:', err);
             if (grid)
                 grid.innerHTML = `<div class="error-data" style="text-align:center; width:100%; padding:2rem;">Lỗi: Không thể tải dữ liệu chiến dịch.</div>`;
         }
-    }
+    } 
 
     function filterCampaigns() {
         const searchValue = document.getElementById('campaignSearchInput')?.value.trim().toLowerCase() || '';
-        const statusFilter = document.getElementById('campaignStatusFilter')?.value || '';
+        const statusFilterValue = document.getElementById('campaignStatusFilter')?.value || '';
+        const statusFilter = statusFilterValue.toLowerCase(); 
 
         currentFilteredCampaigns = allCampaigns.filter(c => {
-            const matchesSearch = searchValue
-                ? (c.name?.toLowerCase().includes(searchValue) ||
-                   c.campaignID?.toString().toLowerCase().includes(searchValue)) 
-                : true;
+            const matchesSearch = searchValue ? (c.name?.toLowerCase().includes(searchValue) || c.campaignID?.toString().toLowerCase().includes(searchValue))  : true;
             
-            const matchesStatus = statusFilter 
-                ? c.status?.toLowerCase() === statusFilter 
-                : true;
+            const matchesStatus = statusFilter ? c.status?.toLowerCase() === statusFilter : true; 
             
             return matchesSearch && matchesStatus;
         });
@@ -144,8 +140,7 @@
 
         document.getElementById('campaignCancelBtn')?.addEventListener('click', closeCampaignModal);
         document.getElementById('campaignCloseBtn')?.addEventListener('click', closeCampaignModal);
-
-        document.getElementById('detailCloseBtn')?.addEventListener('click', closeCampaignDetail);
+document.getElementById('detailCloseBtn')?.addEventListener('click', closeCampaignDetail);
 
         window.addEventListener('click', e => {
             const modalDetail = document.getElementById('modalChiTiet');

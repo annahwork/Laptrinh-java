@@ -64,7 +64,7 @@
             tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 20px;"><i class="fas fa-spinner fa-spin"></i> Đang tải dữ liệu...</td></tr>`;
 
         try {
-            const response = await fetch(`${API_LIST}?page=1&pageSize=999`);
+            const response = await fetch(`${API_LIST}?page=1&pageSize=5`);
             if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
             allData = await response.json();
 

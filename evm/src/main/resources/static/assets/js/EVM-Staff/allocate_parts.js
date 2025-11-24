@@ -52,7 +52,7 @@
             const typeFilter = filterSelect.value;
             
             // Xây dựng URL (ví dụ, mặc dù controller chưa xử lý)
-            const url = `${API_PARTS}?page=1&pageSize=20&search=${encodeURIComponent(searchTerm)}&type=${encodeURIComponent(typeFilter)}`;
+            const url = `${API_PARTS}?page=1&pageSize=5&search=${encodeURIComponent(searchTerm)}&type=${encodeURIComponent(typeFilter)}`;
 
             const response = await fetch(url);
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -137,7 +137,7 @@
         }
         
         try {
-            const response = await fetch(`${API_PARTS}?page=1&pageSize=100`); 
+            const response = await fetch(`${API_PARTS}?page=1&pageSize=5`); 
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const parts = await response.json();
             

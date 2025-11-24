@@ -55,7 +55,7 @@ section {
 }
 
 .layout-wrapper .main {
-    margin-left: 260px;
+    margin-left: 0px;
     width: calc(100% - 260px);
     flex: 1;
     min-height: 100vh;
@@ -66,9 +66,8 @@ section {
     .layout-wrapper .sidebar {
         width: 220px;
     }
-
     .layout-wrapper .main {
-        margin-left: 220px;
+        margin-left: 0px;
         width: calc(100% - 220px);
     }
 }

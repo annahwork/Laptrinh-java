@@ -1,63 +1,93 @@
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: #f0f2f5;
-    display: grid;
-    place-items: center;
-    min-height: 100vh;
-    margin: 0;
-    color: #333;
+/* =========================================
+   Account Page Styles (account_evm.css)
+   ========================================= */
+
+/* Biến màu sắc & cấu hình */
+:root {
+    --primary: #2563eb;          
+    --primary-hover: #1d4ed8;
+    --danger: #ef4444;           
+    --text-main: #1e293b;        
+    --text-light: #64748b;       
+    --bg-main: #f1f5f9;          
+    --bg-card: #ffffff;          
+    --border: #e2e8f0;           
+    --radius: 12px;              
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 }
 
-.settings-card {
-    background-color: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    max-width: 550px;
-    width: 100%;
+.account-page {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-main);
+    min-height: 100vh;
     padding: 24px;
+    color: var(--text-main);
     box-sizing: border-box;
 }
 
-.settings-header {
+.content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.settings-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+@media (max-width: 768px) {
+    .settings-grid {
+        grid-template-columns: 1fr; 
+    }
+}
+
+.card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+
+/* --- LEFT SIDEBAR (PROFILE) --- */
+.profile-header {
+    padding: 32px 20px;
     text-align: center;
-    border-bottom: 1px solid #ebebeb;
-    padding-bottom: 24px;
-    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(to bottom, #ffffff, #f8fafc);
 }
 
 .avatar-container {
     position: relative;
     width: 100px;
     height: 100px;
-    margin: 0 auto 16px auto;
+    margin: 0 auto 16px;
 }
 
 .avatar-image {
     width: 100%;
     height: 100%;
+    background-color: #e2e8f0;
     border-radius: 50%;
-    object-fit: cover;
-    background-color: #e0e6eb;
-    border: 2px solid #fff;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.avatar-placeholder-icon {
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #90a4ae;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    border: 4px solid #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .avatar-edit-btn {
     position: absolute;
     bottom: 0;
     right: 0;
-    background-color: #f0f2f5;
-    border: 1px solid #ccc;
+    background: var(--primary);
+    color: white;
+    border: 2px solid white;
     border-radius: 50%;
     width: 32px;
     height: 32px;
@@ -65,29 +95,26 @@ body {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: 0.2s;
 }
 
 .avatar-edit-btn:hover {
-    background-color: #e0e6eb;
-}
-
-.avatar-edit-btn svg {
-    width: 16px;
-    height: 16px;
-    color: #333;
+    background: var(--primary-hover);
+    transform: scale(1.05);
 }
 
 .user-name {
-    font-size: 1.75rem;
-    font-weight: 600;
-    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 4px;
+    color: var(--text-main);
 }
 
 .user-role {
-    font-size: 1.1rem;
-    color: #666;
-    margin: 4px 0 0 0;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin: 0;
+    font-weight: 500;
 }
 
 .settings-menu {
@@ -96,19 +123,21 @@ body {
     margin: 0;
 }
 
-.settings-menu li a {
+.menu-link {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 16px 8px;
+    align-items: center;
+    padding: 16px 24px;
     text-decoration: none;
-    color: #333;
-    border-radius: 8px;
-    transition: background-color 0.2s;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.2s;
 }
 
-.settings-menu li a:hover {
-    background-color: #f9f9f9;
+.menu-link:hover {
+    background-color: #f8fafc;
+    color: var(--primary);
+    padding-left: 28px; 
 }
 
 .menu-item-content {
@@ -116,125 +145,331 @@ body {
     align-items: center;
     gap: 12px;
     font-weight: 500;
-    font-size: 1.1rem;
 }
 
-.menu-item-content svg {
-    width: 20px;
-    height: 20px;
-    color: #007bff;
+.menu-chevron {
+    color: #cbd5e1;
+    font-size: 1.2rem;
+    font-weight: bold;
 }
 
-.menu-chevron svg {
-    width: 16px;
-    height: 16px;
-    color: #999;
+.logout-wrapper {
+    padding: 20px;
 }
 
-.logout-button {
-    display: block;
+.btn-danger-outline {
     width: 100%;
-    padding: 14px;
-    margin-top: 24px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    border: 1px solid #fee2e2;
+    background: #fff;
+    color: var(--danger);
+    border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
-    text-align: center;
-    transition: background-color 0.2s;
+    transition: 0.2s;
 }
 
-.logout-button:hover {
-    background-color: #0056b3;
+.btn-danger-outline:hover {
+    background: #fef2f2;
+    border-color: #fecaca;
 }
-.modal-overlay {
-    position: fixed;
+
+/* --- RIGHT CONTENT (DETAILS) --- */
+.detail-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    background-color: #fff;
+}
+
+.detail-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.detail-body {
+    padding: 24px;
+}
+
+.detail-body.p-0 {
+    padding: 0;
+}
+
+.setting-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px dashed var(--border);
+}
+
+.setting-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.setting-row:first-child {
+    padding-top: 0;
+}
+
+.setting-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.setting-label {
+    font-weight: 500;
+    color: var(--text-main);
+    font-size: 0.95rem;
+}
+
+.setting-desc {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-top: 4px;
+}
+
+.setting-select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: #fff;
+    font-size: 0.9rem;
+    color: var(--text-main);
+    cursor: pointer;
+}
+
+/* --- SWITCH TOGGLE --- */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+    right: 0;
+    bottom: 0;
+    background-color: #cbd5e1;
+    transition: .4s;
+    border-radius: 34px;
 }
 
-.modal-content {
-    background-color: #ffffff;
-    padding: 30px;
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+input:checked + .slider {
+    background-color: var(--primary);
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+/* --- TABLE STYLES --- */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.login-history-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.login-history-table th {
+    text-align: left;
+    background: #f8fafc;
+    padding: 12px 24px;
+    color: var(--text-light);
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+
+.login-history-table td {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+    color: var(--text-main);
+}
+
+.login-history-table tr:last-child td {
+    border-bottom: none;
+}
+
+.device-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+.text-right { text-align: right; }
+
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-active {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.badge-inactive {
+    background-color: #f1f5f9;
+    color: #64748b;
+}
+
+/* --- MODAL STYLES (Đã đổi tên class) --- */
+/* Đổi .modal thành .evm-modal */
+.evm-modal {
+    display: none; 
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
+}
+
+/* Thêm quy tắc này để JS hoạt động đúng khi thêm style='display:flex' */
+.evm-modal[style*="display: flex"] {
+    display: flex !important;
+}
+
+.evm-modal.active {
+    display: flex;
+}
+
+/* Đổi .modal-content thành .evm-modal-content */
+.evm-modal-content {
+    background-color: #fff;
     border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     width: 90%;
-    max-width: 400px;
-    position: relative;
+    max-width: 450px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    animation: slideDown 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Đổi .modal-header thành .evm-modal-header */
+.evm-modal-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8fafc;
+}
+
+.evm-modal-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--text-main);
 }
 
 .close-btn {
-    position: absolute;
-    top: 15px;
-    right: 25px;
-    font-size: 28px;
-    font-weight: bold;
+    font-size: 24px;
     cursor: pointer;
-    color: #999;
+    color: var(--text-light);
+    line-height: 1;
     transition: color 0.2s;
 }
 
 .close-btn:hover {
-    color: #333;
+    color: var(--danger);
 }
 
-.modal-content h3 {
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 1.5rem;
-    color: #007bff;
+/* Đổi .modal-body thành .evm-modal-body */
+.evm-modal-body {
+    padding: 24px;
 }
 
+/* Form Elements trong Modal */
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 16px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     font-weight: 500;
+    color: var(--text-main);
+    font-size: 0.9rem;
 }
 
-.form-group input[type="password"] {
+.form-control {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
     border-radius: 8px;
     box-sizing: border-box;
-    font-size: 1rem;
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
 }
 
-.submit-btn {
-    width: 100%;
-    padding: 12px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    margin-top: 10px;
-}
-
-.submit-btn:hover {
-    background-color: #1e7e34;
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .message-area {
-    margin-bottom: 15px;
-    text-align: center;
-    font-weight: 500;
+    font-size: 0.85rem;
+    margin-top: 8px;
+    min-height: 1.2em;
+}
+.text-danger { color: var(--danger); }
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
 }

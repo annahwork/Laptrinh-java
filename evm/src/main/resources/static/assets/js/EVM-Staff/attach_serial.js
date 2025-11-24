@@ -26,7 +26,7 @@
 
     let currentPage = 1;
     let currentQuery = '';
-    const PAGE_SIZE = 10;
+    const PAGE_SIZE = 5;
     let isLastPage = false;
 
     async function fetchData(page = 1, query = '') {

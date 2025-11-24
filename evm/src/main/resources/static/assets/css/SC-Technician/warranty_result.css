@@ -99,7 +99,7 @@
 .filter-controls {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
     flex-wrap: wrap;
     margin-bottom: 1rem;
     background: #fff;
@@ -117,8 +117,8 @@
     background-color: #f8fafc;
     font-size: 0.95rem;
     color: #1e293b;
-    height: 42px;
-    min-width: 220px;
+    height: 40px;
+    min-width: 180px;
     box-sizing: border-box;
     transition: all 0.25s ease;
     appearance: none;
@@ -181,14 +181,15 @@
 }
 
 .search-input {
-    width: 100%;
-    padding: 10px 42px 10px 14px;
+    width: 50%;
+    padding: 10px 20px 10px 45px;
     border: 1px solid #cbd5e1;
     border-radius: 8px;
     background-color: #f8fafc;
     font-size: 0.95rem;
     color: #1e293b;
     transition: all 0.25s ease;
+    box-sizing: border-box;
 }
 
 .search-input:focus {

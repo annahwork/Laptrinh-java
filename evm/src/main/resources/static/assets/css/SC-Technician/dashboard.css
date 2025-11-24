@@ -125,3 +125,49 @@
   font-size: 13px;
   color: #777;
 }
+/* --- PHẦN THÊM VÀO ĐỂ CHẠY TRÊN ĐIỆN THOẠI (Mobile) --- */
+@media (max-width: 768px) {
+  
+  /* 1. Thu gọn lề của các khung để tiết kiệm diện tích */
+  .section-box {
+    padding: 15px; 
+    margin-bottom: 15px;
+  }
+
+  /* 2. Xử lý các thẻ Card (Tổng quan) */
+  .overview-cards .card {
+    min-width: 100%; /* Bắt buộc thẻ dãn full chiều ngang điện thoại */
+    margin-bottom: 10px; /* Tạo khoảng cách giữa các thẻ khi xếp chồng */
+  }
+
+  /* 3. Xử lý Bảng (Table) - QUAN TRỌNG */
+  /* Vì bảng không thể co nhỏ quá mức, ta sẽ cho nó cuộn ngang */
+  .schedule {
+    overflow-x: auto; /* Cho phép cuộn ngang trong khung này */
+    -webkit-overflow-scrolling: touch; /* Cuộn mượt trên iOS */
+  }
+  
+  .data-table {
+    min-width: 600px; /* Đặt độ rộng tối thiểu để bảng không bị bóp méo chữ */
+    white-space: nowrap; /* Giữ chữ thẳng hàng, không tự xuống dòng lung tung */
+  }
+
+  /* 4. Xử lý Thông báo (Notification) */
+  .notice-item {
+    padding-bottom: 10px; /* Chừa chỗ nới lỏng */
+  }
+  
+  .notice-date {
+    /* Trên mobile, bỏ absolute để ngày tháng không đè lên nội dung */
+    position: static; 
+    display: block;
+    text-align: right;
+    margin-top: 5px;
+    font-size: 12px;
+  }
+  
+  .notice-content {
+    /* Cho nội dung hiện rõ hơn chút trên mobile */
+    font-size: 13px; 
+  }
+}
